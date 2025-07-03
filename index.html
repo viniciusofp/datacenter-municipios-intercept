@@ -6,14 +6,22 @@
     <title>Document</title>
   </head>
   <body>
-      <div
-        class="border-8 border-[#6653ff]  max-w-2xl mx-auto my-8 px-6 py-8"
-      >
+      <div class="grid md:flex flex-row gap-5 max-w-2xl mx-auto my-8 text-[20px]">
+            <h1
+              class="font-display text-[#111] w-full md:basis-1/2 text-3xl font-extrabold mb-5 font-actu"
+            >
+              Um <i>data center</i> consome mais energia que muita, muita
+              gente...
+            </h1>
+            <p class="w-full md:basis-1/2 shrink-0 text-pretty">
+              Como o consumo residencial médio diário de um brasileiro foi de 2,27 kWh em 2024, segundo dados do Anuário Estatístico de Energia Elétrica, da Empresa de Pesquisa Energética, a EPE, isso significa que o data center terá um gasto equivalente ao consumo residencial de mais de dois milhões de pessoas. 
+            </p>
+          </div>
         <script src="https://unpkg.com/lodash@4.17.21/lodash.min.js"></script>
         <script src="
 https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
 "></script>
-        <script src="./data.js"></script>
+        <script src="https://raw.githack.com/viniciusofp/datacenter-municipios-intercept/refs/heads/main/data.js"></script>
         <link href="./style.css" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +30,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           rel="stylesheet"
         />
 
-        <script  type="module">
+        <script type="module">
           import { createApp } from 'https://unpkg.com/petite-vue?module';
         const parsedMunicipios = municipios.map(m => ({
               id: m[0],
@@ -103,19 +111,10 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           }).mount('#dataviz');
         </script>
 
-        <div id="dataviz" class="text-[20px]">
-          <div class="grid md:flex flex-row gap-5">
-            <h1
-              class="font-display text-[#111] w-full md:basis-1/2 text-3xl font-extrabold mb-5 font-actu"
-            >
-              Um <i>data center</i> consome mais energia que muita, muita
-              gente...
-            </h1>
-            <p class="w-full md:basis-1/2 shrink-0 mb-12 text-lg text-pretty">
-              Como o consumo residencial médio diário de um brasileiro foi de 2,27 kWh em 2024, segundo dados do Anuário Estatístico de Energia Elétrica, da Empresa de Pesquisa Energética, a EPE, isso significa que o data center terá um gasto equivalente ao consumo residencial de mais de dois milhões de pessoas. 
-            </p>
-          </div>
-          <p class="mb-5 font-bold text-2xl md:text-3xl font-actu text-[#6653ff]"">Quanto tempo sua cidade levaria para consumir a energia do data center do TikTok?</p>
+        <div id="dataviz" class="border-8 border-[#6653ff]  max-w-2xl mx-auto my-8 px-6 py-10 text-[20px]">
+          
+          <p class="mb-4 font-bold text-2xl md:text-3xl font-actu text-[#6653ff]"">Quanto tempo sua cidade levaria para consumir a energia que o data center do TikTok consome em um ano??</p>
+          <p class="mb-5">Insira uma cidade na busca abaixo e confira.</p>
           <div class="relative">
             <svg data-v-3bab6120="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search search-icon opacity-50 absolute left-3 top-5 w-6 h-6"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
             <input
@@ -143,8 +142,8 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
               </li>
             </ul>
           </div>
-          <article v-if="selectedMunicipio !== null" class="mt-8">
-            <h2 class="font-bold font-actu text-[#111] text-2xl mb-2 flex items-center gap-4"><span class="h-[10px] w-[70px] bg-[#111]"></span><span>{{selectedMunicipio.nome}} - {{selectedMunicipio.uf}}</span></h2>
+          <article v-if="selectedMunicipio !== null" class="mt-16">
+            <h2 class="font-bold font-actu text-[#111] text-2xl lg:text-3xl mb-3 lg:mb-5 flex items-center gap-4"><span class="h-[24px] w-[70px] bg-[#111]"></span><span>{{selectedMunicipio.nome}} <span class="font-normal">- {{ufs[selectedMunicipio.uf][0]}}</span></span></h2>
             <p class="mb-3">Tem uma população de <strong>{{formatNumber(selectedMunicipio.populacao)}}</strong> pessoas e {{posicaoMunicipio(selectedMunicipio)}}.</p>
             <p class="mb-3">O que o data center do TikTok vai consumir em um ano, {{selectedMunicipio.nome}} gasta em</p>
             <p class="font-bold font-actu text=[#111] text-2xl">{{proporcao()}}</p>

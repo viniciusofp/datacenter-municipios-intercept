@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@config "./tailwind.config.js";
 
 @font-face {
   font-family: 'TI Actu';
@@ -13,13 +14,19 @@
   src: url('./font/TIActuBeta-ExBold.woff');
 }
 @font-face {
+  font-family: 'TI Actu';
+  font-weight: 400;
+  font-style: normal;
+  src: url('./font/TIActuBeta-Regular.woff');
+}
+@font-face {
   font-family: 'TI Actu Mono';
   font-weight: 400;
   font-style: normal;
   src: url('./font/TIActuBetaMono-Regular.woff');
 }
 
-#dataviz {
+body {
   font-family: 'Newsreader', Arial, Georgia, serif;
   line-height: 1.545454;
   color: rgb(51, 51, 51);
