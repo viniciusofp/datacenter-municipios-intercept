@@ -9,7 +9,6 @@
       <div
         class="border-8 border-[#6653ff]  max-w-2xl mx-auto my-8 px-6 py-8"
       >
-        <script src="https://unpkg.com/marked@2.1.3/lib/marked.js"></script>
         <script src="https://unpkg.com/lodash@4.17.21/lodash.min.js"></script>
         <script src="
 https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
@@ -23,45 +22,25 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           rel="stylesheet"
         />
 
-        <script src="./script.js" type="module">
+        <script  type="module">
           import { createApp } from 'https://unpkg.com/petite-vue?module';
-          const ordinais = [
-            '',
-            'segunda',
-            'terceira',
-            'quarta',
-            'quinta',
-            'sexta',
-            'sétima',
-            'oitava',
-            'nona',
-            'décima',
-            'décima primeira',
-            'décima segunda',
-            'décima terceira',
-            'décima quarta',
-            'décima quinta',
-            'décima sexta',
-            'décima sétima',
-            'décima oitava',
-            'décima nona',
-            'vigésima'
-          ];
-
+        const parsedMunicipios = municipios.map(m => ({
+              id: m[0],
+              nome: m[1],
+              uf: m[2],
+              populacao: m[3]
+            }))
           createApp({
-            municipiosData,
-            filteredMunicipios: _.orderBy(municipiosData, ['pop'], ['desc']),
+            municipiosData: parsedMunicipios,
+            filteredMunicipios: _.orderBy(parsedMunicipios, ['populacao'], ['desc']),
             showList: true,
             input: '',
             selectedMunicipio: null,
-            get compiledMarkdown() {
-              return marked(this.input);
-            },
             update: _.debounce(function (e) {
               if (e.target.value) {
                 this.filterMunicipios(e.target.value);
               } else {
-                this.filteredMunicipios = _.orderBy(municipiosData, ['pop'], ['desc']);
+                this.filteredMunicipios = _.orderBy(parsedMunicipios, ['populacao'], ['desc']);
               }
               this.input = e.target.value;
               this.scrollListToTop()
@@ -71,13 +50,13 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
               el.scrollTop = 0
             },
             filterMunicipios(value) {
-                const filter = municipiosData.filter((mun) => {
+                const filter = this.municipiosData.filter((mun) => {
 
-                return (slugify(mun.municipio, { lower: true, replacement: '' }) +  slugify(mun.uf, { lower: true, replacement: '' })).includes(
+                return (slugify(mun.nome, { lower: true, replacement: '' }) +  slugify(mun.uf, { lower: true, replacement: '' })).includes(
                   slugify(value, { lower: true, replacement: '' })
                 );
               });
-              this.filteredMunicipios = _.orderBy(filter, ['pop'], ['desc'])
+              this.filteredMunicipios = _.orderBy(filter, ['populacao'], ['desc'])
             },
             formatNumber(value) {
               if (parseInt(value) >= 1e6) {
@@ -93,25 +72,33 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
               
             },
             selectMunicipio(value) {
-              this.input = `${value.municipio} - ${value.uf}`;
+              this.input = `${value.nome} - ${value.uf}`;
               this.selectedMunicipio = value;
               this.showList = false
             },
             posicaoMunicipio(mun) {
-              let posicao = _.indexOf(_.orderBy(this.municipiosData, ['pop'], ['desc']), mun)
+              let posicao = _.indexOf(_.orderBy(this.municipiosData, ['populacao'], ['desc']), mun)
               if (posicao <= 19) {
                 return `é a ${ordinais[posicao]} cidade com maior população no Brasil`
               } 
               
-              let posicaoNoEstado = _.indexOf(_.orderBy(this.municipiosData.filter(m => m.uf_id === mun.uf_id), ['pop'], ['desc']), mun)
+              let posicaoNoEstado = _.indexOf(_.orderBy(this.municipiosData.filter(m => m.uf === mun.uf), ['populacao'], ['desc']), mun)
               if (posicaoNoEstado <= 9) {
-                return `é a ${ordinais[posicaoNoEstado]} cidade com maior população do estado ${estados[mun.uf].ref} ${estados[mun.uf].name}`
+                return `é a ${ordinais[posicaoNoEstado]} cidade com maior população do estado ${ufs[mun.uf][1]} ${ufs[mun.uf][0]}`
               }
-              return `é considerada uma cidade ${parseInt(this.selectedMunicipio.pop) > 499999 ? 'grande' : parseInt(this.selectedMunicipio.pop) > 99999 ? 'média' : 'pequena'}`
+              return `é considerada uma cidade ${parseInt(this.selectedMunicipio.populacao) > 499999 ? 'grande' : parseInt(this.selectedMunicipio.populacao) > 99999 ? 'média' : 'pequena'}`
                 
               },
+              proporcao() {
+                const ratio = consumoAnualDC /(ufs[this.selectedMunicipio.uf][2] * this.selectedMunicipio.populacao)
+                const totalDays = Math.round(360 * ratio)
+                const yearsSpent =  Math.floor(totalDays / 360)
+                const monthsSpent = Math.floor((totalDays % 360) / 30)
+                const daysSpent = (totalDays % 30)
+                return  `${yearsSpent} anos ${monthsSpent} meses ${daysSpent} dias `
+              },
               totalEstado(mun) {
-                return this.formatNumber(_.sum(this.municipiosData.filter(m => m.uf_id === mun.uf_id).map(m => m.pop)))
+                return this.formatNumber(_.sum(this.municipiosData.filter(m => m.uf === mun.uf).map(m => m.populacao)))
               }
           }).mount('#dataviz');
         </script>
@@ -125,12 +112,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
               gente...
             </h1>
             <p class="w-full md:basis-1/2 shrink-0 mb-12 text-lg text-pretty">
-              Dados inéditos obtidos pelo
-              <strong>Intercept Brasil</strong> indicam que, entre junho de 2023
-              e abril de 2025, quando as bets começaram a ganhar mais tração no
-              país, o número de auxílio-doença concedidos mensalmente por
-              ludopatia aumentou mais de 2.300% — foram 276 benefícios
-              concedidos no total no período.
+              Como o consumo residencial médio diário de um brasileiro foi de 2,27 kWh em 2024, segundo dados do Anuário Estatístico de Energia Elétrica, da Empresa de Pesquisa Energética, a EPE, isso significa que o data center terá um gasto equivalente ao consumo residencial de mais de dois milhões de pessoas. 
             </p>
           </div>
           <p class="mb-5 font-bold text-2xl md:text-3xl font-actu text-[#6653ff]"">Quanto tempo sua cidade levaria para consumir a energia do data center do TikTok?</p>
@@ -138,7 +120,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             <svg data-v-3bab6120="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search search-icon opacity-50 absolute left-3 top-5 w-6 h-6"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
             <input
               type="text"
-              class="border border-neutral-200 h-16 px-3 pl-12 flex items-center w-full leading-0 font-actu-mono text-base"
+              class="border border-[#111] h-16 px-3 pl-12 flex items-center w-full leading-0 font-actu-mono text-base focus:ring-black focus:outline-[#6653ff]"
               :value="input"
               @input="update"
               @focus="setShowList"
@@ -146,26 +128,27 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             />
 
             <ul
-              v-if="showList"
+              v-if="showList && filteredMunicipios !== null"
               id="municipiosList"
-              class="bg-white border border-neutral-200 border-t-0 shadow-md sm:shadow-lg max-h-32 lg:max-h-42 w-full overflow-y-auto left-0"
+              class="bg-white border border-[#111] border-t-0 shadow-md sm:shadow-lg max-h-32 lg:max-h-42 w-full overflow-y-auto left-0"
             >
               <li
                 v-for="item in filteredMunicipios.slice(0,50)"
-                :key="item.municipio_id"
+                :key="item.id"
                 class="hover:bg-neutral-200 py-1.5 px-3 cursor-pointer tracking-wide duration-150 text-sm font-actu-mono"
                 @click="selectMunicipio(item)"
-                :class="{'text-[#6653ff]': selectedMunicipio.municipio_id === item.municipio_id}"
+                :class="{'text-[#6653ff]': selectedMunicipio.id === item.id}"
               >
-                {{ item.municipio }} - {{item.uf}}
+                {{ item.nome }} - {{item.uf}}
               </li>
             </ul>
           </div>
           <article v-if="selectedMunicipio !== null" class="mt-8">
-            <h2 class="font-bold font-actu text-[#111] text-2xl mb-2 flex items-center gap-4"><span class="h-[10px] w-[70px] bg-[#111]"></span><span>{{selectedMunicipio.municipio}} - {{selectedMunicipio.uf}}</span></h2>
-            <p class="mb-3">Tem uma população de <strong>{{formatNumber(selectedMunicipio.pop)}}</strong> pessoas e {{posicaoMunicipio(selectedMunicipio)}}.</p>
-            <p class="font-bold font-actu text=[#111]">A cidade de {{selectedMunicipio.municipio}} {{(consumoAnualDC /(estados[selectedMunicipio.uf].consumo_por_hab * selectedMunicipio.pop)).toFixed(2)}}</p>
-            <p v-if="selectedMunicipio.uf !== 'DF'" class="my-3 text-sm">A populaçao do estado {{estados[selectedMunicipio.uf].ref}} {{estados[selectedMunicipio.uf].name}} é de {{totalEstado(selectedMunicipio)}} pessoas.</p>
+            <h2 class="font-bold font-actu text-[#111] text-2xl mb-2 flex items-center gap-4"><span class="h-[10px] w-[70px] bg-[#111]"></span><span>{{selectedMunicipio.nome}} - {{selectedMunicipio.uf}}</span></h2>
+            <p class="mb-3">Tem uma população de <strong>{{formatNumber(selectedMunicipio.populacao)}}</strong> pessoas e {{posicaoMunicipio(selectedMunicipio)}}.</p>
+            <p class="mb-3">O que o data center do TikTok vai consumir em um ano, {{selectedMunicipio.nome}} gasta em</p>
+            <p class="font-bold font-actu text=[#111] text-2xl">{{proporcao()}}</p>
+            <!-- <p v-if="selectedMunicipio.uf !== 'DF'" class="my-3 text-sm">A populaçao do estado {{ufs[selectedMunicipio.uf][1]}} {{ufs[selectedMunicipio.uf][0]}} é de {{totalEstado(selectedMunicipio)}} pessoas.</p> -->
 
           </article>
         </div>

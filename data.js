@@ -1,39033 +1,5627 @@
 // UFs: nome, prep, consumo_anual_per_capta
 // Municipios: id, nome, uf, populacao
-
+const ordinais = [
+  '',
+  'segunda',
+  'terceira',
+  'quarta',
+  'quinta',
+  'sexta',
+  'sétima',
+  'oitava',
+  'nona',
+  'décima',
+  'décima primeira',
+  'décima segunda',
+  'décima terceira',
+  'décima quarta',
+  'décima quinta',
+  'décima sexta',
+  'décima sétima',
+  'décima oitava',
+  'décima nona',
+  'vigésima'
+];
 const consumoAnualDC = 1839600000;
-const estados = {
-  AC: { name: 'Acre', ref: 'do', consumo_por_hab: 767.39 },
-  AL: { name: 'Alagoas', ref: 'de', consumo_por_hab: 643.02 },
-  AP: { name: 'Amapá', ref: 'do', consumo_por_hab: 1052.72 },
-  AM: { name: 'Amazonas', ref: 'do', consumo_por_hab: 652.41 },
-  BA: { name: 'Bahia', ref: 'da', consumo_por_hab: 549.23 },
-  CE: { name: 'Ceará', ref: 'do', consumo_por_hab: 632.66 },
-  DF: { name: 'Distrito Federal', ref: 'do', consumo_por_hab: 863.63 },
-  ES: { name: 'Espírito Santo', ref: 'do', consumo_por_hab: 872.55 },
-  GO: { name: 'Goiás', ref: 'de', consumo_por_hab: 984.87 },
-  MA: { name: 'Maranhão', ref: 'do', consumo_por_hab: 730.6 },
-  MT: { name: 'Mato Grosso', ref: 'do', consumo_por_hab: 1039.59 },
-  MS: { name: 'Mato Grosso do Sul', ref: 'do', consumo_por_hab: 892.35 },
-  MG: { name: 'Minas Gerais', ref: 'de', consumo_por_hab: 719.49 },
-  PA: { name: 'Pará', ref: 'do', consumo_por_hab: 645.66 },
-  PB: { name: 'Paraíba', ref: 'da', consumo_por_hab: 687.35 },
-  PR: { name: 'Paraná', ref: 'do', consumo_por_hab: 858.77 },
-  PE: { name: 'Pernambuco', ref: 'de', consumo_por_hab: 626.68 },
-  PI: { name: 'Piauí', ref: 'do', consumo_por_hab: 728.14 },
-  RJ: { name: 'Rio de Janeiro', ref: 'do', consumo_por_hab: 785.13 },
-  RN: { name: 'Rio Grande do Norte', ref: 'do', consumo_por_hab: 717.68 },
-  RS: { name: 'Rio Grande do Sul', ref: 'do', consumo_por_hab: 986.28 },
-  RO: { name: 'Rondônia', ref: 'de', consumo_por_hab: 1063.69 },
-  RR: { name: 'Roraima', ref: 'de', consumo_por_hab: 1106.45 },
-  SC: { name: 'Santa Catarina', ref: 'de', consumo_por_hab: 987.51 },
-  SP: { name: 'São Paulo', ref: 'de', consumo_por_hab: 1034.12 },
-  SE: { name: 'Sergipe', ref: 'de', consumo_por_hab: 700.69 },
-  TO: { name: 'Tocantins', ref: 'do', consumo_por_hab: 937.06 }
+const ufs = {
+  RO: ['Rondônia', 'de', 1063.689627],
+  AC: ['Acre', 'do', 767.3914526],
+  AM: ['Amazonas', 'do', 652.4063898],
+  RR: ['Roraima', 'de', 1106.448759],
+  PA: ['Pará', 'do', 645.6642294],
+  AP: ['Amapá', 'do', 1052.72292],
+  TO: ['Tocantins', 'do', 937.0637807],
+  MA: ['Maranhão', 'do', 730.5996111],
+  PI: ['Piauí', 'do', 728.1449675],
+  CE: ['Ceará', 'do', 632.6616638],
+  RN: ['Rio Grande do Norte', 'do', 717.6791295],
+  PB: ['Paraíba', 'da', 687.3542525],
+  PE: ['Pernambuco', 'de', 626.6750139],
+  AL: ['Alagoas', 'de', 643.0238362],
+  SE: ['Sergipe', 'de', 700.6912115],
+  BA: ['Bahia', 'da', 549.2346074],
+  MG: ['Minas Gerais', 'de', 719.4880044],
+  ES: ['Espírito Santo', 'do', 872.5463234],
+  RJ: ['Rio de Janeiro', 'do', 785.1336892],
+  SP: ['São Paulo', 'de', 1034.122145],
+  PR: ['Paraná', 'do', 858.7696435],
+  SC: ['Santa Catarina', 'de', 987.514942],
+  RS: ['Rio Grande do Sul', 'do', 986.2841737],
+  MS: ['Mato Grosso do Sul', 'do', 892.3544225],
+  MT: ['Mato Grosso', 'do', 1039.58526],
+  GO: ['Goiás', 'de', 984.8714742],
+  DF: ['Distrito Federal', 'do', 863.629345]
 };
 
-const municipiosData = [
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00015',
-    municipio: "Alta Floresta D'Oeste",
-    pop: 22853
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00023',
-    municipio: 'Ariquemes',
-    pop: 108573
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00031',
-    municipio: 'Cabixi',
-    pop: 5690
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00049',
-    municipio: 'Cacoal',
-    pop: 97637
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00056',
-    municipio: 'Cerejeiras',
-    pop: 16975
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00064',
-    municipio: 'Colorado do Oeste',
-    pop: 16588
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00072',
-    municipio: 'Corumbiara',
-    pop: 8001
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00080',
-    municipio: 'Costa Marques',
-    pop: 13522
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00098',
-    municipio: "Espigão D'Oeste",
-    pop: 32717
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00106',
-    municipio: 'Guajará-Mirim',
-    pop: 43553
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00114',
-    municipio: 'Jaru',
-    pop: 55583
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00122',
-    municipio: 'Ji-Paraná',
-    pop: 139359
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00130',
-    municipio: "Machadinho D'Oeste",
-    pop: 34063
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00148',
-    municipio: "Nova Brasilândia D'Oeste",
-    pop: 16504
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00155',
-    municipio: 'Ouro Preto do Oeste',
-    pop: 38681
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00189',
-    municipio: 'Pimenta Bueno',
-    pop: 39053
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00205',
-    municipio: 'Porto Velho',
-    pop: 514873
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00254',
-    municipio: 'Presidente Médici',
-    pop: 20518
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00262',
-    municipio: 'Rio Crespo',
-    pop: 3753
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00288',
-    municipio: 'Rolim de Moura',
-    pop: 62559
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00296',
-    municipio: "Santa Luzia D'Oeste",
-    pop: 7877
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00304',
-    municipio: 'Vilhena',
-    pop: 108528
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00320',
-    municipio: 'São Miguel do Guaporé',
-    pop: 22267
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00338',
-    municipio: 'Nova Mamoré',
-    pop: 28496
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00346',
-    municipio: "Alvorada D'Oeste",
-    pop: 13837
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00379',
-    municipio: 'Alto Alegre dos Parecis',
-    pop: 12263
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00403',
-    municipio: 'Alto Paraíso',
-    pop: 17463
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00452',
-    municipio: 'Buritis',
-    pop: 30729
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00502',
-    municipio: 'Novo Horizonte do Oeste',
-    pop: 8056
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00601',
-    municipio: 'Cacaulândia',
-    pop: 4345
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00700',
-    municipio: 'Campo Novo de Rondônia',
-    pop: 9225
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00809',
-    municipio: 'Candeias do Jamari',
-    pop: 24163
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00908',
-    municipio: 'Castanheiras',
-    pop: 3456
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00924',
-    municipio: 'Chupinguaia',
-    pop: 10129
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '00940',
-    municipio: 'Cujubim',
-    pop: 15883
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01005',
-    municipio: 'Governador Jorge Teixeira',
-    pop: 8420
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01104',
-    municipio: 'Itapuã do Oeste',
-    pop: 9209
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01203',
-    municipio: 'Ministro Andreazza',
-    pop: 6657
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01302',
-    municipio: 'Mirante da Serra',
-    pop: 9740
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01401',
-    municipio: 'Monte Negro',
-    pop: 12241
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01435',
-    municipio: 'Nova União',
-    pop: 6577
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01450',
-    municipio: 'Parecis',
-    pop: 4390
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01468',
-    municipio: 'Pimenteiras do Oeste',
-    pop: 2311
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01476',
-    municipio: 'Primavera de Rondônia',
-    pop: 3279
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01484',
-    municipio: "São Felipe D'Oeste",
-    pop: 5605
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01492',
-    municipio: 'São Francisco do Guaporé',
-    pop: 17511
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01500',
-    municipio: 'Seringueiras',
-    pop: 12954
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01559',
-    municipio: 'Teixeirópolis',
-    pop: 4536
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01609',
-    municipio: 'Theobroma',
-    pop: 8540
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01708',
-    municipio: 'Urupá',
-    pop: 11377
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01757',
-    municipio: 'Vale do Anari',
-    pop: 8265
-  },
-  {
-    uf: 'RO',
-    uf_id: 11,
-    municipio_id: '01807',
-    municipio: 'Vale do Paraíso',
-    pop: 6843
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00013',
-    municipio: 'Acrelândia',
-    pop: 14657
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00054',
-    municipio: 'Assis Brasil',
-    pop: 8573
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00104',
-    municipio: 'Brasiléia',
-    pop: 27841
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00138',
-    municipio: 'Bujari',
-    pop: 13766
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00179',
-    municipio: 'Capixaba',
-    pop: 10922
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00203',
-    municipio: 'Cruzeiro do Sul',
-    pop: 98382
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00252',
-    municipio: 'Epitaciolândia',
-    pop: 19739
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00302',
-    municipio: 'Feijó',
-    pop: 37644
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00328',
-    municipio: 'Jordão',
-    pop: 9787
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00336',
-    municipio: 'Mâncio Lima',
-    pop: 20329
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00344',
-    municipio: 'Manoel Urbano',
-    pop: 12776
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00351',
-    municipio: 'Marechal Thaumaturgo',
-    pop: 17951
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00385',
-    municipio: 'Plácido de Castro',
-    pop: 17127
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00393',
-    municipio: 'Porto Walter',
-    pop: 11275
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00401',
-    municipio: 'Rio Branco',
-    pop: 387852
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00427',
-    municipio: 'Rodrigues Alves',
-    pop: 15537
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00435',
-    municipio: 'Santa Rosa do Purus',
-    pop: 7143
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00450',
-    municipio: 'Senador Guiomard',
-    pop: 22352
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00500',
-    municipio: 'Sena Madureira',
-    pop: 43916
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00609',
-    municipio: 'Tarauacá',
-    pop: 46517
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00708',
-    municipio: 'Xapuri',
-    pop: 19090
-  },
-  {
-    uf: 'AC',
-    uf_id: 12,
-    municipio_id: '00807',
-    municipio: 'Porto Acre',
-    pop: 17455
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00029',
-    municipio: 'Alvarães',
-    pop: 16670
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00060',
-    municipio: 'Amaturá',
-    pop: 11411
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00086',
-    municipio: 'Anamã',
-    pop: 10318
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00102',
-    municipio: 'Anori',
-    pop: 17932
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00144',
-    municipio: 'Apuí',
-    pop: 21735
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00201',
-    municipio: 'Atalaia do Norte',
-    pop: 15892
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00300',
-    municipio: 'Autazes',
-    pop: 45328
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00409',
-    municipio: 'Barcelos',
-    pop: 18626
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00508',
-    municipio: 'Barreirinha',
-    pop: 33436
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00607',
-    municipio: 'Benjamin Constant',
-    pop: 40509
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00631',
-    municipio: 'Beruri',
-    pop: 22136
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00680',
-    municipio: 'Boa Vista do Ramos',
-    pop: 25769
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00706',
-    municipio: 'Boca do Acre',
-    pop: 38246
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00805',
-    municipio: 'Borba',
-    pop: 34879
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00839',
-    municipio: 'Caapiranga',
-    pop: 14310
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '00904',
-    municipio: 'Canutama',
-    pop: 17885
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01001',
-    municipio: 'Carauari',
-    pop: 30892
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01100',
-    municipio: 'Careiro',
-    pop: 32442
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01159',
-    municipio: 'Careiro da Várzea',
-    pop: 19809
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01209',
-    municipio: 'Coari',
-    pop: 73820
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01308',
-    municipio: 'Codajás',
-    pop: 24451
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01407',
-    municipio: 'Eirunepé',
-    pop: 35534
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01506',
-    municipio: 'Envira',
-    pop: 17920
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01605',
-    municipio: 'Fonte Boa',
-    pop: 27875
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01654',
-    municipio: 'Guajará',
-    pop: 14332
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01704',
-    municipio: 'Humaitá',
-    pop: 62312
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01803',
-    municipio: 'Ipixuna',
-    pop: 25458
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01852',
-    municipio: 'Iranduba',
-    pop: 67114
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01902',
-    municipio: 'Itacoatiara',
-    pop: 112520
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '01951',
-    municipio: 'Itamarati',
-    pop: 11730
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02009',
-    municipio: 'Itapiranga',
-    pop: 10805
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02108',
-    municipio: 'Japurá',
-    pop: 9397
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02207',
-    municipio: 'Juruá',
-    pop: 11152
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02306',
-    municipio: 'Jutaí',
-    pop: 27656
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02405',
-    municipio: 'Lábrea',
-    pop: 48927
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02504',
-    municipio: 'Manacapuru',
-    pop: 110691
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02553',
-    municipio: 'Manaquiri',
-    pop: 17009
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02603',
-    municipio: 'Manaus',
-    pop: 2279686
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02702',
-    municipio: 'Manicoré',
-    pop: 57758
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02801',
-    municipio: 'Maraã',
-    pop: 15843
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '02900',
-    municipio: 'Maués',
-    pop: 65714
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03007',
-    municipio: 'Nhamundá',
-    pop: 21106
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03106',
-    municipio: 'Nova Olinda do Norte',
-    pop: 28267
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03205',
-    municipio: 'Novo Airão',
-    pop: 16467
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03304',
-    municipio: 'Novo Aripuanã',
-    pop: 24987
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03403',
-    municipio: 'Parintins',
-    pop: 101956
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03502',
-    municipio: 'Pauini',
-    pop: 20232
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03536',
-    municipio: 'Presidente Figueiredo',
-    pop: 33004
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03569',
-    municipio: 'Rio Preto da Eva',
-    pop: 25723
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03601',
-    municipio: 'Santa Isabel do Rio Negro',
-    pop: 14176
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03700',
-    municipio: 'Santo Antônio do Içá',
-    pop: 30448
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03809',
-    municipio: 'São Gabriel da Cachoeira',
-    pop: 56406
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03908',
-    municipio: 'São Paulo de Olivença',
-    pop: 35196
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '03957',
-    municipio: 'São Sebastião do Uatumã',
-    pop: 12247
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04005',
-    municipio: 'Silves',
-    pop: 12404
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04062',
-    municipio: 'Tabatinga',
-    pop: 72283
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04104',
-    municipio: 'Tapauá',
-    pop: 20501
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04203',
-    municipio: 'Tefé',
-    pop: 79278
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04237',
-    municipio: 'Tonantins',
-    pop: 20224
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04260',
-    municipio: 'Uarini',
-    pop: 15278
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04302',
-    municipio: 'Urucará',
-    pop: 19505
-  },
-  {
-    uf: 'AM',
-    uf_id: 13,
-    municipio_id: '04401',
-    municipio: 'Urucurituba',
-    pop: 25592
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00027',
-    municipio: 'Amajari',
-    pop: 15583
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00050',
-    municipio: 'Alto Alegre',
-    pop: 23049
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00100',
-    municipio: 'Boa Vista',
-    pop: 470169
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00159',
-    municipio: 'Bonfim',
-    pop: 15222
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00175',
-    municipio: 'Cantá',
-    pop: 20552
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00209',
-    municipio: 'Caracaraí',
-    pop: 22443
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00233',
-    municipio: 'Caroebe',
-    pop: 11708
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00282',
-    municipio: 'Iracema',
-    pop: 10778
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00308',
-    municipio: 'Mucajaí',
-    pop: 19619
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00407',
-    municipio: 'Normandia',
-    pop: 15744
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00456',
-    municipio: 'Pacaraima',
-    pop: 22104
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00472',
-    municipio: 'Rorainópolis',
-    pop: 36747
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00506',
-    municipio: 'São João da Baliza',
-    pop: 9727
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00605',
-    municipio: 'São Luiz',
-    pop: 7777
-  },
-  {
-    uf: 'RR',
-    uf_id: 14,
-    municipio_id: '00704',
-    municipio: 'Uiramutã',
-    pop: 15571
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00107',
-    municipio: 'Abaetetuba',
-    pop: 170999
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00131',
-    municipio: 'Abel Figueiredo',
-    pop: 6302
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00206',
-    municipio: 'Acará',
-    pop: 62701
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00305',
-    municipio: 'Afuá',
-    pop: 40246
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00347',
-    municipio: 'Água Azul do Norte',
-    pop: 17960
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00404',
-    municipio: 'Alenquer',
-    pop: 74836
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00503',
-    municipio: 'Almeirim',
-    pop: 36334
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00602',
-    municipio: 'Altamira',
-    pop: 136982
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00701',
-    municipio: 'Anajás',
-    pop: 30003
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00800',
-    municipio: 'Ananindeua',
-    pop: 507838
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00859',
-    municipio: 'Anapu',
-    pop: 34947
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00909',
-    municipio: 'Augusto Corrêa',
-    pop: 47596
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '00958',
-    municipio: 'Aurora do Pará',
-    pop: 24321
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01006',
-    municipio: 'Aveiro',
-    pop: 19223
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01105',
-    municipio: 'Bagre',
-    pop: 34633
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01204',
-    municipio: 'Baião',
-    pop: 55949
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01253',
-    municipio: 'Bannach',
-    pop: 4252
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01303',
-    municipio: 'Barcarena',
-    pop: 137331
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01402',
-    municipio: 'Belém',
-    pop: 1398531
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01451',
-    municipio: 'Belterra',
-    pop: 18954
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01501',
-    municipio: 'Benevides',
-    pop: 68191
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01576',
-    municipio: 'Bom Jesus do Tocantins',
-    pop: 18958
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01600',
-    municipio: 'Bonito',
-    pop: 12998
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01709',
-    municipio: 'Bragança',
-    pop: 131679
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01725',
-    municipio: 'Brasil Novo',
-    pop: 26606
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01758',
-    municipio: 'Brejo Grande do Araguaia',
-    pop: 6985
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01782',
-    municipio: 'Breu Branco',
-    pop: 47351
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01808',
-    municipio: 'Breves',
-    pop: 115051
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01907',
-    municipio: 'Bujaru',
-    pop: 25112
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '01956',
-    municipio: 'Cachoeira do Piriá',
-    pop: 19578
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02004',
-    municipio: 'Cachoeira do Arari',
-    pop: 25243
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02103',
-    municipio: 'Cametá',
-    pop: 143837
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02152',
-    municipio: 'Canaã dos Carajás',
-    pop: 86629
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02202',
-    municipio: 'Capanema',
-    pop: 74808
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02301',
-    municipio: 'Capitão Poço',
-    pop: 59960
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02400',
-    municipio: 'Castanhal',
-    pop: 207603
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02509',
-    municipio: 'Chaves',
-    pop: 21487
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02608',
-    municipio: 'Colares',
-    pop: 13526
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02707',
-    municipio: 'Conceição do Araguaia',
-    pop: 47099
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02756',
-    municipio: 'Concórdia do Pará',
-    pop: 28287
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02764',
-    municipio: 'Cumaru do Norte',
-    pop: 14937
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02772',
-    municipio: 'Curionópolis',
-    pop: 20859
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02806',
-    municipio: 'Curralinho',
-    pop: 36451
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02855',
-    municipio: 'Curuá',
-    pop: 14834
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02905',
-    municipio: 'Curuçá',
-    pop: 44413
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02939',
-    municipio: 'Dom Eliseu',
-    pop: 62322
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '02954',
-    municipio: 'Eldorado do Carajás',
-    pop: 29425
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03002',
-    municipio: 'Faro',
-    pop: 9125
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03044',
-    municipio: 'Floresta do Araguaia',
-    pop: 18565
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03077',
-    municipio: 'Garrafão do Norte',
-    pop: 25552
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03093',
-    municipio: 'Goianésia do Pará',
-    pop: 27059
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03101',
-    municipio: 'Gurupá',
-    pop: 33922
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03200',
-    municipio: 'Igarapé-Açu',
-    pop: 37855
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03309',
-    municipio: 'Igarapé-Miri',
-    pop: 68955
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03408',
-    municipio: 'Inhangapi',
-    pop: 10754
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03457',
-    municipio: 'Ipixuna do Pará',
-    pop: 30158
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03507',
-    municipio: 'Irituia',
-    pop: 32698
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03606',
-    municipio: 'Itaituba',
-    pop: 133684
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03705',
-    municipio: 'Itupiranga',
-    pop: 52187
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03754',
-    municipio: 'Jacareacanga',
-    pop: 26006
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03804',
-    municipio: 'Jacundá',
-    pop: 38391
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '03903',
-    municipio: 'Juruti',
-    pop: 53952
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04000',
-    municipio: 'Limoeiro do Ajuru',
-    pop: 31778
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04059',
-    municipio: 'Mãe do Rio',
-    pop: 37048
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04109',
-    municipio: 'Magalhães Barata',
-    pop: 8428
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04208',
-    municipio: 'Marabá',
-    pop: 288513
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04307',
-    municipio: 'Maracanã',
-    pop: 27207
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04406',
-    municipio: 'Marapanim',
-    pop: 28105
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04422',
-    municipio: 'Marituba',
-    pop: 118998
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04455',
-    municipio: 'Medicilândia',
-    pop: 28633
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04505',
-    municipio: 'Melgaço',
-    pop: 29846
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04604',
-    municipio: 'Mocajuba',
-    pop: 28821
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04703',
-    municipio: 'Moju',
-    pop: 90795
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04752',
-    municipio: 'Mojuí dos Campos',
-    pop: 25312
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04802',
-    municipio: 'Monte Alegre',
-    pop: 63641
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04901',
-    municipio: 'Muaná',
-    pop: 48955
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04950',
-    municipio: 'Nova Esperança do Piriá',
-    pop: 21259
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '04976',
-    municipio: 'Nova Ipixuna',
-    pop: 14417
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05007',
-    municipio: 'Nova Timboteua',
-    pop: 13204
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05031',
-    municipio: 'Novo Progresso',
-    pop: 36518
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05064',
-    municipio: 'Novo Repartimento',
-    pop: 63754
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05106',
-    municipio: 'Óbidos',
-    pop: 55271
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05205',
-    municipio: 'Oeiras do Pará',
-    pop: 36377
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05304',
-    municipio: 'Oriximiná',
-    pop: 72460
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05403',
-    municipio: 'Ourém',
-    pop: 18675
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05437',
-    municipio: 'Ourilândia do Norte',
-    pop: 34905
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05486',
-    municipio: 'Pacajá',
-    pop: 43594
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05494',
-    municipio: 'Palestina do Pará',
-    pop: 7086
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05502',
-    municipio: 'Paragominas',
-    pop: 112843
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05536',
-    municipio: 'Parauapebas',
-    pop: 298854
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05551',
-    municipio: "Pau D'Arco",
-    pop: 7296
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05601',
-    municipio: 'Peixe-Boi',
-    pop: 8651
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05635',
-    municipio: 'Piçarra',
-    pop: 13341
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05650',
-    municipio: 'Placas',
-    pop: 18772
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05700',
-    municipio: 'Ponta de Pedras',
-    pop: 25767
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05809',
-    municipio: 'Portel',
-    pop: 66898
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '05908',
-    municipio: 'Porto de Moz',
-    pop: 43673
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06005',
-    municipio: 'Prainha',
-    pop: 38318
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06104',
-    municipio: 'Primavera',
-    pop: 11332
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06112',
-    municipio: 'Quatipuru',
-    pop: 11870
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06138',
-    municipio: 'Redenção',
-    pop: 91947
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06161',
-    municipio: 'Rio Maria',
-    pop: 19129
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06187',
-    municipio: 'Rondon do Pará',
-    pop: 56593
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06195',
-    municipio: 'Rurópolis',
-    pop: 37360
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06203',
-    municipio: 'Salinópolis',
-    pop: 48168
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06302',
-    municipio: 'Salvaterra',
-    pop: 25441
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06351',
-    municipio: 'Santa Bárbara do Pará',
-    pop: 22288
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06401',
-    municipio: 'Santa Cruz do Arari',
-    pop: 7654
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06500',
-    municipio: 'Santa Izabel do Pará',
-    pop: 78317
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06559',
-    municipio: 'Santa Luzia do Pará',
-    pop: 21217
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06583',
-    municipio: 'Santa Maria das Barreiras',
-    pop: 17079
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06609',
-    municipio: 'Santa Maria do Pará',
-    pop: 25696
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06708',
-    municipio: 'Santana do Araguaia',
-    pop: 31683
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06807',
-    municipio: 'Santarém',
-    pop: 357311
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '06906',
-    municipio: 'Santarém Novo',
-    pop: 6348
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07003',
-    municipio: 'Santo Antônio do Tauá',
-    pop: 29134
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07102',
-    municipio: 'São Caetano de Odivelas',
-    pop: 17248
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07151',
-    municipio: 'São Domingos do Araguaia',
-    pop: 21638
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07201',
-    municipio: 'São Domingos do Capim',
-    pop: 32449
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07300',
-    municipio: 'São Félix do Xingu',
-    pop: 65957
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07409',
-    municipio: 'São Francisco do Pará',
-    pop: 15418
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07458',
-    municipio: 'São Geraldo do Araguaia',
-    pop: 24978
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07466',
-    municipio: 'São João da Ponta',
-    pop: 4509
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07474',
-    municipio: 'São João de Pirabas',
-    pop: 21447
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07508',
-    municipio: 'São João do Araguaia',
-    pop: 14246
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07607',
-    municipio: 'São Miguel do Guamá',
-    pop: 55798
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07706',
-    municipio: 'São Sebastião da Boa Vista',
-    pop: 27441
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07755',
-    municipio: 'Sapucaia',
-    pop: 6160
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07805',
-    municipio: 'Senador José Porfírio',
-    pop: 24441
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07904',
-    municipio: 'Soure',
-    pop: 25218
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07953',
-    municipio: 'Tailândia',
-    pop: 75526
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07961',
-    municipio: 'Terra Alta',
-    pop: 10815
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '07979',
-    municipio: 'Terra Santa',
-    pop: 19667
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08001',
-    municipio: 'Tomé-Açu',
-    pop: 72326
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08035',
-    municipio: 'Tracuateua',
-    pop: 30373
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08050',
-    municipio: 'Trairão',
-    pop: 15619
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08084',
-    municipio: 'Tucumã',
-    pop: 42480
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08100',
-    municipio: 'Tucuruí',
-    pop: 96238
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08126',
-    municipio: 'Ulianópolis',
-    pop: 39576
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08159',
-    municipio: 'Uruará',
-    pop: 45939
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08209',
-    municipio: 'Vigia',
-    pop: 53806
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08308',
-    municipio: 'Viseu',
-    pop: 61970
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08357',
-    municipio: 'Vitória do Xingu',
-    pop: 16414
-  },
-  {
-    uf: 'PA',
-    uf_id: 15,
-    municipio_id: '08407',
-    municipio: 'Xinguara',
-    pop: 56999
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00055',
-    municipio: 'Serra do Navio',
-    pop: 4986
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00105',
-    municipio: 'Amapá',
-    pop: 8434
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00154',
-    municipio: 'Pedra Branca do Amapari',
-    pop: 13798
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00204',
-    municipio: 'Calçoene',
-    pop: 11391
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00212',
-    municipio: 'Cutias',
-    pop: 4725
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00238',
-    municipio: 'Ferreira Gomes',
-    pop: 7145
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00253',
-    municipio: 'Itaubal',
-    pop: 6043
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00279',
-    municipio: 'Laranjal do Jari',
-    pop: 37969
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00303',
-    municipio: 'Macapá',
-    pop: 487200
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00402',
-    municipio: 'Mazagão',
-    pop: 23575
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00501',
-    municipio: 'Oiapoque',
-    pop: 30481
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00535',
-    municipio: 'Porto Grande',
-    pop: 18988
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00550',
-    municipio: 'Pracuúba',
-    pop: 4042
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00600',
-    municipio: 'Santana',
-    pop: 118353
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00709',
-    municipio: 'Tartarugalzinho',
-    pop: 13785
-  },
-  {
-    uf: 'AP',
-    uf_id: 16,
-    municipio_id: '00808',
-    municipio: 'Vitória do Jari',
-    pop: 11922
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '00251',
-    municipio: 'Abreulândia',
-    pop: 2668
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '00301',
-    municipio: 'Aguiarnópolis',
-    pop: 4537
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '00350',
-    municipio: 'Aliança do Tocantins',
-    pop: 5222
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '00400',
-    municipio: 'Almas',
-    pop: 6542
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '00707',
-    municipio: 'Alvorada',
-    pop: 9094
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '01002',
-    municipio: 'Ananás',
-    pop: 10662
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '01051',
-    municipio: 'Angico',
-    pop: 2918
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '01101',
-    municipio: 'Aparecida do Rio Negro',
-    pop: 5067
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '01309',
-    municipio: 'Aragominas',
-    pop: 5360
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '01903',
-    municipio: 'Araguacema',
-    pop: 6039
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02000',
-    municipio: 'Araguaçu',
-    pop: 8273
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02109',
-    municipio: 'Araguaína',
-    pop: 181493
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02158',
-    municipio: 'Araguanã',
-    pop: 4338
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02208',
-    municipio: 'Araguatins',
-    pop: 33205
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02307',
-    municipio: 'Arapoema',
-    pop: 5553
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02406',
-    municipio: 'Arraias',
-    pop: 10522
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02554',
-    municipio: 'Augustinópolis',
-    pop: 18128
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02703',
-    municipio: 'Aurora do Tocantins',
-    pop: 3420
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '02901',
-    municipio: 'Axixá do Tocantins',
-    pop: 10663
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03008',
-    municipio: 'Babaçulândia',
-    pop: 7779
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03057',
-    municipio: 'Bandeirantes do Tocantins',
-    pop: 3534
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03073',
-    municipio: 'Barra do Ouro',
-    pop: 4641
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03107',
-    municipio: 'Barrolândia',
-    pop: 4915
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03206',
-    municipio: 'Bernardo Sayão',
-    pop: 4316
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03305',
-    municipio: 'Bom Jesus do Tocantins',
-    pop: 4181
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03602',
-    municipio: 'Brasilândia do Tocantins',
-    pop: 2016
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03701',
-    municipio: 'Brejinho de Nazaré',
-    pop: 4796
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03800',
-    municipio: 'Buriti do Tocantins',
-    pop: 10654
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03826',
-    municipio: 'Cachoeirinha',
-    pop: 1991
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03842',
-    municipio: 'Campos Lindos',
-    pop: 8951
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03867',
-    municipio: 'Cariri do Tocantins',
-    pop: 4147
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03883',
-    municipio: 'Carmolândia',
-    pop: 2246
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03891',
-    municipio: 'Carrasco Bonito',
-    pop: 3362
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '03909',
-    municipio: 'Caseara',
-    pop: 5009
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '04105',
-    municipio: 'Centenário',
-    pop: 2135
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '04600',
-    municipio: 'Chapada de Areia',
-    pop: 1563
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '05102',
-    municipio: 'Chapada da Natividade',
-    pop: 3182
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '05508',
-    municipio: 'Colinas do Tocantins',
-    pop: 35957
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '05557',
-    municipio: 'Combinado',
-    pop: 4896
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '05607',
-    municipio: 'Conceição do Tocantins',
-    pop: 3956
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '06001',
-    municipio: 'Couto Magalhães',
-    pop: 5515
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '06100',
-    municipio: 'Cristalândia',
-    pop: 6437
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '06258',
-    municipio: 'Crixás do Tocantins',
-    pop: 1499
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '06506',
-    municipio: 'Darcinópolis',
-    pop: 6054
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07009',
-    municipio: 'Dianópolis',
-    pop: 18031
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07108',
-    municipio: 'Divinópolis do Tocantins',
-    pop: 7297
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07207',
-    municipio: 'Dois Irmãos do Tocantins',
-    pop: 6395
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07306',
-    municipio: 'Dueré',
-    pop: 4321
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07405',
-    municipio: 'Esperantina',
-    pop: 7493
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07553',
-    municipio: 'Fátima',
-    pop: 3520
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07652',
-    municipio: 'Figueirópolis',
-    pop: 5336
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '07702',
-    municipio: 'Filadélfia',
-    pop: 7823
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '08205',
-    municipio: 'Formoso do Araguaia',
-    pop: 19428
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '08254',
-    municipio: 'Tabocão',
-    pop: 3676
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '08304',
-    municipio: 'Goianorte',
-    pop: 4840
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '09005',
-    municipio: 'Goiatins',
-    pop: 12816
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '09302',
-    municipio: 'Guaraí',
-    pop: 25681
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '09500',
-    municipio: 'Gurupi',
-    pop: 89574
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: '09807',
-    municipio: 'Ipueiras',
-    pop: 1627
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 10508,
-    municipio: 'Itacajá',
-    pop: 6969
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 10706,
-    municipio: 'Itaguatins',
-    pop: 5206
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 10904,
-    municipio: 'Itapiratins',
-    pop: 3679
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 11100,
-    municipio: 'Itaporã do Tocantins',
-    pop: 2464
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 11506,
-    municipio: 'Jaú do Tocantins',
-    pop: 3403
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 11803,
-    municipio: 'Juarina',
-    pop: 2305
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 11902,
-    municipio: 'Lagoa da Confusão',
-    pop: 16312
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 11951,
-    municipio: 'Lagoa do Tocantins',
-    pop: 3610
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 12009,
-    municipio: 'Lajeado',
-    pop: 3520
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 12157,
-    municipio: 'Lavandeira',
-    pop: 1673
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 12405,
-    municipio: 'Lizarda',
-    pop: 2991
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 12454,
-    municipio: 'Luzinópolis',
-    pop: 2803
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 12504,
-    municipio: 'Marianópolis do Tocantins',
-    pop: 4772
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 12702,
-    municipio: 'Mateiros',
-    pop: 2888
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 12801,
-    municipio: 'Maurilândia do Tocantins',
-    pop: 3171
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 13205,
-    municipio: 'Miracema do Tocantins',
-    pop: 18787
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 13304,
-    municipio: 'Miranorte',
-    pop: 13056
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 13601,
-    municipio: 'Monte do Carmo',
-    pop: 5722
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 13700,
-    municipio: 'Monte Santo do Tocantins',
-    pop: 2500
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 13809,
-    municipio: 'Palmeiras do Tocantins',
-    pop: 4897
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 13957,
-    municipio: 'Muricilândia',
-    pop: 3485
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 14203,
-    municipio: 'Natividade',
-    pop: 8961
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 14302,
-    municipio: 'Nazaré',
-    pop: 4660
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 14880,
-    municipio: 'Nova Olinda',
-    pop: 10609
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 15002,
-    municipio: 'Nova Rosalândia',
-    pop: 3403
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 15101,
-    municipio: 'Novo Acordo',
-    pop: 4102
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 15150,
-    municipio: 'Novo Alegre',
-    pop: 1841
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 15259,
-    municipio: 'Novo Jardim',
-    pop: 2263
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 15507,
-    municipio: 'Oliveira de Fátima',
-    pop: 1211
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 15705,
-    municipio: 'Palmeirante',
-    pop: 4909
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 15754,
-    municipio: 'Palmeirópolis',
-    pop: 7119
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 16109,
-    municipio: 'Paraíso do Tocantins',
-    pop: 55164
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 16208,
-    municipio: 'Paranã',
-    pop: 10854
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 16307,
-    municipio: "Pau D'Arco",
-    pop: 4085
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 16505,
-    municipio: 'Pedro Afonso',
-    pop: 14731
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 16604,
-    municipio: 'Peixe',
-    pop: 9438
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 16653,
-    municipio: 'Pequizeiro',
-    pop: 5038
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 16703,
-    municipio: 'Colméia',
-    pop: 9158
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 17008,
-    municipio: 'Pindorama do Tocantins',
-    pop: 4596
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 17206,
-    municipio: 'Piraquê',
-    pop: 2265
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 17503,
-    municipio: 'Pium',
-    pop: 7375
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 17800,
-    municipio: 'Ponte Alta do Bom Jesus',
-    pop: 4295
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 17909,
-    municipio: 'Ponte Alta do Tocantins',
-    pop: 7842
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18006,
-    municipio: 'Porto Alegre do Tocantins',
-    pop: 2953
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18204,
-    municipio: 'Porto Nacional',
-    pop: 68555
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18303,
-    municipio: 'Praia Norte',
-    pop: 9460
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18402,
-    municipio: 'Presidente Kennedy',
-    pop: 3051
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18451,
-    municipio: 'Pugmil',
-    pop: 2231
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18501,
-    municipio: 'Recursolândia',
-    pop: 3471
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18550,
-    municipio: 'Riachinho',
-    pop: 4039
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18659,
-    municipio: 'Rio da Conceição',
-    pop: 1822
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18709,
-    municipio: 'Rio dos Bois',
-    pop: 2833
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18758,
-    municipio: 'Rio Sono',
-    pop: 4798
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18808,
-    municipio: 'Sampaio',
-    pop: 4372
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18840,
-    municipio: 'Sandolândia',
-    pop: 3873
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18865,
-    municipio: 'Santa Fé do Araguaia',
-    pop: 7489
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18881,
-    municipio: 'Santa Maria do Tocantins',
-    pop: 2726
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18899,
-    municipio: 'Santa Rita do Tocantins',
-    pop: 2291
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 18907,
-    municipio: 'Santa Rosa do Tocantins',
-    pop: 4789
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 19004,
-    municipio: 'Santa Tereza do Tocantins',
-    pop: 2889
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20002,
-    municipio: 'Santa Terezinha do Tocantins',
-    pop: 2463
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20101,
-    municipio: 'São Bento do Tocantins',
-    pop: 5936
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20150,
-    municipio: 'São Félix do Tocantins',
-    pop: 1875
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20200,
-    municipio: 'São Miguel do Tocantins',
-    pop: 13939
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20259,
-    municipio: 'São Salvador do Tocantins',
-    pop: 2385
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20309,
-    municipio: 'São Sebastião do Tocantins',
-    pop: 4189
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20499,
-    municipio: 'São Valério',
-    pop: 4547
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20655,
-    municipio: 'Silvanópolis',
-    pop: 5252
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20804,
-    municipio: 'Sítio Novo do Tocantins',
-    pop: 11334
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20853,
-    municipio: 'Sucupira',
-    pop: 1599
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20903,
-    municipio: 'Taguatinga',
-    pop: 14247
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20937,
-    municipio: 'Taipas do Tocantins',
-    pop: 2086
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 20978,
-    municipio: 'Talismã',
-    pop: 2509
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 21000,
-    municipio: 'Palmas',
-    pop: 323625
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 21109,
-    municipio: 'Tocantínia',
-    pop: 7751
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 21208,
-    municipio: 'Tocantinópolis',
-    pop: 23203
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 21257,
-    municipio: 'Tupirama',
-    pop: 2003
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 21307,
-    municipio: 'Tupiratins',
-    pop: 1897
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 22081,
-    municipio: 'Wanderlândia',
-    pop: 10751
-  },
-  {
-    uf: 'TO',
-    uf_id: 17,
-    municipio_id: 22107,
-    municipio: 'Xambioá',
-    pop: 10683
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00055',
-    municipio: 'Açailândia',
-    pop: 110506
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00105',
-    municipio: 'Afonso Cunha',
-    pop: 6296
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00154',
-    municipio: 'Água Doce do Maranhão',
-    pop: 12446
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00204',
-    municipio: 'Alcântara',
-    pop: 18774
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00303',
-    municipio: 'Aldeias Altas',
-    pop: 23782
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00402',
-    municipio: 'Altamira do Maranhão',
-    pop: 6565
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00436',
-    municipio: 'Alto Alegre do Maranhão',
-    pop: 24543
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00477',
-    municipio: 'Alto Alegre do Pindaré',
-    pop: 26411
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00501',
-    municipio: 'Alto Parnaíba',
-    pop: 11382
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00550',
-    municipio: 'Amapá do Maranhão',
-    pop: 7364
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00600',
-    municipio: 'Amarante do Maranhão',
-    pop: 38333
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00709',
-    municipio: 'Anajatuba',
-    pop: 26221
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00808',
-    municipio: 'Anapurus',
-    pop: 14111
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00832',
-    municipio: 'Apicum-Açu',
-    pop: 17984
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00873',
-    municipio: 'Araguanã',
-    pop: 11347
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00907',
-    municipio: 'Araioses',
-    pop: 40278
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '00956',
-    municipio: 'Arame',
-    pop: 26191
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01004',
-    municipio: 'Arari',
-    pop: 30521
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01103',
-    municipio: 'Axixá',
-    pop: 12079
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01202',
-    municipio: 'Bacabal',
-    pop: 107620
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01251',
-    municipio: 'Bacabeira',
-    pop: 17414
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01301',
-    municipio: 'Bacuri',
-    pop: 16610
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01350',
-    municipio: 'Bacurituba',
-    pop: 5374
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01400',
-    municipio: 'Balsas',
-    pop: 106094
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01509',
-    municipio: 'Barão de Grajaú',
-    pop: 19458
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01608',
-    municipio: 'Barra do Corda',
-    pop: 87672
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01707',
-    municipio: 'Barreirinhas',
-    pop: 67999
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01731',
-    municipio: 'Belágua',
-    pop: 8716
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01772',
-    municipio: 'Bela Vista do Maranhão',
-    pop: 12073
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01806',
-    municipio: 'Benedito Leite',
-    pop: 5597
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01905',
-    municipio: 'Bequimão',
-    pop: 19983
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01939',
-    municipio: 'Bernardo do Mearim',
-    pop: 5983
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '01970',
-    municipio: 'Boa Vista do Gurupi',
-    pop: 7769
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02002',
-    municipio: 'Bom Jardim',
-    pop: 34035
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02036',
-    municipio: 'Bom Jesus das Selvas',
-    pop: 29588
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02077',
-    municipio: 'Bom Lugar',
-    pop: 12414
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02101',
-    municipio: 'Brejo',
-    pop: 35322
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02150',
-    municipio: 'Brejo de Areia',
-    pop: 9387
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02200',
-    municipio: 'Buriti',
-    pop: 30799
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02309',
-    municipio: 'Buriti Bravo',
-    pop: 22940
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02325',
-    municipio: 'Buriticupu',
-    pop: 56896
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02358',
-    municipio: 'Buritirana',
-    pop: 13157
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02374',
-    municipio: 'Cachoeira Grande',
-    pop: 10004
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02408',
-    municipio: 'Cajapió',
-    pop: 10342
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02507',
-    municipio: 'Cajari',
-    pop: 16711
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02556',
-    municipio: 'Campestre do Maranhão',
-    pop: 12553
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02606',
-    municipio: 'Cândido Mendes',
-    pop: 20413
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02705',
-    municipio: 'Cantanhede',
-    pop: 24976
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02754',
-    municipio: 'Capinzal do Norte',
-    pop: 11664
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02804',
-    municipio: 'Carolina',
-    pop: 24606
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '02903',
-    municipio: 'Carutapera',
-    pop: 24855
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03000',
-    municipio: 'Caxias',
-    pop: 163428
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03109',
-    municipio: 'Cedral',
-    pop: 10444
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03125',
-    municipio: 'Central do Maranhão',
-    pop: 7233
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03158',
-    municipio: 'Centro do Guilherme',
-    pop: 12668
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03174',
-    municipio: 'Centro Novo do Maranhão',
-    pop: 16529
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03208',
-    municipio: 'Chapadinha',
-    pop: 84202
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03257',
-    municipio: 'Cidelândia',
-    pop: 13152
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03307',
-    municipio: 'Codó',
-    pop: 118295
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03406',
-    municipio: 'Coelho Neto',
-    pop: 42918
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03505',
-    municipio: 'Colinas',
-    pop: 41745
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03554',
-    municipio: 'Conceição do Lago-Açu',
-    pop: 15264
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03604',
-    municipio: 'Coroatá',
-    pop: 61351
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03703',
-    municipio: 'Cururupu',
-    pop: 32608
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03752',
-    municipio: 'Davinópolis',
-    pop: 14788
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03802',
-    municipio: 'Dom Pedro',
-    pop: 23579
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '03901',
-    municipio: 'Duque Bacelar',
-    pop: 10448
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04008',
-    municipio: 'Esperantinópolis',
-    pop: 18725
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04057',
-    municipio: 'Estreito',
-    pop: 34353
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04073',
-    municipio: 'Feira Nova do Maranhão',
-    pop: 8236
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04081',
-    municipio: 'Fernando Falcão',
-    pop: 11184
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04099',
-    municipio: 'Formosa da Serra Negra',
-    pop: 18133
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04107',
-    municipio: 'Fortaleza dos Nogueiras',
-    pop: 12951
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04206',
-    municipio: 'Fortuna',
-    pop: 17346
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04305',
-    municipio: 'Godofredo Viana',
-    pop: 10422
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04404',
-    municipio: 'Gonçalves Dias',
-    pop: 17579
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04503',
-    municipio: 'Governador Archer',
-    pop: 10472
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04552',
-    municipio: 'Governador Edison Lobão',
-    pop: 18908
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04602',
-    municipio: 'Governador Eugênio Barros',
-    pop: 14258
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04628',
-    municipio: 'Governador Luiz Rocha',
-    pop: 7219
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04651',
-    municipio: 'Governador Newton Bello',
-    pop: 10981
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04677',
-    municipio: 'Governador Nunes Freire',
-    pop: 23563
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04701',
-    municipio: 'Graça Aranha',
-    pop: 6161
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04800',
-    municipio: 'Grajaú',
-    pop: 76578
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '04909',
-    municipio: 'Guimarães',
-    pop: 10470
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05005',
-    municipio: 'Humberto de Campos',
-    pop: 26546
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05104',
-    municipio: 'Icatu',
-    pop: 25332
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05153',
-    municipio: 'Igarapé do Meio',
-    pop: 14350
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05203',
-    municipio: 'Igarapé Grande',
-    pop: 10463
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05302',
-    municipio: 'Imperatriz',
-    pop: 285146
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05351',
-    municipio: 'Itaipava do Grajaú',
-    pop: 14143
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05401',
-    municipio: 'Itapecuru Mirim',
-    pop: 62269
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05427',
-    municipio: 'Itinga do Maranhão',
-    pop: 22934
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05450',
-    municipio: 'Jatobá',
-    pop: 7610
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05476',
-    municipio: 'Jenipapo dos Vieiras',
-    pop: 17499
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05500',
-    municipio: 'João Lisboa',
-    pop: 25287
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05609',
-    municipio: 'Joselândia',
-    pop: 15235
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05658',
-    municipio: 'Junco do Maranhão',
-    pop: 5275
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05708',
-    municipio: 'Lago da Pedra',
-    pop: 45875
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05807',
-    municipio: 'Lago do Junco',
-    pop: 9700
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05906',
-    municipio: 'Lago Verde',
-    pop: 15077
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05922',
-    municipio: 'Lagoa do Mato',
-    pop: 10809
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05948',
-    municipio: 'Lago dos Rodrigues',
-    pop: 8961
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05963',
-    municipio: 'Lagoa Grande do Maranhão',
-    pop: 11710
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '05989',
-    municipio: 'Lajeado Novo',
-    pop: 7227
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06003',
-    municipio: 'Lima Campos',
-    pop: 11558
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06102',
-    municipio: 'Loreto',
-    pop: 11876
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06201',
-    municipio: 'Luís Domingues',
-    pop: 7351
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06300',
-    municipio: 'Magalhães de Almeida',
-    pop: 14001
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06326',
-    municipio: 'Maracaçumé',
-    pop: 21686
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06359',
-    municipio: 'Marajá do Sena',
-    pop: 7165
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06375',
-    municipio: 'Maranhãozinho',
-    pop: 14086
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06409',
-    municipio: 'Mata Roma',
-    pop: 17537
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06508',
-    municipio: 'Matinha',
-    pop: 22530
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06607',
-    municipio: 'Matões',
-    pop: 33300
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06631',
-    municipio: 'Matões do Norte',
-    pop: 17945
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06672',
-    municipio: 'Milagres do Maranhão',
-    pop: 9048
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06706',
-    municipio: 'Mirador',
-    pop: 21518
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06755',
-    municipio: 'Miranda do Norte',
-    pop: 24377
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06805',
-    municipio: 'Mirinzal',
-    pop: 14297
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '06904',
-    municipio: 'Monção',
-    pop: 28606
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07001',
-    municipio: 'Montes Altos',
-    pop: 9309
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07100',
-    municipio: 'Morros',
-    pop: 18994
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07209',
-    municipio: 'Nina Rodrigues',
-    pop: 14551
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07258',
-    municipio: 'Nova Colinas',
-    pop: 5144
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07308',
-    municipio: 'Nova Iorque',
-    pop: 4412
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07357',
-    municipio: 'Nova Olinda do Maranhão',
-    pop: 14468
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07407',
-    municipio: "Olho d'Água das Cunhãs",
-    pop: 18295
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07456',
-    municipio: 'Olinda Nova do Maranhão',
-    pop: 13909
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07506',
-    municipio: 'Paço do Lumiar',
-    pop: 152306
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07605',
-    municipio: 'Palmeirândia',
-    pop: 21606
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07704',
-    municipio: 'Paraibano',
-    pop: 18619
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07803',
-    municipio: 'Parnarama',
-    pop: 32256
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '07902',
-    municipio: 'Passagem Franca',
-    pop: 17592
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08009',
-    municipio: 'Pastos Bons',
-    pop: 19246
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08058',
-    municipio: 'Paulino Neves',
-    pop: 17523
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08108',
-    municipio: 'Paulo Ramos',
-    pop: 20792
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08207',
-    municipio: 'Pedreiras',
-    pop: 38267
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08256',
-    municipio: 'Pedro do Rosário',
-    pop: 24917
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08306',
-    municipio: 'Penalva',
-    pop: 33534
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08405',
-    municipio: 'Peri Mirim',
-    pop: 11277
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08454',
-    municipio: 'Peritoró',
-    pop: 20910
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08504',
-    municipio: 'Pindaré-Mirim',
-    pop: 32521
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08603',
-    municipio: 'Pinheiro',
-    pop: 87919
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08702',
-    municipio: 'Pio XII',
-    pop: 22369
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08801',
-    municipio: 'Pirapemas',
-    pop: 18120
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '08900',
-    municipio: 'Poção de Pedras',
-    pop: 17444
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09007',
-    municipio: 'Porto Franco',
-    pop: 24517
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09056',
-    municipio: 'Porto Rico do Maranhão',
-    pop: 6091
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09106',
-    municipio: 'Presidente Dutra',
-    pop: 46578
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09205',
-    municipio: 'Presidente Juscelino',
-    pop: 11616
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09239',
-    municipio: 'Presidente Médici',
-    pop: 4748
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09270',
-    municipio: 'Presidente Sarney',
-    pop: 17913
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09304',
-    municipio: 'Presidente Vargas',
-    pop: 10791
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09403',
-    municipio: 'Primeira Cruz',
-    pop: 13922
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09452',
-    municipio: 'Raposa',
-    pop: 32054
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09502',
-    municipio: 'Riachão',
-    pop: 22699
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09551',
-    municipio: 'Ribamar Fiquene',
-    pop: 7597
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09601',
-    municipio: 'Rosário',
-    pop: 39763
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09700',
-    municipio: 'Sambaíba',
-    pop: 5701
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09759',
-    municipio: 'Santa Filomena do Maranhão',
-    pop: 6839
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09809',
-    municipio: 'Santa Helena',
-    pop: 43112
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: '09908',
-    municipio: 'Santa Inês',
-    pop: 88167
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10005,
-    municipio: 'Santa Luzia',
-    pop: 59037
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10039,
-    municipio: 'Santa Luzia do Paruá',
-    pop: 24870
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10104,
-    municipio: 'Santa Quitéria do Maranhão',
-    pop: 24489
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10203,
-    municipio: 'Santa Rita',
-    pop: 38446
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10237,
-    municipio: 'Santana do Maranhão',
-    pop: 10777
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10278,
-    municipio: 'Santo Amaro do Maranhão',
-    pop: 14280
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10302,
-    municipio: 'Santo Antônio dos Lopes',
-    pop: 14623
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10401,
-    municipio: 'São Benedito do Rio Preto',
-    pop: 18793
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10500,
-    municipio: 'São Bento',
-    pop: 48036
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10609,
-    municipio: 'São Bernardo',
-    pop: 27887
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10658,
-    municipio: 'São Domingos do Azeitão',
-    pop: 8213
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10708,
-    municipio: 'São Domingos do Maranhão',
-    pop: 35221
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10807,
-    municipio: 'São Félix de Balsas',
-    pop: 4495
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10856,
-    municipio: 'São Francisco do Brejão',
-    pop: 9222
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 10906,
-    municipio: 'São Francisco do Maranhão',
-    pop: 12353
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11003,
-    municipio: 'São João Batista',
-    pop: 18909
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11029,
-    municipio: 'São João do Carú',
-    pop: 12421
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11052,
-    municipio: 'São João do Paraíso',
-    pop: 10105
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11078,
-    municipio: 'São João do Soter',
-    pop: 17254
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11102,
-    municipio: 'São João dos Patos',
-    pop: 25891
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11201,
-    municipio: 'São José de Ribamar',
-    pop: 257414
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11250,
-    municipio: 'São José dos Basílios',
-    pop: 7102
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11300,
-    municipio: 'São Luís',
-    pop: 1088057
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11409,
-    municipio: 'São Luís Gonzaga do Maranhão',
-    pop: 18153
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11508,
-    municipio: 'São Mateus do Maranhão',
-    pop: 40160
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11532,
-    municipio: 'São Pedro da Água Branca',
-    pop: 14736
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11573,
-    municipio: 'São Pedro dos Crentes',
-    pop: 5965
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11607,
-    municipio: 'São Raimundo das Mangabeiras',
-    pop: 19129
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11631,
-    municipio: 'São Raimundo do Doca Bezerra',
-    pop: 5767
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11672,
-    municipio: 'São Roberto',
-    pop: 4602
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11706,
-    municipio: 'São Vicente Ferrer',
-    pop: 19885
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11722,
-    municipio: 'Satubinha',
-    pop: 8880
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11748,
-    municipio: 'Senador Alexandre Costa',
-    pop: 10445
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11763,
-    municipio: 'Senador La Rocque',
-    pop: 15035
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11789,
-    municipio: 'Serrano do Maranhão',
-    pop: 10461
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11805,
-    municipio: 'Sítio Novo',
-    pop: 17457
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11904,
-    municipio: 'Sucupira do Norte',
-    pop: 10471
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 11953,
-    municipio: 'Sucupira do Riachão',
-    pop: 5088
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12001,
-    municipio: 'Tasso Fragoso',
-    pop: 9106
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12100,
-    municipio: 'Timbiras',
-    pop: 27344
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12209,
-    municipio: 'Timon',
-    pop: 182241
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12233,
-    municipio: 'Trizidela do Vale',
-    pop: 23052
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12274,
-    municipio: 'Tufilândia',
-    pop: 5633
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12308,
-    municipio: 'Tuntum',
-    pop: 37401
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12407,
-    municipio: 'Turiaçu',
-    pop: 38905
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12456,
-    municipio: 'Turilândia',
-    pop: 33032
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12506,
-    municipio: 'Tutóia',
-    pop: 55041
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12605,
-    municipio: 'Urbano Santos',
-    pop: 34060
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12704,
-    municipio: 'Vargem Grande',
-    pop: 44540
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12803,
-    municipio: 'Viana',
-    pop: 53115
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12852,
-    municipio: 'Vila Nova dos Martírios',
-    pop: 10575
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 12902,
-    municipio: 'Vitória do Mearim',
-    pop: 31851
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 13009,
-    municipio: 'Vitorino Freire',
-    pop: 31906
-  },
-  {
-    uf: 'MA',
-    uf_id: 21,
-    municipio_id: 14007,
-    municipio: 'Zé Doca',
-    pop: 41943
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00053',
-    municipio: 'Acauã',
-    pop: 6515
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00103',
-    municipio: 'Agricolândia',
-    pop: 5023
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00202',
-    municipio: 'Água Branca',
-    pop: 18033
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00251',
-    municipio: 'Alagoinha do Piauí',
-    pop: 6901
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00277',
-    municipio: 'Alegrete do Piauí',
-    pop: 4713
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00301',
-    municipio: 'Alto Longá',
-    pop: 13734
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00400',
-    municipio: 'Altos',
-    pop: 49637
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00459',
-    municipio: 'Alvorada do Gurguéia',
-    pop: 5459
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00509',
-    municipio: 'Amarante',
-    pop: 17577
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00608',
-    municipio: 'Angical do Piauí',
-    pop: 6982
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00707',
-    municipio: 'Anísio de Abreu',
-    pop: 9631
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00806',
-    municipio: 'Antônio Almeida',
-    pop: 3228
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00905',
-    municipio: 'Aroazes',
-    pop: 5433
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '00954',
-    municipio: 'Aroeiras do Itaim',
-    pop: 2766
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01002',
-    municipio: 'Arraial',
-    pop: 4593
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01051',
-    municipio: 'Assunção do Piauí',
-    pop: 7597
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01101',
-    municipio: 'Avelino Lopes',
-    pop: 11106
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01150',
-    municipio: 'Baixa Grande do Ribeiro',
-    pop: 13838
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01176',
-    municipio: "Barra D'Alcântara",
-    pop: 4091
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01200',
-    municipio: 'Barras',
-    pop: 49533
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01309',
-    municipio: 'Barreiras do Piauí',
-    pop: 3334
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01408',
-    municipio: 'Barro Duro',
-    pop: 6744
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01507',
-    municipio: 'Batalha',
-    pop: 27123
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01556',
-    municipio: 'Bela Vista do Piauí',
-    pop: 4208
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01572',
-    municipio: 'Belém do Piauí',
-    pop: 3508
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01606',
-    municipio: 'Beneditinos',
-    pop: 10104
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01705',
-    municipio: 'Bertolínia',
-    pop: 5701
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01739',
-    municipio: 'Betânia do Piauí',
-    pop: 6368
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01770',
-    municipio: 'Boa Hora',
-    pop: 7108
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01804',
-    municipio: 'Bocaina',
-    pop: 4131
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01903',
-    municipio: 'Bom Jesus',
-    pop: 30321
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01919',
-    municipio: 'Bom Princípio do Piauí',
-    pop: 5786
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01929',
-    municipio: 'Bonfim do Piauí',
-    pop: 6089
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01945',
-    municipio: 'Boqueirão do Piauí',
-    pop: 6728
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01960',
-    municipio: 'Brasileira',
-    pop: 8658
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '01988',
-    municipio: 'Brejo do Piauí',
-    pop: 3969
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02000',
-    municipio: 'Buriti dos Lopes',
-    pop: 20096
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02026',
-    municipio: 'Buriti dos Montes',
-    pop: 7538
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02059',
-    municipio: 'Cabeceiras do Piauí',
-    pop: 10449
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02075',
-    municipio: 'Cajazeiras do Piauí',
-    pop: 3146
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02083',
-    municipio: 'Cajueiro da Praia',
-    pop: 8203
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02091',
-    municipio: 'Caldeirão Grande do Piauí',
-    pop: 5605
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02109',
-    municipio: 'Campinas do Piauí',
-    pop: 4988
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02117',
-    municipio: 'Campo Alegre do Fidalgo',
-    pop: 4701
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02133',
-    municipio: 'Campo Grande do Piauí',
-    pop: 6188
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02174',
-    municipio: 'Campo Largo do Piauí',
-    pop: 7636
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02208',
-    municipio: 'Campo Maior',
-    pop: 47074
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02251',
-    municipio: 'Canavieira',
-    pop: 3429
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02307',
-    municipio: 'Canto do Buriti',
-    pop: 19669
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02406',
-    municipio: 'Capitão de Campos',
-    pop: 11347
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02455',
-    municipio: 'Capitão Gervásio Oliveira',
-    pop: 4065
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02505',
-    municipio: 'Caracol',
-    pop: 10538
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02539',
-    municipio: 'Caraúbas do Piauí',
-    pop: 5755
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02554',
-    municipio: 'Caridade do Piauí',
-    pop: 5162
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02604',
-    municipio: 'Castelo do Piauí',
-    pop: 19663
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02653',
-    municipio: 'Caxingó',
-    pop: 5657
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02703',
-    municipio: 'Cocal',
-    pop: 29209
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02711',
-    municipio: 'Cocal de Telha',
-    pop: 5034
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02729',
-    municipio: 'Cocal dos Alves',
-    pop: 6569
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02737',
-    municipio: 'Coivaras',
-    pop: 4233
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02752',
-    municipio: 'Colônia do Gurguéia',
-    pop: 6287
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02778',
-    municipio: 'Colônia do Piauí',
-    pop: 7088
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02802',
-    municipio: 'Conceição do Canindé',
-    pop: 5063
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02851',
-    municipio: 'Coronel José Dias',
-    pop: 4305
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '02901',
-    municipio: 'Corrente',
-    pop: 28275
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03008',
-    municipio: 'Cristalândia do Piauí',
-    pop: 7454
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03107',
-    municipio: 'Cristino Castro',
-    pop: 10772
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03206',
-    municipio: 'Curimatá',
-    pop: 11552
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03230',
-    municipio: 'Currais',
-    pop: 4968
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03255',
-    municipio: 'Curralinhos',
-    pop: 4527
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03271',
-    municipio: 'Curral Novo do Piauí',
-    pop: 5185
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03305',
-    municipio: 'Demerval Lobão',
-    pop: 16998
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03354',
-    municipio: 'Dirceu Arcoverde',
-    pop: 7238
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03404',
-    municipio: 'Dom Expedito Lopes',
-    pop: 6421
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03420',
-    municipio: 'Domingos Mourão',
-    pop: 4138
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03453',
-    municipio: 'Dom Inocêncio',
-    pop: 9335
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03503',
-    municipio: 'Elesbão Veloso',
-    pop: 13786
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03602',
-    municipio: 'Eliseu Martins',
-    pop: 4435
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03701',
-    municipio: 'Esperantina',
-    pop: 42510
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03750',
-    municipio: 'Fartura do Piauí',
-    pop: 5414
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03800',
-    municipio: 'Flores do Piauí',
-    pop: 4508
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03859',
-    municipio: 'Floresta do Piauí',
-    pop: 2364
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '03909',
-    municipio: 'Floriano',
-    pop: 64150
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04006',
-    municipio: 'Francinópolis',
-    pop: 4517
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04105',
-    municipio: 'Francisco Ayres',
-    pop: 4494
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04154',
-    municipio: 'Francisco Macedo',
-    pop: 2986
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04204',
-    municipio: 'Francisco Santos',
-    pop: 8366
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04303',
-    municipio: 'Fronteiras',
-    pop: 10382
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04352',
-    municipio: 'Geminiano',
-    pop: 5587
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04402',
-    municipio: 'Gilbués',
-    pop: 11166
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04501',
-    municipio: 'Guadalupe',
-    pop: 10478
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04550',
-    municipio: 'Guaribas',
-    pop: 4350
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04600',
-    municipio: 'Hugo Napoleão',
-    pop: 3562
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04659',
-    municipio: 'Ilha Grande',
-    pop: 9501
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04709',
-    municipio: 'Inhuma',
-    pop: 15259
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04808',
-    municipio: 'Ipiranga do Piauí',
-    pop: 9620
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '04907',
-    municipio: 'Isaías Coelho',
-    pop: 7886
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05003',
-    municipio: 'Itainópolis',
-    pop: 10980
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05102',
-    municipio: 'Itaueira',
-    pop: 10493
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05151',
-    municipio: 'Jacobina do Piauí',
-    pop: 5715
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05201',
-    municipio: 'Jaicós',
-    pop: 17811
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05250',
-    municipio: 'Jardim do Mulato',
-    pop: 4251
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05276',
-    municipio: 'Jatobá do Piauí',
-    pop: 4568
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05300',
-    municipio: 'Jerumenha',
-    pop: 4600
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05359',
-    municipio: 'João Costa',
-    pop: 3031
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05409',
-    municipio: 'Joaquim Pires',
-    pop: 14175
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05458',
-    municipio: 'Joca Marques',
-    pop: 5535
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05508',
-    municipio: 'José de Freitas',
-    pop: 44391
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05516',
-    municipio: 'Juazeiro do Piauí',
-    pop: 5311
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05524',
-    municipio: 'Júlio Borges',
-    pop: 5499
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05532',
-    municipio: 'Jurema',
-    pop: 4505
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05540',
-    municipio: 'Lagoinha do Piauí',
-    pop: 3029
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05557',
-    municipio: 'Lagoa Alegre',
-    pop: 8449
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05565',
-    municipio: 'Lagoa do Barro do Piauí',
-    pop: 5146
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05573',
-    municipio: 'Lagoa de São Francisco',
-    pop: 6449
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05581',
-    municipio: 'Lagoa do Piauí',
-    pop: 5009
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05599',
-    municipio: 'Lagoa do Sítio',
-    pop: 4575
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05607',
-    municipio: 'Landri Sales',
-    pop: 5311
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05706',
-    municipio: 'Luís Correia',
-    pop: 31775
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05805',
-    municipio: 'Luzilândia',
-    pop: 26204
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05854',
-    municipio: 'Madeiro',
-    pop: 8218
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05904',
-    municipio: 'Manoel Emídio',
-    pop: 5314
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '05953',
-    municipio: 'Marcolândia',
-    pop: 8783
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06001',
-    municipio: 'Marcos Parente',
-    pop: 4848
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06050',
-    municipio: 'Massapê do Piauí',
-    pop: 5215
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06100',
-    municipio: 'Matias Olímpio',
-    pop: 10875
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06209',
-    municipio: 'Miguel Alves',
-    pop: 33071
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06308',
-    municipio: 'Miguel Leão',
-    pop: 1352
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06357',
-    municipio: 'Milton Brandão',
-    pop: 6678
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06407',
-    municipio: 'Monsenhor Gil',
-    pop: 10455
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06506',
-    municipio: 'Monsenhor Hipólito',
-    pop: 7751
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06605',
-    municipio: 'Monte Alegre do Piauí',
-    pop: 10910
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06654',
-    municipio: 'Morro Cabeça no Tempo',
-    pop: 4458
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06670',
-    municipio: 'Morro do Chapéu do Piauí',
-    pop: 6547
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06696',
-    municipio: 'Murici dos Portelas',
-    pop: 10139
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06704',
-    municipio: 'Nazaré do Piauí',
-    pop: 6729
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06720',
-    municipio: 'Nazária',
-    pop: 10706
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06753',
-    municipio: 'Nossa Senhora de Nazaré',
-    pop: 5406
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06803',
-    municipio: 'Nossa Senhora dos Remédios',
-    pop: 8732
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06902',
-    municipio: 'Novo Oriente do Piauí',
-    pop: 6178
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '06951',
-    municipio: 'Novo Santo Antônio',
-    pop: 2886
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07009',
-    municipio: 'Oeiras',
-    pop: 39545
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07108',
-    municipio: "Olho D'Água do Piauí",
-    pop: 2725
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07207',
-    municipio: 'Padre Marcos',
-    pop: 6481
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07306',
-    municipio: 'Paes Landim',
-    pop: 4174
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07355',
-    municipio: 'Pajeú do Piauí',
-    pop: 3041
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07405',
-    municipio: 'Palmeira do Piauí',
-    pop: 5048
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07504',
-    municipio: 'Palmeirais',
-    pop: 13480
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07553',
-    municipio: 'Paquetá',
-    pop: 3878
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07603',
-    municipio: 'Parnaguá',
-    pop: 10289
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07702',
-    municipio: 'Parnaíba',
-    pop: 169552
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07751',
-    municipio: 'Passagem Franca do Piauí',
-    pop: 4220
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07777',
-    municipio: 'Patos do Piauí',
-    pop: 5461
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07793',
-    municipio: "Pau D'Arco do Piauí",
-    pop: 3972
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07801',
-    municipio: 'Paulistana',
-    pop: 21601
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07850',
-    municipio: 'Pavussu',
-    pop: 3698
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07900',
-    municipio: 'Pedro II',
-    pop: 39039
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07934',
-    municipio: 'Pedro Laurentino',
-    pop: 2514
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '07959',
-    municipio: 'Nova Santa Rita',
-    pop: 4147
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08007',
-    municipio: 'Picos',
-    pop: 86228
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08106',
-    municipio: 'Pimenteiras',
-    pop: 11528
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08205',
-    municipio: 'Pio IX',
-    pop: 17947
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08304',
-    municipio: 'Piracuruca',
-    pop: 29849
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08403',
-    municipio: 'Piripiri',
-    pop: 67676
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08502',
-    municipio: 'Porto',
-    pop: 12312
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08551',
-    municipio: 'Porto Alegre do Piauí',
-    pop: 2391
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08601',
-    municipio: 'Prata do Piauí',
-    pop: 3098
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08650',
-    municipio: 'Queimada Nova',
-    pop: 8936
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08700',
-    municipio: 'Redenção do Gurguéia',
-    pop: 8563
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08809',
-    municipio: 'Regeneração',
-    pop: 17418
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08858',
-    municipio: 'Riacho Frio',
-    pop: 4241
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08874',
-    municipio: 'Ribeira do Piauí',
-    pop: 4114
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '08908',
-    municipio: 'Ribeiro Gonçalves',
-    pop: 6215
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09005',
-    municipio: 'Rio Grande do Piauí',
-    pop: 5868
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09104',
-    municipio: 'Santa Cruz do Piauí',
-    pop: 5928
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09153',
-    municipio: 'Santa Cruz dos Milagres',
-    pop: 3466
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09203',
-    municipio: 'Santa Filomena',
-    pop: 6209
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09302',
-    municipio: 'Santa Luz',
-    pop: 5425
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09351',
-    municipio: 'Santana do Piauí',
-    pop: 4174
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09377',
-    municipio: 'Santa Rosa do Piauí',
-    pop: 4690
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09401',
-    municipio: 'Santo Antônio de Lisboa',
-    pop: 5938
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09450',
-    municipio: 'Santo Antônio dos Milagres',
-    pop: 2189
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09500',
-    municipio: 'Santo Inácio do Piauí',
-    pop: 3719
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09559',
-    municipio: 'São Braz do Piauí',
-    pop: 4451
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09609',
-    municipio: 'São Félix do Piauí',
-    pop: 2885
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09658',
-    municipio: 'São Francisco de Assis do Piauí',
-    pop: 5703
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09708',
-    municipio: 'São Francisco do Piauí',
-    pop: 5404
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09757',
-    municipio: 'São Gonçalo do Gurguéia',
-    pop: 3019
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09807',
-    municipio: 'São Gonçalo do Piauí',
-    pop: 4944
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09856',
-    municipio: 'São João da Canabrava',
-    pop: 4306
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09872',
-    municipio: 'São João da Fronteira',
-    pop: 5615
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09906',
-    municipio: 'São João da Serra',
-    pop: 6233
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09955',
-    municipio: 'São João da Varjota',
-    pop: 4443
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: '09971',
-    municipio: 'São João do Arraial',
-    pop: 8443
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10003,
-    municipio: 'São João do Piauí',
-    pop: 22036
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10052,
-    municipio: 'São José do Divino',
-    pop: 4906
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10102,
-    municipio: 'São José do Peixe',
-    pop: 3320
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10201,
-    municipio: 'São José do Piauí',
-    pop: 6732
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10300,
-    municipio: 'São Julião',
-    pop: 6135
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10359,
-    municipio: 'São Lourenço do Piauí',
-    pop: 4497
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10375,
-    municipio: 'São Luis do Piauí',
-    pop: 2329
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10383,
-    municipio: 'São Miguel da Baixa Grande',
-    pop: 2304
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10391,
-    municipio: 'São Miguel do Fidalgo',
-    pop: 2870
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10409,
-    municipio: 'São Miguel do Tapuio',
-    pop: 17902
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10508,
-    municipio: 'São Pedro do Piauí',
-    pop: 14046
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10607,
-    municipio: 'São Raimundo Nonato',
-    pop: 40784
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10623,
-    municipio: 'Sebastião Barros',
-    pop: 3228
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10631,
-    municipio: 'Sebastião Leal',
-    pop: 4572
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10656,
-    municipio: 'Sigefredo Pacheco',
-    pop: 9631
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10706,
-    municipio: 'Simões',
-    pop: 14650
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10805,
-    municipio: 'Simplício Mendes',
-    pop: 14342
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10904,
-    municipio: 'Socorro do Piauí',
-    pop: 4184
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10938,
-    municipio: 'Sussuapara',
-    pop: 6345
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10953,
-    municipio: 'Tamboril do Piauí',
-    pop: 3029
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 10979,
-    municipio: 'Tanque do Piauí',
-    pop: 2330
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11001,
-    municipio: 'Teresina',
-    pop: 902644
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11100,
-    municipio: 'União',
-    pop: 47707
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11209,
-    municipio: 'Uruçuí',
-    pop: 26501
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11308,
-    municipio: 'Valença do Piauí',
-    pop: 22920
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11357,
-    municipio: 'Várzea Branca',
-    pop: 5173
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11407,
-    municipio: 'Várzea Grande',
-    pop: 4515
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11506,
-    municipio: 'Vera Mendes',
-    pop: 3271
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11605,
-    municipio: 'Vila Nova do Piauí',
-    pop: 2979
-  },
-  {
-    uf: 'PI',
-    uf_id: 22,
-    municipio_id: 11704,
-    municipio: 'Wall Ferraz',
-    pop: 4117
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00101',
-    municipio: 'Abaiara',
-    pop: 10282
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00150',
-    municipio: 'Acarape',
-    pop: 14306
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00200',
-    municipio: 'Acaraú',
-    pop: 68758
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00309',
-    municipio: 'Acopiara',
-    pop: 46215
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00408',
-    municipio: 'Aiuaba',
-    pop: 14220
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00507',
-    municipio: 'Alcântaras',
-    pop: 11754
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00606',
-    municipio: 'Altaneira',
-    pop: 6970
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00705',
-    municipio: 'Alto Santo',
-    pop: 14418
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00754',
-    municipio: 'Amontada',
-    pop: 44342
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00804',
-    municipio: 'Antonina do Norte',
-    pop: 7484
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '00903',
-    municipio: 'Apuiarés',
-    pop: 13219
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01000',
-    municipio: 'Aquiraz',
-    pop: 84737
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01109',
-    municipio: 'Aracati',
-    pop: 78752
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01208',
-    municipio: 'Aracoiaba',
-    pop: 26696
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01257',
-    municipio: 'Ararendá',
-    pop: 11485
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01307',
-    municipio: 'Araripe',
-    pop: 20223
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01406',
-    municipio: 'Aratuba',
-    pop: 11459
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01505',
-    municipio: 'Arneiroz',
-    pop: 7619
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01604',
-    municipio: 'Assaré',
-    pop: 22212
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01703',
-    municipio: 'Aurora',
-    pop: 24267
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01802',
-    municipio: 'Baixio',
-    pop: 5832
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01851',
-    municipio: 'Banabuiú',
-    pop: 17654
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01901',
-    municipio: 'Barbalha',
-    pop: 80217
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '01950',
-    municipio: 'Barreira',
-    pop: 23351
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02008',
-    municipio: 'Barro',
-    pop: 19669
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02057',
-    municipio: 'Barroquinha',
-    pop: 14977
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02107',
-    municipio: 'Baturité',
-    pop: 36978
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02206',
-    municipio: 'Beberibe',
-    pop: 55666
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02305',
-    municipio: 'Bela Cruz',
-    pop: 34441
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02404',
-    municipio: 'Boa Viagem',
-    pop: 52169
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02503',
-    municipio: 'Brejo Santo',
-    pop: 53778
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02602',
-    municipio: 'Camocim',
-    pop: 65031
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02701',
-    municipio: 'Campos Sales',
-    pop: 26082
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02800',
-    municipio: 'Canindé',
-    pop: 77207
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '02909',
-    municipio: 'Capistrano',
-    pop: 17760
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03006',
-    municipio: 'Caridade',
-    pop: 16419
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03105',
-    municipio: 'Cariré',
-    pop: 18075
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03204',
-    municipio: 'Caririaçu',
-    pop: 27482
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03303',
-    municipio: 'Cariús',
-    pop: 17333
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03402',
-    municipio: 'Carnaubal',
-    pop: 17758
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03501',
-    municipio: 'Cascavel',
-    pop: 76365
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03600',
-    municipio: 'Catarina',
-    pop: 9577
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03659',
-    municipio: 'Catunda',
-    pop: 10817
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03709',
-    municipio: 'Caucaia',
-    pop: 375730
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03808',
-    municipio: 'Cedro',
-    pop: 22678
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03907',
-    municipio: 'Chaval',
-    pop: 12805
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03931',
-    municipio: 'Choró',
-    pop: 12380
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '03956',
-    municipio: 'Chorozinho',
-    pop: 20763
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04004',
-    municipio: 'Coreaú',
-    pop: 21438
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04103',
-    municipio: 'Crateús',
-    pop: 79809
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04202',
-    municipio: 'Crato',
-    pop: 138232
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04236',
-    municipio: 'Croatá',
-    pop: 18007
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04251',
-    municipio: 'Cruz',
-    pop: 31847
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04269',
-    municipio: 'Deputado Irapuan Pinheiro',
-    pop: 9172
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04277',
-    municipio: 'Ereré',
-    pop: 6393
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04285',
-    municipio: 'Eusébio',
-    pop: 80304
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04301',
-    municipio: 'Farias Brito',
-    pop: 18557
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04350',
-    municipio: 'Forquilha',
-    pop: 25127
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04400',
-    municipio: 'Fortaleza',
-    pop: 2574412
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04459',
-    municipio: 'Fortim',
-    pop: 18052
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04509',
-    municipio: 'Frecheirinha',
-    pop: 16362
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04608',
-    municipio: 'General Sampaio',
-    pop: 6924
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04657',
-    municipio: 'Graça',
-    pop: 14174
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04707',
-    municipio: 'Granja',
-    pop: 55633
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04806',
-    municipio: 'Granjeiro',
-    pop: 4960
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04905',
-    municipio: 'Groaíras',
-    pop: 11313
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '04954',
-    municipio: 'Guaiúba',
-    pop: 25085
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05001',
-    municipio: 'Guaraciaba do Norte',
-    pop: 44294
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05100',
-    municipio: 'Guaramiranga',
-    pop: 5819
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05209',
-    municipio: 'Hidrolândia',
-    pop: 18225
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05233',
-    municipio: 'Horizonte',
-    pop: 79934
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05266',
-    municipio: 'Ibaretama',
-    pop: 12191
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05308',
-    municipio: 'Ibiapina',
-    pop: 24649
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05332',
-    municipio: 'Ibicuitinga',
-    pop: 11979
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05357',
-    municipio: 'Icapuí',
-    pop: 22367
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05407',
-    municipio: 'Icó',
-    pop: 64802
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05506',
-    municipio: 'Iguatu',
-    pop: 102251
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05605',
-    municipio: 'Independência',
-    pop: 24530
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05654',
-    municipio: 'Ipaporanga',
-    pop: 11937
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05704',
-    municipio: 'Ipaumirim',
-    pop: 12441
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05803',
-    municipio: 'Ipu',
-    pop: 42968
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '05902',
-    municipio: 'Ipueiras',
-    pop: 38285
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06009',
-    municipio: 'Iracema',
-    pop: 14411
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06108',
-    municipio: 'Irauçuba',
-    pop: 24751
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06207',
-    municipio: 'Itaiçaba',
-    pop: 7779
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06256',
-    municipio: 'Itaitinga',
-    pop: 70679
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06306',
-    municipio: 'Itapajé',
-    pop: 49086
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06405',
-    municipio: 'Itapipoca',
-    pop: 137892
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06504',
-    municipio: 'Itapiúna',
-    pop: 18228
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06553',
-    municipio: 'Itarema',
-    pop: 45465
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06603',
-    municipio: 'Itatira',
-    pop: 21087
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06702',
-    municipio: 'Jaguaretama',
-    pop: 17625
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06801',
-    municipio: 'Jaguaribara',
-    pop: 10656
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '06900',
-    municipio: 'Jaguaribe',
-    pop: 35124
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07007',
-    municipio: 'Jaguaruana',
-    pop: 33070
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07106',
-    municipio: 'Jardim',
-    pop: 28707
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07205',
-    municipio: 'Jati',
-    pop: 8100
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07254',
-    municipio: 'Jijoca de Jericoacoara',
-    pop: 27662
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07304',
-    municipio: 'Juazeiro do Norte',
-    pop: 303004
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07403',
-    municipio: 'Jucás',
-    pop: 24591
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07502',
-    municipio: 'Lavras da Mangabeira',
-    pop: 32123
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07601',
-    municipio: 'Limoeiro do Norte',
-    pop: 62285
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07635',
-    municipio: 'Madalena',
-    pop: 17264
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07650',
-    municipio: 'Maracanaú',
-    pop: 249684
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07700',
-    municipio: 'Maranguape',
-    pop: 108937
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07809',
-    municipio: 'Marco',
-    pop: 27064
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '07908',
-    municipio: 'Martinópole',
-    pop: 11232
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08005',
-    municipio: 'Massapê',
-    pop: 39633
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08104',
-    municipio: 'Mauriti',
-    pop: 47406
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08203',
-    municipio: 'Meruoca',
-    pop: 15749
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08302',
-    municipio: 'Milagres',
-    pop: 26860
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08351',
-    municipio: 'Milhã',
-    pop: 14635
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08377',
-    municipio: 'Miraíma',
-    pop: 14736
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08401',
-    municipio: 'Missão Velha',
-    pop: 38767
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08500',
-    municipio: 'Mombaça',
-    pop: 38649
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08609',
-    municipio: 'Monsenhor Tabosa',
-    pop: 17664
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08708',
-    municipio: 'Morada Nova',
-    pop: 65323
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08807',
-    municipio: 'Moraújo',
-    pop: 8516
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '08906',
-    municipio: 'Morrinhos',
-    pop: 23608
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09003',
-    municipio: 'Mucambo',
-    pop: 14009
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09102',
-    municipio: 'Mulungu',
-    pop: 10993
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09201',
-    municipio: 'Nova Olinda',
-    pop: 15960
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09300',
-    municipio: 'Nova Russas',
-    pop: 32014
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09409',
-    municipio: 'Novo Oriente',
-    pop: 29043
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09458',
-    municipio: 'Ocara',
-    pop: 25218
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09508',
-    municipio: 'Orós',
-    pop: 20019
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09607',
-    municipio: 'Pacajus',
-    pop: 74825
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09706',
-    municipio: 'Pacatuba',
-    pop: 85873
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09805',
-    municipio: 'Pacoti',
-    pop: 11442
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: '09904',
-    municipio: 'Pacujá',
-    pop: 6345
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10001,
-    municipio: 'Palhano',
-    pop: 9671
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10100,
-    municipio: 'Palmácia',
-    pop: 10339
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10209,
-    municipio: 'Paracuru',
-    pop: 41447
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10258,
-    municipio: 'Paraipaba',
-    pop: 33896
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10308,
-    municipio: 'Parambu',
-    pop: 32816
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10407,
-    municipio: 'Paramoti',
-    pop: 10528
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10506,
-    municipio: 'Pedra Branca',
-    pop: 42257
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10605,
-    municipio: 'Penaforte',
-    pop: 9308
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10704,
-    municipio: 'Pentecoste',
-    pop: 39715
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10803,
-    municipio: 'Pereiro',
-    pop: 15869
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10852,
-    municipio: 'Pindoretama',
-    pop: 24607
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10902,
-    municipio: 'Piquet Carneiro',
-    pop: 17202
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 10951,
-    municipio: 'Pires Ferreira',
-    pop: 10952
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11009,
-    municipio: 'Poranga',
-    pop: 12423
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11108,
-    municipio: 'Porteiras',
-    pop: 17745
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11207,
-    municipio: 'Potengi',
-    pop: 8926
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11231,
-    municipio: 'Potiretama',
-    pop: 6129
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11264,
-    municipio: 'Quiterianópolis',
-    pop: 20506
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11306,
-    municipio: 'Quixadá',
-    pop: 88483
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11355,
-    municipio: 'Quixelô',
-    pop: 16992
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11405,
-    municipio: 'Quixeramobim',
-    pop: 85797
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11504,
-    municipio: 'Quixeré',
-    pop: 21607
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11603,
-    municipio: 'Redenção',
-    pop: 28359
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11702,
-    municipio: 'Reriutaba',
-    pop: 19059
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11801,
-    municipio: 'Russas',
-    pop: 74582
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11900,
-    municipio: 'Saboeiro',
-    pop: 14036
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 11959,
-    municipio: 'Salitre',
-    pop: 17220
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12007,
-    municipio: 'Santana do Acaraú',
-    pop: 32043
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12106,
-    municipio: 'Santana do Cariri',
-    pop: 17388
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12205,
-    municipio: 'Santa Quitéria',
-    pop: 41647
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12304,
-    municipio: 'São Benedito',
-    pop: 49829
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12403,
-    municipio: 'São Gonçalo do Amarante',
-    pop: 57499
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12502,
-    municipio: 'São João do Jaguaribe',
-    pop: 5792
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12601,
-    municipio: 'São Luís do Curu',
-    pop: 10962
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12700,
-    municipio: 'Senador Pompeu',
-    pop: 25143
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12809,
-    municipio: 'Senador Sá',
-    pop: 7519
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 12908,
-    municipio: 'Sobral',
-    pop: 215286
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13005,
-    municipio: 'Solonópole',
-    pop: 18736
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13104,
-    municipio: 'Tabuleiro do Norte',
-    pop: 32044
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13203,
-    municipio: 'Tamboril',
-    pop: 25331
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13252,
-    municipio: 'Tarrafas',
-    pop: 7626
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13302,
-    municipio: 'Tauá',
-    pop: 64255
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13351,
-    municipio: 'Tejuçuoca',
-    pop: 17626
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13401,
-    municipio: 'Tianguá',
-    pop: 86137
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13500,
-    municipio: 'Trairi',
-    pop: 61516
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13559,
-    municipio: 'Tururu',
-    pop: 15457
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13609,
-    municipio: 'Ubajara',
-    pop: 34312
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13708,
-    municipio: 'Umari',
-    pop: 6993
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13757,
-    municipio: 'Umirim',
-    pop: 17804
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13807,
-    municipio: 'Uruburetama',
-    pop: 21279
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13906,
-    municipio: 'Uruoca',
-    pop: 14243
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 13955,
-    municipio: 'Varjota',
-    pop: 18660
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 14003,
-    municipio: 'Várzea Alegre',
-    pop: 40771
-  },
-  {
-    uf: 'CE',
-    uf_id: 23,
-    municipio_id: 14102,
-    municipio: 'Viçosa do Ceará',
-    pop: 62609
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00109',
-    municipio: 'Acari',
-    pop: 10865
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00208',
-    municipio: 'Açu',
-    pop: 58906
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00307',
-    municipio: 'Afonso Bezerra',
-    pop: 11149
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00406',
-    municipio: 'Água Nova',
-    pop: 3028
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00505',
-    municipio: 'Alexandria',
-    pop: 14042
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00604',
-    municipio: 'Almino Afonso',
-    pop: 4806
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00703',
-    municipio: 'Alto do Rodrigues',
-    pop: 12857
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00802',
-    municipio: 'Angicos',
-    pop: 11973
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '00901',
-    municipio: 'Antônio Martins',
-    pop: 6738
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01008',
-    municipio: 'Apodi',
-    pop: 37390
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01107',
-    municipio: 'Areia Branca',
-    pop: 24643
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01206',
-    municipio: 'Arês',
-    pop: 13657
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01305',
-    municipio: 'Campo Grande',
-    pop: 10045
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01404',
-    municipio: 'Baía Formosa',
-    pop: 9098
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01453',
-    municipio: 'Baraúna',
-    pop: 28268
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01503',
-    municipio: 'Barcelona',
-    pop: 4103
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01602',
-    municipio: 'Bento Fernandes',
-    pop: 4920
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01651',
-    municipio: 'Bodó',
-    pop: 2363
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01701',
-    municipio: 'Bom Jesus',
-    pop: 10279
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01800',
-    municipio: 'Brejinho',
-    pop: 12603
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01859',
-    municipio: 'Caiçara do Norte',
-    pop: 6474
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '01909',
-    municipio: 'Caiçara do Rio do Vento',
-    pop: 3359
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02006',
-    municipio: 'Caicó',
-    pop: 63339
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02105',
-    municipio: 'Campo Redondo',
-    pop: 10504
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02204',
-    municipio: 'Canguaretama',
-    pop: 30806
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02303',
-    municipio: 'Caraúbas',
-    pop: 20161
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02402',
-    municipio: 'Carnaúba dos Dantas',
-    pop: 8267
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02501',
-    municipio: 'Carnaubais',
-    pop: 10010
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02600',
-    municipio: 'Ceará-Mirim',
-    pop: 83009
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02709',
-    municipio: 'Cerro Corá',
-    pop: 11322
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02808',
-    municipio: 'Coronel Ezequiel',
-    pop: 5241
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '02907',
-    municipio: 'Coronel João Pessoa',
-    pop: 4315
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03004',
-    municipio: 'Cruzeta',
-    pop: 8238
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03103',
-    municipio: 'Currais Novos',
-    pop: 42930
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03202',
-    municipio: 'Doutor Severiano',
-    pop: 7253
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03251',
-    municipio: 'Parnamirim',
-    pop: 269298
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03301',
-    municipio: 'Encanto',
-    pop: 6252
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03400',
-    municipio: 'Equador',
-    pop: 5476
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03509',
-    municipio: 'Espírito Santo',
-    pop: 10936
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03608',
-    municipio: 'Extremoz',
-    pop: 66993
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03707',
-    municipio: 'Felipe Guerra',
-    pop: 6458
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03756',
-    municipio: 'Fernando Pedroza',
-    pop: 3029
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03806',
-    municipio: 'Florânia',
-    pop: 10528
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '03905',
-    municipio: 'Francisco Dantas',
-    pop: 2763
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04002',
-    municipio: 'Frutuoso Gomes',
-    pop: 4231
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04101',
-    municipio: 'Galinhos',
-    pop: 2160
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04200',
-    municipio: 'Goianinha',
-    pop: 28212
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04309',
-    municipio: 'Governador Dix-Sept Rosado',
-    pop: 12239
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04408',
-    municipio: 'Grossos',
-    pop: 10251
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04507',
-    municipio: 'Guamaré',
-    pop: 15947
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04606',
-    municipio: 'Ielmo Marinho',
-    pop: 11903
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04705',
-    municipio: 'Ipanguaçu',
-    pop: 14539
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04804',
-    municipio: 'Ipueira',
-    pop: 2090
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04853',
-    municipio: 'Itajá',
-    pop: 7531
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '04903',
-    municipio: 'Itaú',
-    pop: 5452
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05009',
-    municipio: 'Jaçanã',
-    pop: 8051
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05108',
-    municipio: 'Jandaíra',
-    pop: 6748
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05207',
-    municipio: 'Janduís',
-    pop: 4834
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05306',
-    municipio: 'Januário Cicco',
-    pop: 8836
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05405',
-    municipio: 'Japi',
-    pop: 5231
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05504',
-    municipio: 'Jardim de Angicos',
-    pop: 2493
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05603',
-    municipio: 'Jardim de Piranhas',
-    pop: 14416
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05702',
-    municipio: 'Jardim do Seridó',
-    pop: 11952
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05801',
-    municipio: 'João Câmara',
-    pop: 34768
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '05900',
-    municipio: 'João Dias',
-    pop: 2093
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06007',
-    municipio: 'José da Penha',
-    pop: 5964
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06106',
-    municipio: 'Jucurutu',
-    pop: 18286
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06155',
-    municipio: 'Jundiá',
-    pop: 3859
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06205',
-    municipio: "Lagoa d'Anta",
-    pop: 6733
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06304',
-    municipio: 'Lagoa de Pedras',
-    pop: 7577
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06403',
-    municipio: 'Lagoa de Velhos',
-    pop: 2633
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06502',
-    municipio: 'Lagoa Nova',
-    pop: 16126
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06601',
-    municipio: 'Lagoa Salgada',
-    pop: 8619
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06700',
-    municipio: 'Lajes',
-    pop: 10108
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06809',
-    municipio: 'Lajes Pintadas',
-    pop: 4939
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '06908',
-    municipio: 'Lucrécia',
-    pop: 3579
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07005',
-    municipio: 'Luís Gomes',
-    pop: 9286
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07104',
-    municipio: 'Macaíba',
-    pop: 86433
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07203',
-    municipio: 'Macau',
-    pop: 28384
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07252',
-    municipio: 'Major Sales',
-    pop: 4067
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07302',
-    municipio: 'Marcelino Vieira',
-    pop: 8092
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07401',
-    municipio: 'Martins',
-    pop: 8411
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07500',
-    municipio: 'Maxaranguape',
-    pop: 10534
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07609',
-    municipio: 'Messias Targino',
-    pop: 4404
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07708',
-    municipio: 'Montanhas',
-    pop: 11774
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07807',
-    municipio: 'Monte Alegre',
-    pop: 23843
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '07906',
-    municipio: 'Monte das Gameleiras',
-    pop: 2343
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08003',
-    municipio: 'Mossoró',
-    pop: 278034
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08102',
-    municipio: 'Natal',
-    pop: 785368
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08201',
-    municipio: 'Nísia Floresta',
-    pop: 33949
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08300',
-    municipio: 'Nova Cruz',
-    pop: 35534
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08409',
-    municipio: "Olho d'Água do Borges",
-    pop: 3748
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08508',
-    municipio: 'Ouro Branco',
-    pop: 5071
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08607',
-    municipio: 'Paraná',
-    pop: 4046
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08706',
-    municipio: 'Paraú',
-    pop: 3659
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08805',
-    municipio: 'Parazinho',
-    pop: 4940
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08904',
-    municipio: 'Parelhas',
-    pop: 22179
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '08953',
-    municipio: 'Rio do Fogo',
-    pop: 10672
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09100',
-    municipio: 'Passa e Fica',
-    pop: 11406
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09209',
-    municipio: 'Passagem',
-    pop: 3222
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09308',
-    municipio: 'Patu',
-    pop: 11245
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09332',
-    municipio: 'Santa Maria',
-    pop: 4992
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09407',
-    municipio: 'Pau dos Ferros',
-    pop: 31975
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09506',
-    municipio: 'Pedra Grande',
-    pop: 3729
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09605',
-    municipio: 'Pedra Preta',
-    pop: 2499
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09704',
-    municipio: 'Pedro Avelino',
-    pop: 6345
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09803',
-    municipio: 'Pedro Velho',
-    pop: 14197
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: '09902',
-    municipio: 'Pendências',
-    pop: 12536
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10009,
-    municipio: 'Pilões',
-    pop: 3010
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10108,
-    municipio: 'Poço Branco',
-    pop: 12619
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10207,
-    municipio: 'Portalegre',
-    pop: 7842
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10256,
-    municipio: 'Porto do Mangue',
-    pop: 5357
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10306,
-    municipio: 'Serra Caiada',
-    pop: 11146
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10405,
-    municipio: 'Pureza',
-    pop: 9707
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10504,
-    municipio: 'Rafael Fernandes',
-    pop: 5647
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10603,
-    municipio: 'Rafael Godeiro',
-    pop: 3008
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10702,
-    municipio: 'Riacho da Cruz',
-    pop: 2741
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10801,
-    municipio: 'Riacho de Santana',
-    pop: 4243
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 10900,
-    municipio: 'Riachuelo',
-    pop: 7627
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11007,
-    municipio: 'Rodolfo Fernandes',
-    pop: 4349
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11056,
-    municipio: 'Tibau',
-    pop: 5674
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11106,
-    municipio: 'Ruy Barbosa',
-    pop: 3266
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11205,
-    municipio: 'Santa Cruz',
-    pop: 38996
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11403,
-    municipio: 'Santana do Matos',
-    pop: 12746
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11429,
-    municipio: 'Santana do Seridó',
-    pop: 2787
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11502,
-    municipio: 'Santo Antônio',
-    pop: 22779
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11601,
-    municipio: 'São Bento do Norte',
-    pop: 3426
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11700,
-    municipio: 'São Bento do Trairí',
-    pop: 3892
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11809,
-    municipio: 'São Fernando',
-    pop: 3600
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 11908,
-    municipio: 'São Francisco do Oeste',
-    pop: 4304
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12005,
-    municipio: 'São Gonçalo do Amarante',
-    pop: 123207
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12104,
-    municipio: 'São João do Sabugi',
-    pop: 6130
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12203,
-    municipio: 'São José de Mipibu',
-    pop: 49693
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12302,
-    municipio: 'São José do Campestre',
-    pop: 11340
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12401,
-    municipio: 'São José do Seridó',
-    pop: 4716
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12500,
-    municipio: 'São Miguel',
-    pop: 24329
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12559,
-    municipio: 'São Miguel do Gostoso',
-    pop: 10590
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12609,
-    municipio: 'São Paulo do Potengi',
-    pop: 17320
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12708,
-    municipio: 'São Pedro',
-    pop: 5905
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12807,
-    municipio: 'São Rafael',
-    pop: 7899
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 12906,
-    municipio: 'São Tomé',
-    pop: 10188
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13003,
-    municipio: 'São Vicente',
-    pop: 6514
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13102,
-    municipio: 'Senador Elói de Souza',
-    pop: 6007
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13201,
-    municipio: 'Senador Georgino Avelino',
-    pop: 4193
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13300,
-    municipio: 'Serra de São Bento',
-    pop: 5864
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13359,
-    municipio: 'Serra do Mel',
-    pop: 13694
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13409,
-    municipio: 'Serra Negra do Norte',
-    pop: 7801
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13508,
-    municipio: 'Serrinha',
-    pop: 6609
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13557,
-    municipio: 'Serrinha dos Pintos',
-    pop: 4802
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13607,
-    municipio: 'Severiano Melo',
-    pop: 5623
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13706,
-    municipio: 'Sítio Novo',
-    pop: 4758
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13805,
-    municipio: 'Taboleiro Grande',
-    pop: 2406
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 13904,
-    municipio: 'Taipu',
-    pop: 11716
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14001,
-    municipio: 'Tangará',
-    pop: 13602
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14100,
-    municipio: 'Tenente Ananias',
-    pop: 10587
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14159,
-    municipio: 'Tenente Laurentino Cruz',
-    pop: 6118
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14209,
-    municipio: 'Tibau do Sul',
-    pop: 17840
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14308,
-    municipio: 'Timbaúba dos Batistas',
-    pop: 2420
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14407,
-    municipio: 'Touros',
-    pop: 34624
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14456,
-    municipio: 'Triunfo Potiguar',
-    pop: 3474
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14506,
-    municipio: 'Umarizal',
-    pop: 10671
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14605,
-    municipio: 'Upanema',
-    pop: 14013
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14704,
-    municipio: 'Várzea',
-    pop: 5383
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14753,
-    municipio: 'Venha-Ver',
-    pop: 3035
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14803,
-    municipio: 'Vera Cruz',
-    pop: 11044
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 14902,
-    municipio: 'Viçosa',
-    pop: 1890
-  },
-  {
-    uf: 'RN',
-    uf_id: 24,
-    municipio_id: 15008,
-    municipio: 'Vila Flor',
-    pop: 3289
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00106',
-    municipio: 'Água Branca',
-    pop: 9578
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00205',
-    municipio: 'Aguiar',
-    pop: 5061
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00304',
-    municipio: 'Alagoa Grande',
-    pop: 26774
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00403',
-    municipio: 'Alagoa Nova',
-    pop: 21724
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00502',
-    municipio: 'Alagoinha',
-    pop: 14118
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00536',
-    municipio: 'Alcantil',
-    pop: 5777
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00577',
-    municipio: 'Algodão de Jandaíra',
-    pop: 3105
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00601',
-    municipio: 'Alhandra',
-    pop: 22797
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00700',
-    municipio: 'São João do Rio do Peixe',
-    pop: 18468
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00734',
-    municipio: 'Amparo',
-    pop: 2316
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00775',
-    municipio: 'Aparecida',
-    pop: 8225
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00809',
-    municipio: 'Araçagi',
-    pop: 17012
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '00908',
-    municipio: 'Arara',
-    pop: 12496
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01005',
-    municipio: 'Araruna',
-    pop: 17442
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01104',
-    municipio: 'Areia',
-    pop: 23082
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01153',
-    municipio: 'Areia de Baraúnas',
-    pop: 2036
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01203',
-    municipio: 'Areial',
-    pop: 7393
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01302',
-    municipio: 'Aroeiras',
-    pop: 19148
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01351',
-    municipio: 'Assunção',
-    pop: 4342
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01401',
-    municipio: 'Baía da Traição',
-    pop: 9648
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01500',
-    municipio: 'Bananeiras',
-    pop: 23989
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01534',
-    municipio: 'Baraúna',
-    pop: 4968
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01575',
-    municipio: 'Barra de Santana',
-    pop: 8253
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01609',
-    municipio: 'Barra de Santa Rosa',
-    pop: 13094
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01708',
-    municipio: 'Barra de São Miguel',
-    pop: 6101
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01807',
-    municipio: 'Bayeux',
-    pop: 84404
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '01906',
-    municipio: 'Belém',
-    pop: 16740
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02003',
-    municipio: 'Belém do Brejo do Cruz',
-    pop: 6324
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02052',
-    municipio: 'Bernardino Batista',
-    pop: 3650
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02102',
-    municipio: 'Boa Ventura',
-    pop: 5277
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02151',
-    municipio: 'Boa Vista',
-    pop: 6575
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02201',
-    municipio: 'Bom Jesus',
-    pop: 2333
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02300',
-    municipio: 'Bom Sucesso',
-    pop: 4740
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02409',
-    municipio: 'Bonito de Santa Fé',
-    pop: 10460
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02508',
-    municipio: 'Boqueirão',
-    pop: 18153
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02607',
-    municipio: 'Igaracy',
-    pop: 5743
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02706',
-    municipio: 'Borborema',
-    pop: 4231
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02805',
-    municipio: 'Brejo do Cruz',
-    pop: 14050
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '02904',
-    municipio: 'Brejo dos Santos',
-    pop: 5840
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03001',
-    municipio: 'Caaporã',
-    pop: 21865
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03100',
-    municipio: 'Cabaceiras',
-    pop: 5515
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03209',
-    municipio: 'Cabedelo',
-    pop: 70067
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03308',
-    municipio: 'Cachoeira dos Índios',
-    pop: 9351
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03407',
-    municipio: 'Cacimba de Areia',
-    pop: 3354
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03506',
-    municipio: 'Cacimba de Dentro',
-    pop: 16373
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03555',
-    municipio: 'Cacimbas',
-    pop: 7478
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03605',
-    municipio: 'Caiçara',
-    pop: 6713
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03704',
-    municipio: 'Cajazeiras',
-    pop: 66171
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03753',
-    municipio: 'Cajazeirinhas',
-    pop: 2776
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03803',
-    municipio: 'Caldas Brandão',
-    pop: 5928
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '03902',
-    municipio: 'Camalaú',
-    pop: 6298
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04009',
-    municipio: 'Campina Grande',
-    pop: 440939
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04033',
-    municipio: 'Capim',
-    pop: 7347
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04074',
-    municipio: 'Caraúbas',
-    pop: 4059
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04108',
-    municipio: 'Carrapateira',
-    pop: 2367
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04157',
-    municipio: 'Casserengue',
-    pop: 7056
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04207',
-    municipio: 'Catingueira',
-    pop: 4572
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04306',
-    municipio: 'Catolé do Rocha',
-    pop: 32118
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04355',
-    municipio: 'Caturité',
-    pop: 5492
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04405',
-    municipio: 'Conceição',
-    pop: 18723
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04504',
-    municipio: 'Condado',
-    pop: 6624
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04603',
-    municipio: 'Conde',
-    pop: 29543
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04702',
-    municipio: 'Congo',
-    pop: 5102
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04801',
-    municipio: 'Coremas',
-    pop: 15005
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04850',
-    municipio: 'Coxixola',
-    pop: 1882
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '04900',
-    municipio: 'Cruz do Espírito Santo',
-    pop: 17718
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05006',
-    municipio: 'Cubati',
-    pop: 7820
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05105',
-    municipio: 'Cuité',
-    pop: 20205
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05204',
-    municipio: 'Cuitegi',
-    pop: 6894
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05238',
-    municipio: 'Cuité de Mamanguape',
-    pop: 6431
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05279',
-    municipio: 'Curral de Cima',
-    pop: 5406
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05303',
-    municipio: 'Curral Velho',
-    pop: 2327
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05352',
-    municipio: 'Damião',
-    pop: 5131
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05402',
-    municipio: 'Desterro',
-    pop: 8300
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05501',
-    municipio: 'Vista Serrana',
-    pop: 3759
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05600',
-    municipio: 'Diamante',
-    pop: 6431
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05709',
-    municipio: 'Dona Inês',
-    pop: 10640
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05808',
-    municipio: 'Duas Estradas',
-    pop: 3377
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '05907',
-    municipio: 'Emas',
-    pop: 3053
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06004',
-    municipio: 'Esperança',
-    pop: 32522
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06103',
-    municipio: 'Fagundes',
-    pop: 11315
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06202',
-    municipio: 'Frei Martinho',
-    pop: 2913
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06251',
-    municipio: 'Gado Bravo',
-    pop: 8395
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06301',
-    municipio: 'Guarabira',
-    pop: 59836
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06400',
-    municipio: 'Gurinhém',
-    pop: 14133
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06509',
-    municipio: 'Gurjão',
-    pop: 3343
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06608',
-    municipio: 'Ibiara',
-    pop: 5733
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06707',
-    municipio: 'Imaculada',
-    pop: 10550
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06806',
-    municipio: 'Ingá',
-    pop: 18197
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '06905',
-    municipio: 'Itabaiana',
-    pop: 23621
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07002',
-    municipio: 'Itaporanga',
-    pop: 24686
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07101',
-    municipio: 'Itapororoca',
-    pop: 19054
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07200',
-    municipio: 'Itatuba',
-    pop: 10816
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07309',
-    municipio: 'Jacaraú',
-    pop: 14923
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07408',
-    municipio: 'Jericó',
-    pop: 7721
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07507',
-    municipio: 'João Pessoa',
-    pop: 888679
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07606',
-    municipio: 'Juarez Távora',
-    pop: 8057
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07705',
-    municipio: 'Juazeirinho',
-    pop: 17488
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07804',
-    municipio: 'Junco do Seridó',
-    pop: 7002
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '07903',
-    municipio: 'Juripiranga',
-    pop: 10259
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08000',
-    municipio: 'Juru',
-    pop: 9410
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08109',
-    municipio: 'Lagoa',
-    pop: 4502
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08208',
-    municipio: 'Lagoa de Dentro',
-    pop: 8088
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08307',
-    municipio: 'Lagoa Seca',
-    pop: 29053
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08406',
-    municipio: 'Lastro',
-    pop: 3292
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08505',
-    municipio: 'Livramento',
-    pop: 7045
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08554',
-    municipio: 'Logradouro',
-    pop: 5045
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08604',
-    municipio: 'Lucena',
-    pop: 13019
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08703',
-    municipio: "Mãe d'Água",
-    pop: 3624
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08802',
-    municipio: 'Malta',
-    pop: 6259
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '08901',
-    municipio: 'Mamanguape',
-    pop: 46719
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09008',
-    municipio: 'Manaíra',
-    pop: 10700
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09057',
-    municipio: 'Marcação',
-    pop: 9435
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09107',
-    municipio: 'Mari',
-    pop: 22126
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09156',
-    municipio: 'Marizópolis',
-    pop: 6960
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09206',
-    municipio: 'Massaranduba',
-    pop: 14666
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09305',
-    municipio: 'Mataraca',
-    pop: 8585
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09339',
-    municipio: 'Matinhas',
-    pop: 4735
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09370',
-    municipio: 'Mato Grosso',
-    pop: 2592
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09396',
-    municipio: 'Maturéia',
-    pop: 6677
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09404',
-    municipio: 'Mogeiro',
-    pop: 14375
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09503',
-    municipio: 'Montadas',
-    pop: 6083
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09602',
-    municipio: 'Monte Horebe',
-    pop: 4435
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09701',
-    municipio: 'Monteiro',
-    pop: 33742
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09800',
-    municipio: 'Mulungu',
-    pop: 8945
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: '09909',
-    municipio: 'Natuba',
-    pop: 9014
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10006,
-    municipio: 'Nazarezinho',
-    pop: 7392
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10105,
-    municipio: 'Nova Floresta',
-    pop: 9884
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10204,
-    municipio: 'Nova Olinda',
-    pop: 5909
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10303,
-    municipio: 'Nova Palmeira',
-    pop: 4362
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10402,
-    municipio: "Olho d'Água",
-    pop: 6111
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10501,
-    municipio: 'Olivedos',
-    pop: 3674
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10600,
-    municipio: 'Ouro Velho',
-    pop: 2998
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10659,
-    municipio: 'Parari',
-    pop: 1751
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10709,
-    municipio: 'Passagem',
-    pop: 2562
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10808,
-    municipio: 'Patos',
-    pop: 107774
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 10907,
-    municipio: 'Paulista',
-    pop: 12160
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11004,
-    municipio: 'Pedra Branca',
-    pop: 3846
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11103,
-    municipio: 'Pedra Lavrada',
-    pop: 6998
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11202,
-    municipio: 'Pedras de Fogo',
-    pop: 31152
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11301,
-    municipio: 'Piancó',
-    pop: 17006
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11400,
-    municipio: 'Picuí',
-    pop: 18835
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11509,
-    municipio: 'Pilar',
-    pop: 12801
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11608,
-    municipio: 'Pilões',
-    pop: 6979
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11707,
-    municipio: 'Pilõezinhos',
-    pop: 5514
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11806,
-    municipio: 'Pirpirituba',
-    pop: 9467
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 11905,
-    municipio: 'Pitimbu',
-    pop: 17164
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12002,
-    municipio: 'Pocinhos',
-    pop: 17990
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12036,
-    municipio: 'Poço Dantas',
-    pop: 3932
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12077,
-    municipio: 'Poço de José de Moura',
-    pop: 4120
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12101,
-    municipio: 'Pombal',
-    pop: 33796
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12200,
-    municipio: 'Prata',
-    pop: 4027
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12309,
-    municipio: 'Princesa Isabel',
-    pop: 21659
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12408,
-    municipio: 'Puxinanã',
-    pop: 14837
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12507,
-    municipio: 'Queimadas',
-    pop: 50214
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12606,
-    municipio: 'Quixaba',
-    pop: 1798
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12705,
-    municipio: 'Remígio',
-    pop: 18373
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12721,
-    municipio: 'Pedro Régis',
-    pop: 5925
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12747,
-    municipio: 'Riachão',
-    pop: 2964
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12754,
-    municipio: 'Riachão do Bacamarte',
-    pop: 4877
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12762,
-    municipio: 'Riachão do Poço',
-    pop: 4946
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12788,
-    municipio: 'Riacho de Santo Antônio',
-    pop: 2044
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12804,
-    municipio: 'Riacho dos Cavalos',
-    pop: 8762
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 12903,
-    municipio: 'Rio Tinto',
-    pop: 25394
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13000,
-    municipio: 'Salgadinho',
-    pop: 3437
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13109,
-    municipio: 'Salgado de São Félix',
-    pop: 11760
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13158,
-    municipio: 'Santa Cecília',
-    pop: 8031
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13208,
-    municipio: 'Santa Cruz',
-    pop: 6041
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13307,
-    municipio: 'Santa Helena',
-    pop: 6020
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13356,
-    municipio: 'Santa Inês',
-    pop: 3274
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13406,
-    municipio: 'Santa Luzia',
-    pop: 15387
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13505,
-    municipio: 'Santana de Mangueira',
-    pop: 5106
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13604,
-    municipio: 'Santana dos Garrotes',
-    pop: 6657
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13653,
-    municipio: 'Joca Claudino',
-    pop: 2606
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13703,
-    municipio: 'Santa Rita',
-    pop: 159121
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13802,
-    municipio: 'Santa Teresinha',
-    pop: 4499
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13851,
-    municipio: 'Santo André',
-    pop: 2702
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13901,
-    municipio: 'São Bento',
-    pop: 33700
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13927,
-    municipio: 'São Bentinho',
-    pop: 4473
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13943,
-    municipio: 'São Domingos do Cariri',
-    pop: 2676
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13968,
-    municipio: 'São Domingos',
-    pop: 2636
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 13984,
-    municipio: 'São Francisco',
-    pop: 3190
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14008,
-    municipio: 'São João do Cariri',
-    pop: 4341
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14107,
-    municipio: 'São João do Tigre',
-    pop: 4363
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14206,
-    municipio: 'São José da Lagoa Tapada',
-    pop: 7270
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14305,
-    municipio: 'São José de Caiana',
-    pop: 5032
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14404,
-    municipio: 'São José de Espinharas',
-    pop: 4099
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14453,
-    municipio: 'São José dos Ramos',
-    pop: 6105
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14503,
-    municipio: 'São José de Piranhas',
-    pop: 19552
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14552,
-    municipio: 'São José de Princesa',
-    pop: 3383
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14602,
-    municipio: 'São José do Bonfim',
-    pop: 3333
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14651,
-    municipio: 'São José do Brejo do Cruz',
-    pop: 1748
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14701,
-    municipio: 'São José do Sabugi',
-    pop: 4270
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14800,
-    municipio: 'São José dos Cordeiros',
-    pop: 3474
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 14909,
-    municipio: 'São Mamede',
-    pop: 7640
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15005,
-    municipio: 'São Miguel de Taipu',
-    pop: 7287
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15104,
-    municipio: 'São Sebastião de Lagoa de Roça',
-    pop: 11365
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15203,
-    municipio: 'São Sebastião do Umbuzeiro',
-    pop: 3376
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15302,
-    municipio: 'Sapé',
-    pop: 53309
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15401,
-    municipio: 'São Vicente do Seridó',
-    pop: 10620
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15500,
-    municipio: 'Serra Branca',
-    pop: 14075
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15609,
-    municipio: 'Serra da Raiz',
-    pop: 3162
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15708,
-    municipio: 'Serra Grande',
-    pop: 3043
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15807,
-    municipio: 'Serra Redonda',
-    pop: 6984
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15906,
-    municipio: 'Serraria',
-    pop: 4839
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15930,
-    municipio: 'Sertãozinho',
-    pop: 5282
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 15971,
-    municipio: 'Sobrado',
-    pop: 8579
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16003,
-    municipio: 'Solânea',
-    pop: 27749
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16102,
-    municipio: 'Soledade',
-    pop: 14381
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16151,
-    municipio: 'Sossêgo',
-    pop: 3461
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16201,
-    municipio: 'Sousa',
-    pop: 69876
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16300,
-    municipio: 'Sumé',
-    pop: 17763
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16409,
-    municipio: 'Tacima',
-    pop: 7934
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16508,
-    municipio: 'Taperoá',
-    pop: 14376
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16607,
-    municipio: 'Tavares',
-    pop: 14464
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16706,
-    municipio: 'Teixeira',
-    pop: 15082
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16755,
-    municipio: 'Tenório',
-    pop: 3069
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16805,
-    municipio: 'Triunfo',
-    pop: 10259
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 16904,
-    municipio: 'Uiraúna',
-    pop: 15386
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 17001,
-    municipio: 'Umbuzeiro',
-    pop: 9302
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 17100,
-    municipio: 'Várzea',
-    pop: 2764
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 17209,
-    municipio: 'Vieirópolis',
-    pop: 4974
-  },
-  {
-    uf: 'PB',
-    uf_id: 25,
-    municipio_id: 17407,
-    municipio: 'Zabelê',
-    pop: 2310
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00054',
-    municipio: 'Abreu e Lima',
-    pop: 103945
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00104',
-    municipio: 'Afogados da Ingazeira',
-    pop: 42407
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00203',
-    municipio: 'Afrânio',
-    pop: 19349
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00302',
-    municipio: 'Agrestina',
-    pop: 24615
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00401',
-    municipio: 'Água Preta',
-    pop: 27221
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00500',
-    municipio: 'Águas Belas',
-    pop: 43713
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00609',
-    municipio: 'Alagoinha',
-    pop: 14355
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00708',
-    municipio: 'Aliança',
-    pop: 37372
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00807',
-    municipio: 'Altinho',
-    pop: 21185
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '00906',
-    municipio: 'Amaraji',
-    pop: 18471
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01003',
-    municipio: 'Angelim',
-    pop: 10580
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01052',
-    municipio: 'Araçoiaba',
-    pop: 19936
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01102',
-    municipio: 'Araripina',
-    pop: 90104
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01201',
-    municipio: 'Arcoverde',
-    pop: 82003
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01300',
-    municipio: 'Barra de Guabiraba',
-    pop: 12616
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01409',
-    municipio: 'Barreiros',
-    pop: 42056
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01508',
-    municipio: 'Belém de Maria',
-    pop: 10829
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01607',
-    municipio: 'Belém do São Francisco',
-    pop: 18713
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01706',
-    municipio: 'Belo Jardim',
-    pop: 83647
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01805',
-    municipio: 'Betânia',
-    pop: 11981
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '01904',
-    municipio: 'Bezerros',
-    pop: 64809
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02001',
-    municipio: 'Bodocó',
-    pop: 36129
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02100',
-    municipio: 'Bom Conselho',
-    pop: 46192
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02209',
-    municipio: 'Bom Jardim',
-    pop: 39278
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02308',
-    municipio: 'Bonito',
-    pop: 39163
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02407',
-    municipio: 'Brejão',
-    pop: 9399
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02506',
-    municipio: 'Brejinho',
-    pop: 8010
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02605',
-    municipio: 'Brejo da Madre de Deus',
-    pop: 51107
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02704',
-    municipio: 'Buenos Aires',
-    pop: 13254
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02803',
-    municipio: 'Buíque',
-    pop: 54425
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '02902',
-    municipio: 'Cabo de Santo Agostinho',
-    pop: 216969
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03009',
-    municipio: 'Cabrobó',
-    pop: 31746
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03108',
-    municipio: 'Cachoeirinha',
-    pop: 20612
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03207',
-    municipio: 'Caetés',
-    pop: 30441
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03306',
-    municipio: 'Calçado',
-    pop: 11445
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03405',
-    municipio: 'Calumbi',
-    pop: 5367
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03454',
-    municipio: 'Camaragibe',
-    pop: 155771
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03504',
-    municipio: 'Camocim de São Félix',
-    pop: 17991
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03603',
-    municipio: 'Camutanga',
-    pop: 7972
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03702',
-    municipio: 'Canhotinho',
-    pop: 25090
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03801',
-    municipio: 'Capoeiras',
-    pop: 18890
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03900',
-    municipio: 'Carnaíba',
-    pop: 19513
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '03926',
-    municipio: 'Carnaubeira da Penha',
-    pop: 12682
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04007',
-    municipio: 'Carpina',
-    pop: 83205
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04106',
-    municipio: 'Caruaru',
-    pop: 402290
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04155',
-    municipio: 'Casinhas',
-    pop: 13489
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04205',
-    municipio: 'Catende',
-    pop: 33279
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04304',
-    municipio: 'Cedro',
-    pop: 10845
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04403',
-    municipio: 'Chã de Alegria',
-    pop: 13461
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04502',
-    municipio: 'Chã Grande',
-    pop: 21224
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04601',
-    municipio: 'Condado',
-    pop: 25383
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04700',
-    municipio: 'Correntes',
-    pop: 17660
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04809',
-    municipio: 'Cortês',
-    pop: 10512
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '04908',
-    municipio: 'Cumaru',
-    pop: 16252
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05004',
-    municipio: 'Cupira',
-    pop: 24301
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05103',
-    municipio: 'Custódia',
-    pop: 39403
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05152',
-    municipio: 'Dormentes',
-    pop: 17749
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05202',
-    municipio: 'Escada',
-    pop: 62252
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05301',
-    municipio: 'Exu',
-    pop: 33436
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05400',
-    municipio: 'Feira Nova',
-    pop: 22169
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05459',
-    municipio: 'Fernando de Noronha',
-    pop: 3316
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05509',
-    municipio: 'Ferreiros',
-    pop: 15794
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05608',
-    municipio: 'Flores',
-    pop: 20835
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05707',
-    municipio: 'Floresta',
-    pop: 31627
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05806',
-    municipio: 'Frei Miguelinho',
-    pop: 14070
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '05905',
-    municipio: 'Gameleira',
-    pop: 17973
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06002',
-    municipio: 'Garanhuns',
-    pop: 151064
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06101',
-    municipio: 'Glória do Goitá',
-    pop: 30370
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06200',
-    municipio: 'Goiana',
-    pop: 85160
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06309',
-    municipio: 'Granito',
-    pop: 7206
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06408',
-    municipio: 'Gravatá',
-    pop: 91887
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06507',
-    municipio: 'Iati',
-    pop: 17605
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06606',
-    municipio: 'Ibimirim',
-    pop: 28760
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06705',
-    municipio: 'Ibirajuba',
-    pop: 7344
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06804',
-    municipio: 'Igarassu',
-    pop: 122312
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '06903',
-    municipio: 'Iguaracy',
-    pop: 11366
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07000',
-    municipio: 'Inajá',
-    pop: 27488
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07109',
-    municipio: 'Ingazeira',
-    pop: 4959
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07208',
-    municipio: 'Ipojuca',
-    pop: 105638
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07307',
-    municipio: 'Ipubi',
-    pop: 30603
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07406',
-    municipio: 'Itacuruba',
-    pop: 4490
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07505',
-    municipio: 'Itaíba',
-    pop: 33691
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07604',
-    municipio: 'Ilha de Itamaracá',
-    pop: 25529
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07653',
-    municipio: 'Itambé',
-    pop: 36626
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07703',
-    municipio: 'Itapetim',
-    pop: 14232
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07752',
-    municipio: 'Itapissuma',
-    pop: 29463
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07802',
-    municipio: 'Itaquitinga',
-    pop: 17109
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07901',
-    municipio: 'Jaboatão dos Guararapes',
-    pop: 683285
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '07950',
-    municipio: 'Jaqueira',
-    pop: 10483
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08008',
-    municipio: 'Jataúba',
-    pop: 16323
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08057',
-    municipio: 'Jatobá',
-    pop: 14463
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08107',
-    municipio: 'João Alfredo',
-    pop: 28903
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08206',
-    municipio: 'Joaquim Nabuco',
-    pop: 13506
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08255',
-    municipio: 'Jucati',
-    pop: 11975
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08305',
-    municipio: 'Jupi',
-    pop: 15943
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08404',
-    municipio: 'Jurema',
-    pop: 14027
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08453',
-    municipio: 'Lagoa do Carro',
-    pop: 18708
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08503',
-    municipio: 'Lagoa de Itaenga',
-    pop: 19915
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08602',
-    municipio: 'Lagoa do Ouro',
-    pop: 12364
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08701',
-    municipio: 'Lagoa dos Gatos',
-    pop: 14386
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08750',
-    municipio: 'Lagoa Grande',
-    pop: 24952
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08800',
-    municipio: 'Lajedo',
-    pop: 41786
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '08909',
-    municipio: 'Limoeiro',
-    pop: 59125
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09006',
-    municipio: 'Macaparana',
-    pop: 24624
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09105',
-    municipio: 'Machados',
-    pop: 11471
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09154',
-    municipio: 'Manari',
-    pop: 26773
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09204',
-    municipio: 'Maraial',
-    pop: 9432
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09303',
-    municipio: 'Mirandiba',
-    pop: 14599
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09402',
-    municipio: 'Moreno',
-    pop: 57647
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09501',
-    municipio: 'Nazaré da Mata',
-    pop: 32153
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09600',
-    municipio: 'Olinda',
-    pop: 365402
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09709',
-    municipio: 'Orobó',
-    pop: 22438
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09808',
-    municipio: 'Orocó',
-    pop: 14100
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: '09907',
-    municipio: 'Ouricuri',
-    pop: 68329
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10004,
-    municipio: 'Palmares',
-    pop: 56615
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10103,
-    municipio: 'Palmeirina',
-    pop: 7154
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10202,
-    municipio: 'Panelas',
-    pop: 23449
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10301,
-    municipio: 'Paranatama',
-    pop: 12712
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10400,
-    municipio: 'Parnamirim',
-    pop: 19028
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10509,
-    municipio: 'Passira',
-    pop: 29719
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10608,
-    municipio: 'Paudalho',
-    pop: 59638
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10707,
-    municipio: 'Paulista',
-    pop: 362960
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10806,
-    municipio: 'Pedra',
-    pop: 23605
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 10905,
-    municipio: 'Pesqueira',
-    pop: 65408
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11002,
-    municipio: 'Petrolândia',
-    pop: 35991
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11101,
-    municipio: 'Petrolina',
-    pop: 414083
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11200,
-    municipio: 'Poção',
-    pop: 10805
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11309,
-    municipio: 'Pombos',
-    pop: 26847
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11408,
-    municipio: 'Primavera',
-    pop: 14351
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11507,
-    municipio: 'Quipapá',
-    pop: 17974
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11533,
-    municipio: 'Quixaba',
-    pop: 6755
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11606,
-    municipio: 'Recife',
-    pop: 1587707
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11705,
-    municipio: 'Riacho das Almas',
-    pop: 21411
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11804,
-    municipio: 'Ribeirão',
-    pop: 34255
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 11903,
-    municipio: 'Rio Formoso',
-    pop: 20460
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12000,
-    municipio: 'Sairé',
-    pop: 11218
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12109,
-    municipio: 'Salgadinho',
-    pop: 5620
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12208,
-    municipio: 'Salgueiro',
-    pop: 65635
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12307,
-    municipio: 'Saloá',
-    pop: 14173
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12406,
-    municipio: 'Sanharó',
-    pop: 18933
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12455,
-    municipio: 'Santa Cruz',
-    pop: 14320
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12471,
-    municipio: 'Santa Cruz da Baixa Verde',
-    pop: 11933
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12505,
-    municipio: 'Santa Cruz do Capibaribe',
-    pop: 104277
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12554,
-    municipio: 'Santa Filomena',
-    pop: 12402
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12604,
-    municipio: 'Santa Maria da Boa Vista',
-    pop: 42682
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12703,
-    municipio: 'Santa Maria do Cambucá',
-    pop: 14533
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12802,
-    municipio: 'Santa Terezinha',
-    pop: 10513
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 12901,
-    municipio: 'São Benedito do Sul',
-    pop: 13479
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13008,
-    municipio: 'São Bento do Una',
-    pop: 51264
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13107,
-    municipio: 'São Caitano',
-    pop: 39117
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13206,
-    municipio: 'São João',
-    pop: 24772
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13305,
-    municipio: 'São Joaquim do Monte',
-    pop: 20440
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13404,
-    municipio: 'São José da Coroa Grande',
-    pop: 19468
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13503,
-    municipio: 'São José do Belmonte',
-    pop: 36752
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13602,
-    municipio: 'São José do Egito',
-    pop: 32491
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13701,
-    municipio: 'São Lourenço da Mata',
-    pop: 117759
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13800,
-    municipio: 'São Vicente Férrer',
-    pop: 17176
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 13909,
-    municipio: 'Serra Talhada',
-    pop: 98143
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14006,
-    municipio: 'Serrita',
-    pop: 18759
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14105,
-    municipio: 'Sertânia',
-    pop: 34269
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14204,
-    municipio: 'Sirinhaém',
-    pop: 39233
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14303,
-    municipio: 'Moreilândia',
-    pop: 10849
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14402,
-    municipio: 'Solidão',
-    pop: 5403
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14501,
-    municipio: 'Surubim',
-    pop: 67515
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14600,
-    municipio: 'Tabira',
-    pop: 29093
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14709,
-    municipio: 'Tacaimbó',
-    pop: 14277
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14808,
-    municipio: 'Tacaratu',
-    pop: 24803
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 14857,
-    municipio: 'Tamandaré',
-    pop: 24534
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15003,
-    municipio: 'Taquaritinga do Norte',
-    pop: 25497
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15102,
-    municipio: 'Terezinha',
-    pop: 6857
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15201,
-    municipio: 'Terra Nova',
-    pop: 9221
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15300,
-    municipio: 'Timbaúba',
-    pop: 47575
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15409,
-    municipio: 'Toritama',
-    pop: 43636
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15508,
-    municipio: 'Tracunhaém',
-    pop: 14393
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15607,
-    municipio: 'Trindade',
-    pop: 32086
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15706,
-    municipio: 'Triunfo',
-    pop: 15142
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15805,
-    municipio: 'Tupanatinga',
-    pop: 27009
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 15904,
-    municipio: 'Tuparetama',
-    pop: 8252
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 16001,
-    municipio: 'Venturosa',
-    pop: 17609
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 16100,
-    municipio: 'Verdejante',
-    pop: 9474
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 16183,
-    municipio: 'Vertente do Lério',
-    pop: 7782
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 16209,
-    municipio: 'Vertentes',
-    pop: 22955
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 16308,
-    municipio: 'Vicência',
-    pop: 27297
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 16407,
-    municipio: 'Vitória de Santo Antão',
-    pop: 143799
-  },
-  {
-    uf: 'PE',
-    uf_id: 26,
-    municipio_id: 16506,
-    municipio: 'Xexéu',
-    pop: 11791
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00102',
-    municipio: 'Água Branca',
-    pop: 19550
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00201',
-    municipio: 'Anadia',
-    pop: 14193
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00300',
-    municipio: 'Arapiraca',
-    pop: 243661
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00409',
-    municipio: 'Atalaia',
-    pop: 38530
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00508',
-    municipio: 'Barra de Santo Antônio',
-    pop: 16735
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00607',
-    municipio: 'Barra de São Miguel',
-    pop: 8118
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00706',
-    municipio: 'Batalha',
-    pop: 17103
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00805',
-    municipio: 'Belém',
-    pop: 4820
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '00904',
-    municipio: 'Belo Monte',
-    pop: 5898
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01001',
-    municipio: 'Boca da Mata',
-    pop: 21517
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01100',
-    municipio: 'Branquinha',
-    pop: 9786
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01209',
-    municipio: 'Cacimbinhas',
-    pop: 10701
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01308',
-    municipio: 'Cajueiro',
-    pop: 16605
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01357',
-    municipio: 'Campestre',
-    pop: 6807
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01407',
-    municipio: 'Campo Alegre',
-    pop: 32714
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01506',
-    municipio: 'Campo Grande',
-    pop: 8293
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01605',
-    municipio: 'Canapi',
-    pop: 15743
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01704',
-    municipio: 'Capela',
-    pop: 15068
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01803',
-    municipio: 'Carneiros',
-    pop: 9200
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '01902',
-    municipio: 'Chã Preta',
-    pop: 6010
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02009',
-    municipio: 'Coité do Nóia',
-    pop: 11036
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02108',
-    municipio: 'Colônia Leopoldina',
-    pop: 15949
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02207',
-    municipio: 'Coqueiro Seco',
-    pop: 5700
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02306',
-    municipio: 'Coruripe',
-    pop: 51788
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02355',
-    municipio: 'Craíbas',
-    pop: 26115
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02405',
-    municipio: 'Delmiro Gouveia',
-    pop: 52809
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02504',
-    municipio: 'Dois Riachos',
-    pop: 9906
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02553',
-    municipio: 'Estrela de Alagoas',
-    pop: 15701
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02603',
-    municipio: 'Feira Grande',
-    pop: 23191
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02702',
-    municipio: 'Feliz Deserto',
-    pop: 4038
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02801',
-    municipio: 'Flexeiras',
-    pop: 9767
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '02900',
-    municipio: 'Girau do Ponciano',
-    pop: 37335
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03007',
-    municipio: 'Ibateguara',
-    pop: 13992
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03106',
-    municipio: 'Igaci',
-    pop: 24452
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03205',
-    municipio: 'Igreja Nova',
-    pop: 22125
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03304',
-    municipio: 'Inhapi',
-    pop: 15417
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03403',
-    municipio: 'Jacaré dos Homens',
-    pop: 5182
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03502',
-    municipio: 'Jacuípe',
-    pop: 5432
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03601',
-    municipio: 'Japaratinga',
-    pop: 9443
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03700',
-    municipio: 'Jaramataia',
-    pop: 5075
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03759',
-    municipio: 'Jequiá da Praia',
-    pop: 9625
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03809',
-    municipio: 'Joaquim Gomes',
-    pop: 17386
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '03908',
-    municipio: 'Jundiá',
-    pop: 4176
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04005',
-    municipio: 'Junqueiro',
-    pop: 24381
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04104',
-    municipio: 'Lagoa da Canoa',
-    pop: 18831
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04203',
-    municipio: 'Limoeiro de Anadia',
-    pop: 25197
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04302',
-    municipio: 'Maceió',
-    pop: 994464
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04401',
-    municipio: 'Major Isidoro',
-    pop: 17834
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04500',
-    municipio: 'Maragogi',
-    pop: 33232
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04609',
-    municipio: 'Maravilha',
-    pop: 9715
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04708',
-    municipio: 'Marechal Deodoro',
-    pop: 62341
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04807',
-    municipio: 'Maribondo',
-    pop: 13968
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '04906',
-    municipio: 'Mar Vermelho',
-    pop: 3212
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05002',
-    municipio: 'Mata Grande',
-    pop: 22147
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05101',
-    municipio: 'Matriz de Camaragibe',
-    pop: 24330
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05200',
-    municipio: 'Messias',
-    pop: 15707
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05309',
-    municipio: 'Minador do Negrão',
-    pop: 4938
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05408',
-    municipio: 'Monteirópolis',
-    pop: 7341
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05507',
-    municipio: 'Murici',
-    pop: 25933
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05606',
-    municipio: 'Novo Lino',
-    pop: 10298
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05705',
-    municipio: "Olho d'Água das Flores",
-    pop: 21132
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05804',
-    municipio: "Olho d'Água do Casado",
-    pop: 8522
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '05903',
-    municipio: "Olho d'Água Grande",
-    pop: 4384
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06000',
-    municipio: 'Olivença',
-    pop: 11048
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06109',
-    municipio: 'Ouro Branco',
-    pop: 11699
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06208',
-    municipio: 'Palestina',
-    pop: 4410
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06307',
-    municipio: 'Palmeira dos Índios',
-    pop: 73596
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06406',
-    municipio: 'Pão de Açúcar',
-    pop: 24291
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06422',
-    municipio: 'Pariconha',
-    pop: 10803
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06448',
-    municipio: 'Paripueira',
-    pop: 14176
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06505',
-    municipio: 'Passo de Camaragibe',
-    pop: 14076
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06604',
-    municipio: 'Paulo Jacinto',
-    pop: 6697
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06703',
-    municipio: 'Penedo',
-    pop: 60189
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06802',
-    municipio: 'Piaçabuçu',
-    pop: 16201
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '06901',
-    municipio: 'Pilar',
-    pop: 36499
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07008',
-    municipio: 'Pindoba',
-    pop: 2786
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07107',
-    municipio: 'Piranhas',
-    pop: 23053
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07206',
-    municipio: 'Poço das Trincheiras',
-    pop: 12974
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07305',
-    municipio: 'Porto Calvo',
-    pop: 24520
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07404',
-    municipio: 'Porto de Pedras',
-    pop: 9508
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07503',
-    municipio: 'Porto Real do Colégio',
-    pop: 20262
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07602',
-    municipio: 'Quebrangulo',
-    pop: 11305
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07701',
-    municipio: 'Rio Largo',
-    pop: 97435
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07800',
-    municipio: 'Roteiro',
-    pop: 6607
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '07909',
-    municipio: 'Santa Luzia do Norte',
-    pop: 7065
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08006',
-    municipio: 'Santana do Ipanema',
-    pop: 47397
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08105',
-    municipio: 'Santana do Mundaú',
-    pop: 11568
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08204',
-    municipio: 'São Brás',
-    pop: 6557
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08303',
-    municipio: 'São José da Laje',
-    pop: 21193
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08402',
-    municipio: 'São José da Tapera',
-    pop: 31557
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08501',
-    municipio: 'São Luís do Quitunde',
-    pop: 31792
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08600',
-    municipio: 'São Miguel dos Campos',
-    pop: 53391
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08709',
-    municipio: 'São Miguel dos Milagres',
-    pop: 8687
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08808',
-    municipio: 'São Sebastião',
-    pop: 32701
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08907',
-    municipio: 'Satuba',
-    pop: 25000
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '08956',
-    municipio: 'Senador Rui Palmeira',
-    pop: 12549
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '09004',
-    municipio: "Tanque d'Arca",
-    pop: 5909
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '09103',
-    municipio: 'Taquarana',
-    pop: 19422
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '09152',
-    municipio: 'Teotônio Vilela',
-    pop: 39161
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '09202',
-    municipio: 'Traipu',
-    pop: 24124
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '09301',
-    municipio: 'União dos Palmares',
-    pop: 60874
-  },
-  {
-    uf: 'AL',
-    uf_id: 27,
-    municipio_id: '09400',
-    municipio: 'Viçosa',
-    pop: 24423
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00100',
-    municipio: 'Amparo do São Francisco',
-    pop: 2206
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00209',
-    municipio: 'Aquidabã',
-    pop: 20542
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00308',
-    municipio: 'Aracaju',
-    pop: 628849
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00407',
-    municipio: 'Arauá',
-    pop: 10483
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00506',
-    municipio: 'Areia Branca',
-    pop: 18560
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00605',
-    municipio: 'Barra dos Coqueiros',
-    pop: 44384
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00670',
-    municipio: 'Boquim',
-    pop: 25038
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '00704',
-    municipio: 'Brejo Grande',
-    pop: 8016
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01009',
-    municipio: 'Campo do Brito',
-    pop: 18646
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01108',
-    municipio: 'Canhoba',
-    pop: 3855
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01207',
-    municipio: 'Canindé de São Francisco',
-    pop: 33491
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01306',
-    municipio: 'Capela',
-    pop: 32716
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01405',
-    municipio: 'Carira',
-    pop: 20315
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01504',
-    municipio: 'Carmópolis',
-    pop: 14179
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01603',
-    municipio: 'Cedro de São João',
-    pop: 5482
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01702',
-    municipio: 'Cristinápolis',
-    pop: 17539
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '01900',
-    municipio: 'Cumbe',
-    pop: 3906
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02007',
-    municipio: 'Divina Pastora',
-    pop: 4433
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02106',
-    municipio: 'Estância',
-    pop: 66978
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02205',
-    municipio: 'Feira Nova',
-    pop: 6207
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02304',
-    municipio: 'Frei Paulo',
-    pop: 14884
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02403',
-    municipio: 'Gararu',
-    pop: 11301
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02502',
-    municipio: 'General Maynard',
-    pop: 3111
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02601',
-    municipio: 'Gracho Cardoso',
-    pop: 5979
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02700',
-    municipio: 'Ilha das Flores',
-    pop: 8495
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02809',
-    municipio: 'Indiaroba',
-    pop: 16949
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '02908',
-    municipio: 'Itabaiana',
-    pop: 108408
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03005',
-    municipio: 'Itabaianinha',
-    pop: 42114
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03104',
-    municipio: 'Itabi',
-    pop: 4823
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03203',
-    municipio: "Itaporanga d'Ajuda",
-    pop: 35863
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03302',
-    municipio: 'Japaratuba',
-    pop: 16472
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03401',
-    municipio: 'Japoatã',
-    pop: 13707
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03500',
-    municipio: 'Lagarto',
-    pop: 105558
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03609',
-    municipio: 'Laranjeiras',
-    pop: 24170
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03708',
-    municipio: 'Macambira',
-    pop: 7024
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03807',
-    municipio: 'Malhada dos Bois',
-    pop: 3666
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '03906',
-    municipio: 'Malhador',
-    pop: 11728
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04003',
-    municipio: 'Maruim',
-    pop: 15975
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04102',
-    municipio: 'Moita Bonita',
-    pop: 11288
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04201',
-    municipio: 'Monte Alegre de Sergipe',
-    pop: 14732
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04300',
-    municipio: 'Muribeca',
-    pop: 8033
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04409',
-    municipio: 'Neópolis',
-    pop: 16558
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04458',
-    municipio: 'Nossa Senhora Aparecida',
-    pop: 9496
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04508',
-    municipio: 'Nossa Senhora da Glória',
-    pop: 43255
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04607',
-    municipio: 'Nossa Senhora das Dores',
-    pop: 25537
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04706',
-    municipio: 'Nossa Senhora de Lourdes',
-    pop: 6404
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04805',
-    municipio: 'Nossa Senhora do Socorro',
-    pop: 202450
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '04904',
-    municipio: 'Pacatuba',
-    pop: 12709
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05000',
-    municipio: 'Pedra Mole',
-    pop: 2818
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05109',
-    municipio: 'Pedrinhas',
-    pop: 7416
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05208',
-    municipio: 'Pinhão',
-    pop: 5769
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05307',
-    municipio: 'Pirambu',
-    pop: 8037
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05406',
-    municipio: 'Poço Redondo',
-    pop: 29117
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05505',
-    municipio: 'Poço Verde',
-    pop: 22214
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05604',
-    municipio: 'Porto da Folha',
-    pop: 27350
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05703',
-    municipio: 'Propriá',
-    pop: 27273
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05802',
-    municipio: 'Riachão do Dantas',
-    pop: 18579
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '05901',
-    municipio: 'Riachuelo',
-    pop: 8875
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06008',
-    municipio: 'Ribeirópolis',
-    pop: 17362
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06107',
-    municipio: 'Rosário do Catete',
-    pop: 9499
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06206',
-    municipio: 'Salgado',
-    pop: 20772
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06305',
-    municipio: 'Santa Luzia do Itanhy',
-    pop: 13965
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06404',
-    municipio: 'Santana do São Francisco',
-    pop: 7530
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06503',
-    municipio: 'Santa Rosa de Lima',
-    pop: 4038
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06602',
-    municipio: 'Santo Amaro das Brotas',
-    pop: 11297
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06701',
-    municipio: 'São Cristóvão',
-    pop: 100360
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06800',
-    municipio: 'São Domingos',
-    pop: 10550
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '06909',
-    municipio: 'São Francisco',
-    pop: 3323
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '07006',
-    municipio: 'São Miguel do Aleixo',
-    pop: 3481
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '07105',
-    municipio: 'Simão Dias',
-    pop: 44285
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '07204',
-    municipio: 'Siriri',
-    pop: 7984
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '07303',
-    municipio: 'Telha',
-    pop: 3373
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '07402',
-    municipio: 'Tobias Barreto',
-    pop: 52613
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '07501',
-    municipio: 'Tomar do Geru',
-    pop: 12145
-  },
-  {
-    uf: 'SE',
-    uf_id: 28,
-    municipio_id: '07600',
-    municipio: 'Umbaúba',
-    pop: 24538
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00108',
-    municipio: 'Abaíra',
-    pop: 7452
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00207',
-    municipio: 'Abaré',
-    pop: 18240
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00306',
-    municipio: 'Acajutiba',
-    pop: 14215
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00355',
-    municipio: 'Adustina',
-    pop: 14554
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00405',
-    municipio: 'Água Fria',
-    pop: 14871
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00504',
-    municipio: 'Érico Cardoso',
-    pop: 10948
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00603',
-    municipio: 'Aiquara',
-    pop: 4586
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00702',
-    municipio: 'Alagoinhas',
-    pop: 160662
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00801',
-    municipio: 'Alcobaça',
-    pop: 25494
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '00900',
-    municipio: 'Almadina',
-    pop: 5327
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01007',
-    municipio: 'Amargosa',
-    pop: 38478
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01106',
-    municipio: 'Amélia Rodrigues',
-    pop: 24848
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01155',
-    municipio: 'América Dourada',
-    pop: 15583
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01205',
-    municipio: 'Anagé',
-    pop: 26715
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01304',
-    municipio: 'Andaraí',
-    pop: 13531
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01353',
-    municipio: 'Andorinha',
-    pop: 15485
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01403',
-    municipio: 'Angical',
-    pop: 14178
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01502',
-    municipio: 'Anguera',
-    pop: 11456
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01601',
-    municipio: 'Antas',
-    pop: 15061
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01700',
-    municipio: 'Antônio Cardoso',
-    pop: 11501
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01809',
-    municipio: 'Antônio Gonçalves',
-    pop: 11236
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01908',
-    municipio: 'Aporá',
-    pop: 16379
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '01957',
-    municipio: 'Apuarema',
-    pop: 7114
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02005',
-    municipio: 'Aracatu',
-    pop: 14422
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02054',
-    municipio: 'Araçás',
-    pop: 11946
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02104',
-    municipio: 'Araci',
-    pop: 50336
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02203',
-    municipio: 'Aramari',
-    pop: 10122
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02252',
-    municipio: 'Arataca',
-    pop: 10463
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02302',
-    municipio: 'Aratuípe',
-    pop: 8981
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02401',
-    municipio: 'Aurelino Leal',
-    pop: 11409
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02500',
-    municipio: 'Baianópolis',
-    pop: 14110
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02609',
-    municipio: 'Baixa Grande',
-    pop: 18680
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02658',
-    municipio: 'Banzaê',
-    pop: 12309
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02708',
-    municipio: 'Barra',
-    pop: 53528
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02807',
-    municipio: 'Barra da Estiva',
-    pop: 27582
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '02906',
-    municipio: 'Barra do Choça',
-    pop: 38481
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03003',
-    municipio: 'Barra do Mendes',
-    pop: 14345
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03102',
-    municipio: 'Barra do Rocha',
-    pop: 5920
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03201',
-    municipio: 'Barreiras',
-    pop: 170667
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03235',
-    municipio: 'Barro Alto',
-    pop: 13911
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03276',
-    municipio: 'Barrocas',
-    pop: 15743
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03300',
-    municipio: 'Barro Preto',
-    pop: 5966
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03409',
-    municipio: 'Belmonte',
-    pop: 20567
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03508',
-    municipio: 'Belo Campo',
-    pop: 19042
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03607',
-    municipio: 'Biritinga',
-    pop: 15606
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03706',
-    municipio: 'Boa Nova',
-    pop: 14052
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03805',
-    municipio: 'Boa Vista do Tupim',
-    pop: 17307
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03904',
-    municipio: 'Bom Jesus da Lapa',
-    pop: 68704
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '03953',
-    municipio: 'Bom Jesus da Serra',
-    pop: 10028
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04001',
-    municipio: 'Boninal',
-    pop: 14104
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04050',
-    municipio: 'Bonito',
-    pop: 16393
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04100',
-    municipio: 'Boquira',
-    pop: 19829
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04209',
-    municipio: 'Botuporã',
-    pop: 11411
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04308',
-    municipio: 'Brejões',
-    pop: 13272
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04407',
-    municipio: 'Brejolândia',
-    pop: 9377
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04506',
-    municipio: 'Brotas de Macaúbas',
-    pop: 12169
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04605',
-    municipio: 'Brumado',
-    pop: 74095
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04704',
-    municipio: 'Buerarema',
-    pop: 15056
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04753',
-    municipio: 'Buritirama',
-    pop: 20212
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04803',
-    municipio: 'Caatiba',
-    pop: 6224
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04852',
-    municipio: 'Cabaceiras do Paraguaçu',
-    pop: 17039
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '04902',
-    municipio: 'Cachoeira',
-    pop: 30550
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05008',
-    municipio: 'Caculé',
-    pop: 23246
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05107',
-    municipio: 'Caém',
-    pop: 10729
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05156',
-    municipio: 'Caetanos',
-    pop: 11500
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05206',
-    municipio: 'Caetité',
-    pop: 54572
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05305',
-    municipio: 'Cafarnaum',
-    pop: 18039
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05404',
-    municipio: 'Cairu',
-    pop: 18486
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05503',
-    municipio: 'Caldeirão Grande',
-    pop: 13566
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05602',
-    municipio: 'Camacan',
-    pop: 22756
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05701',
-    municipio: 'Camaçari',
-    pop: 319394
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05800',
-    municipio: 'Camamu',
-    pop: 31775
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '05909',
-    municipio: 'Campo Alegre de Lourdes',
-    pop: 32377
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06006',
-    municipio: 'Campo Formoso',
-    pop: 74894
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06105',
-    municipio: 'Canápolis',
-    pop: 10612
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06204',
-    municipio: 'Canarana',
-    pop: 24989
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06303',
-    municipio: 'Canavieiras',
-    pop: 34343
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06402',
-    municipio: 'Candeal',
-    pop: 7969
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06501',
-    municipio: 'Candeias',
-    pop: 75083
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06600',
-    municipio: 'Candiba',
-    pop: 13425
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06709',
-    municipio: 'Cândido Sales',
-    pop: 26465
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06808',
-    municipio: 'Cansanção',
-    pop: 39556
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06824',
-    municipio: 'Canudos',
-    pop: 16662
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06857',
-    municipio: 'Capela do Alto Alegre',
-    pop: 11055
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06873',
-    municipio: 'Capim Grosso',
-    pop: 35228
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06899',
-    municipio: 'Caraíbas',
-    pop: 10260
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '06907',
-    municipio: 'Caravelas',
-    pop: 21229
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07004',
-    municipio: 'Cardeal da Silva',
-    pop: 8634
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07103',
-    municipio: 'Carinhanha',
-    pop: 30375
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07202',
-    municipio: 'Casa Nova',
-    pop: 75815
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07301',
-    municipio: 'Castro Alves',
-    pop: 25471
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07400',
-    municipio: 'Catolândia',
-    pop: 3560
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07509',
-    municipio: 'Catu',
-    pop: 50153
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07558',
-    municipio: 'Caturama',
-    pop: 9115
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07608',
-    municipio: 'Central',
-    pop: 16849
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07707',
-    municipio: 'Chorrochó',
-    pop: 10929
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07806',
-    municipio: 'Cícero Dantas',
-    pop: 32268
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '07905',
-    municipio: 'Cipó',
-    pop: 17836
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08002',
-    municipio: 'Coaraci',
-    pop: 17663
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08101',
-    municipio: 'Cocos',
-    pop: 19817
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08200',
-    municipio: 'Conceição da Feira',
-    pop: 21499
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08309',
-    municipio: 'Conceição do Almeida',
-    pop: 16184
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08408',
-    municipio: 'Conceição do Coité',
-    pop: 71316
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08507',
-    municipio: 'Conceição do Jacuípe',
-    pop: 37409
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08606',
-    municipio: 'Conde',
-    pop: 24434
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08705',
-    municipio: 'Condeúba',
-    pop: 17571
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08804',
-    municipio: 'Contendas do Sincorá',
-    pop: 4490
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '08903',
-    municipio: 'Coração de Maria',
-    pop: 28258
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09000',
-    municipio: 'Cordeiros',
-    pop: 7763
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09109',
-    municipio: 'Coribe',
-    pop: 14464
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09208',
-    municipio: 'Coronel João Sá',
-    pop: 17593
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09307',
-    municipio: 'Correntina',
-    pop: 34179
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09406',
-    municipio: 'Cotegipe',
-    pop: 13472
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09505',
-    municipio: 'Cravolândia',
-    pop: 4514
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09604',
-    municipio: 'Crisópolis',
-    pop: 20343
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09703',
-    municipio: 'Cristópolis',
-    pop: 14514
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09802',
-    municipio: 'Cruz das Almas',
-    pop: 63203
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: '09901',
-    municipio: 'Curaçá',
-    pop: 36021
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10008,
-    municipio: 'Dário Meira',
-    pop: 11094
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10057,
-    municipio: "Dias d'Ávila",
-    pop: 75053
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10107,
-    municipio: 'Dom Basílio',
-    pop: 12309
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10206,
-    municipio: 'Dom Macedo Costa',
-    pop: 4588
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10305,
-    municipio: 'Elísio Medrado',
-    pop: 8066
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10404,
-    municipio: 'Encruzilhada',
-    pop: 19535
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10503,
-    municipio: 'Entre Rios',
-    pop: 39902
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10602,
-    municipio: 'Esplanada',
-    pop: 34146
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10701,
-    municipio: 'Euclides da Cunha',
-    pop: 64547
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10727,
-    municipio: 'Eunápolis',
-    pop: 120515
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10750,
-    municipio: 'Fátima',
-    pop: 18469
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10776,
-    municipio: 'Feira da Mata',
-    pop: 5825
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10800,
-    municipio: 'Feira de Santana',
-    pop: 657948
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10859,
-    municipio: 'Filadélfia',
-    pop: 18573
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 10909,
-    municipio: 'Firmino Alves',
-    pop: 5006
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11006,
-    municipio: 'Floresta Azul',
-    pop: 11442
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11105,
-    municipio: 'Formosa do Rio Preto',
-    pop: 27421
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11204,
-    municipio: 'Gandu',
-    pop: 33938
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11253,
-    municipio: 'Gavião',
-    pop: 4493
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11303,
-    municipio: 'Gentio do Ouro',
-    pop: 11263
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11402,
-    municipio: 'Glória',
-    pop: 16072
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11501,
-    municipio: 'Gongogi',
-    pop: 5567
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11600,
-    municipio: 'Governador Mangabeira',
-    pop: 21314
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11659,
-    municipio: 'Guajeru',
-    pop: 8225
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11709,
-    municipio: 'Guanambi',
-    pop: 93065
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11808,
-    municipio: 'Guaratinga',
-    pop: 19490
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11857,
-    municipio: 'Heliópolis',
-    pop: 13074
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 11907,
-    municipio: 'Iaçu',
-    pop: 25333
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12004,
-    municipio: 'Ibiassucê',
-    pop: 10754
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12103,
-    municipio: 'Ibicaraí',
-    pop: 22200
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12202,
-    municipio: 'Ibicoara',
-    pop: 21690
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12301,
-    municipio: 'Ibicuí',
-    pop: 14306
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12400,
-    municipio: 'Ibipeba',
-    pop: 17128
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12509,
-    municipio: 'Ibipitanga',
-    pop: 14316
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12608,
-    municipio: 'Ibiquera',
-    pop: 3837
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12707,
-    municipio: 'Ibirapitanga',
-    pop: 26794
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12806,
-    municipio: 'Ibirapuã',
-    pop: 9259
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 12905,
-    municipio: 'Ibirataia',
-    pop: 19375
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13002,
-    municipio: 'Ibitiara',
-    pop: 15062
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13101,
-    municipio: 'Ibititá',
-    pop: 17509
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13200,
-    municipio: 'Ibotirama',
-    pop: 27670
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13309,
-    municipio: 'Ichu',
-    pop: 6415
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13408,
-    municipio: 'Igaporã',
-    pop: 16047
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13457,
-    municipio: 'Igrapiúna',
-    pop: 13528
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13507,
-    municipio: 'Iguaí',
-    pop: 21897
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13606,
-    municipio: 'Ilhéus',
-    pop: 189028
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13705,
-    municipio: 'Inhambupe',
-    pop: 35397
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13804,
-    municipio: 'Ipecaetá',
-    pop: 14064
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 13903,
-    municipio: 'Ipiaú',
-    pop: 42507
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14000,
-    municipio: 'Ipirá',
-    pop: 59264
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14109,
-    municipio: 'Ipupiara',
-    pop: 10318
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14208,
-    municipio: 'Irajuba',
-    pop: 6255
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14307,
-    municipio: 'Iramaia',
-    pop: 11060
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14406,
-    municipio: 'Iraquara',
-    pop: 24759
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14505,
-    municipio: 'Irará',
-    pop: 29509
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14604,
-    municipio: 'Irecê',
-    pop: 78425
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14653,
-    municipio: 'Itabela',
-    pop: 29563
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14703,
-    municipio: 'Itaberaba',
-    pop: 68244
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14802,
-    municipio: 'Itabuna',
-    pop: 196676
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 14901,
-    municipio: 'Itacaré',
-    pop: 29337
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15007,
-    municipio: 'Itaeté',
-    pop: 13822
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15106,
-    municipio: 'Itagi',
-    pop: 14314
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15205,
-    municipio: 'Itagibá',
-    pop: 15792
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15304,
-    municipio: 'Itagimirim',
-    pop: 6512
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15353,
-    municipio: 'Itaguaçu da Bahia',
-    pop: 12683
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15403,
-    municipio: 'Itaju do Colônia',
-    pop: 6157
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15502,
-    municipio: 'Itajuípe',
-    pop: 19249
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15601,
-    municipio: 'Itamaraju',
-    pop: 62065
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15700,
-    municipio: 'Itamari',
-    pop: 7219
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15809,
-    municipio: 'Itambé',
-    pop: 25108
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 15908,
-    municipio: 'Itanagra',
-    pop: 6087
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16005,
-    municipio: 'Itanhém',
-    pop: 18258
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16104,
-    municipio: 'Itaparica',
-    pop: 20369
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16203,
-    municipio: 'Itapé',
-    pop: 10658
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16302,
-    municipio: 'Itapebi',
-    pop: 9501
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16401,
-    municipio: 'Itapetinga',
-    pop: 68735
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16500,
-    municipio: 'Itapicuru',
-    pop: 33254
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16609,
-    municipio: 'Itapitanga',
-    pop: 10630
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16708,
-    municipio: 'Itaquara',
-    pop: 8448
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16807,
-    municipio: 'Itarantim',
-    pop: 17517
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16856,
-    municipio: 'Itatim',
-    pop: 16375
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 16906,
-    municipio: 'Itiruçu',
-    pop: 11261
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17003,
-    municipio: 'Itiúba',
-    pop: 35491
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17102,
-    municipio: 'Itororó',
-    pop: 16945
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17201,
-    municipio: 'Ituaçu',
-    pop: 18493
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17300,
-    municipio: 'Ituberá',
-    pop: 22299
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17334,
-    municipio: 'Iuiu',
-    pop: 11532
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17359,
-    municipio: 'Jaborandi',
-    pop: 9592
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17409,
-    municipio: 'Jacaraci',
-    pop: 14901
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17508,
-    municipio: 'Jacobina',
-    pop: 86649
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17607,
-    municipio: 'Jaguaquara',
-    pop: 47738
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17706,
-    municipio: 'Jaguarari',
-    pop: 34440
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17805,
-    municipio: 'Jaguaripe',
-    pop: 18300
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 17904,
-    municipio: 'Jandaíra',
-    pop: 9535
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18001,
-    municipio: 'Jequié',
-    pop: 168733
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18100,
-    municipio: 'Jeremoabo',
-    pop: 39501
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18209,
-    municipio: 'Jiquiriçá',
-    pop: 14066
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18308,
-    municipio: 'Jitaúna',
-    pop: 14815
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18357,
-    municipio: 'João Dourado',
-    pop: 25799
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18407,
-    municipio: 'Juazeiro',
-    pop: 254481
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18456,
-    municipio: 'Jucuruçu',
-    pop: 9944
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18506,
-    municipio: 'Jussara',
-    pop: 16956
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18555,
-    municipio: 'Jussari',
-    pop: 6059
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18605,
-    municipio: 'Jussiape',
-    pop: 7585
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18704,
-    municipio: 'Lafaiete Coutinho',
-    pop: 4221
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18753,
-    municipio: 'Lagoa Real',
-    pop: 14546
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18803,
-    municipio: 'Laje',
-    pop: 21704
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 18902,
-    municipio: 'Lajedão',
-    pop: 3986
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19009,
-    municipio: 'Lajedinho',
-    pop: 3621
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19058,
-    municipio: 'Lajedo do Tabocal',
-    pop: 7702
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19108,
-    municipio: 'Lamarão',
-    pop: 9305
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19157,
-    municipio: 'Lapão',
-    pop: 26998
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19207,
-    municipio: 'Lauro de Freitas',
-    pop: 217960
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19306,
-    municipio: 'Lençóis',
-    pop: 11170
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19405,
-    municipio: 'Licínio de Almeida',
-    pop: 12208
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19504,
-    municipio: 'Livramento de Nossa Senhora',
-    pop: 46249
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19553,
-    municipio: 'Luís Eduardo Magalhães',
-    pop: 116662
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19603,
-    municipio: 'Macajuba',
-    pop: 10758
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19702,
-    municipio: 'Macarani',
-    pop: 22596
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19801,
-    municipio: 'Macaúbas',
-    pop: 43725
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19900,
-    municipio: 'Macururé',
-    pop: 7455
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19926,
-    municipio: 'Madre de Deus',
-    pop: 19173
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 19959,
-    municipio: 'Maetinga',
-    pop: 7212
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20007,
-    municipio: 'Maiquinique',
-    pop: 9011
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20106,
-    municipio: 'Mairi',
-    pop: 18161
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20205,
-    municipio: 'Malhada',
-    pop: 15834
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20304,
-    municipio: 'Malhada de Pedras',
-    pop: 8972
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20403,
-    municipio: 'Manoel Vitorino',
-    pop: 14295
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20452,
-    municipio: 'Mansidão',
-    pop: 14484
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20502,
-    municipio: 'Maracás',
-    pop: 29197
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20601,
-    municipio: 'Maragogipe',
-    pop: 37225
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20700,
-    municipio: 'Maraú',
-    pop: 25626
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20809,
-    municipio: 'Marcionílio Souza',
-    pop: 9507
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 20908,
-    municipio: 'Mascote',
-    pop: 13941
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21005,
-    municipio: 'Mata de São João',
-    pop: 44839
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21054,
-    municipio: 'Matina',
-    pop: 10629
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21104,
-    municipio: 'Medeiros Neto',
-    pop: 22925
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21203,
-    municipio: 'Miguel Calmon',
-    pop: 25317
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21302,
-    municipio: 'Milagres',
-    pop: 11434
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21401,
-    municipio: 'Mirangaba',
-    pop: 16185
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21450,
-    municipio: 'Mirante',
-    pop: 10523
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21500,
-    municipio: 'Monte Santo',
-    pop: 49823
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21609,
-    municipio: 'Morpará',
-    pop: 8232
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21708,
-    municipio: 'Morro do Chapéu',
-    pop: 35224
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21807,
-    municipio: 'Mortugaba',
-    pop: 11487
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 21906,
-    municipio: 'Mucugê',
-    pop: 12650
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22003,
-    municipio: 'Mucuri',
-    pop: 40005
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22052,
-    municipio: 'Mulungu do Morro',
-    pop: 13625
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22102,
-    municipio: 'Mundo Novo',
-    pop: 17417
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22201,
-    municipio: 'Muniz Ferreira',
-    pop: 7443
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22250,
-    municipio: 'Muquém do São Francisco',
-    pop: 10796
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22300,
-    municipio: 'Muritiba',
-    pop: 30146
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22409,
-    municipio: 'Mutuípe',
-    pop: 20612
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22508,
-    municipio: 'Nazaré',
-    pop: 28403
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22607,
-    municipio: 'Nilo Peçanha',
-    pop: 12418
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22656,
-    municipio: 'Nordestina',
-    pop: 19500
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22706,
-    municipio: 'Nova Canaã',
-    pop: 14035
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22730,
-    municipio: 'Nova Fátima',
-    pop: 8264
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22755,
-    municipio: 'Nova Ibiá',
-    pop: 6701
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22805,
-    municipio: 'Nova Itarana',
-    pop: 8059
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22854,
-    municipio: 'Nova Redenção',
-    pop: 7708
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 22904,
-    municipio: 'Nova Soure',
-    pop: 24906
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23001,
-    municipio: 'Nova Viçosa',
-    pop: 41551
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23035,
-    municipio: 'Novo Horizonte',
-    pop: 11565
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23050,
-    municipio: 'Novo Triunfo',
-    pop: 11197
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23100,
-    municipio: 'Olindina',
-    pop: 23085
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23209,
-    municipio: 'Oliveira dos Brejinhos',
-    pop: 21334
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23308,
-    municipio: 'Ouriçangas',
-    pop: 7939
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23357,
-    municipio: 'Ourolândia',
-    pop: 20037
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23407,
-    municipio: 'Palmas de Monte Alto',
-    pop: 20677
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23506,
-    municipio: 'Palmeiras',
-    pop: 10819
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23605,
-    municipio: 'Paramirim',
-    pop: 21009
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23704,
-    municipio: 'Paratinga',
-    pop: 30671
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23803,
-    municipio: 'Paripiranga',
-    pop: 27866
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 23902,
-    municipio: 'Pau Brasil',
-    pop: 9584
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24009,
-    municipio: 'Paulo Afonso',
-    pop: 119128
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24058,
-    municipio: 'Pé de Serra',
-    pop: 13675
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24108,
-    municipio: 'Pedrão',
-    pop: 6415
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24207,
-    municipio: 'Pedro Alexandre',
-    pop: 14288
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24306,
-    municipio: 'Piatã',
-    pop: 20859
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24405,
-    municipio: 'Pilão Arcado',
-    pop: 37272
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24504,
-    municipio: 'Pindaí',
-    pop: 15146
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24603,
-    municipio: 'Pindobaçu',
-    pop: 19625
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24652,
-    municipio: 'Pintadas',
-    pop: 10656
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24678,
-    municipio: 'Piraí do Norte',
-    pop: 11429
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24702,
-    municipio: 'Piripá',
-    pop: 9255
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24801,
-    municipio: 'Piritiba',
-    pop: 17838
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 24900,
-    municipio: 'Planaltino',
-    pop: 8254
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25006,
-    municipio: 'Planalto',
-    pop: 24036
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25105,
-    municipio: 'Poções',
-    pop: 50642
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25204,
-    municipio: 'Pojuca',
-    pop: 33608
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25253,
-    municipio: 'Ponto Novo',
-    pop: 18670
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25303,
-    municipio: 'Porto Seguro',
-    pop: 181007
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25402,
-    municipio: 'Potiraguá',
-    pop: 10636
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25501,
-    municipio: 'Prado',
-    pop: 37241
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25600,
-    municipio: 'Presidente Dutra',
-    pop: 15650
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25709,
-    municipio: 'Presidente Jânio Quadros',
-    pop: 12986
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25758,
-    municipio: 'Presidente Tancredo Neves',
-    pop: 29343
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25808,
-    municipio: 'Queimadas',
-    pop: 27362
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25907,
-    municipio: 'Quijingue',
-    pop: 26457
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25931,
-    municipio: 'Quixabeira',
-    pop: 9815
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 25956,
-    municipio: 'Rafael Jambeiro',
-    pop: 20146
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26004,
-    municipio: 'Remanso',
-    pop: 42746
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26103,
-    municipio: 'Retirolândia',
-    pop: 14147
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26202,
-    municipio: 'Riachão das Neves',
-    pop: 22323
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26301,
-    municipio: 'Riachão do Jacuípe',
-    pop: 35118
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26400,
-    municipio: 'Riacho de Santana',
-    pop: 32103
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26509,
-    municipio: 'Ribeira do Amparo',
-    pop: 14525
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26608,
-    municipio: 'Ribeira do Pombal',
-    pop: 56170
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26657,
-    municipio: 'Ribeirão do Largo',
-    pop: 10039
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26707,
-    municipio: 'Rio de Contas',
-    pop: 13627
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26806,
-    municipio: 'Rio do Antônio',
-    pop: 13520
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 26905,
-    municipio: 'Rio do Pires',
-    pop: 10801
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27002,
-    municipio: 'Rio Real',
-    pop: 36997
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27101,
-    municipio: 'Rodelas',
-    pop: 10801
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27200,
-    municipio: 'Ruy Barbosa',
-    pop: 29606
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27309,
-    municipio: 'Salinas da Margarida',
-    pop: 15568
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27408,
-    municipio: 'Salvador',
-    pop: 2568928
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27507,
-    municipio: 'Santa Bárbara',
-    pop: 21723
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27606,
-    municipio: 'Santa Brígida',
-    pop: 15421
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27705,
-    municipio: 'Santa Cruz Cabrália',
-    pop: 30862
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27804,
-    municipio: 'Santa Cruz da Vitória',
-    pop: 4721
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 27903,
-    municipio: 'Santa Inês',
-    pop: 10628
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28000,
-    municipio: 'Santaluz',
-    pop: 39922
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28059,
-    municipio: 'Santa Luzia',
-    pop: 14377
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28109,
-    municipio: 'Santa Maria da Vitória',
-    pop: 40467
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28208,
-    municipio: 'Santana',
-    pop: 25520
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28307,
-    municipio: 'Santanópolis',
-    pop: 9023
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28406,
-    municipio: 'Santa Rita de Cássia',
-    pop: 28826
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28505,
-    municipio: 'Santa Terezinha',
-    pop: 10847
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28604,
-    municipio: 'Santo Amaro',
-    pop: 58413
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28703,
-    municipio: 'Santo Antônio de Jesus',
-    pop: 109267
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28802,
-    municipio: 'Santo Estêvão',
-    pop: 54940
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28901,
-    municipio: 'São Desidério',
-    pop: 34783
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 28950,
-    municipio: 'São Domingos',
-    pop: 8693
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29008,
-    municipio: 'São Félix',
-    pop: 11198
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29057,
-    municipio: 'São Félix do Coribe',
-    pop: 15740
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29107,
-    municipio: 'São Felipe',
-    pop: 20918
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29206,
-    municipio: 'São Francisco do Conde',
-    pop: 40932
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29255,
-    municipio: 'São Gabriel',
-    pop: 19210
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29305,
-    municipio: 'São Gonçalo dos Campos',
-    pop: 41909
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29354,
-    municipio: 'São José da Vitória',
-    pop: 5451
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29370,
-    municipio: 'São José do Jacuípe',
-    pop: 10556
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29404,
-    municipio: 'São Miguel das Matas',
-    pop: 10634
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29503,
-    municipio: 'São Sebastião do Passé',
-    pop: 42936
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29602,
-    municipio: 'Sapeaçu',
-    pop: 18609
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29701,
-    municipio: 'Sátiro Dias',
-    pop: 16485
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29750,
-    municipio: 'Saubara',
-    pop: 11842
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29800,
-    municipio: 'Saúde',
-    pop: 10715
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 29909,
-    municipio: 'Seabra',
-    pop: 48530
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30006,
-    municipio: 'Sebastião Laranjeiras',
-    pop: 9610
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30105,
-    municipio: 'Senhor do Bonfim',
-    pop: 77976
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30154,
-    municipio: 'Serra do Ramalho',
-    pop: 36119
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30204,
-    municipio: 'Sento Sé',
-    pop: 40147
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30303,
-    municipio: 'Serra Dourada',
-    pop: 17580
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30402,
-    municipio: 'Serra Preta',
-    pop: 18685
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30501,
-    municipio: 'Serrinha',
-    pop: 84428
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30600,
-    municipio: 'Serrolândia',
-    pop: 13831
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30709,
-    municipio: 'Simões Filho',
-    pop: 120394
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30758,
-    municipio: 'Sítio do Mato',
-    pop: 13935
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30766,
-    municipio: 'Sítio do Quinto',
-    pop: 14359
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30774,
-    municipio: 'Sobradinho',
-    pop: 26959
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30808,
-    municipio: 'Souto Soares',
-    pop: 17674
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 30907,
-    municipio: 'Tabocas do Brejo Velho',
-    pop: 12368
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31004,
-    municipio: 'Tanhaçu',
-    pop: 21741
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31053,
-    municipio: 'Tanque Novo',
-    pop: 17770
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31103,
-    municipio: 'Tanquinho',
-    pop: 7983
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31202,
-    municipio: 'Taperoá',
-    pop: 18571
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31301,
-    municipio: 'Tapiramutá',
-    pop: 16253
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31350,
-    municipio: 'Teixeira de Freitas',
-    pop: 153332
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31400,
-    municipio: 'Teodoro Sampaio',
-    pop: 7301
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31509,
-    municipio: 'Teofilândia',
-    pop: 21827
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31608,
-    municipio: 'Teolândia',
-    pop: 15919
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31707,
-    municipio: 'Terra Nova',
-    pop: 11035
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31806,
-    municipio: 'Tremedal',
-    pop: 16691
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 31905,
-    municipio: 'Tucano',
-    pop: 50959
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32002,
-    municipio: 'Uauá',
-    pop: 25441
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32101,
-    municipio: 'Ubaíra',
-    pop: 19162
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32200,
-    municipio: 'Ubaitaba',
-    pop: 17967
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32309,
-    municipio: 'Ubatã',
-    pop: 16097
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32408,
-    municipio: 'Uibaí',
-    pop: 13880
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32457,
-    municipio: 'Umburanas',
-    pop: 13888
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32507,
-    municipio: 'Una',
-    pop: 18403
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32606,
-    municipio: 'Urandi',
-    pop: 15794
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32705,
-    municipio: 'Uruçuca',
-    pop: 22130
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32804,
-    municipio: 'Utinga',
-    pop: 16691
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 32903,
-    municipio: 'Valença',
-    pop: 90028
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33000,
-    municipio: 'Valente',
-    pop: 25126
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33059,
-    municipio: 'Várzea da Roça',
-    pop: 14279
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33109,
-    municipio: 'Várzea do Poço',
-    pop: 8344
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33158,
-    municipio: 'Várzea Nova',
-    pop: 13847
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33174,
-    municipio: 'Varzedo',
-    pop: 10296
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33208,
-    municipio: 'Vera Cruz',
-    pop: 44978
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33257,
-    municipio: 'Vereda',
-    pop: 6171
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33307,
-    municipio: 'Vitória da Conquista',
-    pop: 394024
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33406,
-    municipio: 'Wagner',
-    pop: 9847
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33455,
-    municipio: 'Wanderley',
-    pop: 13436
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33505,
-    municipio: 'Wenceslau Guimarães',
-    pop: 25430
-  },
-  {
-    uf: 'BA',
-    uf_id: 29,
-    municipio_id: 33604,
-    municipio: 'Xique-Xique',
-    pop: 46979
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00104',
-    municipio: 'Abadia dos Dourados',
-    pop: 6365
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00203',
-    municipio: 'Abaeté',
-    pop: 23161
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00302',
-    municipio: 'Abre Campo',
-    pop: 14312
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00401',
-    municipio: 'Acaiaca',
-    pop: 3997
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00500',
-    municipio: 'Açucena',
-    pop: 8995
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00609',
-    municipio: 'Água Boa',
-    pop: 12545
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00708',
-    municipio: 'Água Comprida',
-    pop: 2165
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00807',
-    municipio: 'Aguanil',
-    pop: 4490
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '00906',
-    municipio: 'Águas Formosas',
-    pop: 18841
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01003',
-    municipio: 'Águas Vermelhas',
-    pop: 14486
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01102',
-    municipio: 'Aimorés',
-    pop: 26165
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01201',
-    municipio: 'Aiuruoca',
-    pop: 6382
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01300',
-    municipio: 'Alagoa',
-    pop: 2816
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01409',
-    municipio: 'Albertina',
-    pop: 3023
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01508',
-    municipio: 'Além Paraíba',
-    pop: 31333
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01607',
-    municipio: 'Alfenas',
-    pop: 81950
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01631',
-    municipio: 'Alfredo Vasconcelos',
-    pop: 7184
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01706',
-    municipio: 'Almenara',
-    pop: 41894
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01805',
-    municipio: 'Alpercata',
-    pop: 7029
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '01904',
-    municipio: 'Alpinópolis',
-    pop: 18672
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02001',
-    municipio: 'Alterosa',
-    pop: 14253
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02050',
-    municipio: 'Alto Caparaó',
-    pop: 5982
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02100',
-    municipio: 'Alto Rio Doce',
-    pop: 10994
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02209',
-    municipio: 'Alvarenga',
-    pop: 4012
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02308',
-    municipio: 'Alvinópolis',
-    pop: 15360
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02407',
-    municipio: 'Alvorada de Minas',
-    pop: 4322
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02506',
-    municipio: 'Amparo do Serra',
-    pop: 4595
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02605',
-    municipio: 'Andradas',
-    pop: 42282
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02704',
-    municipio: 'Cachoeira de Pajeú',
-    pop: 9333
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02803',
-    municipio: 'Andrelândia',
-    pop: 12169
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02852',
-    municipio: 'Angelândia',
-    pop: 7860
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '02902',
-    municipio: 'Antônio Carlos',
-    pop: 11345
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03009',
-    municipio: 'Antônio Dias',
-    pop: 9388
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03108',
-    municipio: 'Antônio Prado de Minas',
-    pop: 1558
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03207',
-    municipio: 'Araçaí',
-    pop: 2224
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03306',
-    municipio: 'Aracitaba',
-    pop: 2095
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03405',
-    municipio: 'Araçuaí',
-    pop: 35250
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03504',
-    municipio: 'Araguari',
-    pop: 122874
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03603',
-    municipio: 'Arantina',
-    pop: 2991
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03702',
-    municipio: 'Araponga',
-    pop: 8218
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03751',
-    municipio: 'Araporã',
-    pop: 8935
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03801',
-    municipio: 'Arapuá',
-    pop: 2674
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '03900',
-    municipio: 'Araújos',
-    pop: 9556
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04007',
-    municipio: 'Araxá',
-    pop: 117677
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04106',
-    municipio: 'Arceburgo',
-    pop: 9348
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04205',
-    municipio: 'Arcos',
-    pop: 43348
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04304',
-    municipio: 'Areado',
-    pop: 14212
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04403',
-    municipio: 'Argirita',
-    pop: 2725
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04452',
-    municipio: 'Aricanduva',
-    pop: 4820
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04502',
-    municipio: 'Arinos',
-    pop: 17598
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04601',
-    municipio: 'Astolfo Dutra',
-    pop: 14565
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04700',
-    municipio: 'Ataléia',
-    pop: 13967
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04809',
-    municipio: 'Augusto de Lima',
-    pop: 4593
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '04908',
-    municipio: 'Baependi',
-    pop: 18768
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05004',
-    municipio: 'Baldim',
-    pop: 7614
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05103',
-    municipio: 'Bambuí',
-    pop: 24144
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05202',
-    municipio: 'Bandeira',
-    pop: 4821
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05301',
-    municipio: 'Bandeira do Sul',
-    pop: 6146
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05400',
-    municipio: 'Barão de Cocais',
-    pop: 32095
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05509',
-    municipio: 'Barão de Monte Alto',
-    pop: 4991
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05608',
-    municipio: 'Barbacena',
-    pop: 129630
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05707',
-    municipio: 'Barra Longa',
-    pop: 5740
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '05905',
-    municipio: 'Barroso',
-    pop: 20566
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06002',
-    municipio: 'Bela Vista de Minas',
-    pop: 10412
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06101',
-    municipio: 'Belmiro Braga',
-    pop: 3299
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06200',
-    municipio: 'Belo Horizonte',
-    pop: 2416339
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06309',
-    municipio: 'Belo Oriente',
-    pop: 24503
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06408',
-    municipio: 'Belo Vale',
-    pop: 8946
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06507',
-    municipio: 'Berilo',
-    pop: 9769
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06606',
-    municipio: 'Bertópolis',
-    pop: 4546
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06655',
-    municipio: 'Berizal',
-    pop: 4277
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06705',
-    municipio: 'Betim',
-    pop: 429236
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06804',
-    municipio: 'Bias Fortes',
-    pop: 3388
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '06903',
-    municipio: 'Bicas',
-    pop: 14331
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07000',
-    municipio: 'Biquinhas',
-    pop: 2409
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07109',
-    municipio: 'Boa Esperança',
-    pop: 41332
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07208',
-    municipio: 'Bocaina de Minas',
-    pop: 5508
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07307',
-    municipio: 'Bocaiúva',
-    pop: 49668
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07406',
-    municipio: 'Bom Despacho',
-    pop: 53995
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07505',
-    municipio: 'Bom Jardim de Minas',
-    pop: 6968
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07604',
-    municipio: 'Bom Jesus da Penha',
-    pop: 4642
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07703',
-    municipio: 'Bom Jesus do Amparo',
-    pop: 5775
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07802',
-    municipio: 'Bom Jesus do Galho',
-    pop: 14756
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '07901',
-    municipio: 'Bom Repouso',
-    pop: 13183
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08008',
-    municipio: 'Bom Sucesso',
-    pop: 17510
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08107',
-    municipio: 'Bonfim',
-    pop: 7672
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08206',
-    municipio: 'Bonfinópolis de Minas',
-    pop: 5615
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08255',
-    municipio: 'Bonito de Minas',
-    pop: 10491
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08305',
-    municipio: 'Borda da Mata',
-    pop: 17811
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08404',
-    municipio: 'Botelhos',
-    pop: 15137
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08503',
-    municipio: 'Botumirim',
-    pop: 5841
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08552',
-    municipio: 'Brasilândia de Minas',
-    pop: 15432
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08602',
-    municipio: 'Brasília de Minas',
-    pop: 33188
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08701',
-    municipio: 'Brás Pires',
-    pop: 4314
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08800',
-    municipio: 'Braúnas',
-    pop: 4475
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '08909',
-    municipio: 'Brazópolis',
-    pop: 14506
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09006',
-    municipio: 'Brumadinho',
-    pop: 40777
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09105',
-    municipio: 'Bueno Brandão',
-    pop: 11161
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09204',
-    municipio: 'Buenópolis',
-    pop: 9229
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09253',
-    municipio: 'Bugre',
-    pop: 4149
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09303',
-    municipio: 'Buritis',
-    pop: 24693
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09402',
-    municipio: 'Buritizeiro',
-    pop: 24068
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09451',
-    municipio: 'Cabeceira Grande',
-    pop: 6797
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09501',
-    municipio: 'Cabo Verde',
-    pop: 11396
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09600',
-    municipio: 'Cachoeira da Prata',
-    pop: 3781
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09709',
-    municipio: 'Cachoeira de Minas',
-    pop: 12248
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09808',
-    municipio: 'Cachoeira Dourada',
-    pop: 2346
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: '09907',
-    municipio: 'Caetanópolis',
-    pop: 11832
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10004,
-    municipio: 'Caeté',
-    pop: 39850
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10103,
-    municipio: 'Caiana',
-    pop: 5463
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10202,
-    municipio: 'Cajuri',
-    pop: 4186
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10301,
-    municipio: 'Caldas',
-    pop: 14588
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10400,
-    municipio: 'Camacho',
-    pop: 2867
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10509,
-    municipio: 'Camanducaia',
-    pop: 27551
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10608,
-    municipio: 'Cambuí',
-    pop: 30870
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10707,
-    municipio: 'Cambuquira',
-    pop: 12560
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10806,
-    municipio: 'Campanário',
-    pop: 2917
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 10905,
-    municipio: 'Campanha',
-    pop: 16334
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11002,
-    municipio: 'Campestre',
-    pop: 21143
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11101,
-    municipio: 'Campina Verde',
-    pop: 18250
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11150,
-    municipio: 'Campo Azul',
-    pop: 3802
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11200,
-    municipio: 'Campo Belo',
-    pop: 53943
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11309,
-    municipio: 'Campo do Meio',
-    pop: 11624
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11408,
-    municipio: 'Campo Florido',
-    pop: 8838
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11507,
-    municipio: 'Campos Altos',
-    pop: 13136
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11606,
-    municipio: 'Campos Gerais',
-    pop: 26809
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11705,
-    municipio: 'Canaã',
-    pop: 4832
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11804,
-    municipio: 'Canápolis',
-    pop: 10755
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 11903,
-    municipio: 'Cana Verde',
-    pop: 5356
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12000,
-    municipio: 'Candeias',
-    pop: 14236
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12059,
-    municipio: 'Cantagalo',
-    pop: 4039
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12109,
-    municipio: 'Caparaó',
-    pop: 5144
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12208,
-    municipio: 'Capela Nova',
-    pop: 4416
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12307,
-    municipio: 'Capelinha',
-    pop: 41536
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12406,
-    municipio: 'Capetinga',
-    pop: 6652
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12505,
-    municipio: 'Capim Branco',
-    pop: 11105
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12604,
-    municipio: 'Capinópolis',
-    pop: 14899
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12653,
-    municipio: 'Capitão Andrade',
-    pop: 4650
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12703,
-    municipio: 'Capitão Enéas',
-    pop: 14401
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12802,
-    municipio: 'Capitólio',
-    pop: 10863
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 12901,
-    municipio: 'Caputira',
-    pop: 9128
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13008,
-    municipio: 'Caraí',
-    pop: 19654
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13107,
-    municipio: 'Caranaíba',
-    pop: 2960
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13206,
-    municipio: 'Carandaí',
-    pop: 24368
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13305,
-    municipio: 'Carangola',
-    pop: 32165
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13404,
-    municipio: 'Caratinga',
-    pop: 90687
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13503,
-    municipio: 'Carbonita',
-    pop: 8633
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13602,
-    municipio: 'Careaçu',
-    pop: 7029
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13701,
-    municipio: 'Carlos Chagas',
-    pop: 18852
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13800,
-    municipio: 'Carmésia',
-    pop: 2682
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 13909,
-    municipio: 'Carmo da Cachoeira',
-    pop: 11776
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14006,
-    municipio: 'Carmo da Mata',
-    pop: 11279
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14105,
-    municipio: 'Carmo de Minas',
-    pop: 14114
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14204,
-    municipio: 'Carmo do Cajuru',
-    pop: 24376
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14303,
-    municipio: 'Carmo do Paranaíba',
-    pop: 29899
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14402,
-    municipio: 'Carmo do Rio Claro',
-    pop: 21464
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14501,
-    municipio: 'Carmópolis de Minas',
-    pop: 18498
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14550,
-    municipio: 'Carneirinho',
-    pop: 9630
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14600,
-    municipio: 'Carrancas',
-    pop: 4153
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14709,
-    municipio: 'Carvalhópolis',
-    pop: 3417
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14808,
-    municipio: 'Carvalhos',
-    pop: 4507
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 14907,
-    municipio: 'Casa Grande',
-    pop: 2260
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15003,
-    municipio: 'Cascalho Rico',
-    pop: 2757
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15102,
-    municipio: 'Cássia',
-    pop: 17495
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15201,
-    municipio: 'Conceição da Barra de Minas',
-    pop: 3596
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15300,
-    municipio: 'Cataguases',
-    pop: 67872
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15359,
-    municipio: 'Catas Altas',
-    pop: 5668
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15409,
-    municipio: 'Catas Altas da Noruega',
-    pop: 3141
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15458,
-    municipio: 'Catuji',
-    pop: 7226
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15474,
-    municipio: 'Catuti',
-    pop: 4805
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15508,
-    municipio: 'Caxambu',
-    pop: 21436
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15607,
-    municipio: 'Cedro do Abaeté',
-    pop: 1091
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15706,
-    municipio: 'Central de Minas',
-    pop: 6243
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15805,
-    municipio: 'Centralina',
-    pop: 10440
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 15904,
-    municipio: 'Chácara',
-    pop: 3177
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16001,
-    municipio: 'Chalé',
-    pop: 6261
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16100,
-    municipio: 'Chapada do Norte',
-    pop: 10024
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16159,
-    municipio: 'Chapada Gaúcha',
-    pop: 12810
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16209,
-    municipio: 'Chiador',
-    pop: 2865
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16308,
-    municipio: 'Cipotânea',
-    pop: 5599
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16407,
-    municipio: 'Claraval',
-    pop: 4777
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16506,
-    municipio: 'Claro dos Poções',
-    pop: 7259
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16605,
-    municipio: 'Cláudio',
-    pop: 31665
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16704,
-    municipio: 'Coimbra',
-    pop: 7285
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16803,
-    municipio: 'Coluna',
-    pop: 8251
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 16902,
-    municipio: 'Comendador Gomes',
-    pop: 2813
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17009,
-    municipio: 'Comercinho',
-    pop: 6627
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17108,
-    municipio: 'Conceição da Aparecida',
-    pop: 10668
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17207,
-    municipio: 'Conceição das Pedras',
-    pop: 2837
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17306,
-    municipio: 'Conceição das Alagoas',
-    pop: 29949
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17405,
-    municipio: 'Conceição de Ipanema',
-    pop: 4503
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17504,
-    municipio: 'Conceição do Mato Dentro',
-    pop: 24254
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17603,
-    municipio: 'Conceição do Pará',
-    pop: 5567
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17702,
-    municipio: 'Conceição do Rio Verde',
-    pop: 12780
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17801,
-    municipio: 'Conceição dos Ouros',
-    pop: 11183
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17836,
-    municipio: 'Cônego Marinho',
-    pop: 7420
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17876,
-    municipio: 'Confins',
-    pop: 7676
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 17900,
-    municipio: 'Congonhal',
-    pop: 11403
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18007,
-    municipio: 'Congonhas',
-    pop: 54986
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18106,
-    municipio: 'Congonhas do Norte',
-    pop: 4927
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18205,
-    municipio: 'Conquista',
-    pop: 6864
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18304,
-    municipio: 'Conselheiro Lafaiete',
-    pop: 137980
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18403,
-    municipio: 'Conselheiro Pena',
-    pop: 21113
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18502,
-    municipio: 'Consolação',
-    pop: 1578
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18601,
-    municipio: 'Contagem',
-    pop: 649975
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18700,
-    municipio: 'Coqueiral',
-    pop: 9197
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18809,
-    municipio: 'Coração de Jesus',
-    pop: 26151
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 18908,
-    municipio: 'Cordisburgo',
-    pop: 7592
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19005,
-    municipio: 'Cordislândia',
-    pop: 3247
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19104,
-    municipio: 'Corinto',
-    pop: 23996
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19203,
-    municipio: 'Coroaci',
-    pop: 11200
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19302,
-    municipio: 'Coromandel',
-    pop: 30013
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19401,
-    municipio: 'Coronel Fabriciano',
-    pop: 108551
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19500,
-    municipio: 'Coronel Murta',
-    pop: 8283
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19609,
-    municipio: 'Coronel Pacheco',
-    pop: 2799
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19708,
-    municipio: 'Coronel Xavier Chaves',
-    pop: 3586
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19807,
-    municipio: 'Córrego Danta',
-    pop: 2978
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19906,
-    municipio: 'Córrego do Bom Jesus',
-    pop: 4429
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 19955,
-    municipio: 'Córrego Fundo',
-    pop: 6310
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20003,
-    municipio: 'Córrego Novo',
-    pop: 2912
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20102,
-    municipio: 'Couto de Magalhães de Minas',
-    pop: 4346
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20151,
-    municipio: 'Crisólita',
-    pop: 5296
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20201,
-    municipio: 'Cristais',
-    pop: 12576
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20300,
-    municipio: 'Cristália',
-    pop: 5165
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20409,
-    municipio: 'Cristiano Otoni',
-    pop: 4735
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20508,
-    municipio: 'Cristina',
-    pop: 10627
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20607,
-    municipio: 'Crucilândia',
-    pop: 5633
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20706,
-    municipio: 'Cruzeiro da Fortaleza',
-    pop: 3610
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20805,
-    municipio: 'Cruzília',
-    pop: 15779
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20839,
-    municipio: 'Cuparaque',
-    pop: 3994
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20870,
-    municipio: 'Curral de Dentro',
-    pop: 7630
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 20904,
-    municipio: 'Curvelo',
-    pop: 83862
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21001,
-    municipio: 'Datas',
-    pop: 5618
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21100,
-    municipio: 'Delfim Moreira',
-    pop: 8130
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21209,
-    municipio: 'Delfinópolis',
-    pop: 8760
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21258,
-    municipio: 'Delta',
-    pop: 11003
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21308,
-    municipio: 'Descoberto',
-    pop: 5058
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21407,
-    municipio: 'Desterro de Entre Rios',
-    pop: 7900
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21506,
-    municipio: 'Desterro do Melo',
-    pop: 3059
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21605,
-    municipio: 'Diamantina',
-    pop: 49353
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21704,
-    municipio: 'Diogo de Vasconcelos',
-    pop: 3596
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21803,
-    municipio: 'Dionísio',
-    pop: 6789
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 21902,
-    municipio: 'Divinésia',
-    pop: 4426
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22009,
-    municipio: 'Divino',
-    pop: 21329
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22108,
-    municipio: 'Divino das Laranjeiras',
-    pop: 4186
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22207,
-    municipio: 'Divinolândia de Minas',
-    pop: 6607
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22306,
-    municipio: 'Divinópolis',
-    pop: 242328
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22355,
-    municipio: 'Divisa Alegre',
-    pop: 6513
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22405,
-    municipio: 'Divisa Nova',
-    pop: 5993
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22454,
-    municipio: 'Divisópolis',
-    pop: 10585
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22470,
-    municipio: 'Dom Bosco',
-    pop: 3767
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22504,
-    municipio: 'Dom Cavati',
-    pop: 4981
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22603,
-    municipio: 'Dom Joaquim',
-    pop: 5051
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22702,
-    municipio: 'Dom Silvério',
-    pop: 5350
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22801,
-    municipio: 'Dom Viçoso',
-    pop: 3176
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 22900,
-    municipio: 'Dona Euzébia',
-    pop: 6241
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23007,
-    municipio: 'Dores de Campos',
-    pop: 10313
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23106,
-    municipio: 'Dores de Guanhães',
-    pop: 5121
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23205,
-    municipio: 'Dores do Indaiá',
-    pop: 12786
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23304,
-    municipio: 'Dores do Turvo',
-    pop: 5159
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23403,
-    municipio: 'Doresópolis',
-    pop: 1496
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23502,
-    municipio: 'Douradoquara',
-    pop: 1869
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23528,
-    municipio: 'Durandé',
-    pop: 8038
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23601,
-    municipio: 'Elói Mendes',
-    pop: 27343
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23700,
-    municipio: 'Engenheiro Caldas',
-    pop: 14308
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23809,
-    municipio: 'Engenheiro Navarro',
-    pop: 6411
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23858,
-    municipio: 'Entre Folhas',
-    pop: 5293
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 23908,
-    municipio: 'Entre Rios de Minas',
-    pop: 15120
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24005,
-    municipio: 'Ervália',
-    pop: 20951
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24104,
-    municipio: 'Esmeraldas',
-    pop: 91573
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24203,
-    municipio: 'Espera Feliz',
-    pop: 24761
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24302,
-    municipio: 'Espinosa',
-    pop: 31385
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24401,
-    municipio: 'Espírito Santo do Dourado',
-    pop: 7007
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24500,
-    municipio: 'Estiva',
-    pop: 11836
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24609,
-    municipio: 'Estrela Dalva',
-    pop: 2204
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24708,
-    municipio: 'Estrela do Indaiá',
-    pop: 2750
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24807,
-    municipio: 'Estrela do Sul',
-    pop: 6926
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 24906,
-    municipio: 'Eugenópolis',
-    pop: 11075
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25002,
-    municipio: 'Ewbank da Câmara',
-    pop: 3977
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25101,
-    municipio: 'Extrema',
-    pop: 57913
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25200,
-    municipio: 'Fama',
-    pop: 2662
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25309,
-    municipio: 'Faria Lemos',
-    pop: 3239
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25408,
-    municipio: 'Felício dos Santos',
-    pop: 5248
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25507,
-    municipio: 'São Gonçalo do Rio Preto',
-    pop: 3098
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25606,
-    municipio: 'Felisburgo',
-    pop: 6592
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25705,
-    municipio: 'Felixlândia',
-    pop: 14279
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25804,
-    municipio: 'Fernandes Tourinho',
-    pop: 2825
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25903,
-    municipio: 'Ferros',
-    pop: 9666
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 25952,
-    municipio: 'Fervedouro',
-    pop: 10693
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26000,
-    municipio: 'Florestal',
-    pop: 8386
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26109,
-    municipio: 'Formiga',
-    pop: 70668
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26208,
-    municipio: 'Formoso',
-    pop: 8103
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26307,
-    municipio: 'Fortaleza de Minas',
-    pop: 3485
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26406,
-    municipio: 'Fortuna de Minas',
-    pop: 3207
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26505,
-    municipio: 'Francisco Badaró',
-    pop: 7208
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26604,
-    municipio: 'Francisco Dumont',
-    pop: 4564
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26703,
-    municipio: 'Francisco Sá',
-    pop: 23819
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26752,
-    municipio: 'Franciscópolis',
-    pop: 5062
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26802,
-    municipio: 'Frei Gaspar',
-    pop: 5741
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26901,
-    municipio: 'Frei Inocêncio',
-    pop: 8334
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 26950,
-    municipio: 'Frei Lagonegro',
-    pop: 3475
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27008,
-    municipio: 'Fronteira',
-    pop: 14909
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27057,
-    municipio: 'Fronteira dos Vales',
-    pop: 4405
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27073,
-    municipio: 'Fruta de Leite',
-    pop: 4607
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27107,
-    municipio: 'Frutal',
-    pop: 60942
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27206,
-    municipio: 'Funilândia',
-    pop: 4886
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27305,
-    municipio: 'Galiléia',
-    pop: 6281
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27339,
-    municipio: 'Gameleiras',
-    pop: 4863
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27354,
-    municipio: 'Glaucilândia',
-    pop: 2991
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27370,
-    municipio: 'Goiabeira',
-    pop: 2869
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27388,
-    municipio: 'Goianá',
-    pop: 4190
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27404,
-    municipio: 'Gonçalves',
-    pop: 4891
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27503,
-    municipio: 'Gonzaga',
-    pop: 5271
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27602,
-    municipio: 'Gouveia',
-    pop: 11549
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27701,
-    municipio: 'Governador Valadares',
-    pop: 266649
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27800,
-    municipio: 'Grão Mogol',
-    pop: 14091
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 27909,
-    municipio: 'Grupiara',
-    pop: 1426
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28006,
-    municipio: 'Guanhães',
-    pop: 33434
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28105,
-    municipio: 'Guapé',
-    pop: 14073
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28204,
-    municipio: 'Guaraciaba',
-    pop: 9921
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28253,
-    municipio: 'Guaraciama',
-    pop: 5203
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28303,
-    municipio: 'Guaranésia',
-    pop: 19611
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28402,
-    municipio: 'Guarani',
-    pop: 7780
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28501,
-    municipio: 'Guarará',
-    pop: 3132
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28600,
-    municipio: 'Guarda-Mor',
-    pop: 6684
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28709,
-    municipio: 'Guaxupé',
-    pop: 52621
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28808,
-    municipio: 'Guidoval',
-    pop: 7284
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 28907,
-    municipio: 'Guimarânia',
-    pop: 8808
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29004,
-    municipio: 'Guiricema',
-    pop: 7850
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29103,
-    municipio: 'Gurinhatã',
-    pop: 5203
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29202,
-    municipio: 'Heliodora',
-    pop: 6274
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29301,
-    municipio: 'Iapu',
-    pop: 12486
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29400,
-    municipio: 'Ibertioga',
-    pop: 5334
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29509,
-    municipio: 'Ibiá',
-    pop: 22596
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29608,
-    municipio: 'Ibiaí',
-    pop: 6254
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29657,
-    municipio: 'Ibiracatu',
-    pop: 5139
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29707,
-    municipio: 'Ibiraci',
-    pop: 11057
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29806,
-    municipio: 'Ibirité',
-    pop: 178713
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 29905,
-    municipio: 'Ibitiúra de Minas',
-    pop: 3439
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30002,
-    municipio: 'Ibituruna',
-    pop: 2740
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30051,
-    municipio: 'Icaraí de Minas',
-    pop: 10912
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30101,
-    municipio: 'Igarapé',
-    pop: 48475
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30200,
-    municipio: 'Igaratinga',
-    pop: 11252
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30309,
-    municipio: 'Iguatama',
-    pop: 6845
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30408,
-    municipio: 'Ijaci',
-    pop: 7291
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30507,
-    municipio: 'Ilicínea',
-    pop: 13171
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30556,
-    municipio: 'Imbé de Minas',
-    pop: 7208
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30606,
-    municipio: 'Inconfidentes',
-    pop: 7510
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30655,
-    municipio: 'Indaiabira',
-    pop: 6379
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30705,
-    municipio: 'Indianópolis',
-    pop: 6309
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30804,
-    municipio: 'Ingaí',
-    pop: 2633
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 30903,
-    municipio: 'Inhapim',
-    pop: 23000
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31000,
-    municipio: 'Inhaúma',
-    pop: 6435
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31109,
-    municipio: 'Inimutaba',
-    pop: 7587
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31158,
-    municipio: 'Ipaba',
-    pop: 17554
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31208,
-    municipio: 'Ipanema',
-    pop: 20095
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31307,
-    municipio: 'Ipatinga',
-    pop: 235445
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31406,
-    municipio: 'Ipiaçu',
-    pop: 3823
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31505,
-    municipio: 'Ipuiúna',
-    pop: 9299
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31604,
-    municipio: 'Iraí de Minas',
-    pop: 7423
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31703,
-    municipio: 'Itabira',
-    pop: 117747
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31802,
-    municipio: 'Itabirinha',
-    pop: 10560
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 31901,
-    municipio: 'Itabirito',
-    pop: 55877
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32008,
-    municipio: 'Itacambira',
-    pop: 4265
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32107,
-    municipio: 'Itacarambi',
-    pop: 17521
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32206,
-    municipio: 'Itaguara',
-    pop: 14325
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32305,
-    municipio: 'Itaipé',
-    pop: 10549
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32404,
-    municipio: 'Itajubá',
-    pop: 96632
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32503,
-    municipio: 'Itamarandiba',
-    pop: 34137
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32602,
-    municipio: 'Itamarati de Minas',
-    pop: 3730
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32701,
-    municipio: 'Itambacuri',
-    pop: 21296
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32800,
-    municipio: 'Itambé do Mato Dentro',
-    pop: 2175
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 32909,
-    municipio: 'Itamogi',
-    pop: 11062
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33006,
-    municipio: 'Itamonte',
-    pop: 15193
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33105,
-    municipio: 'Itanhandu',
-    pop: 15684
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33204,
-    municipio: 'Itanhomi',
-    pop: 11298
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33303,
-    municipio: 'Itaobim',
-    pop: 19354
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33402,
-    municipio: 'Itapagipe',
-    pop: 14004
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33501,
-    municipio: 'Itapecerica',
-    pop: 21462
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33600,
-    municipio: 'Itapeva',
-    pop: 13332
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33709,
-    municipio: 'Itatiaiuçu',
-    pop: 13603
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33758,
-    municipio: 'Itaú de Minas',
-    pop: 14655
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33808,
-    municipio: 'Itaúna',
-    pop: 102500
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 33907,
-    municipio: 'Itaverava',
-    pop: 5752
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34004,
-    municipio: 'Itinga',
-    pop: 13982
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34103,
-    municipio: 'Itueta',
-    pop: 6218
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34202,
-    municipio: 'Ituiutaba',
-    pop: 106397
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34301,
-    municipio: 'Itumirim',
-    pop: 6845
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34400,
-    municipio: 'Iturama',
-    pop: 40011
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34509,
-    municipio: 'Itutinga',
-    pop: 4347
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34608,
-    municipio: 'Jaboticatubas',
-    pop: 21214
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34707,
-    municipio: 'Jacinto',
-    pop: 11169
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34806,
-    municipio: 'Jacuí',
-    pop: 7663
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 34905,
-    municipio: 'Jacutinga',
-    pop: 26705
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35001,
-    municipio: 'Jaguaraçu',
-    pop: 3173
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35050,
-    municipio: 'Jaíba',
-    pop: 39379
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35076,
-    municipio: 'Jampruca',
-    pop: 4306
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35100,
-    municipio: 'Janaúba',
-    pop: 73281
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35209,
-    municipio: 'Januária',
-    pop: 67087
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35308,
-    municipio: 'Japaraíba',
-    pop: 4672
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35357,
-    municipio: 'Japonvar',
-    pop: 8357
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35407,
-    municipio: 'Jeceaba',
-    pop: 6428
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35456,
-    municipio: 'Jenipapo de Minas',
-    pop: 6124
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35506,
-    municipio: 'Jequeri',
-    pop: 12652
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35605,
-    municipio: 'Jequitaí',
-    pop: 6460
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35704,
-    municipio: 'Jequitibá',
-    pop: 6098
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35803,
-    municipio: 'Jequitinhonha',
-    pop: 24509
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 35902,
-    municipio: 'Jesuânia',
-    pop: 5296
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36009,
-    municipio: 'Joaíma',
-    pop: 14084
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36108,
-    municipio: 'Joanésia',
-    pop: 4304
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36207,
-    municipio: 'João Monlevade',
-    pop: 83360
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36306,
-    municipio: 'João Pinheiro',
-    pop: 48532
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36405,
-    municipio: 'Joaquim Felício',
-    pop: 3891
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36504,
-    municipio: 'Jordânia',
-    pop: 10536
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36520,
-    municipio: 'José Gonçalves de Minas',
-    pop: 3993
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36553,
-    municipio: 'José Raydan',
-    pop: 4352
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36579,
-    municipio: 'Josenópolis',
-    pop: 3607
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36603,
-    municipio: 'Nova União',
-    pop: 6083
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36652,
-    municipio: 'Juatuba',
-    pop: 32726
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36702,
-    municipio: 'Juiz de Fora',
-    pop: 565764
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36801,
-    municipio: 'Juramento',
-    pop: 3815
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36900,
-    municipio: 'Juruaia',
-    pop: 11543
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 36959,
-    municipio: 'Juvenília',
-    pop: 5929
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37007,
-    municipio: 'Ladainha',
-    pop: 14399
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37106,
-    municipio: 'Lagamar',
-    pop: 6672
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37205,
-    municipio: 'Lagoa da Prata',
-    pop: 53583
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37304,
-    municipio: 'Lagoa dos Patos',
-    pop: 3285
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37403,
-    municipio: 'Lagoa Dourada',
-    pop: 13116
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37502,
-    municipio: 'Lagoa Formosa',
-    pop: 19507
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37536,
-    municipio: 'Lagoa Grande',
-    pop: 9210
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37601,
-    municipio: 'Lagoa Santa',
-    pop: 79981
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37700,
-    municipio: 'Lajinha',
-    pop: 21422
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37809,
-    municipio: 'Lambari',
-    pop: 20950
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 37908,
-    municipio: 'Lamim',
-    pop: 3226
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38005,
-    municipio: 'Laranjal',
-    pop: 6042
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38104,
-    municipio: 'Lassance',
-    pop: 7358
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38203,
-    municipio: 'Lavras',
-    pop: 109884
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38302,
-    municipio: 'Leandro Ferreira',
-    pop: 3270
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38351,
-    municipio: 'Leme do Prado',
-    pop: 4387
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38401,
-    municipio: 'Leopoldina',
-    pop: 52696
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38500,
-    municipio: 'Liberdade',
-    pop: 4775
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38609,
-    municipio: 'Lima Duarte',
-    pop: 17712
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38625,
-    municipio: 'Limeira do Oeste',
-    pop: 9087
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38658,
-    municipio: 'Lontra',
-    pop: 8968
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38674,
-    municipio: 'Luisburgo',
-    pop: 7195
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38682,
-    municipio: 'Luislândia',
-    pop: 6329
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38708,
-    municipio: 'Luminárias',
-    pop: 5731
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38807,
-    municipio: 'Luz',
-    pop: 18304
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 38906,
-    municipio: 'Machacalis',
-    pop: 6579
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39003,
-    municipio: 'Machado',
-    pop: 38831
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39102,
-    municipio: 'Madre de Deus de Minas',
-    pop: 5341
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39201,
-    municipio: 'Malacacheta',
-    pop: 17751
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39250,
-    municipio: 'Mamonas',
-    pop: 6096
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39300,
-    municipio: 'Manga',
-    pop: 19188
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39409,
-    municipio: 'Manhuaçu',
-    pop: 96545
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39508,
-    municipio: 'Manhumirim',
-    pop: 20970
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39607,
-    municipio: 'Mantena',
-    pop: 27358
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39706,
-    municipio: 'Maravilhas',
-    pop: 7518
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39805,
-    municipio: 'Mar de Espanha',
-    pop: 13119
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 39904,
-    municipio: 'Maria da Fé',
-    pop: 14557
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40001,
-    municipio: 'Mariana',
-    pop: 64058
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40100,
-    municipio: 'Marilac',
-    pop: 4320
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40159,
-    municipio: 'Mário Campos',
-    pop: 16546
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40209,
-    municipio: 'Maripá de Minas',
-    pop: 3532
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40308,
-    municipio: 'Marliéria',
-    pop: 4761
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40407,
-    municipio: 'Marmelópolis',
-    pop: 3299
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40506,
-    municipio: 'Martinho Campos',
-    pop: 14461
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40530,
-    municipio: 'Martins Soares',
-    pop: 8725
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40555,
-    municipio: 'Mata Verde',
-    pop: 9458
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40605,
-    municipio: 'Materlândia',
-    pop: 3982
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40704,
-    municipio: 'Mateus Leme',
-    pop: 40239
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40803,
-    municipio: 'Matias Barbosa',
-    pop: 14501
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40852,
-    municipio: 'Matias Cardoso',
-    pop: 8975
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 40902,
-    municipio: 'Matipó',
-    pop: 19054
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41009,
-    municipio: 'Mato Verde',
-    pop: 12238
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41108,
-    municipio: 'Matozinhos',
-    pop: 39291
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41207,
-    municipio: 'Matutina',
-    pop: 3907
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41306,
-    municipio: 'Medeiros',
-    pop: 4040
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41405,
-    municipio: 'Medina',
-    pop: 20492
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41504,
-    municipio: 'Mendes Pimentel',
-    pop: 5651
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41603,
-    municipio: 'Mercês',
-    pop: 10609
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41702,
-    municipio: 'Mesquita',
-    pop: 5038
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41801,
-    municipio: 'Minas Novas',
-    pop: 24191
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 41900,
-    municipio: 'Minduri',
-    pop: 3815
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42007,
-    municipio: 'Mirabela',
-    pop: 14029
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42106,
-    municipio: 'Miradouro',
-    pop: 9026
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42205,
-    municipio: 'Miraí',
-    pop: 13922
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42254,
-    municipio: 'Miravânia',
-    pop: 4011
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42304,
-    municipio: 'Moeda',
-    pop: 5291
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42403,
-    municipio: 'Moema',
-    pop: 7778
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42502,
-    municipio: 'Monjolos',
-    pop: 2196
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42601,
-    municipio: 'Monsenhor Paulo',
-    pop: 8550
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42700,
-    municipio: 'Montalvânia',
-    pop: 14160
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42809,
-    municipio: 'Monte Alegre de Minas',
-    pop: 20666
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 42908,
-    municipio: 'Monte Azul',
-    pop: 20577
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43005,
-    municipio: 'Monte Belo',
-    pop: 13340
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43104,
-    municipio: 'Monte Carmelo',
-    pop: 49354
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43153,
-    municipio: 'Monte Formoso',
-    pop: 4449
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43203,
-    municipio: 'Monte Santo de Minas',
-    pop: 21301
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43302,
-    municipio: 'Montes Claros',
-    pop: 434321
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43401,
-    municipio: 'Monte Sião',
-    pop: 24933
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43450,
-    municipio: 'Montezuma',
-    pop: 6979
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43500,
-    municipio: 'Morada Nova de Minas',
-    pop: 9364
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43609,
-    municipio: 'Morro da Garça',
-    pop: 2438
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43708,
-    municipio: 'Morro do Pilar',
-    pop: 3174
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43807,
-    municipio: 'Munhoz',
-    pop: 7857
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 43906,
-    municipio: 'Muriaé',
-    pop: 108161
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44003,
-    municipio: 'Mutum',
-    pop: 28670
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44102,
-    municipio: 'Muzambinho',
-    pop: 22527
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44201,
-    municipio: 'Nacip Raydan',
-    pop: 2437
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44300,
-    municipio: 'Nanuque',
-    pop: 35554
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44359,
-    municipio: 'Naque',
-    pop: 6442
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44375,
-    municipio: 'Natalândia',
-    pop: 3626
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44409,
-    municipio: 'Natércia',
-    pop: 4800
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44508,
-    municipio: 'Nazareno',
-    pop: 8390
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44607,
-    municipio: 'Nepomuceno',
-    pop: 25774
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44656,
-    municipio: 'Ninheira',
-    pop: 10915
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44672,
-    municipio: 'Nova Belém',
-    pop: 3156
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44706,
-    municipio: 'Nova Era',
-    pop: 17807
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44805,
-    municipio: 'Nova Lima',
-    pop: 119142
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 44904,
-    municipio: 'Nova Módica',
-    pop: 3731
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45000,
-    municipio: 'Nova Ponte',
-    pop: 15113
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45059,
-    municipio: 'Nova Porteirinha',
-    pop: 6780
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45109,
-    municipio: 'Nova Resende',
-    pop: 16854
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45208,
-    municipio: 'Nova Serrana',
-    pop: 112910
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45307,
-    municipio: 'Novo Cruzeiro',
-    pop: 27453
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45356,
-    municipio: 'Novo Oriente de Minas',
-    pop: 10501
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45372,
-    municipio: 'Novorizonte',
-    pop: 4630
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45406,
-    municipio: 'Olaria',
-    pop: 1986
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45455,
-    municipio: "Olhos-d'Água",
-    pop: 5520
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45505,
-    municipio: 'Olímpio Noronha',
-    pop: 2616
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45604,
-    municipio: 'Oliveira',
-    pop: 40552
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45703,
-    municipio: 'Oliveira Fortes',
-    pop: 2062
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45802,
-    municipio: 'Onça de Pitangui',
-    pop: 3027
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45851,
-    municipio: 'Oratórios',
-    pop: 5076
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45877,
-    municipio: 'Orizânia',
-    pop: 8759
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 45901,
-    municipio: 'Ouro Branco',
-    pop: 40411
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46008,
-    municipio: 'Ouro Fino',
-    pop: 33227
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46107,
-    municipio: 'Ouro Preto',
-    pop: 77601
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46206,
-    municipio: 'Ouro Verde de Minas',
-    pop: 5858
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46255,
-    municipio: 'Padre Carvalho',
-    pop: 5085
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46305,
-    municipio: 'Padre Paraíso',
-    pop: 17537
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46404,
-    municipio: 'Paineiras',
-    pop: 4273
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46503,
-    municipio: 'Pains',
-    pop: 8341
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46552,
-    municipio: 'Pai Pedro',
-    pop: 5634
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46602,
-    municipio: 'Paiva',
-    pop: 1498
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46701,
-    municipio: 'Palma',
-    pop: 5742
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46750,
-    municipio: 'Palmópolis',
-    pop: 6373
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 46909,
-    municipio: 'Papagaios',
-    pop: 14207
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47006,
-    municipio: 'Paracatu',
-    pop: 98397
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47105,
-    municipio: 'Pará de Minas',
-    pop: 102033
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47204,
-    municipio: 'Paraguaçu',
-    pop: 22357
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47303,
-    municipio: 'Paraisópolis',
-    pop: 21005
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47402,
-    municipio: 'Paraopeba',
-    pop: 24800
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47501,
-    municipio: 'Passabém',
-    pop: 1617
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47600,
-    municipio: 'Passa Quatro',
-    pop: 15842
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47709,
-    municipio: 'Passa Tempo',
-    pop: 8696
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47808,
-    municipio: 'Passa Vinte',
-    pop: 2301
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47907,
-    municipio: 'Passos',
-    pop: 116530
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 47956,
-    municipio: 'Patis',
-    pop: 4863
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48004,
-    municipio: 'Patos de Minas',
-    pop: 167870
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48103,
-    municipio: 'Patrocínio',
-    pop: 93852
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48202,
-    municipio: 'Patrocínio do Muriaé',
-    pop: 5735
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48301,
-    municipio: 'Paula Cândido',
-    pop: 8786
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48400,
-    municipio: 'Paulistas',
-    pop: 4429
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48509,
-    municipio: 'Pavão',
-    pop: 8168
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48608,
-    municipio: 'Peçanha',
-    pop: 17843
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48707,
-    municipio: 'Pedra Azul',
-    pop: 24999
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48756,
-    municipio: 'Pedra Bonita',
-    pop: 7559
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48806,
-    municipio: 'Pedra do Anta',
-    pop: 3371
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 48905,
-    municipio: 'Pedra do Indaiá',
-    pop: 4232
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49002,
-    municipio: 'Pedra Dourada',
-    pop: 2883
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49101,
-    municipio: 'Pedralva',
-    pop: 10924
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49150,
-    municipio: 'Pedras de Maria da Cruz',
-    pop: 10619
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49200,
-    municipio: 'Pedrinópolis',
-    pop: 3404
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49309,
-    municipio: 'Pedro Leopoldo',
-    pop: 64910
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49408,
-    municipio: 'Pedro Teixeira',
-    pop: 1854
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49507,
-    municipio: 'Pequeri',
-    pop: 3448
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49606,
-    municipio: 'Pequi',
-    pop: 4258
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49705,
-    municipio: 'Perdigão',
-    pop: 12925
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49804,
-    municipio: 'Perdizes',
-    pop: 17830
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49903,
-    municipio: 'Perdões',
-    pop: 21991
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 49952,
-    municipio: 'Periquito',
-    pop: 6647
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50000,
-    municipio: 'Pescador',
-    pop: 3587
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50109,
-    municipio: 'Piau',
-    pop: 2854
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50158,
-    municipio: 'Piedade de Caratinga',
-    pop: 8883
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50208,
-    municipio: 'Piedade de Ponte Nova',
-    pop: 4056
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50307,
-    municipio: 'Piedade do Rio Grande',
-    pop: 4697
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50406,
-    municipio: 'Piedade dos Gerais',
-    pop: 5175
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50505,
-    municipio: 'Pimenta',
-    pop: 8794
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50539,
-    municipio: "Pingo-d'Água",
-    pop: 4845
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50570,
-    municipio: 'Pintópolis',
-    pop: 7231
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50604,
-    municipio: 'Piracema',
-    pop: 6884
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50703,
-    municipio: 'Pirajuba',
-    pop: 5762
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50802,
-    municipio: 'Piranga',
-    pop: 17360
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 50901,
-    municipio: 'Piranguçu',
-    pop: 6271
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51008,
-    municipio: 'Piranguinho',
-    pop: 9451
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51107,
-    municipio: 'Pirapetinga',
-    pop: 11408
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51206,
-    municipio: 'Pirapora',
-    pop: 57543
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51305,
-    municipio: 'Piraúba',
-    pop: 11958
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51404,
-    municipio: 'Pitangui',
-    pop: 27734
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51503,
-    municipio: 'Piumhi',
-    pop: 37742
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51602,
-    municipio: 'Planura',
-    pop: 11484
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51701,
-    municipio: 'Poço Fundo',
-    pop: 16791
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51800,
-    municipio: 'Poços de Caldas',
-    pop: 171533
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 51909,
-    municipio: 'Pocrane',
-    pop: 8468
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52006,
-    municipio: 'Pompéu',
-    pop: 32305
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52105,
-    municipio: 'Ponte Nova',
-    pop: 59569
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52131,
-    municipio: 'Ponto Chique',
-    pop: 3807
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52170,
-    municipio: 'Ponto dos Volantes',
-    pop: 11077
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52204,
-    municipio: 'Porteirinha',
-    pop: 38668
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52303,
-    municipio: 'Porto Firme',
-    pop: 10825
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52402,
-    municipio: 'Poté',
-    pop: 13751
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52501,
-    municipio: 'Pouso Alegre',
-    pop: 160751
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52600,
-    municipio: 'Pouso Alto',
-    pop: 6755
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52709,
-    municipio: 'Prados',
-    pop: 9327
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52808,
-    municipio: 'Prata',
-    pop: 29578
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 52907,
-    municipio: 'Pratápolis',
-    pop: 8551
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53004,
-    municipio: 'Pratinha',
-    pop: 3673
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53103,
-    municipio: 'Presidente Bernardes',
-    pop: 4883
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53202,
-    municipio: 'Presidente Juscelino',
-    pop: 3493
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53301,
-    municipio: 'Presidente Kubitschek',
-    pop: 3154
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53400,
-    municipio: 'Presidente Olegário',
-    pop: 19177
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53509,
-    municipio: 'Alto Jequitibá',
-    pop: 8596
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53608,
-    municipio: 'Prudente de Morais',
-    pop: 11940
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53707,
-    municipio: 'Quartel Geral',
-    pop: 3237
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53806,
-    municipio: 'Queluzito',
-    pop: 1800
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 53905,
-    municipio: 'Raposos',
-    pop: 16735
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54002,
-    municipio: 'Raul Soares',
-    pop: 23882
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54101,
-    municipio: 'Recreio',
-    pop: 11337
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54150,
-    municipio: 'Reduto',
-    pop: 8170
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54200,
-    municipio: 'Resende Costa',
-    pop: 11520
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54309,
-    municipio: 'Resplendor',
-    pop: 17612
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54408,
-    municipio: 'Ressaquinha',
-    pop: 4641
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54457,
-    municipio: 'Riachinho',
-    pop: 6890
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54507,
-    municipio: 'Riacho dos Machados',
-    pop: 8886
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54606,
-    municipio: 'Ribeirão das Neves',
-    pop: 344828
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54705,
-    municipio: 'Ribeirão Vermelho',
-    pop: 4201
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54804,
-    municipio: 'Rio Acima',
-    pop: 10626
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 54903,
-    municipio: 'Rio Casca',
-    pop: 12921
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55009,
-    municipio: 'Rio Doce',
-    pop: 2542
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55108,
-    municipio: 'Rio do Prado',
-    pop: 4679
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55207,
-    municipio: 'Rio Espera',
-    pop: 5479
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55306,
-    municipio: 'Rio Manso',
-    pop: 5727
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55405,
-    municipio: 'Rio Novo',
-    pop: 8689
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55504,
-    municipio: 'Rio Paranaíba',
-    pop: 15143
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55603,
-    municipio: 'Rio Pardo de Minas',
-    pop: 29123
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55702,
-    municipio: 'Rio Piracicaba',
-    pop: 15001
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55801,
-    municipio: 'Rio Pomba',
-    pop: 17856
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 55900,
-    municipio: 'Rio Preto',
-    pop: 5240
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56007,
-    municipio: 'Rio Vermelho',
-    pop: 12815
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56106,
-    municipio: 'Ritápolis',
-    pop: 5115
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56205,
-    municipio: 'Rochedo de Minas',
-    pop: 2363
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56304,
-    municipio: 'Rodeiro',
-    pop: 9064
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56403,
-    municipio: 'Romaria',
-    pop: 3440
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56452,
-    municipio: 'Rosário da Limeira',
-    pop: 4896
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56502,
-    municipio: 'Rubelita',
-    pop: 5572
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56601,
-    municipio: 'Rubim',
-    pop: 10575
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56700,
-    municipio: 'Sabará',
-    pop: 134286
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56809,
-    municipio: 'Sabinópolis',
-    pop: 14382
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 56908,
-    municipio: 'Sacramento',
-    pop: 27891
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57005,
-    municipio: 'Salinas',
-    pop: 41641
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57104,
-    municipio: 'Salto da Divisa',
-    pop: 6164
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57203,
-    municipio: 'Santa Bárbara',
-    pop: 31756
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57252,
-    municipio: 'Santa Bárbara do Leste',
-    pop: 8737
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57278,
-    municipio: 'Santa Bárbara do Monte Verde',
-    pop: 3199
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57302,
-    municipio: 'Santa Bárbara do Tugúrio',
-    pop: 4262
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57336,
-    municipio: 'Santa Cruz de Minas',
-    pop: 8321
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57377,
-    municipio: 'Santa Cruz de Salinas',
-    pop: 3944
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57401,
-    municipio: 'Santa Cruz do Escalvado',
-    pop: 4743
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57500,
-    municipio: 'Santa Efigênia de Minas',
-    pop: 4067
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57609,
-    municipio: 'Santa Fé de Minas',
-    pop: 3551
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57658,
-    municipio: 'Santa Helena de Minas',
-    pop: 6059
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57708,
-    municipio: 'Santa Juliana',
-    pop: 16568
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57807,
-    municipio: 'Santa Luzia',
-    pop: 229483
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 57906,
-    municipio: 'Santa Margarida',
-    pop: 16903
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58003,
-    municipio: 'Santa Maria de Itabira',
-    pop: 10716
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58102,
-    municipio: 'Santa Maria do Salto',
-    pop: 4803
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58201,
-    municipio: 'Santa Maria do Suaçuí',
-    pop: 12898
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58300,
-    municipio: 'Santana da Vargem',
-    pop: 6781
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58409,
-    municipio: 'Santana de Cataguases',
-    pop: 3553
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58508,
-    municipio: 'Santana de Pirapama',
-    pop: 7079
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58607,
-    municipio: 'Santana do Deserto',
-    pop: 3819
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58706,
-    municipio: 'Santana do Garambéu',
-    pop: 2175
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58805,
-    municipio: 'Santana do Jacaré',
-    pop: 4265
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58904,
-    municipio: 'Santana do Manhuaçu',
-    pop: 9236
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 58953,
-    municipio: 'Santana do Paraíso',
-    pop: 48286
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59001,
-    municipio: 'Santana do Riacho',
-    pop: 5579
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59100,
-    municipio: 'Santana dos Montes',
-    pop: 3507
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59209,
-    municipio: 'Santa Rita de Caldas',
-    pop: 8588
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59308,
-    municipio: 'Santa Rita de Jacutinga',
-    pop: 4836
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59357,
-    municipio: 'Santa Rita de Minas',
-    pop: 6952
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59407,
-    municipio: 'Santa Rita de Ibitipoca',
-    pop: 3344
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59506,
-    municipio: 'Santa Rita do Itueto',
-    pop: 5973
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59605,
-    municipio: 'Santa Rita do Sapucaí',
-    pop: 42320
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59704,
-    municipio: 'Santa Rosa da Serra',
-    pop: 3476
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59803,
-    municipio: 'Santa Vitória',
-    pop: 21745
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 59902,
-    municipio: 'Santo Antônio do Amparo',
-    pop: 17651
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60009,
-    municipio: 'Santo Antônio do Aventureiro',
-    pop: 3881
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60108,
-    municipio: 'Santo Antônio do Grama',
-    pop: 4342
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60207,
-    municipio: 'Santo Antônio do Itambé',
-    pop: 3979
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60306,
-    municipio: 'Santo Antônio do Jacinto',
-    pop: 10397
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60405,
-    municipio: 'Santo Antônio do Monte',
-    pop: 28358
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60454,
-    municipio: 'Santo Antônio do Retiro',
-    pop: 6743
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60504,
-    municipio: 'Santo Antônio do Rio Abaixo',
-    pop: 1853
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60603,
-    municipio: 'Santo Hipólito',
-    pop: 2720
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60702,
-    municipio: 'Santos Dumont',
-    pop: 43392
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60801,
-    municipio: 'São Bento Abade',
-    pop: 4835
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60900,
-    municipio: 'São Brás do Suaçuí',
-    pop: 4133
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 60959,
-    municipio: 'São Domingos das Dores',
-    pop: 5778
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61007,
-    municipio: 'São Domingos do Prata',
-    pop: 17771
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61056,
-    municipio: 'São Félix de Minas',
-    pop: 3252
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61106,
-    municipio: 'São Francisco',
-    pop: 54239
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61205,
-    municipio: 'São Francisco de Paula',
-    pop: 6293
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61304,
-    municipio: 'São Francisco de Sales',
-    pop: 5857
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61403,
-    municipio: 'São Francisco do Glória',
-    pop: 4866
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61502,
-    municipio: 'São Geraldo',
-    pop: 10517
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61601,
-    municipio: 'São Geraldo da Piedade',
-    pop: 3258
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61650,
-    municipio: 'São Geraldo do Baixio',
-    pop: 3175
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61700,
-    municipio: 'São Gonçalo do Abaeté',
-    pop: 7521
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61809,
-    municipio: 'São Gonçalo do Pará',
-    pop: 12192
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 61908,
-    municipio: 'São Gonçalo do Rio Abaixo',
-    pop: 12353
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62005,
-    municipio: 'São Gonçalo do Sapucaí',
-    pop: 24480
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62104,
-    municipio: 'São Gotardo',
-    pop: 43309
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62203,
-    municipio: 'São João Batista do Glória',
-    pop: 7912
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62252,
-    municipio: 'São João da Lagoa',
-    pop: 4950
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62302,
-    municipio: 'São João da Mata',
-    pop: 3000
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62401,
-    municipio: 'São João da Ponte',
-    pop: 24269
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62450,
-    municipio: 'São João das Missões',
-    pop: 13467
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62500,
-    municipio: 'São João del Rei',
-    pop: 94062
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62559,
-    municipio: 'São João do Manhuaçu',
-    pop: 11614
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62575,
-    municipio: 'São João do Manteninha',
-    pop: 5468
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62609,
-    municipio: 'São João do Oriente',
-    pop: 7139
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62658,
-    municipio: 'São João do Pacuí',
-    pop: 4052
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62708,
-    municipio: 'São João do Paraíso',
-    pop: 24604
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62807,
-    municipio: 'São João Evangelista',
-    pop: 15617
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62906,
-    municipio: 'São João Nepomuceno',
-    pop: 26478
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62922,
-    municipio: 'São Joaquim de Bicas',
-    pop: 36496
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62948,
-    municipio: 'São José da Barra',
-    pop: 8084
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 62955,
-    municipio: 'São José da Lapa',
-    pop: 27710
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63003,
-    municipio: 'São José da Safira',
-    pop: 3861
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63102,
-    municipio: 'São José da Varginha',
-    pop: 4677
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63201,
-    municipio: 'São José do Alegre',
-    pop: 4242
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63300,
-    municipio: 'São José do Divino',
-    pop: 3501
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63409,
-    municipio: 'São José do Goiabal',
-    pop: 5492
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63508,
-    municipio: 'São José do Jacuri',
-    pop: 6298
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63607,
-    municipio: 'São José do Mantimento',
-    pop: 2834
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63706,
-    municipio: 'São Lourenço',
-    pop: 46653
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63805,
-    municipio: 'São Miguel do Anta',
-    pop: 6430
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 63904,
-    municipio: 'São Pedro da União',
-    pop: 4979
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64001,
-    municipio: 'São Pedro dos Ferros',
-    pop: 7194
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64100,
-    municipio: 'São Pedro do Suaçuí',
-    pop: 5166
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64209,
-    municipio: 'São Romão',
-    pop: 10553
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64308,
-    municipio: 'São Roque de Minas',
-    pop: 7341
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64407,
-    municipio: 'São Sebastião da Bela Vista',
-    pop: 6694
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64431,
-    municipio: 'São Sebastião da Vargem Alegre',
-    pop: 3219
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64472,
-    municipio: 'São Sebastião do Anta',
-    pop: 6386
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64506,
-    municipio: 'São Sebastião do Maranhão',
-    pop: 10244
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64605,
-    municipio: 'São Sebastião do Oeste',
-    pop: 9355
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64704,
-    municipio: 'São Sebastião do Paraíso',
-    pop: 74742
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64803,
-    municipio: 'São Sebastião do Rio Preto',
-    pop: 1248
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 64902,
-    municipio: 'São Sebastião do Rio Verde',
-    pop: 2373
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65008,
-    municipio: 'São Tiago',
-    pop: 11517
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65107,
-    municipio: 'São Tomás de Aquino',
-    pop: 6853
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65206,
-    municipio: 'São Tomé das Letras',
-    pop: 7089
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65305,
-    municipio: 'São Vicente de Minas',
-    pop: 6935
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65404,
-    municipio: 'Sapucaí-Mirim',
-    pop: 6462
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65503,
-    municipio: 'Sardoá',
-    pop: 5164
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65537,
-    municipio: 'Sarzedo',
-    pop: 39327
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65552,
-    municipio: 'Setubinha',
-    pop: 10032
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65560,
-    municipio: 'Sem-Peixe',
-    pop: 2441
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65578,
-    municipio: 'Senador Amaral',
-    pop: 6458
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65602,
-    municipio: 'Senador Cortes',
-    pop: 2319
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65701,
-    municipio: 'Senador Firmino',
-    pop: 7945
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65800,
-    municipio: 'Senador José Bento',
-    pop: 2137
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 65909,
-    municipio: 'Senador Modestino Gonçalves',
-    pop: 4035
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66006,
-    municipio: 'Senhora de Oliveira',
-    pop: 5584
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66105,
-    municipio: 'Senhora do Porto',
-    pop: 3088
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66204,
-    municipio: 'Senhora dos Remédios',
-    pop: 10640
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66303,
-    municipio: 'Sericita',
-    pop: 7536
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66402,
-    municipio: 'Seritinga',
-    pop: 1864
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66501,
-    municipio: 'Serra Azul de Minas',
-    pop: 3829
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66600,
-    municipio: 'Serra da Saudade',
-    pop: 854
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66709,
-    municipio: 'Serra dos Aimorés',
-    pop: 6936
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66808,
-    municipio: 'Serra do Salitre',
-    pop: 12210
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66907,
-    municipio: 'Serrania',
-    pop: 7802
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 66956,
-    municipio: 'Serranópolis de Minas',
-    pop: 4496
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67004,
-    municipio: 'Serranos',
-    pop: 2035
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67103,
-    municipio: 'Serro',
-    pop: 22550
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67202,
-    municipio: 'Sete Lagoas',
-    pop: 237931
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67301,
-    municipio: 'Silveirânia',
-    pop: 2391
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67400,
-    municipio: 'Silvianópolis',
-    pop: 6336
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67509,
-    municipio: 'Simão Pereira',
-    pop: 3060
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67608,
-    municipio: 'Simonésia',
-    pop: 20339
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67707,
-    municipio: 'Sobrália',
-    pop: 5175
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67806,
-    municipio: 'Soledade de Minas',
-    pop: 5733
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 67905,
-    municipio: 'Tabuleiro',
-    pop: 4098
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68002,
-    municipio: 'Taiobeiras',
-    pop: 34392
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68051,
-    municipio: 'Taparuba',
-    pop: 3492
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68101,
-    municipio: 'Tapira',
-    pop: 4212
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68200,
-    municipio: 'Tapiraí',
-    pop: 1707
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68309,
-    municipio: 'Taquaraçu de Minas',
-    pop: 4368
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68408,
-    municipio: 'Tarumirim',
-    pop: 15072
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68507,
-    municipio: 'Teixeiras',
-    pop: 12634
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68606,
-    municipio: 'Teófilo Otoni',
-    pop: 142571
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68705,
-    municipio: 'Timóteo',
-    pop: 84087
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68804,
-    municipio: 'Tiradentes',
-    pop: 8008
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 68903,
-    municipio: 'Tiros',
-    pop: 8172
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69000,
-    municipio: 'Tocantins',
-    pop: 16574
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69059,
-    municipio: 'Tocos do Moji',
-    pop: 3899
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69109,
-    municipio: 'Toledo',
-    pop: 7541
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69208,
-    municipio: 'Tombos',
-    pop: 8699
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69307,
-    municipio: 'Três Corações',
-    pop: 78079
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69356,
-    municipio: 'Três Marias',
-    pop: 29927
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69406,
-    municipio: 'Três Pontas',
-    pop: 57086
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69505,
-    municipio: 'Tumiritinga',
-    pop: 5973
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69604,
-    municipio: 'Tupaciguara',
-    pop: 26482
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69703,
-    municipio: 'Turmalina',
-    pop: 20650
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69802,
-    municipio: 'Turvolândia',
-    pop: 5078
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 69901,
-    municipio: 'Ubá',
-    pop: 107222
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70008,
-    municipio: 'Ubaí',
-    pop: 11977
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70057,
-    municipio: 'Ubaporanga',
-    pop: 13423
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70107,
-    municipio: 'Uberaba',
-    pop: 354142
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70206,
-    municipio: 'Uberlândia',
-    pop: 754954
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70305,
-    municipio: 'Umburatiba',
-    pop: 2742
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70404,
-    municipio: 'Unaí',
-    pop: 90724
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70438,
-    municipio: 'União de Minas',
-    pop: 3848
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70479,
-    municipio: 'Uruana de Minas',
-    pop: 3360
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70503,
-    municipio: 'Urucânia',
-    pop: 10875
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70529,
-    municipio: 'Urucuia',
-    pop: 18291
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70578,
-    municipio: 'Vargem Alegre',
-    pop: 5834
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70602,
-    municipio: 'Vargem Bonita',
-    pop: 2206
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70651,
-    municipio: 'Vargem Grande do Rio Pardo',
-    pop: 4727
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70701,
-    municipio: 'Varginha',
-    pop: 142802
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70750,
-    municipio: 'Varjão de Minas',
-    pop: 7243
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70800,
-    municipio: 'Várzea da Palma',
-    pop: 34639
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 70909,
-    municipio: 'Varzelândia',
-    pop: 19214
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71006,
-    municipio: 'Vazante',
-    pop: 20433
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71030,
-    municipio: 'Verdelândia',
-    pop: 7770
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71071,
-    municipio: 'Veredinha',
-    pop: 5257
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71105,
-    municipio: 'Veríssimo',
-    pop: 3480
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71154,
-    municipio: 'Vermelho Novo',
-    pop: 5034
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71204,
-    municipio: 'Vespasiano',
-    pop: 136826
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71303,
-    municipio: 'Viçosa',
-    pop: 79221
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71402,
-    municipio: 'Vieiras',
-    pop: 3780
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71501,
-    municipio: 'Mathias Lobato',
-    pop: 3069
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71600,
-    municipio: 'Virgem da Lapa',
-    pop: 11867
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71709,
-    municipio: 'Virgínia',
-    pop: 9142
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71808,
-    municipio: 'Virginópolis',
-    pop: 10519
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 71907,
-    municipio: 'Virgolândia',
-    pop: 4530
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 72004,
-    municipio: 'Visconde do Rio Branco',
-    pop: 40608
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 72103,
-    municipio: 'Volta Grande',
-    pop: 4473
-  },
-  {
-    uf: 'MG',
-    uf_id: 31,
-    municipio_id: 72202,
-    municipio: 'Wenceslau Braz',
-    pop: 2387
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00102',
-    municipio: 'Afonso Cláudio',
-    pop: 32446
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00136',
-    municipio: 'Águia Branca',
-    pop: 10124
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00169',
-    municipio: 'Água Doce do Norte',
-    pop: 12559
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00201',
-    municipio: 'Alegre',
-    pop: 30744
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00300',
-    municipio: 'Alfredo Chaves',
-    pop: 14373
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00359',
-    municipio: 'Alto Rio Novo',
-    pop: 7747
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00409',
-    municipio: 'Anchieta',
-    pop: 32584
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00508',
-    municipio: 'Apiacá',
-    pop: 7474
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00607',
-    municipio: 'Aracruz',
-    pop: 102410
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00706',
-    municipio: 'Atílio Vivácqua',
-    pop: 11013
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00805',
-    municipio: 'Baixo Guandu',
-    pop: 32694
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '00904',
-    municipio: 'Barra de São Francisco',
-    pop: 45250
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01001',
-    municipio: 'Boa Esperança',
-    pop: 14079
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01100',
-    municipio: 'Bom Jesus do Norte',
-    pop: 10764
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01159',
-    municipio: 'Brejetuba',
-    pop: 13642
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01209',
-    municipio: 'Cachoeiro de Itapemirim',
-    pop: 198323
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01308',
-    municipio: 'Cariacica',
-    pop: 375485
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01407',
-    municipio: 'Castelo',
-    pop: 39396
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01506',
-    municipio: 'Colatina',
-    pop: 128622
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01605',
-    municipio: 'Conceição da Barra',
-    pop: 28953
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01704',
-    municipio: 'Conceição do Castelo',
-    pop: 12448
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01803',
-    municipio: 'Divino de São Lourenço',
-    pop: 5359
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '01902',
-    municipio: 'Domingos Martins',
-    pop: 37972
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02009',
-    municipio: 'Dores do Rio Preto',
-    pop: 6885
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02108',
-    municipio: 'Ecoporanga',
-    pop: 22670
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02207',
-    municipio: 'Fundão',
-    pop: 18824
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02256',
-    municipio: 'Governador Lindenberg',
-    pop: 11467
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02306',
-    municipio: 'Guaçuí',
-    pop: 31290
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02405',
-    municipio: 'Guarapari',
-    pop: 134944
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02454',
-    municipio: 'Ibatiba',
-    pop: 27308
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02504',
-    municipio: 'Ibiraçu',
-    pop: 12261
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02553',
-    municipio: 'Ibitirama',
-    pop: 9973
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02603',
-    municipio: 'Iconha',
-    pop: 12793
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02652',
-    municipio: 'Irupi',
-    pop: 14513
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02702',
-    municipio: 'Itaguaçu',
-    pop: 14065
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02801',
-    municipio: 'Itapemirim',
-    pop: 43362
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '02900',
-    municipio: 'Itarana',
-    pop: 10984
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03007',
-    municipio: 'Iúna',
-    pop: 30444
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03056',
-    municipio: 'Jaguaré',
-    pop: 31232
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03106',
-    municipio: 'Jerônimo Monteiro',
-    pop: 12079
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03130',
-    municipio: 'João Neiva',
-    pop: 14391
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03163',
-    municipio: 'Laranja da Terra',
-    pop: 11572
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03205',
-    municipio: 'Linhares',
-    pop: 181912
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03304',
-    municipio: 'Mantenópolis',
-    pop: 13173
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03320',
-    municipio: 'Marataízes',
-    pop: 45418
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03346',
-    municipio: 'Marechal Floriano',
-    pop: 18743
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03353',
-    municipio: 'Marilândia',
-    pop: 13014
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03403',
-    municipio: 'Mimoso do Sul',
-    pop: 25179
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03502',
-    municipio: 'Montanha',
-    pop: 19752
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03601',
-    municipio: 'Mucurici',
-    pop: 5660
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03700',
-    municipio: 'Muniz Freire',
-    pop: 18811
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03809',
-    municipio: 'Muqui',
-    pop: 14213
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '03908',
-    municipio: 'Nova Venécia',
-    pop: 52084
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04005',
-    municipio: 'Pancas',
-    pop: 19270
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04054',
-    municipio: 'Pedro Canário',
-    pop: 22048
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04104',
-    municipio: 'Pinheiros',
-    pop: 24825
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04203',
-    municipio: 'Piúma',
-    pop: 23682
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04252',
-    municipio: 'Ponto Belo',
-    pop: 6696
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04302',
-    municipio: 'Presidente Kennedy',
-    pop: 14647
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04351',
-    municipio: 'Rio Bananal',
-    pop: 20229
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04401',
-    municipio: 'Rio Novo do Sul',
-    pop: 11479
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04500',
-    municipio: 'Santa Leopoldina',
-    pop: 13747
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04559',
-    municipio: 'Santa Maria de Jetibá',
-    pop: 45062
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04609',
-    municipio: 'Santa Teresa',
-    pop: 23796
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04658',
-    municipio: 'São Domingos do Norte',
-    pop: 9008
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04708',
-    municipio: 'São Gabriel da Palha',
-    pop: 34210
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04807',
-    municipio: 'São José do Calçado',
-    pop: 11373
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04906',
-    municipio: 'São Mateus',
-    pop: 133359
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '04955',
-    municipio: 'São Roque do Canaã',
-    pop: 11271
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05002',
-    municipio: 'Serra',
-    pop: 572274
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05010',
-    municipio: 'Sooretama',
-    pop: 28453
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05036',
-    municipio: 'Vargem Alta',
-    pop: 20353
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05069',
-    municipio: 'Venda Nova do Imigrante',
-    pop: 25168
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05101',
-    municipio: 'Viana',
-    pop: 78442
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05150',
-    municipio: 'Vila Pavão',
-    pop: 9298
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05176',
-    municipio: 'Vila Valério',
-    pop: 14263
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05200',
-    municipio: 'Vila Velha',
-    pop: 502899
-  },
-  {
-    uf: 'ES',
-    uf_id: 32,
-    municipio_id: '05309',
-    municipio: 'Vitória',
-    pop: 342800
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00100',
-    municipio: 'Angra dos Reis',
-    pop: 179120
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00159',
-    municipio: 'Aperibé',
-    pop: 11420
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00209',
-    municipio: 'Araruama',
-    pop: 137773
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00225',
-    municipio: 'Areal',
-    pop: 12236
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00233',
-    municipio: 'Armação dos Búzios',
-    pop: 42442
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00258',
-    municipio: 'Arraial do Cabo',
-    pop: 32794
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00308',
-    municipio: 'Barra do Piraí',
-    pop: 98501
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00407',
-    municipio: 'Barra Mansa',
-    pop: 181688
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00456',
-    municipio: 'Belford Roxo',
-    pop: 518263
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00506',
-    municipio: 'Bom Jardim',
-    pop: 29736
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00605',
-    municipio: 'Bom Jesus do Itabapoana',
-    pop: 37172
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00704',
-    municipio: 'Cabo Frio',
-    pop: 238166
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00803',
-    municipio: 'Cachoeiras de Macacu',
-    pop: 59837
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00902',
-    municipio: 'Cambuci',
-    pop: 15070
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00936',
-    municipio: 'Carapebus',
-    pop: 14325
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '00951',
-    municipio: 'Comendador Levy Gasparian',
-    pop: 9044
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01009',
-    municipio: 'Campos dos Goytacazes',
-    pop: 519011
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01108',
-    municipio: 'Cantagalo',
-    pop: 19996
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01157',
-    municipio: 'Cardoso Moreira',
-    pop: 13403
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01207',
-    municipio: 'Carmo',
-    pop: 17740
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01306',
-    municipio: 'Casimiro de Abreu',
-    pop: 48563
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01405',
-    municipio: 'Conceição de Macabu',
-    pop: 21769
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01504',
-    municipio: 'Cordeiro',
-    pop: 21444
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01603',
-    municipio: 'Duas Barras',
-    pop: 11354
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01702',
-    municipio: 'Duque de Caxias',
-    pop: 866347
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01801',
-    municipio: 'Engenheiro Paulo de Frontin',
-    pop: 12648
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01850',
-    municipio: 'Guapimirim',
-    pop: 54300
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01876',
-    municipio: 'Iguaba Grande',
-    pop: 29577
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '01900',
-    municipio: 'Itaboraí',
-    pop: 240040
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02007',
-    municipio: 'Itaguaí',
-    pop: 123980
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02056',
-    municipio: 'Italva',
-    pop: 14517
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02106',
-    municipio: 'Itaocara',
-    pop: 23643
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02205',
-    municipio: 'Itaperuna',
-    pop: 107246
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02254',
-    municipio: 'Itatiaia',
-    pop: 32694
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02270',
-    municipio: 'Japeri',
-    pop: 102149
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02304',
-    municipio: 'Laje do Muriaé',
-    pop: 7584
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02403',
-    municipio: 'Macaé',
-    pop: 264138
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02452',
-    municipio: 'Macuco',
-    pop: 5601
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02502',
-    municipio: 'Magé',
-    pop: 244092
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02601',
-    municipio: 'Mangaratiba',
-    pop: 43624
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02700',
-    municipio: 'Maricá',
-    pop: 211986
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02809',
-    municipio: 'Mendes',
-    pop: 18049
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02858',
-    municipio: 'Mesquita',
-    pop: 178803
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '02908',
-    municipio: 'Miguel Pereira',
-    pop: 28123
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03005',
-    municipio: 'Miracema',
-    pop: 28411
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03104',
-    municipio: 'Natividade',
-    pop: 15550
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03203',
-    municipio: 'Nilópolis',
-    pop: 155544
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03302',
-    municipio: 'Niterói',
-    pop: 516720
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03401',
-    municipio: 'Nova Friburgo',
-    pop: 203328
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03500',
-    municipio: 'Nova Iguaçu',
-    pop: 843046
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03609',
-    municipio: 'Paracambi',
-    pop: 43656
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03708',
-    municipio: 'Paraíba do Sul',
-    pop: 44467
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03807',
-    municipio: 'Paraty',
-    pop: 47614
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03856',
-    municipio: 'Paty do Alferes',
-    pop: 31345
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03906',
-    municipio: 'Petrópolis',
-    pop: 294983
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '03955',
-    municipio: 'Pinheiral',
-    pop: 25085
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04003',
-    municipio: 'Piraí',
-    pop: 29054
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04102',
-    municipio: 'Porciúncula',
-    pop: 17832
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04110',
-    municipio: 'Porto Real',
-    pop: 21064
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04128',
-    municipio: 'Quatis',
-    pop: 14158
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04144',
-    municipio: 'Queimados',
-    pop: 149093
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04151',
-    municipio: 'Quissamã',
-    pop: 23126
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04201',
-    municipio: 'Resende',
-    pop: 137612
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04300',
-    municipio: 'Rio Bonito',
-    pop: 59113
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04409',
-    municipio: 'Rio Claro',
-    pop: 17950
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04508',
-    municipio: 'Rio das Flores',
-    pop: 9264
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04524',
-    municipio: 'Rio das Ostras',
-    pop: 168099
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04557',
-    municipio: 'Rio de Janeiro',
-    pop: 6729894
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04607',
-    municipio: 'Santa Maria Madalena',
-    pop: 10579
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04706',
-    municipio: 'Santo Antônio de Pádua',
-    pop: 43686
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04755',
-    municipio: 'São Francisco de Itabapoana',
-    pop: 47368
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04805',
-    municipio: 'São Fidélis',
-    pop: 41197
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '04904',
-    municipio: 'São Gonçalo',
-    pop: 960652
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05000',
-    municipio: 'São João da Barra',
-    pop: 38708
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05109',
-    municipio: 'São João de Meriti',
-    pop: 466536
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05133',
-    municipio: 'São José de Ubá',
-    pop: 7315
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05158',
-    municipio: 'São José do Vale do Rio Preto',
-    pop: 22799
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05208',
-    municipio: 'São Pedro da Aldeia',
-    pop: 110556
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05307',
-    municipio: 'São Sebastião do Alto',
-    pop: 7999
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05406',
-    municipio: 'Sapucaia',
-    pop: 18289
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05505',
-    municipio: 'Saquarema',
-    pop: 95201
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05554',
-    municipio: 'Seropédica',
-    pop: 84737
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05604',
-    municipio: 'Silva Jardim',
-    pop: 22026
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05703',
-    municipio: 'Sumidouro',
-    pop: 15690
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05752',
-    municipio: 'Tanguá',
-    pop: 32858
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05802',
-    municipio: 'Teresópolis',
-    pop: 176692
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '05901',
-    municipio: 'Trajano de Moraes',
-    pop: 10652
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '06008',
-    municipio: 'Três Rios',
-    pop: 82300
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '06107',
-    municipio: 'Valença',
-    pop: 71462
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '06156',
-    municipio: 'Varre-Sai',
-    pop: 10559
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '06206',
-    municipio: 'Vassouras',
-    pop: 35904
-  },
-  {
-    uf: 'RJ',
-    uf_id: 33,
-    municipio_id: '06305',
-    municipio: 'Volta Redonda',
-    pop: 279898
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00105',
-    municipio: 'Adamantina',
-    pop: 35642
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00204',
-    municipio: 'Adolfo',
-    pop: 4478
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00303',
-    municipio: 'Aguaí',
-    pop: 32888
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00402',
-    municipio: 'Águas da Prata',
-    pop: 7470
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00501',
-    municipio: 'Águas de Lindóia',
-    pop: 18245
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00550',
-    municipio: 'Águas de Santa Bárbara',
-    pop: 7407
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00600',
-    municipio: 'Águas de São Pedro',
-    pop: 2829
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00709',
-    municipio: 'Agudos',
-    pop: 38879
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00758',
-    municipio: 'Alambari',
-    pop: 6330
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00808',
-    municipio: 'Alfredo Marcondes',
-    pop: 4556
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '00907',
-    municipio: 'Altair',
-    pop: 3479
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01004',
-    municipio: 'Altinópolis',
-    pop: 17156
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01103',
-    municipio: 'Alto Alegre',
-    pop: 3883
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01152',
-    municipio: 'Alumínio',
-    pop: 17591
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01202',
-    municipio: 'Álvares Florence',
-    pop: 3978
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01301',
-    municipio: 'Álvares Machado',
-    pop: 28250
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01400',
-    municipio: 'Álvaro de Carvalho',
-    pop: 4896
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01509',
-    municipio: 'Alvinlândia',
-    pop: 2923
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01608',
-    municipio: 'Americana',
-    pop: 246655
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01707',
-    municipio: 'Américo Brasiliense',
-    pop: 33757
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01806',
-    municipio: 'Américo de Campos',
-    pop: 5975
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '01905',
-    municipio: 'Amparo',
-    pop: 69717
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02002',
-    municipio: 'Analândia',
-    pop: 4684
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02101',
-    municipio: 'Andradina',
-    pop: 61473
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02200',
-    municipio: 'Angatuba',
-    pop: 24512
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02309',
-    municipio: 'Anhembi',
-    pop: 5766
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02408',
-    municipio: 'Anhumas',
-    pop: 4108
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02507',
-    municipio: 'Aparecida',
-    pop: 33223
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02606',
-    municipio: "Aparecida d'Oeste",
-    pop: 4124
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02705',
-    municipio: 'Apiaí',
-    pop: 24886
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02754',
-    municipio: 'Araçariguama',
-    pop: 22168
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02804',
-    municipio: 'Araçatuba',
-    pop: 207775
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '02903',
-    municipio: 'Araçoiaba da Serra',
-    pop: 33656
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03000',
-    municipio: 'Aramina',
-    pop: 5526
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03109',
-    municipio: 'Arandu',
-    pop: 7050
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03158',
-    municipio: 'Arapeí',
-    pop: 2355
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03208',
-    municipio: 'Araraquara',
-    pop: 252318
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03307',
-    municipio: 'Araras',
-    pop: 135331
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03356',
-    municipio: 'Arco-Íris',
-    pop: 2085
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03406',
-    municipio: 'Arealva',
-    pop: 8280
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03505',
-    municipio: 'Areias',
-    pop: 3625
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03604',
-    municipio: 'Areiópolis',
-    pop: 10257
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03703',
-    municipio: 'Ariranha',
-    pop: 7653
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03802',
-    municipio: 'Artur Nogueira',
-    pop: 53157
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03901',
-    municipio: 'Arujá',
-    pop: 89943
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '03950',
-    municipio: 'Aspásia',
-    pop: 1873
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04008',
-    municipio: 'Assis',
-    pop: 104642
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04107',
-    municipio: 'Atibaia',
-    pop: 166043
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04206',
-    municipio: 'Auriflama',
-    pop: 13873
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04305',
-    municipio: 'Avaí',
-    pop: 4519
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04404',
-    municipio: 'Avanhandava',
-    pop: 11438
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04503',
-    municipio: 'Avaré',
-    pop: 96098
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04602',
-    municipio: 'Bady Bassitt',
-    pop: 28909
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04701',
-    municipio: 'Balbinos',
-    pop: 3963
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04800',
-    municipio: 'Bálsamo',
-    pop: 9854
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '04909',
-    municipio: 'Bananal',
-    pop: 10109
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05005',
-    municipio: 'Barão de Antonina',
-    pop: 3618
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05104',
-    municipio: 'Barbosa',
-    pop: 5659
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05203',
-    municipio: 'Bariri',
-    pop: 32405
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05302',
-    municipio: 'Barra Bonita',
-    pop: 35159
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05351',
-    municipio: 'Barra do Chapéu',
-    pop: 5256
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05401',
-    municipio: 'Barra do Turvo',
-    pop: 6922
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05500',
-    municipio: 'Barretos',
-    pop: 126600
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05609',
-    municipio: 'Barrinha',
-    pop: 33181
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05708',
-    municipio: 'Barueri',
-    pop: 330339
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05807',
-    municipio: 'Bastos',
-    pop: 21900
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '05906',
-    municipio: 'Batatais',
-    pop: 59873
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06003',
-    municipio: 'Bauru',
-    pop: 391740
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06102',
-    municipio: 'Bebedouro',
-    pop: 78210
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06201',
-    municipio: 'Bento de Abreu',
-    pop: 2642
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06300',
-    municipio: 'Bernardino de Campos',
-    pop: 11852
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06359',
-    municipio: 'Bertioga',
-    pop: 66873
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06409',
-    municipio: 'Bilac',
-    pop: 7455
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06508',
-    municipio: 'Birigui',
-    pop: 122988
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06607',
-    municipio: 'Biritiba Mirim',
-    pop: 30526
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06706',
-    municipio: 'Boa Esperança do Sul',
-    pop: 13135
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06805',
-    municipio: 'Bocaina',
-    pop: 11467
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '06904',
-    municipio: 'Bofete',
-    pop: 10688
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07001',
-    municipio: 'Boituva',
-    pop: 63415
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07100',
-    municipio: 'Bom Jesus dos Perdões',
-    pop: 22501
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07159',
-    municipio: 'Bom Sucesso de Itararé',
-    pop: 3610
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07209',
-    municipio: 'Borá',
-    pop: 928
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07308',
-    municipio: 'Boracéia',
-    pop: 4823
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07407',
-    municipio: 'Borborema',
-    pop: 14415
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07456',
-    municipio: 'Borebi',
-    pop: 2787
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07506',
-    municipio: 'Botucatu',
-    pop: 150442
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07605',
-    municipio: 'Bragança Paulista',
-    pop: 184634
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07704',
-    municipio: 'Braúna',
-    pop: 5466
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07753',
-    municipio: 'Brejo Alegre',
-    pop: 2605
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07803',
-    municipio: 'Brodowski',
-    pop: 26167
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '07902',
-    municipio: 'Brotas',
-    pop: 24423
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08009',
-    municipio: 'Buri',
-    pop: 20674
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08108',
-    municipio: 'Buritama',
-    pop: 17597
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08207',
-    municipio: 'Buritizal',
-    pop: 4447
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08306',
-    municipio: 'Cabrália Paulista',
-    pop: 4362
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08405',
-    municipio: 'Cabreúva',
-    pop: 48473
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08504',
-    municipio: 'Caçapava',
-    pop: 99678
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08603',
-    municipio: 'Cachoeira Paulista',
-    pop: 32482
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08702',
-    municipio: 'Caconde',
-    pop: 17266
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08801',
-    municipio: 'Cafelândia',
-    pop: 16905
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '08900',
-    municipio: 'Caiabu',
-    pop: 3745
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09007',
-    municipio: 'Caieiras',
-    pop: 98257
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09106',
-    municipio: 'Caiuá',
-    pop: 5585
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09205',
-    municipio: 'Cajamar',
-    pop: 97363
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09254',
-    municipio: 'Cajati',
-    pop: 29257
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09304',
-    municipio: 'Cajobi',
-    pop: 9232
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09403',
-    municipio: 'Cajuru',
-    pop: 24217
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09452',
-    municipio: 'Campina do Monte Alegre',
-    pop: 6077
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09502',
-    municipio: 'Campinas',
-    pop: 1185977
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09601',
-    municipio: 'Campo Limpo Paulista',
-    pop: 79663
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09700',
-    municipio: 'Campos do Jordão',
-    pop: 47983
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09809',
-    municipio: 'Campos Novos Paulista',
-    pop: 4991
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09908',
-    municipio: 'Cananéia',
-    pop: 12489
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: '09957',
-    municipio: 'Canas',
-    pop: 5049
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10005,
-    municipio: 'Cândido Mota',
-    pop: 30172
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10104,
-    municipio: 'Cândido Rodrigues',
-    pop: 2951
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10153,
-    municipio: 'Canitar',
-    pop: 6524
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10203,
-    municipio: 'Capão Bonito',
-    pop: 47403
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10302,
-    municipio: 'Capela do Alto',
-    pop: 23597
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10401,
-    municipio: 'Capivari',
-    pop: 51318
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10500,
-    municipio: 'Caraguatatuba',
-    pop: 141084
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10609,
-    municipio: 'Carapicuíba',
-    pop: 398462
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10708,
-    municipio: 'Cardoso',
-    pop: 11491
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10807,
-    municipio: 'Casa Branca',
-    pop: 28786
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 10906,
-    municipio: 'Cássia dos Coqueiros',
-    pop: 2855
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11003,
-    municipio: 'Castilho',
-    pop: 20418
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11102,
-    municipio: 'Catanduva',
-    pop: 119172
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11201,
-    municipio: 'Catiguá',
-    pop: 7105
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11300,
-    municipio: 'Cedral',
-    pop: 13160
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11409,
-    municipio: 'Cerqueira César',
-    pop: 22076
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11508,
-    municipio: 'Cerquilho',
-    pop: 46217
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11607,
-    municipio: 'Cesário Lange',
-    pop: 19588
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11706,
-    municipio: 'Charqueada',
-    pop: 15798
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 11904,
-    municipio: 'Clementina',
-    pop: 7087
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12001,
-    municipio: 'Colina',
-    pop: 18842
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12100,
-    municipio: 'Colômbia',
-    pop: 6781
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12209,
-    municipio: 'Conchal',
-    pop: 29034
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12308,
-    municipio: 'Conchas',
-    pop: 15381
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12407,
-    municipio: 'Cordeirópolis',
-    pop: 25130
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12506,
-    municipio: 'Coroados',
-    pop: 5498
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12605,
-    municipio: 'Coronel Macedo',
-    pop: 4295
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12704,
-    municipio: 'Corumbataí',
-    pop: 4285
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12803,
-    municipio: 'Cosmópolis',
-    pop: 61204
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 12902,
-    municipio: 'Cosmorama',
-    pop: 8968
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13009,
-    municipio: 'Cotia',
-    pop: 287004
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13108,
-    municipio: 'Cravinhos',
-    pop: 34252
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13207,
-    municipio: 'Cristais Paulista',
-    pop: 9543
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13306,
-    municipio: 'Cruzália',
-    pop: 2129
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13405,
-    municipio: 'Cruzeiro',
-    pop: 76513
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13504,
-    municipio: 'Cubatão',
-    pop: 115082
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13603,
-    municipio: 'Cunha',
-    pop: 22456
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13702,
-    municipio: 'Descalvado',
-    pop: 32622
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13801,
-    municipio: 'Diadema',
-    pop: 404118
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13850,
-    municipio: 'Dirce Reis',
-    pop: 1641
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 13900,
-    municipio: 'Divinolândia',
-    pop: 11314
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14007,
-    municipio: 'Dobrada',
-    pop: 8958
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14106,
-    municipio: 'Dois Córregos',
-    pop: 24855
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14205,
-    municipio: 'Dolcinópolis',
-    pop: 2250
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14304,
-    municipio: 'Dourado',
-    pop: 8186
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14403,
-    municipio: 'Dracena',
-    pop: 46664
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14502,
-    municipio: 'Duartina',
-    pop: 12529
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14601,
-    municipio: 'Dumont',
-    pop: 9719
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14700,
-    municipio: 'Echaporã',
-    pop: 6295
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14809,
-    municipio: 'Eldorado',
-    pop: 13162
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14908,
-    municipio: 'Elias Fausto',
-    pop: 18103
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14924,
-    municipio: 'Elisiário',
-    pop: 3189
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 14957,
-    municipio: 'Embaúba',
-    pop: 2353
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15004,
-    municipio: 'Embu das Artes',
-    pop: 259323
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15103,
-    municipio: 'Embu-Guaçu',
-    pop: 68805
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15129,
-    municipio: 'Emilianópolis',
-    pop: 3062
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15152,
-    municipio: 'Engenheiro Coelho',
-    pop: 20139
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15186,
-    municipio: 'Espírito Santo do Pinhal',
-    pop: 40681
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15194,
-    municipio: 'Espírito Santo do Turvo',
-    pop: 4217
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15202,
-    municipio: "Estrela d'Oeste",
-    pop: 9655
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15301,
-    municipio: 'Estrela do Norte',
-    pop: 2749
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15350,
-    municipio: 'Euclides da Cunha Paulista',
-    pop: 7928
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15400,
-    municipio: 'Fartura',
-    pop: 16984
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15509,
-    municipio: 'Fernandópolis',
-    pop: 73286
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15608,
-    municipio: 'Fernando Prestes',
-    pop: 6066
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15657,
-    municipio: 'Fernão',
-    pop: 1689
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15707,
-    municipio: 'Ferraz de Vasconcelos',
-    pop: 185622
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15806,
-    municipio: 'Flora Rica',
-    pop: 1492
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 15905,
-    municipio: 'Floreal',
-    pop: 2756
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16002,
-    municipio: 'Flórida Paulista',
-    pop: 13171
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16101,
-    municipio: 'Florínea',
-    pop: 3987
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16200,
-    municipio: 'Franca',
-    pop: 364331
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16309,
-    municipio: 'Francisco Morato',
-    pop: 171107
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16408,
-    municipio: 'Franco da Rocha',
-    pop: 149786
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16507,
-    municipio: 'Gabriel Monteiro',
-    pop: 2811
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16606,
-    municipio: 'Gália',
-    pop: 6435
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16705,
-    municipio: 'Garça',
-    pop: 43115
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16804,
-    municipio: 'Gastão Vidigal',
-    pop: 3235
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16853,
-    municipio: 'Gavião Peixoto',
-    pop: 4797
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 16903,
-    municipio: 'General Salgado',
-    pop: 10449
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17000,
-    municipio: 'Getulina',
-    pop: 10355
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17109,
-    municipio: 'Glicério',
-    pop: 4173
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17208,
-    municipio: 'Guaiçara',
-    pop: 11459
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17307,
-    municipio: 'Guaimbê',
-    pop: 5606
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17406,
-    municipio: 'Guaíra',
-    pop: 40424
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17505,
-    municipio: 'Guapiaçu',
-    pop: 22316
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17604,
-    municipio: 'Guapiara',
-    pop: 17256
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17703,
-    municipio: 'Guará',
-    pop: 18790
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17802,
-    municipio: 'Guaraçaí',
-    pop: 7486
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 17901,
-    municipio: 'Guaraci',
-    pop: 10542
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18008,
-    municipio: "Guarani d'Oeste",
-    pop: 1999
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18107,
-    municipio: 'Guarantã',
-    pop: 6531
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18206,
-    municipio: 'Guararapes',
-    pop: 31872
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18305,
-    municipio: 'Guararema',
-    pop: 32436
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18404,
-    municipio: 'Guaratinguetá',
-    pop: 121710
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18503,
-    municipio: 'Guareí',
-    pop: 15268
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18602,
-    municipio: 'Guariba',
-    pop: 38609
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18701,
-    municipio: 'Guarujá',
-    pop: 294973
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18800,
-    municipio: 'Guarulhos',
-    pop: 1345364
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18859,
-    municipio: 'Guatapará',
-    pop: 7462
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 18909,
-    municipio: 'Guzolândia',
-    pop: 4276
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19006,
-    municipio: 'Herculândia',
-    pop: 9302
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19055,
-    municipio: 'Holambra',
-    pop: 15596
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19071,
-    municipio: 'Hortolândia',
-    pop: 247331
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19105,
-    municipio: 'Iacanga',
-    pop: 10633
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19204,
-    municipio: 'Iacri',
-    pop: 6207
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19253,
-    municipio: 'Iaras',
-    pop: 8257
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19303,
-    municipio: 'Ibaté',
-    pop: 33110
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19402,
-    municipio: 'Ibirá',
-    pop: 11934
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19501,
-    municipio: 'Ibirarema',
-    pop: 6461
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19600,
-    municipio: 'Ibitinga',
-    pop: 61908
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19709,
-    municipio: 'Ibiúna',
-    pop: 77651
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19808,
-    municipio: 'Icém',
-    pop: 7969
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 19907,
-    municipio: 'Iepê',
-    pop: 7739
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20004,
-    municipio: 'Igaraçu do Tietê',
-    pop: 23430
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20103,
-    municipio: 'Igarapava',
-    pop: 26755
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20202,
-    municipio: 'Igaratá',
-    pop: 10904
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20301,
-    municipio: 'Iguape',
-    pop: 29881
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20400,
-    municipio: 'Ilhabela',
-    pop: 36329
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20426,
-    municipio: 'Ilha Comprida',
-    pop: 13955
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20442,
-    municipio: 'Ilha Solteira',
-    pop: 26240
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20509,
-    municipio: 'Indaiatuba',
-    pop: 267796
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20608,
-    municipio: 'Indiana',
-    pop: 5191
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20707,
-    municipio: 'Indiaporã',
-    pop: 4109
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20806,
-    municipio: 'Inúbia Paulista',
-    pop: 3671
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 20905,
-    municipio: 'Ipaussu',
-    pop: 13933
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21002,
-    municipio: 'Iperó',
-    pop: 37999
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21101,
-    municipio: 'Ipeúna',
-    pop: 6999
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21150,
-    municipio: 'Ipiguá',
-    pop: 7037
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21200,
-    municipio: 'Iporanga',
-    pop: 4091
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21309,
-    municipio: 'Ipuã',
-    pop: 14691
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21408,
-    municipio: 'Iracemápolis',
-    pop: 22435
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21507,
-    municipio: 'Irapuã',
-    pop: 6946
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21606,
-    municipio: 'Irapuru',
-    pop: 7145
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21705,
-    municipio: 'Itaberá',
-    pop: 18258
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21804,
-    municipio: 'Itaí',
-    pop: 25930
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 21903,
-    municipio: 'Itajobi',
-    pop: 17420
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22000,
-    municipio: 'Itaju',
-    pop: 3702
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22109,
-    municipio: 'Itanhaém',
-    pop: 117435
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22158,
-    municipio: 'Itaoca',
-    pop: 3490
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22208,
-    municipio: 'Itapecerica da Serra',
-    pop: 163928
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22307,
-    municipio: 'Itapetininga',
-    pop: 163774
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22406,
-    municipio: 'Itapeva',
-    pop: 92324
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22505,
-    municipio: 'Itapevi',
-    pop: 241924
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22604,
-    municipio: 'Itapira',
-    pop: 73919
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22653,
-    municipio: 'Itapirapuã Paulista',
-    pop: 4405
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22703,
-    municipio: 'Itápolis',
-    pop: 40464
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22802,
-    municipio: 'Itaporanga',
-    pop: 14260
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 22901,
-    municipio: 'Itapuí',
-    pop: 13984
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23008,
-    municipio: 'Itapura',
-    pop: 4014
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23107,
-    municipio: 'Itaquaquecetuba',
-    pop: 382521
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23206,
-    municipio: 'Itararé',
-    pop: 45327
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23305,
-    municipio: 'Itariri',
-    pop: 15762
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23404,
-    municipio: 'Itatiba',
-    pop: 126403
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23503,
-    municipio: 'Itatinga',
-    pop: 19427
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23602,
-    municipio: 'Itirapina',
-    pop: 16433
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23701,
-    municipio: 'Itirapuã',
-    pop: 5861
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23800,
-    municipio: 'Itobi',
-    pop: 8210
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 23909,
-    municipio: 'Itu',
-    pop: 174561
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24006,
-    municipio: 'Itupeva',
-    pop: 74119
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24105,
-    municipio: 'Ituverava',
-    pop: 38451
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24204,
-    municipio: 'Jaborandi',
-    pop: 6293
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24303,
-    municipio: 'Jaboticabal',
-    pop: 73467
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24402,
-    municipio: 'Jacareí',
-    pop: 249968
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24501,
-    municipio: 'Jaci',
-    pop: 7878
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24600,
-    municipio: 'Jacupiranga',
-    pop: 16254
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24709,
-    municipio: 'Jaguariúna',
-    pop: 61801
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24808,
-    municipio: 'Jales',
-    pop: 50017
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 24907,
-    municipio: 'Jambeiro',
-    pop: 6575
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25003,
-    municipio: 'Jandira',
-    pop: 121988
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25102,
-    municipio: 'Jardinópolis',
-    pop: 46868
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25201,
-    municipio: 'Jarinu',
-    pop: 39531
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25300,
-    municipio: 'Jaú',
-    pop: 137323
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25409,
-    municipio: 'Jeriquara',
-    pop: 3976
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25508,
-    municipio: 'Joanópolis',
-    pop: 13095
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25607,
-    municipio: 'João Ramalho',
-    pop: 4456
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25706,
-    municipio: 'José Bonifácio',
-    pop: 37859
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25805,
-    municipio: 'Júlio Mesquita',
-    pop: 4308
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25854,
-    municipio: 'Jumirim',
-    pop: 3123
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 25904,
-    municipio: 'Jundiaí',
-    pop: 460313
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26001,
-    municipio: 'Junqueirópolis',
-    pop: 20878
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26100,
-    municipio: 'Juquiá',
-    pop: 17255
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26209,
-    municipio: 'Juquitiba',
-    pop: 28007
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26308,
-    municipio: 'Lagoinha',
-    pop: 5182
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26407,
-    municipio: 'Laranjal Paulista',
-    pop: 27009
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26506,
-    municipio: 'Lavínia',
-    pop: 9909
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26605,
-    municipio: 'Lavrinhas',
-    pop: 7328
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26704,
-    municipio: 'Leme',
-    pop: 101316
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26803,
-    municipio: 'Lençóis Paulista',
-    pop: 68395
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 26902,
-    municipio: 'Limeira',
-    pop: 300728
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27009,
-    municipio: 'Lindóia',
-    pop: 7147
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27108,
-    municipio: 'Lins',
-    pop: 76729
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27207,
-    municipio: 'Lorena',
-    pop: 87370
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27256,
-    municipio: 'Lourdes',
-    pop: 1968
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27306,
-    municipio: 'Louveira',
-    pop: 54111
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27405,
-    municipio: 'Lucélia',
-    pop: 20372
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27504,
-    municipio: 'Lucianópolis',
-    pop: 2419
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27603,
-    municipio: 'Luís Antônio',
-    pop: 12531
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27702,
-    municipio: 'Luiziânia',
-    pop: 4751
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27801,
-    municipio: 'Lupércio',
-    pop: 4017
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 27900,
-    municipio: 'Lutécia',
-    pop: 2699
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28007,
-    municipio: 'Macatuba',
-    pop: 17120
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28106,
-    municipio: 'Macaubal',
-    pop: 7587
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28205,
-    municipio: 'Macedônia',
-    pop: 4048
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28304,
-    municipio: 'Magda',
-    pop: 3212
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28403,
-    municipio: 'Mairinque',
-    pop: 51660
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28502,
-    municipio: 'Mairiporã',
-    pop: 97399
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28601,
-    municipio: 'Manduri',
-    pop: 10092
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28700,
-    municipio: 'Marabá Paulista',
-    pop: 4627
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28809,
-    municipio: 'Maracaí',
-    pop: 12826
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28858,
-    municipio: 'Marapoama',
-    pop: 3392
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 28908,
-    municipio: 'Mariápolis',
-    pop: 3539
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29005,
-    municipio: 'Marília',
-    pop: 246627
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29104,
-    municipio: 'Marinópolis',
-    pop: 1870
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29203,
-    municipio: 'Martinópolis',
-    pop: 25299
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29302,
-    municipio: 'Matão',
-    pop: 80998
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29401,
-    municipio: 'Mauá',
-    pop: 429380
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29500,
-    municipio: 'Mendonça',
-    pop: 6369
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29609,
-    municipio: 'Meridiano',
-    pop: 4697
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29658,
-    municipio: 'Mesópolis',
-    pop: 1988
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29708,
-    municipio: 'Miguelópolis',
-    pop: 19655
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29807,
-    municipio: 'Mineiros do Tietê',
-    pop: 11349
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 29906,
-    municipio: 'Miracatu',
-    pop: 18679
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30003,
-    municipio: 'Mira Estrela',
-    pop: 3199
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30102,
-    municipio: 'Mirandópolis',
-    pop: 28737
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30201,
-    municipio: 'Mirante do Paranapanema',
-    pop: 16069
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30300,
-    municipio: 'Mirassol',
-    pop: 65485
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30409,
-    municipio: 'Mirassolândia',
-    pop: 4771
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30508,
-    municipio: 'Mococa',
-    pop: 69324
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30607,
-    municipio: 'Mogi das Cruzes',
-    pop: 468120
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30706,
-    municipio: 'Mogi Guaçu',
-    pop: 159735
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30805,
-    municipio: 'Mogi Mirim',
-    pop: 95534
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 30904,
-    municipio: 'Mombuca',
-    pop: 3815
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31001,
-    municipio: 'Monções',
-    pop: 1954
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31100,
-    municipio: 'Mongaguá',
-    pop: 64519
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31209,
-    municipio: 'Monte Alegre do Sul',
-    pop: 8873
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31308,
-    municipio: 'Monte Alto',
-    pop: 48725
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31407,
-    municipio: 'Monte Aprazível',
-    pop: 22650
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31506,
-    municipio: 'Monte Azul Paulista',
-    pop: 18363
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31605,
-    municipio: 'Monte Castelo',
-    pop: 4301
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31704,
-    municipio: 'Monteiro Lobato',
-    pop: 4205
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31803,
-    municipio: 'Monte Mor',
-    pop: 67296
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 31902,
-    municipio: 'Morro Agudo',
-    pop: 28561
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32009,
-    municipio: 'Morungaba',
-    pop: 14081
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32058,
-    municipio: 'Motuca',
-    pop: 4079
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32108,
-    municipio: 'Murutinga do Sul',
-    pop: 3763
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32157,
-    municipio: 'Nantes',
-    pop: 2699
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32207,
-    municipio: 'Narandiba',
-    pop: 5908
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32306,
-    municipio: 'Natividade da Serra',
-    pop: 7134
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32405,
-    municipio: 'Nazaré Paulista',
-    pop: 18620
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32504,
-    municipio: 'Neves Paulista',
-    pop: 9921
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32603,
-    municipio: 'Nhandeara',
-    pop: 9944
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32702,
-    municipio: 'Nipoã',
-    pop: 4860
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32801,
-    municipio: 'Nova Aliança',
-    pop: 6858
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32827,
-    municipio: 'Nova Campina',
-    pop: 8631
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32843,
-    municipio: 'Nova Canaã Paulista',
-    pop: 2058
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32868,
-    municipio: 'Nova Castilho',
-    pop: 1074
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 32900,
-    municipio: 'Nova Europa',
-    pop: 9459
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33007,
-    municipio: 'Nova Granada',
-    pop: 19725
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33106,
-    municipio: 'Nova Guataporanga',
-    pop: 2188
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33205,
-    municipio: 'Nova Independência',
-    pop: 4795
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33254,
-    municipio: 'Novais',
-    pop: 4469
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33304,
-    municipio: 'Nova Luzitânia',
-    pop: 2838
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33403,
-    municipio: 'Nova Odessa',
-    pop: 64228
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33502,
-    municipio: 'Novo Horizonte',
-    pop: 39435
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33601,
-    municipio: 'Nuporanga',
-    pop: 7550
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33700,
-    municipio: 'Ocauçu',
-    pop: 4412
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33809,
-    municipio: 'Óleo',
-    pop: 2540
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 33908,
-    municipio: 'Olímpia',
-    pop: 56701
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34005,
-    municipio: 'Onda Verde',
-    pop: 4912
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34104,
-    municipio: 'Oriente',
-    pop: 6180
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34203,
-    municipio: 'Orindiúva',
-    pop: 6145
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34302,
-    municipio: 'Orlândia',
-    pop: 39193
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34401,
-    municipio: 'Osasco',
-    pop: 756952
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34500,
-    municipio: 'Oscar Bressane',
-    pop: 2504
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34609,
-    municipio: 'Osvaldo Cruz',
-    pop: 32099
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34708,
-    municipio: 'Ourinhos',
-    pop: 106877
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34757,
-    municipio: 'Ouroeste',
-    pop: 10596
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34807,
-    municipio: 'Ouro Verde',
-    pop: 7901
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 34906,
-    municipio: 'Pacaembu',
-    pop: 15217
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35002,
-    municipio: 'Palestina',
-    pop: 11689
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35101,
-    municipio: 'Palmares Paulista',
-    pop: 9709
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35200,
-    municipio: "Palmeira d'Oeste",
-    pop: 8994
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35309,
-    municipio: 'Palmital',
-    pop: 19767
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35408,
-    municipio: 'Panorama',
-    pop: 15214
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35507,
-    municipio: 'Paraguaçu Paulista',
-    pop: 42087
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35606,
-    municipio: 'Paraibuna',
-    pop: 17950
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35705,
-    municipio: 'Paraíso',
-    pop: 6211
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35804,
-    municipio: 'Paranapanema',
-    pop: 19799
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 35903,
-    municipio: 'Paranapuã',
-    pop: 4111
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36000,
-    municipio: 'Parapuã',
-    pop: 10729
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36109,
-    municipio: 'Pardinho',
-    pop: 7382
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36208,
-    municipio: 'Pariquera-Açu',
-    pop: 19576
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36257,
-    municipio: 'Parisi',
-    pop: 3001
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36307,
-    municipio: 'Patrocínio Paulista',
-    pop: 14837
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36406,
-    municipio: 'Paulicéia',
-    pop: 8200
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36505,
-    municipio: 'Paulínia',
-    pop: 115690
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36570,
-    municipio: 'Paulistânia',
-    pop: 2146
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36604,
-    municipio: 'Paulo de Faria',
-    pop: 7430
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36703,
-    municipio: 'Pederneiras',
-    pop: 46223
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36802,
-    municipio: 'Pedra Bela',
-    pop: 6718
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 36901,
-    municipio: 'Pedranópolis',
-    pop: 2848
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37008,
-    municipio: 'Pedregulho',
-    pop: 15742
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37107,
-    municipio: 'Pedreira',
-    pop: 44332
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37156,
-    municipio: 'Pedrinhas Paulista',
-    pop: 2838
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37206,
-    municipio: 'Pedro de Toledo',
-    pop: 11539
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37305,
-    municipio: 'Penápolis',
-    pop: 63317
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37404,
-    municipio: 'Pereira Barreto',
-    pop: 24389
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37503,
-    municipio: 'Pereiras',
-    pop: 8969
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37602,
-    municipio: 'Peruíbe',
-    pop: 70543
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37701,
-    municipio: 'Piacatu',
-    pop: 5623
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37800,
-    municipio: 'Piedade',
-    pop: 54237
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 37909,
-    municipio: 'Pilar do Sul',
-    pop: 28417
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38006,
-    municipio: 'Pindamonhangaba',
-    pop: 172027
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38105,
-    municipio: 'Pindorama',
-    pop: 14721
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38204,
-    municipio: 'Pinhalzinho',
-    pop: 15605
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38303,
-    municipio: 'Piquerobi',
-    pop: 3296
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38501,
-    municipio: 'Piquete',
-    pop: 12570
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38600,
-    municipio: 'Piracaia',
-    pop: 26764
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38709,
-    municipio: 'Piracicaba',
-    pop: 438827
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38808,
-    municipio: 'Piraju',
-    pop: 30261
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 38907,
-    municipio: 'Pirajuí',
-    pop: 22743
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39004,
-    municipio: 'Pirangi',
-    pop: 11076
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39103,
-    municipio: 'Pirapora do Bom Jesus',
-    pop: 18836
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39202,
-    municipio: 'Pirapozinho',
-    pop: 26065
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39301,
-    municipio: 'Pirassununga',
-    pop: 75475
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39400,
-    municipio: 'Piratininga',
-    pop: 15554
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39509,
-    municipio: 'Pitangueiras',
-    pop: 34416
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39608,
-    municipio: 'Planalto',
-    pop: 4454
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39707,
-    municipio: 'Platina',
-    pop: 3061
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39806,
-    municipio: 'Poá',
-    pop: 106431
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 39905,
-    municipio: 'Poloni',
-    pop: 5696
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40002,
-    municipio: 'Pompéia',
-    pop: 20512
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40101,
-    municipio: 'Pongaí',
-    pop: 3443
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40200,
-    municipio: 'Pontal',
-    pop: 38376
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40259,
-    municipio: 'Pontalinda',
-    pop: 4196
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40309,
-    municipio: 'Pontes Gestal',
-    pop: 2415
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40408,
-    municipio: 'Populina',
-    pop: 4185
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40507,
-    municipio: 'Porangaba',
-    pop: 10773
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40606,
-    municipio: 'Porto Feliz',
-    pop: 58345
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40705,
-    municipio: 'Porto Ferreira',
-    pop: 53940
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40754,
-    municipio: 'Potim',
-    pop: 20767
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40804,
-    municipio: 'Potirendaba',
-    pop: 18994
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40853,
-    municipio: 'Pracinha',
-    pop: 2599
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 40903,
-    municipio: 'Pradópolis',
-    pop: 17309
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41000,
-    municipio: 'Praia Grande',
-    pop: 365577
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41059,
-    municipio: 'Pratânia',
-    pop: 5246
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41109,
-    municipio: 'Presidente Alves',
-    pop: 3841
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41208,
-    municipio: 'Presidente Bernardes',
-    pop: 14772
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41307,
-    municipio: 'Presidente Epitácio',
-    pop: 40383
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41406,
-    municipio: 'Presidente Prudente',
-    pop: 234083
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41505,
-    municipio: 'Presidente Venceslau',
-    pop: 35902
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41604,
-    municipio: 'Promissão',
-    pop: 35991
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41653,
-    municipio: 'Quadra',
-    pop: 3472
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41703,
-    municipio: 'Quatá',
-    pop: 13399
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41802,
-    municipio: 'Queiroz',
-    pop: 3351
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 41901,
-    municipio: 'Queluz',
-    pop: 9146
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42008,
-    municipio: 'Quintana',
-    pop: 7225
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42107,
-    municipio: 'Rafard',
-    pop: 9133
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42206,
-    municipio: 'Rancharia',
-    pop: 29305
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42305,
-    municipio: 'Redenção da Serra',
-    pop: 4611
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42404,
-    municipio: 'Regente Feijó',
-    pop: 20565
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42503,
-    municipio: 'Reginópolis',
-    pop: 7808
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42602,
-    municipio: 'Registro',
-    pop: 61732
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42701,
-    municipio: 'Restinga',
-    pop: 6492
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42800,
-    municipio: 'Ribeira',
-    pop: 3166
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 42909,
-    municipio: 'Ribeirão Bonito',
-    pop: 11079
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43006,
-    municipio: 'Ribeirão Branco',
-    pop: 18930
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43105,
-    municipio: 'Ribeirão Corrente',
-    pop: 4706
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43204,
-    municipio: 'Ribeirão do Sul',
-    pop: 4768
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43238,
-    municipio: 'Ribeirão dos Índios',
-    pop: 2045
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43253,
-    municipio: 'Ribeirão Grande',
-    pop: 7570
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43303,
-    municipio: 'Ribeirão Pires',
-    pop: 118877
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43402,
-    municipio: 'Ribeirão Preto',
-    pop: 728400
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43501,
-    municipio: 'Riversul',
-    pop: 5647
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43600,
-    municipio: 'Rifaina',
-    pop: 4158
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43709,
-    municipio: 'Rincão',
-    pop: 9145
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43808,
-    municipio: 'Rinópolis',
-    pop: 9357
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 43907,
-    municipio: 'Rio Claro',
-    pop: 208857
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44004,
-    municipio: 'Rio das Pedras',
-    pop: 32267
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44103,
-    municipio: 'Rio Grande da Serra',
-    pop: 45317
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44202,
-    municipio: 'Riolândia',
-    pop: 10453
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44251,
-    municipio: 'Rosana',
-    pop: 17533
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44301,
-    municipio: 'Roseira',
-    pop: 11095
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44400,
-    municipio: 'Rubiácea',
-    pop: 2741
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44509,
-    municipio: 'Rubinéia',
-    pop: 3965
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44608,
-    municipio: 'Sabino',
-    pop: 5185
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44707,
-    municipio: 'Sagres',
-    pop: 2519
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44806,
-    municipio: 'Sales',
-    pop: 6612
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 44905,
-    municipio: 'Sales Oliveira',
-    pop: 11654
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45001,
-    municipio: 'Salesópolis',
-    pop: 15396
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45100,
-    municipio: 'Salmourão',
-    pop: 4883
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45159,
-    municipio: 'Saltinho',
-    pop: 8371
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45209,
-    municipio: 'Salto',
-    pop: 140125
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45308,
-    municipio: 'Salto de Pirapora',
-    pop: 45138
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45407,
-    municipio: 'Salto Grande',
-    pop: 9212
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45506,
-    municipio: 'Sandovalina',
-    pop: 3699
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45605,
-    municipio: 'Santa Adélia',
-    pop: 14203
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45704,
-    municipio: 'Santa Albertina',
-    pop: 6543
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 45803,
-    municipio: "Santa Bárbara d'Oeste",
-    pop: 189338
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46009,
-    municipio: 'Santa Branca',
-    pop: 14212
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46108,
-    municipio: "Santa Clara d'Oeste",
-    pop: 2677
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46207,
-    municipio: 'Santa Cruz da Conceição',
-    pop: 4365
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46256,
-    municipio: 'Santa Cruz da Esperança',
-    pop: 2162
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46306,
-    municipio: 'Santa Cruz das Palmeiras',
-    pop: 29525
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46405,
-    municipio: 'Santa Cruz do Rio Pardo',
-    pop: 47677
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46504,
-    municipio: 'Santa Ernestina',
-    pop: 6256
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46603,
-    municipio: 'Santa Fé do Sul',
-    pop: 36098
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46702,
-    municipio: 'Santa Gertrudes',
-    pop: 24107
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46801,
-    municipio: 'Santa Isabel',
-    pop: 54586
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 46900,
-    municipio: 'Santa Lúcia',
-    pop: 7181
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47007,
-    municipio: 'Santa Maria da Serra',
-    pop: 5314
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47106,
-    municipio: 'Santa Mercedes',
-    pop: 3012
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47205,
-    municipio: 'Santana da Ponte Pensa',
-    pop: 1698
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47304,
-    municipio: 'Santana de Parnaíba',
-    pop: 162341
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47403,
-    municipio: "Santa Rita d'Oeste",
-    pop: 2790
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47502,
-    municipio: 'Santa Rita do Passa Quatro',
-    pop: 25060
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47601,
-    municipio: 'Santa Rosa de Viterbo',
-    pop: 23725
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47650,
-    municipio: 'Santa Salete',
-    pop: 1686
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47700,
-    municipio: 'Santo Anastácio',
-    pop: 18045
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47809,
-    municipio: 'Santo André',
-    pop: 778711
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 47908,
-    municipio: 'Santo Antônio da Alegria',
-    pop: 6917
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48005,
-    municipio: 'Santo Antônio de Posse',
-    pop: 23779
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48054,
-    municipio: 'Santo Antônio do Aracanguá',
-    pop: 8568
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48104,
-    municipio: 'Santo Antônio do Jardim',
-    pop: 6237
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48203,
-    municipio: 'Santo Antônio do Pinhal',
-    pop: 7294
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48302,
-    municipio: 'Santo Expedito',
-    pop: 3063
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48401,
-    municipio: 'Santópolis do Aguapeí',
-    pop: 3933
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48500,
-    municipio: 'Santos',
-    pop: 429567
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48609,
-    municipio: 'São Bento do Sapucaí',
-    pop: 11948
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48708,
-    municipio: 'São Bernardo do Campo',
-    pop: 840499
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48807,
-    municipio: 'São Caetano do Sul',
-    pop: 172109
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 48906,
-    municipio: 'São Carlos',
-    pop: 265294
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49003,
-    municipio: 'São Francisco',
-    pop: 2629
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49102,
-    municipio: 'São João da Boa Vista',
-    pop: 95762
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49201,
-    municipio: 'São João das Duas Pontes',
-    pop: 2622
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49250,
-    municipio: 'São João de Iracema',
-    pop: 1880
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49300,
-    municipio: "São João do Pau d'Alho",
-    pop: 2288
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49409,
-    municipio: 'São Joaquim da Barra',
-    pop: 49815
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49508,
-    municipio: 'São José da Bela Vista',
-    pop: 7690
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49607,
-    municipio: 'São José do Barreiro',
-    pop: 3898
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49706,
-    municipio: 'São José do Rio Pardo',
-    pop: 53416
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49805,
-    municipio: 'São José do Rio Preto',
-    pop: 501597
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49904,
-    municipio: 'São José dos Campos',
-    pop: 724756
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 49953,
-    municipio: 'São Lourenço da Serra',
-    pop: 16458
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50001,
-    municipio: 'São Luiz do Paraitinga',
-    pop: 10497
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50100,
-    municipio: 'São Manuel',
-    pop: 38166
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50209,
-    municipio: 'São Miguel Arcanjo',
-    pop: 32904
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50308,
-    municipio: 'São Paulo',
-    pop: 11895578
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50407,
-    municipio: 'São Pedro',
-    pop: 39725
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50506,
-    municipio: 'São Pedro do Turvo',
-    pop: 7333
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50605,
-    municipio: 'São Roque',
-    pop: 81342
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50704,
-    municipio: 'São Sebastião',
-    pop: 84019
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50803,
-    municipio: 'São Sebastião da Grama',
-    pop: 10484
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 50902,
-    municipio: 'São Simão',
-    pop: 13590
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51009,
-    municipio: 'São Vicente',
-    pop: 338407
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51108,
-    municipio: 'Sarapuí',
-    pop: 10632
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51207,
-    municipio: 'Sarutaiá',
-    pop: 3769
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51306,
-    municipio: 'Sebastianópolis do Sul',
-    pop: 3187
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51405,
-    municipio: 'Serra Azul',
-    pop: 13058
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51504,
-    municipio: 'Serrana',
-    pop: 45408
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51603,
-    municipio: 'Serra Negra',
-    pop: 30920
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51702,
-    municipio: 'Sertãozinho',
-    pop: 131600
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51801,
-    municipio: 'Sete Barras',
-    pop: 12912
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 51900,
-    municipio: 'Severínia',
-    pop: 14724
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52007,
-    municipio: 'Silveiras',
-    pop: 6313
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52106,
-    municipio: 'Socorro',
-    pop: 41405
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52205,
-    municipio: 'Sorocaba',
-    pop: 757459
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52304,
-    municipio: 'Sud Mennucci',
-    pop: 7466
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52403,
-    municipio: 'Sumaré',
-    pop: 289787
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52502,
-    municipio: 'Suzano',
-    pop: 318765
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52551,
-    municipio: 'Suzanápolis',
-    pop: 3464
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52601,
-    municipio: 'Tabapuã',
-    pop: 11499
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52700,
-    municipio: 'Tabatinga',
-    pop: 14994
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52809,
-    municipio: 'Taboão da Serra',
-    pop: 284274
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 52908,
-    municipio: 'Taciba',
-    pop: 6399
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53005,
-    municipio: 'Taguaí',
-    pop: 13006
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53104,
-    municipio: 'Taiaçu',
-    pop: 5751
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53203,
-    municipio: 'Taiúva',
-    pop: 6733
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53302,
-    municipio: 'Tambaú',
-    pop: 21682
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53401,
-    municipio: 'Tanabi',
-    pop: 26021
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53500,
-    municipio: 'Tapiraí',
-    pop: 8122
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53609,
-    municipio: 'Tapiratiba',
-    pop: 11936
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53658,
-    municipio: 'Taquaral',
-    pop: 2652
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53708,
-    municipio: 'Taquaritinga',
-    pop: 53322
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53807,
-    municipio: 'Taquarituba',
-    pop: 24863
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53856,
-    municipio: 'Taquarivaí',
-    pop: 7112
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53906,
-    municipio: 'Tarabai',
-    pop: 6635
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 53955,
-    municipio: 'Tarumã',
-    pop: 15248
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54003,
-    municipio: 'Tatuí',
-    pop: 128560
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54102,
-    municipio: 'Taubaté',
-    pop: 321298
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54201,
-    municipio: 'Tejupá',
-    pop: 4142
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54300,
-    municipio: 'Teodoro Sampaio',
-    pop: 22559
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54409,
-    municipio: 'Terra Roxa',
-    pop: 7985
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54508,
-    municipio: 'Tietê',
-    pop: 38690
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54607,
-    municipio: 'Timburi',
-    pop: 2490
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54656,
-    municipio: 'Torre de Pedra',
-    pop: 2063
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54706,
-    municipio: 'Torrinha',
-    pop: 9484
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54755,
-    municipio: 'Trabiju',
-    pop: 1719
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54805,
-    municipio: 'Tremembé',
-    pop: 53083
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54904,
-    municipio: 'Três Fronteiras',
-    pop: 7013
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 54953,
-    municipio: 'Tuiuti',
-    pop: 6947
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55000,
-    municipio: 'Tupã',
-    pop: 65416
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55109,
-    municipio: 'Tupi Paulista',
-    pop: 16206
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55208,
-    municipio: 'Turiúba',
-    pop: 1839
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55307,
-    municipio: 'Turmalina',
-    pop: 1672
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55356,
-    municipio: 'Ubarana',
-    pop: 5456
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55406,
-    municipio: 'Ubatuba',
-    pop: 96598
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55505,
-    municipio: 'Ubirajara',
-    pop: 5265
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55604,
-    municipio: 'Uchoa',
-    pop: 10627
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55703,
-    municipio: 'União Paulista',
-    pop: 1628
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55802,
-    municipio: 'Urânia',
-    pop: 8973
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 55901,
-    municipio: 'Uru',
-    pop: 1419
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56008,
-    municipio: 'Urupês',
-    pop: 14038
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56107,
-    municipio: 'Valentim Gentil',
-    pop: 14531
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56206,
-    municipio: 'Valinhos',
-    pop: 131277
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56305,
-    municipio: 'Valparaíso',
-    pop: 24723
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56354,
-    municipio: 'Vargem',
-    pop: 10805
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56404,
-    municipio: 'Vargem Grande do Sul',
-    pop: 41226
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56453,
-    municipio: 'Vargem Grande Paulista',
-    pop: 52103
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56503,
-    municipio: 'Várzea Paulista',
-    pop: 119576
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56602,
-    municipio: 'Vera Cruz',
-    pop: 10294
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56701,
-    municipio: 'Vinhedo',
-    pop: 79235
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56800,
-    municipio: 'Viradouro',
-    pop: 17681
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56909,
-    municipio: 'Vista Alegre do Alto',
-    pop: 8327
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 56958,
-    municipio: 'Vitória Brasil',
-    pop: 1826
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 57006,
-    municipio: 'Votorantim',
-    pop: 132849
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 57105,
-    municipio: 'Votuporanga',
-    pop: 100159
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 57154,
-    municipio: 'Zacarias',
-    pop: 2761
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 57204,
-    municipio: 'Chavantes',
-    pop: 12411
-  },
-  {
-    uf: 'SP',
-    uf_id: 35,
-    municipio_id: 57303,
-    municipio: 'Estiva Gerbi',
-    pop: 11566
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00103',
-    municipio: 'Abatiá',
-    pop: 7271
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00202',
-    municipio: 'Adrianópolis',
-    pop: 6327
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00301',
-    municipio: 'Agudos do Sul',
-    pop: 10646
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00400',
-    municipio: 'Almirante Tamandaré',
-    pop: 124788
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00459',
-    municipio: 'Altamira do Paraná',
-    pop: 3543
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00509',
-    municipio: 'Altônia',
-    pop: 18750
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00608',
-    municipio: 'Alto Paraná',
-    pop: 14138
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00707',
-    municipio: 'Alto Piquiri',
-    pop: 9802
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00806',
-    municipio: 'Alvorada do Sul',
-    pop: 10478
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '00905',
-    municipio: 'Amaporã',
-    pop: 4736
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01002',
-    municipio: 'Ampére',
-    pop: 20199
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01051',
-    municipio: 'Anahy',
-    pop: 2965
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01101',
-    municipio: 'Andirá',
-    pop: 20044
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01150',
-    municipio: 'Ângulo',
-    pop: 3332
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01200',
-    municipio: 'Antonina',
-    pop: 18223
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01309',
-    municipio: 'Antônio Olinto',
-    pop: 7071
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01408',
-    municipio: 'Apucarana',
-    pop: 134306
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01507',
-    municipio: 'Arapongas',
-    pop: 123863
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01606',
-    municipio: 'Arapoti',
-    pop: 26310
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01655',
-    municipio: 'Arapuã',
-    pop: 3573
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01705',
-    municipio: 'Araruna',
-    pop: 14824
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01804',
-    municipio: 'Araucária',
-    pop: 160038
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01853',
-    municipio: 'Ariranha do Ivaí',
-    pop: 2351
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '01903',
-    municipio: 'Assaí',
-    pop: 13643
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02000',
-    municipio: 'Assis Chateaubriand',
-    pop: 38105
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02109',
-    municipio: 'Astorga',
-    pop: 26145
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02208',
-    municipio: 'Atalaia',
-    pop: 4045
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02307',
-    municipio: 'Balsa Nova',
-    pop: 13871
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02406',
-    municipio: 'Bandeirantes',
-    pop: 31807
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02505',
-    municipio: 'Barbosa Ferraz',
-    pop: 10692
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02604',
-    municipio: 'Barracão',
-    pop: 9900
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02703',
-    municipio: 'Barra do Jacaré',
-    pop: 2866
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02752',
-    municipio: 'Bela Vista da Caroba',
-    pop: 4100
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02802',
-    municipio: 'Bela Vista do Paraíso',
-    pop: 14998
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '02901',
-    municipio: 'Bituruna',
-    pop: 15689
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03008',
-    municipio: 'Boa Esperança',
-    pop: 4622
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03024',
-    municipio: 'Boa Esperança do Iguaçu',
-    pop: 2448
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03040',
-    municipio: 'Boa Ventura de São Roque',
-    pop: 6244
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03057',
-    municipio: 'Boa Vista da Aparecida',
-    pop: 8034
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03107',
-    municipio: 'Bocaiúva do Sul',
-    pop: 13804
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03156',
-    municipio: 'Bom Jesus do Sul',
-    pop: 4061
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03206',
-    municipio: 'Bom Sucesso',
-    pop: 6677
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03222',
-    municipio: 'Bom Sucesso do Sul',
-    pop: 3234
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03305',
-    municipio: 'Borrazópolis',
-    pop: 7824
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03354',
-    municipio: 'Braganey',
-    pop: 4802
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03370',
-    municipio: 'Brasilândia do Sul',
-    pop: 3828
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03404',
-    municipio: 'Cafeara',
-    pop: 2655
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03453',
-    municipio: 'Cafelândia',
-    pop: 19844
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03479',
-    municipio: 'Cafezal do Sul',
-    pop: 4561
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03503',
-    municipio: 'Califórnia',
-    pop: 8921
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03602',
-    municipio: 'Cambará',
-    pop: 23430
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03701',
-    municipio: 'Cambé',
-    pop: 111009
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03800',
-    municipio: 'Cambira',
-    pop: 9899
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03909',
-    municipio: 'Campina da Lagoa',
-    pop: 15979
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '03958',
-    municipio: 'Campina do Simão',
-    pop: 3973
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04006',
-    municipio: 'Campina Grande do Sul',
-    pop: 49971
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04055',
-    municipio: 'Campo Bonito',
-    pop: 4032
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04105',
-    municipio: 'Campo do Tenente',
-    pop: 7666
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04204',
-    municipio: 'Campo Largo',
-    pop: 142695
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04253',
-    municipio: 'Campo Magro',
-    pop: 31555
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04303',
-    municipio: 'Campo Mourão',
-    pop: 103340
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04402',
-    municipio: 'Cândido de Abreu',
-    pop: 15255
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04428',
-    municipio: 'Candói',
-    pop: 15174
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04451',
-    municipio: 'Cantagalo',
-    pop: 10799
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04501',
-    municipio: 'Capanema',
-    pop: 21022
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04600',
-    municipio: 'Capitão Leônidas Marques',
-    pop: 14796
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04659',
-    municipio: 'Carambeí',
-    pop: 24159
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04709',
-    municipio: 'Carlópolis',
-    pop: 17567
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04808',
-    municipio: 'Cascavel',
-    pop: 364104
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '04907',
-    municipio: 'Castro',
-    pop: 75291
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05003',
-    municipio: 'Catanduvas',
-    pop: 10627
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05102',
-    municipio: 'Centenário do Sul',
-    pop: 10936
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05201',
-    municipio: 'Cerro Azul',
-    pop: 16240
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05300',
-    municipio: 'Céu Azul',
-    pop: 11251
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05409',
-    municipio: 'Chopinzinho',
-    pop: 21559
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05508',
-    municipio: 'Cianorte',
-    pop: 82359
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05607',
-    municipio: 'Cidade Gaúcha',
-    pop: 11684
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05706',
-    municipio: 'Clevelândia',
-    pop: 14975
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05805',
-    municipio: 'Colombo',
-    pop: 240720
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '05904',
-    municipio: 'Colorado',
-    pop: 23278
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06001',
-    municipio: 'Congonhinhas',
-    pop: 8442
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06100',
-    municipio: 'Conselheiro Mairinck',
-    pop: 3486
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06209',
-    municipio: 'Contenda',
-    pop: 19827
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06308',
-    municipio: 'Corbélia',
-    pop: 17862
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06407',
-    municipio: 'Cornélio Procópio',
-    pop: 45830
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06456',
-    municipio: 'Coronel Domingos Soares',
-    pop: 5516
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06506',
-    municipio: 'Coronel Vivida',
-    pop: 23859
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06555',
-    municipio: 'Corumbataí do Sul',
-    pop: 3780
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06571',
-    municipio: 'Cruzeiro do Iguaçu',
-    pop: 4171
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06605',
-    municipio: 'Cruzeiro do Oeste',
-    pop: 24622
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06704',
-    municipio: 'Cruzeiro do Sul',
-    pop: 4547
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06803',
-    municipio: 'Cruz Machado',
-    pop: 15910
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06852',
-    municipio: 'Cruzmaltina',
-    pop: 2896
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '06902',
-    municipio: 'Curitiba',
-    pop: 1829225
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07009',
-    municipio: 'Curiúva',
-    pop: 13802
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07108',
-    municipio: 'Diamante do Norte',
-    pop: 5164
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07124',
-    municipio: 'Diamante do Sul',
-    pop: 3170
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07157',
-    municipio: "Diamante D'Oeste",
-    pop: 4557
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07207',
-    municipio: 'Dois Vizinhos',
-    pop: 47014
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07256',
-    municipio: 'Douradina',
-    pop: 9525
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07306',
-    municipio: 'Doutor Camargo',
-    pop: 6484
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07405',
-    municipio: 'Enéas Marques',
-    pop: 6070
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07504',
-    municipio: 'Engenheiro Beltrão',
-    pop: 12431
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07520',
-    municipio: 'Esperança Nova',
-    pop: 1858
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07538',
-    municipio: 'Entre Rios do Oeste',
-    pop: 4729
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07546',
-    municipio: 'Espigão Alto do Iguaçu',
-    pop: 4881
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07553',
-    municipio: 'Farol',
-    pop: 3023
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07603',
-    municipio: 'Faxinal',
-    pop: 16618
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07652',
-    municipio: 'Fazenda Rio Grande',
-    pop: 161506
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07702',
-    municipio: 'Fênix',
-    pop: 4512
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07736',
-    municipio: 'Fernandes Pinheiro',
-    pop: 6387
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07751',
-    municipio: 'Figueira',
-    pop: 8144
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07801',
-    municipio: 'Floraí',
-    pop: 4825
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07850',
-    municipio: 'Flor da Serra do Sul',
-    pop: 4367
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '07900',
-    municipio: 'Floresta',
-    pop: 11226
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08007',
-    municipio: 'Florestópolis',
-    pop: 11639
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08106',
-    municipio: 'Flórida',
-    pop: 2704
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08205',
-    municipio: 'Formosa do Oeste',
-    pop: 7756
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08304',
-    municipio: 'Foz do Iguaçu',
-    pop: 295500
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08320',
-    municipio: 'Francisco Alves',
-    pop: 8464
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08403',
-    municipio: 'Francisco Beltrão',
-    pop: 101302
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08452',
-    municipio: 'Foz do Jordão',
-    pop: 4925
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08502',
-    municipio: 'General Carneiro',
-    pop: 10861
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08551',
-    municipio: 'Godoy Moreira',
-    pop: 2970
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08601',
-    municipio: 'Goioerê',
-    pop: 28970
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08650',
-    municipio: 'Goioxim',
-    pop: 6531
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08700',
-    municipio: 'Grandes Rios',
-    pop: 5586
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08809',
-    municipio: 'Guaíra',
-    pop: 32966
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08908',
-    municipio: 'Guairaçá',
-    pop: 6733
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '08957',
-    municipio: 'Guamiranga',
-    pop: 7961
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09005',
-    municipio: 'Guapirama',
-    pop: 4792
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09104',
-    municipio: 'Guaporema',
-    pop: 2217
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09203',
-    municipio: 'Guaraci',
-    pop: 4762
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09302',
-    municipio: 'Guaraniaçu',
-    pop: 13814
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09401',
-    municipio: 'Guarapuava',
-    pop: 188710
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09500',
-    municipio: 'Guaraqueçaba',
-    pop: 7474
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09609',
-    municipio: 'Guaratuba',
-    pop: 44323
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09658',
-    municipio: 'Honório Serpa',
-    pop: 4872
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09708',
-    municipio: 'Ibaiti',
-    pop: 29440
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09757',
-    municipio: 'Ibema',
-    pop: 6327
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09807',
-    municipio: 'Ibiporã',
-    pop: 53054
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: '09906',
-    municipio: 'Icaraíma',
-    pop: 9139
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10003,
-    municipio: 'Iguaraçu',
-    pop: 5599
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10052,
-    municipio: 'Iguatu',
-    pop: 2162
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10078,
-    municipio: 'Imbaú',
-    pop: 14815
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10102,
-    municipio: 'Imbituva',
-    pop: 30757
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10201,
-    municipio: 'Inácio Martins',
-    pop: 9633
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10300,
-    municipio: 'Inajá',
-    pop: 2510
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10409,
-    municipio: 'Indianópolis',
-    pop: 4531
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10508,
-    municipio: 'Ipiranga',
-    pop: 14338
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10607,
-    municipio: 'Iporã',
-    pop: 16062
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10656,
-    municipio: 'Iracema do Oeste',
-    pop: 2344
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10706,
-    municipio: 'Irati',
-    pop: 60796
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10805,
-    municipio: 'Iretama',
-    pop: 10843
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10904,
-    municipio: 'Itaguajé',
-    pop: 4532
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 10953,
-    municipio: 'Itaipulândia',
-    pop: 11984
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11001,
-    municipio: 'Itambaracá',
-    pop: 5874
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11100,
-    municipio: 'Itambé',
-    pop: 6215
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11209,
-    municipio: "Itapejara d'Oeste",
-    pop: 12766
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11258,
-    municipio: 'Itaperuçu',
-    pop: 32890
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11308,
-    municipio: 'Itaúna do Sul',
-    pop: 3620
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11407,
-    municipio: 'Ivaí',
-    pop: 13473
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11506,
-    municipio: 'Ivaiporã',
-    pop: 33529
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11555,
-    municipio: 'Ivaté',
-    pop: 6833
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11605,
-    municipio: 'Ivatuba',
-    pop: 2705
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11704,
-    municipio: 'Jaboti',
-    pop: 5576
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11803,
-    municipio: 'Jacarezinho',
-    pop: 41400
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 11902,
-    municipio: 'Jaguapitã',
-    pop: 15719
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12009,
-    municipio: 'Jaguariaíva',
-    pop: 36231
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12108,
-    municipio: 'Jandaia do Sul',
-    pop: 21851
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12207,
-    municipio: 'Janiópolis',
-    pop: 5835
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12306,
-    municipio: 'Japira',
-    pop: 5060
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12405,
-    municipio: 'Japurá',
-    pop: 9354
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12504,
-    municipio: 'Jardim Alegre',
-    pop: 12130
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12603,
-    municipio: 'Jardim Olinda',
-    pop: 1353
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12702,
-    municipio: 'Jataizinho',
-    pop: 11971
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12751,
-    municipio: 'Jesuítas',
-    pop: 10860
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12801,
-    municipio: 'Joaquim Távora',
-    pop: 12280
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12900,
-    municipio: 'Jundiaí do Sul',
-    pop: 3366
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 12959,
-    municipio: 'Juranda',
-    pop: 7898
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13007,
-    municipio: 'Jussara',
-    pop: 6795
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13106,
-    municipio: 'Kaloré',
-    pop: 4657
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13205,
-    municipio: 'Lapa',
-    pop: 45857
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13254,
-    municipio: 'Laranjal',
-    pop: 5575
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13304,
-    municipio: 'Laranjeiras do Sul',
-    pop: 33103
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13403,
-    municipio: 'Leópolis',
-    pop: 3751
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13429,
-    municipio: 'Lidianópolis',
-    pop: 3989
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13452,
-    municipio: 'Lindoeste',
-    pop: 5226
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13502,
-    municipio: 'Loanda',
-    pop: 23813
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13601,
-    municipio: 'Lobato',
-    pop: 4693
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13700,
-    municipio: 'Londrina',
-    pop: 577318
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13734,
-    municipio: 'Luiziana',
-    pop: 6696
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13759,
-    municipio: 'Lunardelli',
-    pop: 4902
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13809,
-    municipio: 'Lupionópolis',
-    pop: 4911
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 13908,
-    municipio: 'Mallet',
-    pop: 13655
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14005,
-    municipio: 'Mamborê',
-    pop: 13572
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14104,
-    municipio: 'Mandaguaçu',
-    pop: 33752
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14203,
-    municipio: 'Mandaguari',
-    pop: 38050
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14302,
-    municipio: 'Mandirituba',
-    pop: 28761
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14351,
-    municipio: 'Manfrinópolis',
-    pop: 2761
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14401,
-    municipio: 'Mangueirinha',
-    pop: 16764
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14500,
-    municipio: 'Manoel Ribas',
-    pop: 14576
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14609,
-    municipio: 'Marechal Cândido Rondon',
-    pop: 58140
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14708,
-    municipio: 'Maria Helena',
-    pop: 5935
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14807,
-    municipio: 'Marialva',
-    pop: 44098
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 14906,
-    municipio: 'Marilândia do Sul',
-    pop: 8774
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15002,
-    municipio: 'Marilena',
-    pop: 7409
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15101,
-    municipio: 'Mariluz',
-    pop: 9934
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15200,
-    municipio: 'Maringá',
-    pop: 425983
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15309,
-    municipio: 'Mariópolis',
-    pop: 6475
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15358,
-    municipio: 'Maripá',
-    pop: 6767
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15408,
-    municipio: 'Marmeleiro',
-    pop: 16386
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15457,
-    municipio: 'Marquinho',
-    pop: 4521
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15507,
-    municipio: 'Marumbi',
-    pop: 4778
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15606,
-    municipio: 'Matelândia',
-    pop: 19022
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15705,
-    municipio: 'Matinhos',
-    pop: 41416
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15739,
-    municipio: 'Mato Rico',
-    pop: 3237
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15754,
-    municipio: 'Mauá da Serra',
-    pop: 9628
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15804,
-    municipio: 'Medianeira',
-    pop: 57120
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15853,
-    municipio: 'Mercedes',
-    pop: 6136
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 15903,
-    municipio: 'Mirador',
-    pop: 2258
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16000,
-    municipio: 'Miraselva',
-    pop: 2008
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16059,
-    municipio: 'Missal',
-    pop: 11301
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16109,
-    municipio: 'Moreira Sales',
-    pop: 11137
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16208,
-    municipio: 'Morretes',
-    pop: 18908
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16307,
-    municipio: 'Munhoz de Melo',
-    pop: 4045
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16406,
-    municipio: 'Nossa Senhora das Graças',
-    pop: 3685
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16505,
-    municipio: 'Nova Aliança do Ivaí',
-    pop: 1327
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16604,
-    municipio: 'Nova América da Colina',
-    pop: 3299
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16703,
-    municipio: 'Nova Aurora',
-    pop: 14219
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16802,
-    municipio: 'Nova Cantu',
-    pop: 6799
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16901,
-    municipio: 'Nova Esperança',
-    pop: 27142
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 16950,
-    municipio: 'Nova Esperança do Sudoeste',
-    pop: 5744
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17008,
-    municipio: 'Nova Fátima',
-    pop: 7201
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17057,
-    municipio: 'Nova Laranjeiras',
-    pop: 12287
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17107,
-    municipio: 'Nova Londrina',
-    pop: 13085
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17206,
-    municipio: 'Nova Olímpia',
-    pop: 5960
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17214,
-    municipio: 'Nova Santa Bárbara',
-    pop: 4280
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17222,
-    municipio: 'Nova Santa Rosa',
-    pop: 8535
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17255,
-    municipio: 'Nova Prata do Iguaçu',
-    pop: 13196
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17271,
-    municipio: 'Nova Tebas',
-    pop: 6870
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17297,
-    municipio: 'Novo Itacolomi',
-    pop: 3210
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17305,
-    municipio: 'Ortigueira',
-    pop: 24627
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17404,
-    municipio: 'Ourizona',
-    pop: 3206
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17453,
-    municipio: 'Ouro Verde do Oeste',
-    pop: 7031
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17503,
-    municipio: 'Paiçandu',
-    pop: 48207
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17602,
-    municipio: 'Palmas',
-    pop: 49891
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17701,
-    municipio: 'Palmeira',
-    pop: 34806
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17800,
-    municipio: 'Palmital',
-    pop: 12967
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 17909,
-    municipio: 'Palotina',
-    pop: 36623
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18006,
-    municipio: 'Paraíso do Norte',
-    pop: 13634
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18105,
-    municipio: 'Paranacity',
-    pop: 9597
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18204,
-    municipio: 'Paranaguá',
-    pop: 149819
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18303,
-    municipio: 'Paranapoema',
-    pop: 2378
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18402,
-    municipio: 'Paranavaí',
-    pop: 95525
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18451,
-    municipio: 'Pato Bragado',
-    pop: 5939
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18501,
-    municipio: 'Pato Branco',
-    pop: 96602
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18600,
-    municipio: 'Paula Freitas',
-    pop: 5778
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18709,
-    municipio: 'Paulo Frontin',
-    pop: 6369
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18808,
-    municipio: 'Peabiru',
-    pop: 13496
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18857,
-    municipio: 'Perobal',
-    pop: 7496
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 18907,
-    municipio: 'Pérola',
-    pop: 12275
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19004,
-    municipio: "Pérola d'Oeste",
-    pop: 6235
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19103,
-    municipio: 'Piên',
-    pop: 14179
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19152,
-    municipio: 'Pinhais',
-    pop: 131199
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19202,
-    municipio: 'Pinhalão',
-    pop: 6707
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19251,
-    municipio: 'Pinhal de São Bento',
-    pop: 2819
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19301,
-    municipio: 'Pinhão',
-    pop: 30472
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19400,
-    municipio: 'Piraí do Sul',
-    pop: 24000
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19509,
-    municipio: 'Piraquara',
-    pop: 124934
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19608,
-    municipio: 'Pitanga',
-    pop: 34513
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19657,
-    municipio: 'Pitangueiras',
-    pop: 3121
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19707,
-    municipio: 'Planaltina do Paraná',
-    pop: 4123
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19806,
-    municipio: 'Planalto',
-    pop: 14663
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19905,
-    municipio: 'Ponta Grossa',
-    pop: 372562
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 19954,
-    municipio: 'Pontal do Paraná',
-    pop: 32426
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20002,
-    municipio: 'Porecatu',
-    pop: 11438
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20101,
-    municipio: 'Porto Amazonas',
-    pop: 4099
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20150,
-    municipio: 'Porto Barreiro',
-    pop: 3078
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20200,
-    municipio: 'Porto Rico',
-    pop: 3316
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20309,
-    municipio: 'Porto Vitória',
-    pop: 3549
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20333,
-    municipio: 'Prado Ferreira',
-    pop: 3799
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20358,
-    municipio: 'Pranchita',
-    pop: 5833
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20408,
-    municipio: 'Presidente Castelo Branco',
-    pop: 4336
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20507,
-    municipio: 'Primeiro de Maio',
-    pop: 10121
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20606,
-    municipio: 'Prudentópolis',
-    pop: 50428
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20655,
-    municipio: 'Quarto Centenário',
-    pop: 4170
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20705,
-    municipio: 'Quatiguá',
-    pop: 8357
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20804,
-    municipio: 'Quatro Barras',
-    pop: 25109
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20853,
-    municipio: 'Quatro Pontes',
-    pop: 4636
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 20903,
-    municipio: 'Quedas do Iguaçu',
-    pop: 31405
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21000,
-    municipio: 'Querência do Norte',
-    pop: 10693
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21109,
-    municipio: 'Quinta do Sol',
-    pop: 5060
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21208,
-    municipio: 'Quitandinha',
-    pop: 18823
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21257,
-    municipio: 'Ramilândia',
-    pop: 4293
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21307,
-    municipio: 'Rancho Alegre',
-    pop: 3501
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21356,
-    municipio: "Rancho Alegre D'Oeste",
-    pop: 2638
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21406,
-    municipio: 'Realeza',
-    pop: 19903
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21505,
-    municipio: 'Rebouças',
-    pop: 14754
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21604,
-    municipio: 'Renascença',
-    pop: 6946
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21703,
-    municipio: 'Reserva',
-    pop: 24851
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21752,
-    municipio: 'Reserva do Iguaçu',
-    pop: 6543
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21802,
-    municipio: 'Ribeirão Claro',
-    pop: 12770
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 21901,
-    municipio: 'Ribeirão do Pinhal',
-    pop: 13180
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22008,
-    municipio: 'Rio Azul',
-    pop: 14214
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22107,
-    municipio: 'Rio Bom',
-    pop: 3223
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22156,
-    municipio: 'Rio Bonito do Iguaçu',
-    pop: 14234
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22172,
-    municipio: 'Rio Branco do Ivaí',
-    pop: 3850
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22206,
-    municipio: 'Rio Branco do Sul',
-    pop: 39307
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22305,
-    municipio: 'Rio Negro',
-    pop: 31992
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22404,
-    municipio: 'Rolândia',
-    pop: 74935
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22503,
-    municipio: 'Roncador',
-    pop: 11371
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22602,
-    municipio: 'Rondon',
-    pop: 9240
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22651,
-    municipio: 'Rosário do Ivaí',
-    pop: 5491
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22701,
-    municipio: 'Sabáudia',
-    pop: 9320
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22800,
-    municipio: 'Salgado Filho',
-    pop: 4097
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 22909,
-    municipio: 'Salto do Itararé',
-    pop: 5267
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23006,
-    municipio: 'Salto do Lontra',
-    pop: 15636
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23105,
-    municipio: 'Santa Amélia',
-    pop: 3386
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23204,
-    municipio: 'Santa Cecília do Pavão',
-    pop: 3375
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23303,
-    municipio: 'Santa Cruz de Monte Castelo',
-    pop: 8806
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23402,
-    municipio: 'Santa Fé',
-    pop: 11669
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23501,
-    municipio: 'Santa Helena',
-    pop: 26341
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23600,
-    municipio: 'Santa Inês',
-    pop: 1760
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23709,
-    municipio: 'Santa Isabel do Ivaí',
-    pop: 9059
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23808,
-    municipio: 'Santa Izabel do Oeste',
-    pop: 14385
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23824,
-    municipio: 'Santa Lúcia',
-    pop: 3657
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23857,
-    municipio: 'Santa Maria do Oeste',
-    pop: 9985
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23907,
-    municipio: 'Santa Mariana',
-    pop: 11034
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 23956,
-    municipio: 'Santa Mônica',
-    pop: 3373
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24004,
-    municipio: 'Santana do Itararé',
-    pop: 5628
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24020,
-    municipio: 'Santa Tereza do Oeste',
-    pop: 13749
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24053,
-    municipio: 'Santa Terezinha de Itaipu',
-    pop: 25055
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24103,
-    municipio: 'Santo Antônio da Platina',
-    pop: 45534
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24202,
-    municipio: 'Santo Antônio do Caiuá',
-    pop: 2496
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24301,
-    municipio: 'Santo Antônio do Paraíso',
-    pop: 2116
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24400,
-    municipio: 'Santo Antônio do Sudoeste',
-    pop: 24644
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24509,
-    municipio: 'Santo Inácio',
-    pop: 6397
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24608,
-    municipio: 'São Carlos do Ivaí',
-    pop: 6712
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24707,
-    municipio: 'São Jerônimo da Serra',
-    pop: 10913
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24806,
-    municipio: 'São João',
-    pop: 12230
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 24905,
-    municipio: 'São João do Caiuá',
-    pop: 5620
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25001,
-    municipio: 'São João do Ivaí',
-    pop: 10700
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25100,
-    municipio: 'São João do Triunfo',
-    pop: 13923
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25209,
-    municipio: "São Jorge d'Oeste",
-    pop: 9550
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25308,
-    municipio: 'São Jorge do Ivaí',
-    pop: 5193
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25357,
-    municipio: 'São Jorge do Patrocínio',
-    pop: 6659
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25407,
-    municipio: 'São José da Boa Vista',
-    pop: 6060
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25456,
-    municipio: 'São José das Palmeiras',
-    pop: 4030
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25506,
-    municipio: 'São José dos Pinhais',
-    pop: 345644
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25555,
-    municipio: 'São Manoel do Paraná',
-    pop: 2173
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25605,
-    municipio: 'São Mateus do Sul',
-    pop: 43413
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25704,
-    municipio: 'São Miguel do Iguaçu',
-    pop: 30198
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25753,
-    municipio: 'São Pedro do Iguaçu',
-    pop: 5769
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25803,
-    municipio: 'São Pedro do Ivaí',
-    pop: 8611
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 25902,
-    municipio: 'São Pedro do Paraná',
-    pop: 2722
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26009,
-    municipio: 'São Sebastião da Amoreira',
-    pop: 8100
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26108,
-    municipio: 'São Tomé',
-    pop: 5290
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26207,
-    municipio: 'Sapopema',
-    pop: 6784
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26256,
-    municipio: 'Sarandi',
-    pop: 125785
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26272,
-    municipio: 'Saudade do Iguaçu',
-    pop: 6342
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26306,
-    municipio: 'Sengés',
-    pop: 17344
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26355,
-    municipio: 'Serranópolis do Iguaçu',
-    pop: 5138
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26405,
-    municipio: 'Sertaneja',
-    pop: 5667
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26504,
-    municipio: 'Sertanópolis',
-    pop: 16183
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26603,
-    municipio: 'Siqueira Campos',
-    pop: 23712
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26652,
-    municipio: 'Sulina',
-    pop: 3495
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26678,
-    municipio: 'Tamarana',
-    pop: 10645
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26702,
-    municipio: 'Tamboara',
-    pop: 4979
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26801,
-    municipio: 'Tapejara',
-    pop: 16255
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 26900,
-    municipio: 'Tapira',
-    pop: 5813
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27007,
-    municipio: 'Teixeira Soares',
-    pop: 9581
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27106,
-    municipio: 'Telêmaco Borba',
-    pop: 77182
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27205,
-    municipio: 'Terra Boa',
-    pop: 18048
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27304,
-    municipio: 'Terra Rica',
-    pop: 14989
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27403,
-    municipio: 'Terra Roxa',
-    pop: 18548
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27502,
-    municipio: 'Tibagi',
-    pop: 20304
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27601,
-    municipio: 'Tijucas do Sul',
-    pop: 18279
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27700,
-    municipio: 'Toledo',
-    pop: 158620
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27809,
-    municipio: 'Tomazina',
-    pop: 8495
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27858,
-    municipio: 'Três Barras do Paraná',
-    pop: 11197
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27882,
-    municipio: 'Tunas do Paraná',
-    pop: 6302
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27908,
-    municipio: 'Tuneiras do Oeste',
-    pop: 8095
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27957,
-    municipio: 'Tupãssi',
-    pop: 8204
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 27965,
-    municipio: 'Turvo',
-    pop: 14443
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28005,
-    municipio: 'Ubiratã',
-    pop: 25517
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28104,
-    municipio: 'Umuarama',
-    pop: 121972
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28203,
-    municipio: 'União da Vitória',
-    pop: 56397
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28302,
-    municipio: 'Uniflor',
-    pop: 2121
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28401,
-    municipio: 'Uraí',
-    pop: 10407
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28500,
-    municipio: 'Wenceslau Braz',
-    pop: 19430
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28534,
-    municipio: 'Ventania',
-    pop: 9779
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28559,
-    municipio: 'Vera Cruz do Oeste',
-    pop: 8227
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28609,
-    municipio: 'Verê',
-    pop: 8051
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28625,
-    municipio: 'Alto Paraíso',
-    pop: 3077
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28633,
-    municipio: 'Doutor Ulysses',
-    pop: 5773
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28658,
-    municipio: 'Virmond',
-    pop: 3842
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28708,
-    municipio: 'Vitorino',
-    pop: 10280
-  },
-  {
-    uf: 'PR',
-    uf_id: 41,
-    municipio_id: 28807,
-    municipio: 'Xambrê',
-    pop: 5851
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00051',
-    municipio: 'Abdon Batista',
-    pop: 2633
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00101',
-    municipio: 'Abelardo Luz',
-    pop: 17736
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00200',
-    municipio: 'Agrolândia',
-    pop: 11491
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00309',
-    municipio: 'Agronômica',
-    pop: 6394
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00408',
-    municipio: 'Água Doce',
-    pop: 6625
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00507',
-    municipio: 'Águas de Chapecó',
-    pop: 6128
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00556',
-    municipio: 'Águas Frias',
-    pop: 2963
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00606',
-    municipio: 'Águas Mornas',
-    pop: 7082
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00705',
-    municipio: 'Alfredo Wagner',
-    pop: 10862
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00754',
-    municipio: 'Alto Bela Vista',
-    pop: 1860
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00804',
-    municipio: 'Anchieta',
-    pop: 5984
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '00903',
-    municipio: 'Angelina',
-    pop: 5472
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01000',
-    municipio: 'Anita Garibaldi',
-    pop: 8367
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01109',
-    municipio: 'Anitápolis',
-    pop: 3726
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01208',
-    municipio: 'Antônio Carlos',
-    pop: 12118
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01257',
-    municipio: 'Apiúna',
-    pop: 10020
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01273',
-    municipio: 'Arabutã',
-    pop: 4487
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01307',
-    municipio: 'Araquari',
-    pop: 50178
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01406',
-    municipio: 'Araranguá',
-    pop: 75597
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01505',
-    municipio: 'Armazém',
-    pop: 9188
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01604',
-    municipio: 'Arroio Trinta',
-    pop: 3628
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01653',
-    municipio: 'Arvoredo',
-    pop: 2600
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01703',
-    municipio: 'Ascurra',
-    pop: 8635
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01802',
-    municipio: 'Atalanta',
-    pop: 3270
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01901',
-    municipio: 'Aurora',
-    pop: 7127
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '01950',
-    municipio: 'Balneário Arroio do Silva',
-    pop: 17215
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02008',
-    municipio: 'Balneário Camboriú',
-    pop: 148758
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02057',
-    municipio: 'Balneário Barra do Sul',
-    pop: 16360
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02073',
-    municipio: 'Balneário Gaivota',
-    pop: 17306
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02081',
-    municipio: 'Bandeirante',
-    pop: 3243
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02099',
-    municipio: 'Barra Bonita',
-    pop: 1662
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02107',
-    municipio: 'Barra Velha',
-    pop: 50730
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02131',
-    municipio: 'Bela Vista do Toldo',
-    pop: 5950
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02156',
-    municipio: 'Belmonte',
-    pop: 2709
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02206',
-    municipio: 'Benedito Novo',
-    pop: 10738
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02305',
-    municipio: 'Biguaçu',
-    pop: 82028
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02404',
-    municipio: 'Blumenau',
-    pop: 380597
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02438',
-    municipio: 'Bocaina do Sul',
-    pop: 3618
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02453',
-    municipio: 'Bombinhas',
-    pop: 27732
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02503',
-    municipio: 'Bom Jardim da Serra',
-    pop: 4028
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02537',
-    municipio: 'Bom Jesus',
-    pop: 2872
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02578',
-    municipio: 'Bom Jesus do Oeste',
-    pop: 2234
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02602',
-    municipio: 'Bom Retiro',
-    pop: 8468
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02701',
-    municipio: 'Botuverá',
-    pop: 5623
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02800',
-    municipio: 'Braço do Norte',
-    pop: 35534
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02859',
-    municipio: 'Braço do Trombudo',
-    pop: 4203
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02875',
-    municipio: 'Brunópolis',
-    pop: 2466
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '02909',
-    municipio: 'Brusque',
-    pop: 151949
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03006',
-    municipio: 'Caçador',
-    pop: 75998
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03105',
-    municipio: 'Caibi',
-    pop: 6431
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03154',
-    municipio: 'Calmon',
-    pop: 3513
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03204',
-    municipio: 'Camboriú',
-    pop: 113525
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03253',
-    municipio: 'Capão Alto',
-    pop: 2647
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03303',
-    municipio: 'Campo Alegre',
-    pop: 12815
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03402',
-    municipio: 'Campo Belo do Sul',
-    pop: 7342
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03501',
-    municipio: 'Campo Erê',
-    pop: 9838
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03600',
-    municipio: 'Campos Novos',
-    pop: 38656
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03709',
-    municipio: 'Canelinha',
-    pop: 13413
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03808',
-    municipio: 'Canoinhas',
-    pop: 56721
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03907',
-    municipio: 'Capinzal',
-    pop: 24176
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '03956',
-    municipio: 'Capivari de Baixo',
-    pop: 24799
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04004',
-    municipio: 'Catanduvas',
-    pop: 10938
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04103',
-    municipio: 'Caxambu do Sul',
-    pop: 4732
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04152',
-    municipio: 'Celso Ramos',
-    pop: 2860
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04178',
-    municipio: 'Cerro Negro',
-    pop: 3326
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04194',
-    municipio: 'Chapadão do Lageado',
-    pop: 3036
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04202',
-    municipio: 'Chapecó',
-    pop: 275959
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04251',
-    municipio: 'Cocal do Sul',
-    pop: 17912
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04301',
-    municipio: 'Concórdia',
-    pop: 85982
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04350',
-    municipio: 'Cordilheira Alta',
-    pop: 5099
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04400',
-    municipio: 'Coronel Freitas',
-    pop: 10583
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04459',
-    municipio: 'Coronel Martins',
-    pop: 2028
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04509',
-    municipio: 'Corupá',
-    pop: 15781
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04558',
-    municipio: 'Correia Pinto',
-    pop: 16163
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04608',
-    municipio: 'Criciúma',
-    pop: 225281
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04707',
-    municipio: 'Cunha Porã',
-    pop: 11208
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04756',
-    municipio: 'Cunhataí',
-    pop: 2018
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04806',
-    municipio: 'Curitibanos',
-    pop: 41512
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '04905',
-    municipio: 'Descanso',
-    pop: 8660
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05001',
-    municipio: 'Dionísio Cerqueira',
-    pop: 15294
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05100',
-    municipio: 'Dona Emma',
-    pop: 4388
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05159',
-    municipio: 'Doutor Pedrinho',
-    pop: 3719
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05175',
-    municipio: 'Entre Rios',
-    pop: 3525
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05191',
-    municipio: 'Ermo',
-    pop: 2349
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05209',
-    municipio: 'Erval Velho',
-    pop: 5081
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05308',
-    municipio: 'Faxinal dos Guedes',
-    pop: 11486
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05357',
-    municipio: 'Flor do Sertão',
-    pop: 1850
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05407',
-    municipio: 'Florianópolis',
-    pop: 576361
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05431',
-    municipio: 'Formosa do Sul',
-    pop: 2743
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05456',
-    municipio: 'Forquilhinha',
-    pop: 33929
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05506',
-    municipio: 'Fraiburgo',
-    pop: 34148
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05555',
-    municipio: 'Frei Rogério',
-    pop: 2442
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05605',
-    municipio: 'Galvão',
-    pop: 3200
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05704',
-    municipio: 'Garopaba',
-    pop: 32962
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05803',
-    municipio: 'Garuva',
-    pop: 19554
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '05902',
-    municipio: 'Gaspar',
-    pop: 76982
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06009',
-    municipio: 'Governador Celso Ramos',
-    pop: 17920
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06108',
-    municipio: 'Grão-Pará',
-    pop: 6397
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06207',
-    municipio: 'Gravatal',
-    pop: 12989
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06306',
-    municipio: 'Guabiruba',
-    pop: 26082
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06405',
-    municipio: 'Guaraciaba',
-    pop: 11040
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06504',
-    municipio: 'Guaramirim',
-    pop: 49941
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06603',
-    municipio: 'Guarujá do Sul',
-    pop: 4899
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06652',
-    municipio: 'Guatambú',
-    pop: 9267
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06702',
-    municipio: "Herval d'Oeste",
-    pop: 22173
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06751',
-    municipio: 'Ibiam',
-    pop: 2055
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06801',
-    municipio: 'Ibicaré',
-    pop: 3304
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '06900',
-    municipio: 'Ibirama',
-    pop: 20663
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07007',
-    municipio: 'Içara',
-    pop: 62455
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07106',
-    municipio: 'Ilhota',
-    pop: 18197
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07205',
-    municipio: 'Imaruí',
-    pop: 12127
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07304',
-    municipio: 'Imbituba',
-    pop: 56107
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07403',
-    municipio: 'Imbuia',
-    pop: 6139
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07502',
-    municipio: 'Indaial',
-    pop: 76333
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07577',
-    municipio: 'Iomerê',
-    pop: 2953
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07601',
-    municipio: 'Ipira',
-    pop: 4635
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07650',
-    municipio: 'Iporã do Oeste',
-    pop: 9672
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07684',
-    municipio: 'Ipuaçu',
-    pop: 8046
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07700',
-    municipio: 'Ipumirim',
-    pop: 8065
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07759',
-    municipio: 'Iraceminha',
-    pop: 4005
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07809',
-    municipio: 'Irani',
-    pop: 10497
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07858',
-    municipio: 'Irati',
-    pop: 2100
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '07908',
-    municipio: 'Irineópolis',
-    pop: 10437
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08005',
-    municipio: 'Itá',
-    pop: 7310
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08104',
-    municipio: 'Itaiópolis',
-    pop: 22741
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08203',
-    municipio: 'Itajaí',
-    pop: 287289
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08302',
-    municipio: 'Itapema',
-    pop: 83330
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08401',
-    municipio: 'Itapiranga',
-    pop: 17149
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08450',
-    municipio: 'Itapoá',
-    pop: 34546
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08500',
-    municipio: 'Ituporanga',
-    pop: 28042
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08609',
-    municipio: 'Jaborá',
-    pop: 4435
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08708',
-    municipio: 'Jacinto Machado',
-    pop: 10813
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08807',
-    municipio: 'Jaguaruna',
-    pop: 21284
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08906',
-    municipio: 'Jaraguá do Sul',
-    pop: 195753
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '08955',
-    municipio: 'Jardinópolis',
-    pop: 1808
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09003',
-    municipio: 'Joaçaba',
-    pop: 31509
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09102',
-    municipio: 'Joinville',
-    pop: 654888
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09151',
-    municipio: 'José Boiteux',
-    pop: 6307
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09177',
-    municipio: 'Jupiá',
-    pop: 2675
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09201',
-    municipio: 'Lacerdópolis',
-    pop: 2296
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09300',
-    municipio: 'Lages',
-    pop: 171609
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09409',
-    municipio: 'Laguna',
-    pop: 43992
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09458',
-    municipio: 'Lajeado Grande',
-    pop: 1771
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09508',
-    municipio: 'Laurentino',
-    pop: 8427
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09607',
-    municipio: 'Lauro Müller',
-    pop: 14622
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09706',
-    municipio: 'Lebon Régis',
-    pop: 11605
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09805',
-    municipio: 'Leoberto Leal',
-    pop: 3381
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09854',
-    municipio: 'Lindóia do Sul',
-    pop: 4611
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: '09904',
-    municipio: 'Lontras',
-    pop: 13586
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10001,
-    municipio: 'Luiz Alves',
-    pop: 12126
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10035,
-    municipio: 'Luzerna',
-    pop: 5931
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10050,
-    municipio: 'Macieira',
-    pop: 1800
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10100,
-    municipio: 'Mafra',
-    pop: 57023
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10209,
-    municipio: 'Major Gercino',
-    pop: 3258
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10308,
-    municipio: 'Major Vieira',
-    pop: 7545
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10407,
-    municipio: 'Maracajá',
-    pop: 8213
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10506,
-    municipio: 'Maravilha',
-    pop: 30155
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10555,
-    municipio: 'Marema',
-    pop: 2219
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10605,
-    municipio: 'Massaranduba',
-    pop: 17897
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10704,
-    municipio: 'Matos Costa',
-    pop: 2795
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10803,
-    municipio: 'Meleiro',
-    pop: 7127
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10852,
-    municipio: 'Mirim Doce',
-    pop: 2554
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 10902,
-    municipio: 'Modelo',
-    pop: 4156
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11009,
-    municipio: 'Mondaí',
-    pop: 10216
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11058,
-    municipio: 'Monte Carlo',
-    pop: 9235
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11108,
-    municipio: 'Monte Castelo',
-    pop: 7787
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11207,
-    municipio: 'Morro da Fumaça',
-    pop: 19265
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11256,
-    municipio: 'Morro Grande',
-    pop: 3085
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11306,
-    municipio: 'Navegantes',
-    pop: 93619
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11405,
-    municipio: 'Nova Erechim',
-    pop: 5408
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11454,
-    municipio: 'Nova Itaberaba',
-    pop: 4648
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11504,
-    municipio: 'Nova Trento',
-    pop: 14252
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11603,
-    municipio: 'Nova Veneza',
-    pop: 13968
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11652,
-    municipio: 'Novo Horizonte',
-    pop: 2670
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11702,
-    municipio: 'Orleans',
-    pop: 24474
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11751,
-    municipio: 'Otacílio Costa',
-    pop: 17780
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11801,
-    municipio: 'Ouro',
-    pop: 7091
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11850,
-    municipio: 'Ouro Verde',
-    pop: 2203
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11876,
-    municipio: 'Paial',
-    pop: 1992
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11892,
-    municipio: 'Painel',
-    pop: 2228
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 11900,
-    municipio: 'Palhoça',
-    pop: 245477
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12007,
-    municipio: 'Palma Sola',
-    pop: 7709
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12056,
-    municipio: 'Palmeira',
-    pop: 2640
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12106,
-    municipio: 'Palmitos',
-    pop: 15812
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12205,
-    municipio: 'Papanduva',
-    pop: 19667
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12239,
-    municipio: 'Paraíso',
-    pop: 4376
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12254,
-    municipio: 'Passo de Torres',
-    pop: 14284
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12270,
-    municipio: 'Passos Maia',
-    pop: 4032
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12304,
-    municipio: 'Paulo Lopes',
-    pop: 9661
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12403,
-    municipio: 'Pedras Grandes',
-    pop: 4343
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12502,
-    municipio: 'Penha',
-    pop: 36124
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12601,
-    municipio: 'Peritiba',
-    pop: 3039
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12650,
-    municipio: 'Pescaria Brava',
-    pop: 10531
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12700,
-    municipio: 'Petrolândia',
-    pop: 6942
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12809,
-    municipio: 'Balneário Piçarras',
-    pop: 29725
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 12908,
-    municipio: 'Pinhalzinho',
-    pop: 23379
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13005,
-    municipio: 'Pinheiro Preto',
-    pop: 3598
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13104,
-    municipio: 'Piratuba',
-    pop: 6053
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13153,
-    municipio: 'Planalto Alegre',
-    pop: 3053
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13203,
-    municipio: 'Pomerode',
-    pop: 36392
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13302,
-    municipio: 'Ponte Alta',
-    pop: 4430
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13351,
-    municipio: 'Ponte Alta do Norte',
-    pop: 3249
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13401,
-    municipio: 'Ponte Serrada',
-    pop: 10764
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13500,
-    municipio: 'Porto Belo',
-    pop: 30590
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13609,
-    municipio: 'Porto União',
-    pop: 33727
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13708,
-    municipio: 'Pouso Redondo',
-    pop: 17836
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13807,
-    municipio: 'Praia Grande',
-    pop: 8602
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 13906,
-    municipio: 'Presidente Castello Branco',
-    pop: 1711
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14003,
-    municipio: 'Presidente Getúlio',
-    pop: 21293
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14102,
-    municipio: 'Presidente Nereu',
-    pop: 2345
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14151,
-    municipio: 'Princesa',
-    pop: 3054
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14201,
-    municipio: 'Quilombo',
-    pop: 11359
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14300,
-    municipio: 'Rancho Queimado',
-    pop: 3435
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14409,
-    municipio: 'Rio das Antas',
-    pop: 6386
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14508,
-    municipio: 'Rio do Campo',
-    pop: 6613
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14607,
-    municipio: 'Rio do Oeste',
-    pop: 8008
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14706,
-    municipio: 'Rio dos Cedros',
-    pop: 11163
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14805,
-    municipio: 'Rio do Sul',
-    pop: 76390
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 14904,
-    municipio: 'Rio Fortuna',
-    pop: 5006
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15000,
-    municipio: 'Rio Negrinho',
-    pop: 40168
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15059,
-    municipio: 'Rio Rufino',
-    pop: 2432
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15075,
-    municipio: 'Riqueza',
-    pop: 4835
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15109,
-    municipio: 'Rodeio',
-    pop: 13321
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15208,
-    municipio: 'Romelândia',
-    pop: 4757
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15307,
-    municipio: 'Salete',
-    pop: 7643
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15356,
-    municipio: 'Saltinho',
-    pop: 3633
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15406,
-    municipio: 'Salto Veloso',
-    pop: 4486
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15455,
-    municipio: 'Sangão',
-    pop: 13567
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15505,
-    municipio: 'Santa Cecília',
-    pop: 15764
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15554,
-    municipio: 'Santa Helena',
-    pop: 2473
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15604,
-    municipio: 'Santa Rosa de Lima',
-    pop: 2128
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15653,
-    municipio: 'Santa Rosa do Sul',
-    pop: 10288
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15679,
-    municipio: 'Santa Terezinha',
-    pop: 8077
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15687,
-    municipio: 'Santa Terezinha do Progresso',
-    pop: 2562
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15695,
-    municipio: 'Santiago do Sul',
-    pop: 1714
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15703,
-    municipio: 'Santo Amaro da Imperatriz',
-    pop: 29392
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15752,
-    municipio: 'São Bernardino',
-    pop: 2719
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15802,
-    municipio: 'São Bento do Sul',
-    pop: 86851
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 15901,
-    municipio: 'São Bonifácio',
-    pop: 2986
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16008,
-    municipio: 'São Carlos',
-    pop: 10460
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16057,
-    municipio: 'São Cristóvão do Sul',
-    pop: 6389
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16107,
-    municipio: 'São Domingos',
-    pop: 9356
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16206,
-    municipio: 'São Francisco do Sul',
-    pop: 55784
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16255,
-    municipio: 'São João do Oeste',
-    pop: 6446
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16305,
-    municipio: 'São João Batista',
-    pop: 34733
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16354,
-    municipio: 'São João do Itaperiú',
-    pop: 4732
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16404,
-    municipio: 'São João do Sul',
-    pop: 9126
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16503,
-    municipio: 'São Joaquim',
-    pop: 26852
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16602,
-    municipio: 'São José',
-    pop: 289949
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16701,
-    municipio: 'São José do Cedro',
-    pop: 14491
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16800,
-    municipio: 'São José do Cerrito',
-    pop: 8755
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 16909,
-    municipio: 'São Lourenço do Oeste',
-    pop: 25770
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17006,
-    municipio: 'São Ludgero',
-    pop: 14211
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17105,
-    municipio: 'São Martinho',
-    pop: 3501
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17154,
-    municipio: 'São Miguel da Boa Vista',
-    pop: 1788
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17204,
-    municipio: 'São Miguel do Oeste',
-    pop: 46969
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17253,
-    municipio: 'São Pedro de Alcântara',
-    pop: 6076
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17303,
-    municipio: 'Saudades',
-    pop: 10680
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17402,
-    municipio: 'Schroeder',
-    pop: 21273
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17501,
-    municipio: 'Seara',
-    pop: 19241
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17550,
-    municipio: 'Serra Alta',
-    pop: 3367
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17600,
-    municipio: 'Siderópolis',
-    pop: 14087
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17709,
-    municipio: 'Sombrio',
-    pop: 31397
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17758,
-    municipio: 'Sul Brasil',
-    pop: 2894
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17808,
-    municipio: 'Taió',
-    pop: 18808
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17907,
-    municipio: 'Tangará',
-    pop: 8189
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 17956,
-    municipio: 'Tigrinhos',
-    pop: 2480
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18004,
-    municipio: 'Tijucas',
-    pop: 56674
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18103,
-    municipio: 'Timbé do Sul',
-    pop: 5495
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18202,
-    municipio: 'Timbó',
-    pop: 48903
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18251,
-    municipio: 'Timbó Grande',
-    pop: 7503
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18301,
-    municipio: 'Três Barras',
-    pop: 20373
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18350,
-    municipio: 'Treviso',
-    pop: 3895
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18400,
-    municipio: 'Treze de Maio',
-    pop: 7585
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18509,
-    municipio: 'Treze Tílias',
-    pop: 9308
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18608,
-    municipio: 'Trombudo Central',
-    pop: 7532
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18707,
-    municipio: 'Tubarão',
-    pop: 115495
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18756,
-    municipio: 'Tunápolis',
-    pop: 5054
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18806,
-    municipio: 'Turvo',
-    pop: 13492
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18855,
-    municipio: 'União do Oeste',
-    pop: 2801
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18905,
-    municipio: 'Urubici',
-    pop: 11048
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 18954,
-    municipio: 'Urupema',
-    pop: 2735
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19002,
-    municipio: 'Urussanga',
-    pop: 21395
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19101,
-    municipio: 'Vargeão',
-    pop: 3716
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19150,
-    municipio: 'Vargem',
-    pop: 2632
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19176,
-    municipio: 'Vargem Bonita',
-    pop: 4615
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19200,
-    municipio: 'Vidal Ramos',
-    pop: 6275
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19309,
-    municipio: 'Videira',
-    pop: 58299
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19358,
-    municipio: 'Vitor Meireles',
-    pop: 5492
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19408,
-    municipio: 'Witmarsum',
-    pop: 4451
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19507,
-    municipio: 'Xanxerê',
-    pop: 54194
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19606,
-    municipio: 'Xavantina',
-    pop: 3627
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19705,
-    municipio: 'Xaxim',
-    pop: 33902
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 19853,
-    municipio: 'Zortéa',
-    pop: 4170
-  },
-  {
-    uf: 'SC',
-    uf_id: 42,
-    municipio_id: 20000,
-    municipio: 'Balneário Rincão',
-    pop: 17226
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00034',
-    municipio: 'Aceguá',
-    pop: 4253
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00059',
-    municipio: 'Água Santa',
-    pop: 4000
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00109',
-    municipio: 'Agudo',
-    pop: 16346
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00208',
-    municipio: 'Ajuricaba',
-    pop: 6848
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00307',
-    municipio: 'Alecrim',
-    pop: 6228
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00406',
-    municipio: 'Alegrete',
-    pop: 74329
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00455',
-    municipio: 'Alegria',
-    pop: 3711
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00471',
-    municipio: 'Almirante Tamandaré do Sul',
-    pop: 2008
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00505',
-    municipio: 'Alpestre',
-    pop: 7243
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00554',
-    municipio: 'Alto Alegre',
-    pop: 1837
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00570',
-    municipio: 'Alto Feliz',
-    pop: 3143
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00604',
-    municipio: 'Alvorada',
-    pop: 194116
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00638',
-    municipio: 'Amaral Ferrador',
-    pop: 5394
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00646',
-    municipio: 'Ametista do Sul',
-    pop: 7822
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00661',
-    municipio: 'André da Rocha',
-    pop: 1157
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00703',
-    municipio: 'Anta Gorda',
-    pop: 6080
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00802',
-    municipio: 'Antônio Prado',
-    pop: 13328
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00851',
-    municipio: 'Arambaré',
-    pop: 4211
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00877',
-    municipio: 'Araricá',
-    pop: 8794
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '00901',
-    municipio: 'Aratiba',
-    pop: 6618
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01008',
-    municipio: 'Arroio do Meio',
-    pop: 22490
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01057',
-    municipio: 'Arroio do Sal',
-    pop: 11384
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01073',
-    municipio: 'Arroio do Padre',
-    pop: 2651
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01107',
-    municipio: 'Arroio dos Ratos',
-    pop: 14923
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01206',
-    municipio: 'Arroio do Tigre',
-    pop: 12296
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01305',
-    municipio: 'Arroio Grande',
-    pop: 17887
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01404',
-    municipio: 'Arvorezinha',
-    pop: 10545
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01503',
-    municipio: 'Augusto Pestana',
-    pop: 7302
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01552',
-    municipio: 'Áurea',
-    pop: 3460
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01602',
-    municipio: 'Bagé',
-    pop: 121900
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01636',
-    municipio: 'Balneário Pinhal',
-    pop: 15371
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01651',
-    municipio: 'Barão',
-    pop: 6489
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01701',
-    municipio: 'Barão de Cotegipe',
-    pop: 7313
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01750',
-    municipio: 'Barão do Triunfo',
-    pop: 5983
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01800',
-    municipio: 'Barracão',
-    pop: 4920
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01859',
-    municipio: 'Barra do Guarita',
-    pop: 3230
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01875',
-    municipio: 'Barra do Quaraí',
-    pop: 4337
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01909',
-    municipio: 'Barra do Ribeiro',
-    pop: 12475
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01925',
-    municipio: 'Barra do Rio Azul',
-    pop: 1724
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '01958',
-    municipio: 'Barra Funda',
-    pop: 2555
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02006',
-    municipio: 'Barros Cassal',
-    pop: 9442
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02055',
-    municipio: 'Benjamin Constant do Sul',
-    pop: 2120
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02105',
-    municipio: 'Bento Gonçalves',
-    pop: 127775
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02154',
-    municipio: 'Boa Vista das Missões',
-    pop: 1969
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02204',
-    municipio: 'Boa Vista do Buricá',
-    pop: 7125
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02220',
-    municipio: 'Boa Vista do Cadeado',
-    pop: 2271
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02238',
-    municipio: 'Boa Vista do Incra',
-    pop: 2315
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02253',
-    municipio: 'Boa Vista do Sul',
-    pop: 2815
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02303',
-    municipio: 'Bom Jesus',
-    pop: 11431
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02352',
-    municipio: 'Bom Princípio',
-    pop: 13650
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02378',
-    municipio: 'Bom Progresso',
-    pop: 2134
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02402',
-    municipio: 'Bom Retiro do Sul',
-    pop: 12578
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02451',
-    municipio: 'Boqueirão do Leão',
-    pop: 6215
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02501',
-    municipio: 'Bossoroca',
-    pop: 5988
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02584',
-    municipio: 'Bozano',
-    pop: 2195
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02600',
-    municipio: 'Braga',
-    pop: 3326
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02659',
-    municipio: 'Brochier',
-    pop: 5079
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02709',
-    municipio: 'Butiá',
-    pop: 19433
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02808',
-    municipio: 'Caçapava do Sul',
-    pop: 33508
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '02907',
-    municipio: 'Cacequi',
-    pop: 11324
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03004',
-    municipio: 'Cachoeira do Sul',
-    pop: 82250
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03103',
-    municipio: 'Cachoeirinha',
-    pop: 141303
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03202',
-    municipio: 'Cacique Doble',
-    pop: 4694
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03301',
-    municipio: 'Caibaté',
-    pop: 4797
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03400',
-    municipio: 'Caiçara',
-    pop: 4933
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03509',
-    municipio: 'Camaquã',
-    pop: 63959
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03558',
-    municipio: 'Camargo',
-    pop: 3056
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03608',
-    municipio: 'Cambará do Sul',
-    pop: 6492
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03673',
-    municipio: 'Campestre da Serra',
-    pop: 3311
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03707',
-    municipio: 'Campina das Missões',
-    pop: 6001
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03806',
-    municipio: 'Campinas do Sul',
-    pop: 5390
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '03905',
-    municipio: 'Campo Bom',
-    pop: 64704
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04002',
-    municipio: 'Campo Novo',
-    pop: 5068
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04101',
-    municipio: 'Campos Borges',
-    pop: 3693
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04200',
-    municipio: 'Candelária',
-    pop: 29783
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04309',
-    municipio: 'Cândido Godói',
-    pop: 6421
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04358',
-    municipio: 'Candiota',
-    pop: 10992
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04408',
-    municipio: 'Canela',
-    pop: 50613
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04507',
-    municipio: 'Canguçu',
-    pop: 50998
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04606',
-    municipio: 'Canoas',
-    pop: 359554
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04614',
-    municipio: 'Canudos do Vale',
-    pop: 1687
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04622',
-    municipio: 'Capão Bonito do Sul',
-    pop: 1769
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04630',
-    municipio: 'Capão da Canoa',
-    pop: 66012
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04655',
-    municipio: 'Capão do Cipó',
-    pop: 3186
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04663',
-    municipio: 'Capão do Leão',
-    pop: 27389
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04671',
-    municipio: 'Capivari do Sul',
-    pop: 4079
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04689',
-    municipio: 'Capela de Santana',
-    pop: 11416
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04697',
-    municipio: 'Capitão',
-    pop: 2991
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04705',
-    municipio: 'Carazinho',
-    pop: 63638
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04713',
-    municipio: 'Caraá',
-    pop: 7553
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04804',
-    municipio: 'Carlos Barbosa',
-    pop: 31528
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04853',
-    municipio: 'Carlos Gomes',
-    pop: 1387
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04903',
-    municipio: 'Casca',
-    pop: 9689
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '04952',
-    municipio: 'Caseiros',
-    pop: 3064
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05009',
-    municipio: 'Catuípe',
-    pop: 8840
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05108',
-    municipio: 'Caxias do Sul',
-    pop: 479256
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05116',
-    municipio: 'Centenário',
-    pop: 2779
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05124',
-    municipio: 'Cerrito',
-    pop: 5915
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05132',
-    municipio: 'Cerro Branco',
-    pop: 3865
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05157',
-    municipio: 'Cerro Grande',
-    pop: 2429
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05173',
-    municipio: 'Cerro Grande do Sul',
-    pop: 9343
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05207',
-    municipio: 'Cerro Largo',
-    pop: 14009
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05306',
-    municipio: 'Chapada',
-    pop: 9748
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05355',
-    municipio: 'Charqueadas',
-    pop: 36109
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05371',
-    municipio: 'Charrua',
-    pop: 2807
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05405',
-    municipio: 'Chiapetta',
-    pop: 3992
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05439',
-    municipio: 'Chuí',
-    pop: 6405
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05447',
-    municipio: 'Chuvisca',
-    pop: 4686
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05454',
-    municipio: 'Cidreira',
-    pop: 17538
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05504',
-    municipio: 'Ciríaco',
-    pop: 4215
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05587',
-    municipio: 'Colinas',
-    pop: 2474
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05603',
-    municipio: 'Colorado',
-    pop: 3319
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05702',
-    municipio: 'Condor',
-    pop: 6539
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05801',
-    municipio: 'Constantina',
-    pop: 10623
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05835',
-    municipio: 'Coqueiro Baixo',
-    pop: 1311
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05850',
-    municipio: 'Coqueiros do Sul',
-    pop: 2251
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05871',
-    municipio: 'Coronel Barros',
-    pop: 2892
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05900',
-    municipio: 'Coronel Bicaco',
-    pop: 6230
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05934',
-    municipio: 'Coronel Pilar',
-    pop: 1638
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05959',
-    municipio: 'Cotiporã',
-    pop: 3926
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '05975',
-    municipio: 'Coxilha',
-    pop: 2719
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06007',
-    municipio: 'Crissiumal',
-    pop: 13127
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06056',
-    municipio: 'Cristal',
-    pop: 7454
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06072',
-    municipio: 'Cristal do Sul',
-    pop: 2746
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06106',
-    municipio: 'Cruz Alta',
-    pop: 60486
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06130',
-    municipio: 'Cruzaltense',
-    pop: 1655
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06205',
-    municipio: 'Cruzeiro do Sul',
-    pop: 12571
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06304',
-    municipio: 'David Canabarro',
-    pop: 4403
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06320',
-    municipio: 'Derrubadas',
-    pop: 2797
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06353',
-    municipio: 'Dezesseis de Novembro',
-    pop: 2544
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06379',
-    municipio: 'Dilermando de Aguiar',
-    pop: 2859
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06403',
-    municipio: 'Dois Irmãos',
-    pop: 31769
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06429',
-    municipio: 'Dois Irmãos das Missões',
-    pop: 2133
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06452',
-    municipio: 'Dois Lajeados',
-    pop: 3158
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06502',
-    municipio: 'Dom Feliciano',
-    pop: 13291
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06551',
-    municipio: 'Dom Pedro de Alcântara',
-    pop: 2617
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06601',
-    municipio: 'Dom Pedrito',
-    pop: 38094
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06700',
-    municipio: 'Dona Francisca',
-    pop: 3136
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06734',
-    municipio: 'Doutor Maurício Cardoso',
-    pop: 4542
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06759',
-    municipio: 'Doutor Ricardo',
-    pop: 1925
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06767',
-    municipio: 'Eldorado do Sul',
-    pop: 40954
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06809',
-    municipio: 'Encantado',
-    pop: 23494
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06908',
-    municipio: 'Encruzilhada do Sul',
-    pop: 24280
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06924',
-    municipio: 'Engenho Velho',
-    pop: 1317
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06932',
-    municipio: 'Entre-Ijuís',
-    pop: 9364
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06957',
-    municipio: 'Entre Rios do Sul',
-    pop: 2731
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '06973',
-    municipio: 'Erebango',
-    pop: 3121
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07005',
-    municipio: 'Erechim',
-    pop: 109497
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07054',
-    municipio: 'Ernestina',
-    pop: 3097
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07104',
-    municipio: 'Herval',
-    pop: 6307
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07203',
-    municipio: 'Erval Grande',
-    pop: 5029
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07302',
-    municipio: 'Erval Seco',
-    pop: 6902
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07401',
-    municipio: 'Esmeralda',
-    pop: 3264
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07450',
-    municipio: 'Esperança do Sul',
-    pop: 3294
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07500',
-    municipio: 'Espumoso',
-    pop: 15478
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07559',
-    municipio: 'Estação',
-    pop: 5688
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07609',
-    municipio: 'Estância Velha',
-    pop: 49440
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07708',
-    municipio: 'Esteio',
-    pop: 78181
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07807',
-    municipio: 'Estrela',
-    pop: 33243
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07815',
-    municipio: 'Estrela Velha',
-    pop: 3120
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07831',
-    municipio: 'Eugênio de Castro',
-    pop: 2685
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07864',
-    municipio: 'Fagundes Varela',
-    pop: 2620
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '07906',
-    municipio: 'Farroupilha',
-    pop: 72477
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08003',
-    municipio: 'Faxinal do Soturno',
-    pop: 6846
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08052',
-    municipio: 'Faxinalzinho',
-    pop: 2572
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08078',
-    municipio: 'Fazenda Vilanova',
-    pop: 4399
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08102',
-    municipio: 'Feliz',
-    pop: 13979
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08201',
-    municipio: 'Flores da Cunha',
-    pop: 31973
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08250',
-    municipio: 'Floriano Peixoto',
-    pop: 1694
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08300',
-    municipio: 'Fontoura Xavier',
-    pop: 9721
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08409',
-    municipio: 'Formigueiro',
-    pop: 6533
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08433',
-    municipio: 'Forquetinha',
-    pop: 2441
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08458',
-    municipio: 'Fortaleza dos Valos',
-    pop: 4569
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08508',
-    municipio: 'Frederico Westphalen',
-    pop: 33684
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08607',
-    municipio: 'Garibaldi',
-    pop: 35522
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08656',
-    municipio: 'Garruchos',
-    pop: 2729
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08706',
-    municipio: 'Gaurama',
-    pop: 5780
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08805',
-    municipio: 'General Câmara',
-    pop: 7751
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08854',
-    municipio: 'Gentil',
-    pop: 1783
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '08904',
-    municipio: 'Getúlio Vargas',
-    pop: 16950
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09001',
-    municipio: 'Giruá',
-    pop: 16282
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09050',
-    municipio: 'Glorinha',
-    pop: 7842
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09100',
-    municipio: 'Gramado',
-    pop: 41621
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09126',
-    municipio: 'Gramado dos Loureiros',
-    pop: 2049
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09159',
-    municipio: 'Gramado Xavier',
-    pop: 3356
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09209',
-    municipio: 'Gravataí',
-    pop: 275294
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09258',
-    municipio: 'Guabiju',
-    pop: 1442
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09308',
-    municipio: 'Guaíba',
-    pop: 95956
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09407',
-    municipio: 'Guaporé',
-    pop: 26138
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09506',
-    municipio: 'Guarani das Missões',
-    pop: 7553
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09555',
-    municipio: 'Harmonia',
-    pop: 5524
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09571',
-    municipio: 'Herveiras',
-    pop: 2608
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09605',
-    municipio: 'Horizontina',
-    pop: 19246
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09654',
-    municipio: 'Hulha Negra',
-    pop: 6102
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09704',
-    municipio: 'Humaitá',
-    pop: 4774
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09753',
-    municipio: 'Ibarama',
-    pop: 3793
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09803',
-    municipio: 'Ibiaçá',
-    pop: 4618
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09902',
-    municipio: 'Ibiraiaras',
-    pop: 6830
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: '09951',
-    municipio: 'Ibirapuitã',
-    pop: 3793
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10009,
-    municipio: 'Ibirubá',
-    pop: 22082
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10108,
-    municipio: 'Igrejinha',
-    pop: 34763
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10207,
-    municipio: 'Ijuí',
-    pop: 87775
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10306,
-    municipio: 'Ilópolis',
-    pop: 4245
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10330,
-    municipio: 'Imbé',
-    pop: 27931
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10363,
-    municipio: 'Imigrante',
-    pop: 3148
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10405,
-    municipio: 'Independência',
-    pop: 6558
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10413,
-    municipio: 'Inhacorá',
-    pop: 2049
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10439,
-    municipio: 'Ipê',
-    pop: 5496
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10462,
-    municipio: 'Ipiranga do Sul',
-    pop: 1750
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10504,
-    municipio: 'Iraí',
-    pop: 7624
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10538,
-    municipio: 'Itaara',
-    pop: 5706
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10553,
-    municipio: 'Itacurubi',
-    pop: 3042
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10579,
-    municipio: 'Itapuca',
-    pop: 1967
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10603,
-    municipio: 'Itaqui',
-    pop: 36830
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10652,
-    municipio: 'Itati',
-    pop: 2695
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10702,
-    municipio: 'Itatiba do Sul',
-    pop: 3249
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10751,
-    municipio: 'Ivorá',
-    pop: 1964
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10801,
-    municipio: 'Ivoti',
-    pop: 23533
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10850,
-    municipio: 'Jaboticaba',
-    pop: 3850
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10876,
-    municipio: 'Jacuizinho',
-    pop: 2070
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 10900,
-    municipio: 'Jacutinga',
-    pop: 3401
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11007,
-    municipio: 'Jaguarão',
-    pop: 27406
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11106,
-    municipio: 'Jaguari',
-    pop: 10779
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11122,
-    municipio: 'Jaquirana',
-    pop: 3755
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11130,
-    municipio: 'Jari',
-    pop: 3414
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11155,
-    municipio: 'Jóia',
-    pop: 7305
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11205,
-    municipio: 'Júlio de Castilhos',
-    pop: 18557
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11239,
-    municipio: 'Lagoa Bonita do Sul',
-    pop: 2287
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11254,
-    municipio: 'Lagoão',
-    pop: 5429
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11270,
-    municipio: 'Lagoa dos Três Cantos',
-    pop: 1779
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11304,
-    municipio: 'Lagoa Vermelha',
-    pop: 28617
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11403,
-    municipio: 'Lajeado',
-    pop: 96651
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11429,
-    municipio: 'Lajeado do Bugre',
-    pop: 2660
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11502,
-    municipio: 'Lavras do Sul',
-    pop: 7294
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11601,
-    municipio: 'Liberato Salzano',
-    pop: 4854
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11627,
-    municipio: 'Lindolfo Collor',
-    pop: 6409
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11643,
-    municipio: 'Linha Nova',
-    pop: 1720
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11700,
-    municipio: 'Machadinho',
-    pop: 5864
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11718,
-    municipio: 'Maçambará',
-    pop: 4487
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11734,
-    municipio: 'Mampituba',
-    pop: 3201
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11759,
-    municipio: 'Manoel Viana',
-    pop: 6917
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11775,
-    municipio: 'Maquiné',
-    pop: 7588
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11791,
-    municipio: 'Maratá',
-    pop: 2521
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11809,
-    municipio: 'Marau',
-    pop: 46656
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11908,
-    municipio: 'Marcelino Ramos',
-    pop: 4389
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 11981,
-    municipio: 'Mariana Pimentel',
-    pop: 4003
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12005,
-    municipio: 'Mariano Moro',
-    pop: 1888
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12054,
-    municipio: 'Marques de Souza',
-    pop: 4050
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12104,
-    municipio: 'Mata',
-    pop: 4786
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12138,
-    municipio: 'Mato Castelhano',
-    pop: 2610
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12153,
-    municipio: 'Mato Leitão',
-    pop: 4990
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12179,
-    municipio: 'Mato Queimado',
-    pop: 1833
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12203,
-    municipio: 'Maximiliano de Almeida',
-    pop: 4258
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12252,
-    municipio: 'Minas do Leão',
-    pop: 7661
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12302,
-    municipio: 'Miraguaí',
-    pop: 4506
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12351,
-    municipio: 'Montauri',
-    pop: 1530
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12377,
-    municipio: 'Monte Alegre dos Campos',
-    pop: 3250
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12385,
-    municipio: 'Monte Belo do Sul',
-    pop: 2609
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12401,
-    municipio: 'Montenegro',
-    pop: 66295
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12427,
-    municipio: 'Mormaço',
-    pop: 2815
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12443,
-    municipio: 'Morrinhos do Sul',
-    pop: 3134
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12450,
-    municipio: 'Morro Redondo',
-    pop: 6169
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12476,
-    municipio: 'Morro Reuter',
-    pop: 6163
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12500,
-    municipio: 'Mostardas',
-    pop: 12346
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12609,
-    municipio: 'Muçum',
-    pop: 4694
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12617,
-    municipio: 'Muitos Capões',
-    pop: 2938
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12625,
-    municipio: 'Muliterno',
-    pop: 1755
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12658,
-    municipio: 'Não-Me-Toque',
-    pop: 18314
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12674,
-    municipio: 'Nicolau Vergueiro',
-    pop: 1979
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12708,
-    municipio: 'Nonoai',
-    pop: 14056
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12757,
-    municipio: 'Nova Alvorada',
-    pop: 3229
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12807,
-    municipio: 'Nova Araçá',
-    pop: 5086
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12906,
-    municipio: 'Nova Bassano',
-    pop: 9877
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 12955,
-    municipio: 'Nova Boa Vista',
-    pop: 2088
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13003,
-    municipio: 'Nova Bréscia',
-    pop: 3105
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13011,
-    municipio: 'Nova Candelária',
-    pop: 3134
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13037,
-    municipio: 'Nova Esperança do Sul',
-    pop: 4974
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13060,
-    municipio: 'Nova Hartz',
-    pop: 20539
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13086,
-    municipio: 'Nova Pádua',
-    pop: 2390
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13102,
-    municipio: 'Nova Palma',
-    pop: 5683
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13201,
-    municipio: 'Nova Petrópolis',
-    pop: 23889
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13300,
-    municipio: 'Nova Prata',
-    pop: 26587
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13334,
-    municipio: 'Nova Ramada',
-    pop: 2201
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13359,
-    municipio: 'Nova Roma do Sul',
-    pop: 3543
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13375,
-    municipio: 'Nova Santa Rita',
-    pop: 30121
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13391,
-    municipio: 'Novo Cabrais',
-    pop: 3636
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13409,
-    municipio: 'Novo Hamburgo',
-    pop: 235879
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13425,
-    municipio: 'Novo Machado',
-    pop: 3246
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13441,
-    municipio: 'Novo Tiradentes',
-    pop: 2188
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13466,
-    municipio: 'Novo Xingu',
-    pop: 1678
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13490,
-    municipio: 'Novo Barreiro',
-    pop: 4371
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13508,
-    municipio: 'Osório',
-    pop: 48929
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13607,
-    municipio: 'Paim Filho',
-    pop: 3691
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13656,
-    municipio: 'Palmares do Sul',
-    pop: 13170
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13706,
-    municipio: 'Palmeira das Missões',
-    pop: 34233
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13805,
-    municipio: 'Palmitinho',
-    pop: 8032
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13904,
-    municipio: 'Panambi',
-    pop: 45042
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 13953,
-    municipio: 'Pantano Grande',
-    pop: 10438
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14001,
-    municipio: 'Paraí',
-    pop: 7357
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14027,
-    municipio: 'Paraíso do Sul',
-    pop: 6635
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14035,
-    municipio: 'Pareci Novo',
-    pop: 4433
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14050,
-    municipio: 'Parobé',
-    pop: 53555
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14068,
-    municipio: 'Passa Sete',
-    pop: 4036
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14076,
-    municipio: 'Passo do Sobrado',
-    pop: 6154
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14100,
-    municipio: 'Passo Fundo',
-    pop: 214564
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14134,
-    municipio: 'Paulo Bento',
-    pop: 2188
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14159,
-    municipio: 'Paverama',
-    pop: 8146
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14175,
-    municipio: 'Pedras Altas',
-    pop: 2100
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14209,
-    municipio: 'Pedro Osório',
-    pop: 7634
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14308,
-    municipio: 'Pejuçara',
-    pop: 3819
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14407,
-    municipio: 'Pelotas',
-    pop: 336131
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14423,
-    municipio: 'Picada Café',
-    pop: 5470
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14456,
-    municipio: 'Pinhal',
-    pop: 3034
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14464,
-    municipio: 'Pinhal da Serra',
-    pop: 2299
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14472,
-    municipio: 'Pinhal Grande',
-    pop: 3867
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14498,
-    municipio: 'Pinheirinho do Vale',
-    pop: 4637
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14506,
-    municipio: 'Pinheiro Machado',
-    pop: 11409
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14548,
-    municipio: 'Pinto Bandeira',
-    pop: 2784
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14555,
-    municipio: 'Pirapó',
-    pop: 2260
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14605,
-    municipio: 'Piratini',
-    pop: 17792
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14704,
-    municipio: 'Planalto',
-    pop: 10624
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14753,
-    municipio: 'Poço das Antas',
-    pop: 2222
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14779,
-    municipio: 'Pontão',
-    pop: 3350
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14787,
-    municipio: 'Ponte Preta',
-    pop: 1604
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14803,
-    municipio: 'Portão',
-    pop: 35237
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 14902,
-    municipio: 'Porto Alegre',
-    pop: 1389322
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15008,
-    municipio: 'Porto Lucena',
-    pop: 4424
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15057,
-    municipio: 'Porto Mauá',
-    pop: 2176
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15073,
-    municipio: 'Porto Vera Cruz',
-    pop: 1585
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15107,
-    municipio: 'Porto Xavier',
-    pop: 10132
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15131,
-    municipio: 'Pouso Novo',
-    pop: 1773
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15149,
-    municipio: 'Presidente Lucena',
-    pop: 3159
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15156,
-    municipio: 'Progresso',
-    pop: 5430
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15172,
-    municipio: 'Protásio Alves',
-    pop: 2069
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15206,
-    municipio: 'Putinga',
-    pop: 3814
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15305,
-    municipio: 'Quaraí',
-    pop: 23988
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15313,
-    municipio: 'Quatro Irmãos',
-    pop: 1579
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15321,
-    municipio: 'Quevedos',
-    pop: 2555
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15354,
-    municipio: 'Quinze de Novembro',
-    pop: 4000
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15404,
-    municipio: 'Redentora',
-    pop: 9934
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15453,
-    municipio: 'Relvado',
-    pop: 1828
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15503,
-    municipio: 'Restinga Sêca',
-    pop: 15213
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15552,
-    municipio: 'Rio dos Índios',
-    pop: 2874
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15602,
-    municipio: 'Rio Grande',
-    pop: 198958
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15701,
-    municipio: 'Rio Pardo',
-    pop: 35666
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15750,
-    municipio: 'Riozinho',
-    pop: 4572
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15800,
-    municipio: 'Roca Sales',
-    pop: 10644
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15909,
-    municipio: 'Rodeio Bonito',
-    pop: 6821
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 15958,
-    municipio: 'Rolador',
-    pop: 2332
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16006,
-    municipio: 'Rolante',
-    pop: 21733
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16105,
-    municipio: 'Ronda Alta',
-    pop: 9972
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16204,
-    municipio: 'Rondinha',
-    pop: 5083
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16303,
-    municipio: 'Roque Gonzales',
-    pop: 6698
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16402,
-    municipio: 'Rosário do Sul',
-    pop: 37700
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16428,
-    municipio: 'Sagrada Família',
-    pop: 2529
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16436,
-    municipio: 'Saldanha Marinho',
-    pop: 2621
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16451,
-    municipio: 'Salto do Jacuí',
-    pop: 10373
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16477,
-    municipio: 'Salvador das Missões',
-    pop: 2953
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16501,
-    municipio: 'Salvador do Sul',
-    pop: 7182
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16600,
-    municipio: 'Sananduva',
-    pop: 16759
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16709,
-    municipio: 'Santa Bárbara do Sul',
-    pop: 8275
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16733,
-    municipio: 'Santa Cecília do Sul',
-    pop: 1710
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16758,
-    municipio: 'Santa Clara do Sul',
-    pop: 7067
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16808,
-    municipio: 'Santa Cruz do Sul',
-    pop: 138104
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16907,
-    municipio: 'Santa Maria',
-    pop: 282244
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16956,
-    municipio: 'Santa Maria do Herval',
-    pop: 6482
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 16972,
-    municipio: 'Santa Margarida do Sul',
-    pop: 2658
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17004,
-    municipio: 'Santana da Boa Vista',
-    pop: 7140
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17103,
-    municipio: "Sant'Ana do Livramento",
-    pop: 87296
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17202,
-    municipio: 'Santa Rosa',
-    pop: 79395
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17251,
-    municipio: 'Santa Tereza',
-    pop: 1531
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17301,
-    municipio: 'Santa Vitória do Palmar',
-    pop: 31961
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17400,
-    municipio: 'Santiago',
-    pop: 50331
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17509,
-    municipio: 'Santo Ângelo',
-    pop: 79130
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17558,
-    municipio: 'Santo Antônio do Palma',
-    pop: 2134
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17608,
-    municipio: 'Santo Antônio da Patrulha',
-    pop: 44393
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17707,
-    municipio: 'Santo Antônio das Missões',
-    pop: 10493
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17756,
-    municipio: 'Santo Antônio do Planalto',
-    pop: 2136
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17806,
-    municipio: 'Santo Augusto',
-    pop: 14196
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17905,
-    municipio: 'Santo Cristo',
-    pop: 15656
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 17954,
-    municipio: 'Santo Expedito do Sul',
-    pop: 2395
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18002,
-    municipio: 'São Borja',
-    pop: 61323
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18051,
-    municipio: 'São Domingos do Sul',
-    pop: 2808
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18101,
-    municipio: 'São Francisco de Assis',
-    pop: 17949
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18200,
-    municipio: 'São Francisco de Paula',
-    pop: 22373
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18309,
-    municipio: 'São Gabriel',
-    pop: 60102
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18408,
-    municipio: 'São Jerônimo',
-    pop: 21421
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18424,
-    municipio: 'São João da Urtiga',
-    pop: 4549
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18432,
-    municipio: 'São João do Polêsine',
-    pop: 2707
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18440,
-    municipio: 'São Jorge',
-    pop: 2976
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18457,
-    municipio: 'São José das Missões',
-    pop: 2403
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18465,
-    municipio: 'São José do Herval',
-    pop: 1934
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18481,
-    municipio: 'São José do Hortêncio',
-    pop: 4551
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18499,
-    municipio: 'São José do Inhacorá',
-    pop: 2463
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18507,
-    municipio: 'São José do Norte',
-    pop: 26245
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18606,
-    municipio: 'São José do Ouro',
-    pop: 6978
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18614,
-    municipio: 'São José do Sul',
-    pop: 2440
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18622,
-    municipio: 'São José dos Ausentes',
-    pop: 4286
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18705,
-    municipio: 'São Leopoldo',
-    pop: 225669
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18804,
-    municipio: 'São Lourenço do Sul',
-    pop: 43283
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 18903,
-    municipio: 'São Luiz Gonzaga',
-    pop: 35858
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19000,
-    municipio: 'São Marcos',
-    pop: 21537
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19109,
-    municipio: 'São Martinho',
-    pop: 5589
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19125,
-    municipio: 'São Martinho da Serra',
-    pop: 2911
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19158,
-    municipio: 'São Miguel das Missões',
-    pop: 7196
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19208,
-    municipio: 'São Nicolau',
-    pop: 5248
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19307,
-    municipio: 'São Paulo das Missões',
-    pop: 5948
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19356,
-    municipio: 'São Pedro da Serra',
-    pop: 3614
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19364,
-    municipio: 'São Pedro das Missões',
-    pop: 1791
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19372,
-    municipio: 'São Pedro do Butiá',
-    pop: 3139
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19406,
-    municipio: 'São Pedro do Sul',
-    pop: 15870
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19505,
-    municipio: 'São Sebastião do Caí',
-    pop: 24883
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19604,
-    municipio: 'São Sepé',
-    pop: 21575
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19703,
-    municipio: 'São Valentim',
-    pop: 3324
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19711,
-    municipio: 'São Valentim do Sul',
-    pop: 2255
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19737,
-    municipio: 'São Valério do Sul',
-    pop: 2594
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19752,
-    municipio: 'São Vendelino',
-    pop: 2306
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19802,
-    municipio: 'São Vicente do Sul',
-    pop: 8259
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 19901,
-    municipio: 'Sapiranga',
-    pop: 77898
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20008,
-    municipio: 'Sapucaia do Sul',
-    pop: 136542
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20107,
-    municipio: 'Sarandi',
-    pop: 23356
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20206,
-    municipio: 'Seberi',
-    pop: 12313
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20230,
-    municipio: 'Sede Nova',
-    pop: 2753
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20263,
-    municipio: 'Segredo',
-    pop: 6107
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20305,
-    municipio: 'Selbach',
-    pop: 5220
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20321,
-    municipio: 'Senador Salgado Filho',
-    pop: 2726
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20354,
-    municipio: 'Sentinela do Sul',
-    pop: 5422
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20404,
-    municipio: 'Serafina Corrêa',
-    pop: 17379
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20453,
-    municipio: 'Sério',
-    pop: 2093
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20503,
-    municipio: 'Sertão',
-    pop: 5637
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20552,
-    municipio: 'Sertão Santana',
-    pop: 5988
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20578,
-    municipio: 'Sete de Setembro',
-    pop: 1884
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20602,
-    municipio: 'Severiano de Almeida',
-    pop: 3467
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20651,
-    municipio: 'Silveira Martins',
-    pop: 2060
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20677,
-    municipio: 'Sinimbu',
-    pop: 8698
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20701,
-    municipio: 'Sobradinho',
-    pop: 14512
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20800,
-    municipio: 'Soledade',
-    pop: 30936
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20859,
-    municipio: 'Tabaí',
-    pop: 4565
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 20909,
-    municipio: 'Tapejara',
-    pop: 25201
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21006,
-    municipio: 'Tapera',
-    pop: 10822
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21105,
-    municipio: 'Tapes',
-    pop: 14938
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21204,
-    municipio: 'Taquara',
-    pop: 54360
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21303,
-    municipio: 'Taquari',
-    pop: 25968
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21329,
-    municipio: 'Taquaruçu do Sul',
-    pop: 3190
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21352,
-    municipio: 'Tavares',
-    pop: 5319
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21402,
-    municipio: 'Tenente Portela',
-    pop: 14811
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21436,
-    municipio: 'Terra de Areia',
-    pop: 10569
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21451,
-    municipio: 'Teutônia',
-    pop: 33963
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21469,
-    municipio: 'Tio Hugo',
-    pop: 3352
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21477,
-    municipio: 'Tiradentes do Sul',
-    pop: 5201
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21493,
-    municipio: 'Toropi',
-    pop: 2598
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21501,
-    municipio: 'Torres',
-    pop: 43268
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21600,
-    municipio: 'Tramandaí',
-    pop: 56296
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21626,
-    municipio: 'Travesseiro',
-    pop: 2193
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21634,
-    municipio: 'Três Arroios',
-    pop: 2638
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21667,
-    municipio: 'Três Cachoeiras',
-    pop: 11216
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21709,
-    municipio: 'Três Coroas',
-    pop: 24420
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21808,
-    municipio: 'Três de Maio',
-    pop: 25452
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21832,
-    municipio: 'Três Forquilhas',
-    pop: 2814
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21857,
-    municipio: 'Três Palmeiras',
-    pop: 4826
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21907,
-    municipio: 'Três Passos',
-    pop: 26284
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 21956,
-    municipio: 'Trindade do Sul',
-    pop: 7766
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22004,
-    municipio: 'Triunfo',
-    pop: 28414
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22103,
-    municipio: 'Tucunduva',
-    pop: 5649
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22152,
-    municipio: 'Tunas',
-    pop: 3739
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22186,
-    municipio: 'Tupanci do Sul',
-    pop: 1398
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22202,
-    municipio: 'Tupanciretã',
-    pop: 20345
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22251,
-    municipio: 'Tupandi',
-    pop: 5160
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22301,
-    municipio: 'Tuparendi',
-    pop: 8536
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22327,
-    municipio: 'Turuçu',
-    pop: 3489
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22343,
-    municipio: 'Ubiretama',
-    pop: 2028
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22350,
-    municipio: 'União da Serra',
-    pop: 1186
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22376,
-    municipio: 'Unistalda',
-    pop: 2052
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22400,
-    municipio: 'Uruguaiana',
-    pop: 120885
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22509,
-    municipio: 'Vacaria',
-    pop: 66110
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22525,
-    municipio: 'Vale Verde',
-    pop: 3214
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22533,
-    municipio: 'Vale do Sol',
-    pop: 10080
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22541,
-    municipio: 'Vale Real',
-    pop: 6213
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22558,
-    municipio: 'Vanini',
-    pop: 2047
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22608,
-    municipio: 'Venâncio Aires',
-    pop: 70805
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22707,
-    municipio: 'Vera Cruz',
-    pop: 27638
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22806,
-    municipio: 'Veranópolis',
-    pop: 24540
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22855,
-    municipio: 'Vespasiano Corrêa',
-    pop: 1852
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 22905,
-    municipio: 'Viadutos',
-    pop: 4852
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23002,
-    municipio: 'Viamão',
-    pop: 232113
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23101,
-    municipio: 'Vicente Dutra',
-    pop: 4747
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23200,
-    municipio: 'Victor Graeff',
-    pop: 2832
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23309,
-    municipio: 'Vila Flores',
-    pop: 3736
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23358,
-    municipio: 'Vila Lângaro',
-    pop: 2122
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23408,
-    municipio: 'Vila Maria',
-    pop: 4512
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23457,
-    municipio: 'Vila Nova do Sul',
-    pop: 3935
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23507,
-    municipio: 'Vista Alegre',
-    pop: 2712
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23606,
-    municipio: 'Vista Alegre do Prata',
-    pop: 1624
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23705,
-    municipio: 'Vista Gaúcha',
-    pop: 2842
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23754,
-    municipio: 'Vitória das Missões',
-    pop: 3318
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23770,
-    municipio: 'Westfália',
-    pop: 3219
-  },
-  {
-    uf: 'RS',
-    uf_id: 43,
-    municipio_id: 23804,
-    municipio: 'Xangri-lá',
-    pop: 16907
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '00203',
-    municipio: 'Água Clara',
-    pop: 17647
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '00252',
-    municipio: 'Alcinópolis',
-    pop: 4648
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '00609',
-    municipio: 'Amambai',
-    pop: 41414
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '00708',
-    municipio: 'Anastácio',
-    pop: 24741
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '00807',
-    municipio: 'Anaurilândia',
-    pop: 7735
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '00856',
-    municipio: 'Angélica',
-    pop: 11203
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '00906',
-    municipio: 'Antônio João',
-    pop: 9641
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '01003',
-    municipio: 'Aparecida do Taboado',
-    pop: 29446
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '01102',
-    municipio: 'Aquidauana',
-    pop: 48561
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '01243',
-    municipio: 'Aral Moreira',
-    pop: 11085
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '01508',
-    municipio: 'Bandeirantes',
-    pop: 8276
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '01904',
-    municipio: 'Bataguassu',
-    pop: 24004
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02001',
-    municipio: 'Batayporã',
-    pop: 10953
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02100',
-    municipio: 'Bela Vista',
-    pop: 21965
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02159',
-    municipio: 'Bodoquena',
-    pop: 8849
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02209',
-    municipio: 'Bonito',
-    pop: 24761
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02308',
-    municipio: 'Brasilândia',
-    pop: 11840
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02407',
-    municipio: 'Caarapó',
-    pop: 32406
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02605',
-    municipio: 'Camapuã',
-    pop: 13920
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02704',
-    municipio: 'Campo Grande',
-    pop: 954537
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02803',
-    municipio: 'Caracol',
-    pop: 5115
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02902',
-    municipio: 'Cassilândia',
-    pop: 21549
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '02951',
-    municipio: 'Chapadão do Sul',
-    pop: 33791
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03108',
-    municipio: 'Corguinho',
-    pop: 4893
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03157',
-    municipio: 'Coronel Sapucaia',
-    pop: 14661
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03207',
-    municipio: 'Corumbá',
-    pop: 99107
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03256',
-    municipio: 'Costa Rica',
-    pop: 28163
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03306',
-    municipio: 'Coxim',
-    pop: 33390
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03454',
-    municipio: 'Deodápolis',
-    pop: 14210
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03488',
-    municipio: 'Dois Irmãos do Buriti',
-    pop: 11470
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03504',
-    municipio: 'Douradina',
-    pop: 5749
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03702',
-    municipio: 'Dourados',
-    pop: 260640
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03751',
-    municipio: 'Eldorado',
-    pop: 11633
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03801',
-    municipio: 'Fátima do Sul',
-    pop: 21388
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '03900',
-    municipio: 'Figueirão',
-    pop: 3709
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04007',
-    municipio: 'Glória de Dourados',
-    pop: 10777
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04106',
-    municipio: 'Guia Lopes da Laguna',
-    pop: 10135
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04304',
-    municipio: 'Iguatemi',
-    pop: 14017
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04403',
-    municipio: 'Inocência',
-    pop: 8712
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04502',
-    municipio: 'Itaporã',
-    pop: 25075
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04601',
-    municipio: 'Itaquiraí',
-    pop: 19996
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04700',
-    municipio: 'Ivinhema',
-    pop: 29613
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04809',
-    municipio: 'Japorã',
-    pop: 8409
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '04908',
-    municipio: 'Jaraguari',
-    pop: 7425
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05004',
-    municipio: 'Jardim',
-    pop: 24509
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05103',
-    municipio: 'Jateí',
-    pop: 3620
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05152',
-    municipio: 'Juti',
-    pop: 7009
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05202',
-    municipio: 'Ladário',
-    pop: 22290
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05251',
-    municipio: 'Laguna Carapã',
-    pop: 7012
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05400',
-    municipio: 'Maracaju',
-    pop: 47558
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05608',
-    municipio: 'Miranda',
-    pop: 26487
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05681',
-    municipio: 'Mundo Novo',
-    pop: 19937
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05707',
-    municipio: 'Naviraí',
-    pop: 52707
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '05806',
-    municipio: 'Nioaque',
-    pop: 13412
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06002',
-    municipio: 'Nova Alvorada do Sul',
-    pop: 23054
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06200',
-    municipio: 'Nova Andradina',
-    pop: 50610
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06259',
-    municipio: 'Novo Horizonte do Sul',
-    pop: 4811
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06275',
-    municipio: 'Paraíso das Águas',
-    pop: 5777
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06309',
-    municipio: 'Paranaíba',
-    pop: 42543
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06358',
-    municipio: 'Paranhos',
-    pop: 13323
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06408',
-    municipio: 'Pedro Gomes',
-    pop: 6974
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06606',
-    municipio: 'Ponta Porã',
-    pop: 97577
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '06903',
-    municipio: 'Porto Murtinho',
-    pop: 12864
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07109',
-    municipio: 'Ribas do Rio Pardo',
-    pop: 23996
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07208',
-    municipio: 'Rio Brilhante',
-    pop: 39936
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07307',
-    municipio: 'Rio Negro',
-    pop: 4933
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07406',
-    municipio: 'Rio Verde de Mato Grosso',
-    pop: 20393
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07505',
-    municipio: 'Rochedo',
-    pop: 5407
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07554',
-    municipio: 'Santa Rita do Pardo',
-    pop: 7174
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07695',
-    municipio: 'São Gabriel do Oeste',
-    pop: 31694
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07703',
-    municipio: 'Sete Quedas',
-    pop: 11301
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07802',
-    municipio: 'Selvíria',
-    pop: 8593
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07901',
-    municipio: 'Sidrolândia',
-    pop: 49374
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07935',
-    municipio: 'Sonora',
-    pop: 14822
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07950',
-    municipio: 'Tacuru',
-    pop: 11159
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '07976',
-    municipio: 'Taquarussu',
-    pop: 3730
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '08008',
-    municipio: 'Terenos',
-    pop: 18139
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '08305',
-    municipio: 'Três Lagoas',
-    pop: 141435
-  },
-  {
-    uf: 'MS',
-    uf_id: 50,
-    municipio_id: '08404',
-    municipio: 'Vicentina',
-    pop: 6476
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00102',
-    municipio: 'Acorizal',
-    pop: 4990
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00201',
-    municipio: 'Água Boa',
-    pop: 31314
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00250',
-    municipio: 'Alta Floresta',
-    pop: 61291
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00300',
-    municipio: 'Alto Araguaia',
-    pop: 17657
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00359',
-    municipio: 'Alto Boa Vista',
-    pop: 5875
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00409',
-    municipio: 'Alto Garças',
-    pop: 13707
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00508',
-    municipio: 'Alto Paraguai',
-    pop: 7717
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00607',
-    municipio: 'Alto Taquari',
-    pop: 11571
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '00805',
-    municipio: 'Apiacás',
-    pop: 8692
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01001',
-    municipio: 'Araguaiana',
-    pop: 3950
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01209',
-    municipio: 'Araguainha',
-    pop: 1006
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01258',
-    municipio: 'Araputanga',
-    pop: 14854
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01308',
-    municipio: 'Arenápolis',
-    pop: 10747
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01407',
-    municipio: 'Aripuanã',
-    pop: 26010
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01605',
-    municipio: 'Barão de Melgaço',
-    pop: 7204
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01704',
-    municipio: 'Barra do Bugres',
-    pop: 29576
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01803',
-    municipio: 'Barra do Garças',
-    pop: 72694
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01837',
-    municipio: 'Boa Esperança do Norte',
-    pop: 5772
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01852',
-    municipio: 'Bom Jesus do Araguaia',
-    pop: 7731
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '01902',
-    municipio: 'Brasnorte',
-    pop: 17496
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02504',
-    municipio: 'Cáceres',
-    pop: 91626
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02603',
-    municipio: 'Campinápolis',
-    pop: 15713
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02637',
-    municipio: 'Campo Novo do Parecis',
-    pop: 50033
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02678',
-    municipio: 'Campo Verde',
-    pop: 47831
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02686',
-    municipio: 'Campos de Júlio',
-    pop: 9608
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02694',
-    municipio: 'Canabrava do Norte',
-    pop: 4480
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02702',
-    municipio: 'Canarana',
-    pop: 27657
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02793',
-    municipio: 'Carlinda',
-    pop: 10324
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '02850',
-    municipio: 'Castanheira',
-    pop: 7459
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03007',
-    municipio: 'Chapada dos Guimarães',
-    pop: 19374
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03056',
-    municipio: 'Cláudia',
-    pop: 9436
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03106',
-    municipio: 'Cocalinho',
-    pop: 6428
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03205',
-    municipio: 'Colíder',
-    pop: 32010
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03254',
-    municipio: 'Colniza',
-    pop: 26090
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03304',
-    municipio: 'Comodoro',
-    pop: 18461
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03353',
-    municipio: 'Confresa',
-    pop: 37541
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03361',
-    municipio: "Conquista D'Oeste",
-    pop: 3874
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03379',
-    municipio: 'Cotriguaçu',
-    pop: 10398
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03403',
-    municipio: 'Cuiabá',
-    pop: 682932
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03437',
-    municipio: 'Curvelândia',
-    pop: 4967
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03452',
-    municipio: 'Denise',
-    pop: 6815
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03502',
-    municipio: 'Diamantino',
-    pop: 22479
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03601',
-    municipio: 'Dom Aquino',
-    pop: 7915
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03700',
-    municipio: 'Feliz Natal',
-    pop: 10564
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03809',
-    municipio: "Figueirópolis D'Oeste",
-    pop: 3112
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03858',
-    municipio: 'Gaúcha do Norte',
-    pop: 9181
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03908',
-    municipio: 'General Carneiro',
-    pop: 6250
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '03957',
-    municipio: "Glória D'Oeste",
-    pop: 2899
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04104',
-    municipio: 'Guarantã do Norte',
-    pop: 31328
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04203',
-    municipio: 'Guiratinga',
-    pop: 10532
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04500',
-    municipio: 'Indiavaí',
-    pop: 2194
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04526',
-    municipio: 'Ipiranga do Norte',
-    pop: 8409
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04542',
-    municipio: 'Itanhangá',
-    pop: 8049
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04559',
-    municipio: 'Itaúba',
-    pop: 5161
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04609',
-    municipio: 'Itiquira',
-    pop: 12519
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04807',
-    municipio: 'Jaciara',
-    pop: 29560
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '04906',
-    municipio: 'Jangada',
-    pop: 7447
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05002',
-    municipio: 'Jauru',
-    pop: 8076
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05101',
-    municipio: 'Juara',
-    pop: 35899
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05150',
-    municipio: 'Juína',
-    pop: 47800
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05176',
-    municipio: 'Juruena',
-    pop: 10149
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05200',
-    municipio: 'Juscimeira',
-    pop: 11620
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05234',
-    municipio: "Lambari D'Oeste",
-    pop: 4724
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05259',
-    municipio: 'Lucas do Rio Verde',
-    pop: 92256
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05309',
-    municipio: 'Luciara',
-    pop: 2591
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05507',
-    municipio: 'Vila Bela da Santíssima Trindade',
-    pop: 17384
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05580',
-    municipio: 'Marcelândia',
-    pop: 11414
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05606',
-    municipio: 'Matupá',
-    pop: 21415
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05622',
-    municipio: "Mirassol d'Oeste",
-    pop: 27511
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '05903',
-    municipio: 'Nobres',
-    pop: 15753
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06000',
-    municipio: 'Nortelândia',
-    pop: 5935
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06109',
-    municipio: 'Nossa Senhora do Livramento',
-    pop: 11658
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06158',
-    municipio: 'Nova Bandeirantes',
-    pop: 14160
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06174',
-    municipio: 'Nova Nazaré',
-    pop: 4467
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06182',
-    municipio: 'Nova Lacerda',
-    pop: 6965
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06190',
-    municipio: 'Nova Santa Helena',
-    pop: 4431
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06208',
-    municipio: 'Nova Brasilândia',
-    pop: 3853
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06216',
-    municipio: 'Nova Canaã do Norte',
-    pop: 11771
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06224',
-    municipio: 'Nova Mutum',
-    pop: 61223
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06232',
-    municipio: 'Nova Olímpia',
-    pop: 16314
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06240',
-    municipio: 'Nova Ubiratã',
-    pop: 9589
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06257',
-    municipio: 'Nova Xavantina',
-    pop: 25486
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06265',
-    municipio: 'Novo Mundo',
-    pop: 6444
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06273',
-    municipio: 'Novo Horizonte do Norte',
-    pop: 3307
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06281',
-    municipio: 'Novo São Joaquim',
-    pop: 7160
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06299',
-    municipio: 'Paranaíta',
-    pop: 11989
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06307',
-    municipio: 'Paranatinga',
-    pop: 28204
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06315',
-    municipio: 'Novo Santo Antônio',
-    pop: 2040
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06372',
-    municipio: 'Pedra Preta',
-    pop: 18722
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06422',
-    municipio: 'Peixoto de Azevedo',
-    pop: 33599
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06455',
-    municipio: 'Planalto da Serra',
-    pop: 3287
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06505',
-    municipio: 'Poconé',
-    pop: 31269
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06653',
-    municipio: 'Pontal do Araguaia',
-    pop: 7299
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06703',
-    municipio: 'Ponte Branca',
-    pop: 2076
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06752',
-    municipio: 'Pontes e Lacerda',
-    pop: 54795
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06778',
-    municipio: 'Porto Alegre do Norte',
-    pop: 12524
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06802',
-    municipio: 'Porto dos Gaúchos',
-    pop: 5690
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06828',
-    municipio: 'Porto Esperidião',
-    pop: 10167
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '06851',
-    municipio: 'Porto Estrela',
-    pop: 3181
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07008',
-    municipio: 'Poxoréu',
-    pop: 24587
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07040',
-    municipio: 'Primavera do Leste',
-    pop: 92927
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07065',
-    municipio: 'Querência',
-    pop: 29820
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07107',
-    municipio: 'São José dos Quatro Marcos',
-    pop: 17830
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07156',
-    municipio: 'Reserva do Cabaçal',
-    pop: 2062
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07180',
-    municipio: 'Ribeirão Cascalheira',
-    pop: 10431
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07198',
-    municipio: 'Ribeirãozinho',
-    pop: 2697
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07206',
-    municipio: 'Rio Branco',
-    pop: 4489
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07248',
-    municipio: 'Santa Carmem',
-    pop: 5677
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07263',
-    municipio: 'Santo Afonso',
-    pop: 2460
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07297',
-    municipio: 'São José do Povo',
-    pop: 2780
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07305',
-    municipio: 'São José do Rio Claro',
-    pop: 14662
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07354',
-    municipio: 'São José do Xingu',
-    pop: 6168
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07404',
-    municipio: 'São Pedro da Cipa',
-    pop: 4247
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07578',
-    municipio: 'Rondolândia',
-    pop: 3527
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07602',
-    municipio: 'Rondonópolis',
-    pop: 259167
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07701',
-    municipio: 'Rosário Oeste',
-    pop: 15236
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07743',
-    municipio: 'Santa Cruz do Xingu',
-    pop: 2834
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07750',
-    municipio: 'Salto do Céu',
-    pop: 3679
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07768',
-    municipio: 'Santa Rita do Trivelato',
-    pop: 3463
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07776',
-    municipio: 'Santa Terezinha',
-    pop: 7720
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07792',
-    municipio: 'Santo Antônio do Leste',
-    pop: 4212
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07800',
-    municipio: 'Santo Antônio do Leverger',
-    pop: 16795
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07859',
-    municipio: 'São Félix do Araguaia',
-    pop: 14332
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07875',
-    municipio: 'Sapezal',
-    pop: 31499
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07883',
-    municipio: 'Serra Nova Dourada',
-    pop: 1901
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07909',
-    municipio: 'Sinop',
-    pop: 216029
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07925',
-    municipio: 'Sorriso',
-    pop: 120561
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07941',
-    municipio: 'Tabaporã',
-    pop: 9908
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '07958',
-    municipio: 'Tangará da Serra',
-    pop: 112547
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08006',
-    municipio: 'Tapurah',
-    pop: 15272
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08055',
-    municipio: 'Terra Nova do Norte',
-    pop: 10641
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08105',
-    municipio: 'Tesouro',
-    pop: 2977
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08204',
-    municipio: 'Torixoréu',
-    pop: 4230
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08303',
-    municipio: 'União do Sul',
-    pop: 3897
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08352',
-    municipio: 'Vale de São Domingos',
-    pop: 2907
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08402',
-    municipio: 'Várzea Grande',
-    pop: 314627
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08501',
-    municipio: 'Vera',
-    pop: 10584
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08600',
-    municipio: 'Vila Rica',
-    pop: 19827
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08808',
-    municipio: 'Nova Guarita',
-    pop: 4579
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08857',
-    municipio: 'Nova Marilândia',
-    pop: 3678
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08907',
-    municipio: 'Nova Maringá',
-    pop: 5775
-  },
-  {
-    uf: 'MT',
-    uf_id: 51,
-    municipio_id: '08956',
-    municipio: 'Nova Monte Verde',
-    pop: 8451
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00050',
-    municipio: 'Abadia de Goiás',
-    pop: 21165
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00100',
-    municipio: 'Abadiânia',
-    pop: 17638
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00134',
-    municipio: 'Acreúna',
-    pop: 21995
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00159',
-    municipio: 'Adelândia',
-    pop: 2297
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00175',
-    municipio: 'Água Fria de Goiás',
-    pop: 4991
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00209',
-    municipio: 'Água Limpa',
-    pop: 1856
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00258',
-    municipio: 'Águas Lindas de Goiás',
-    pop: 240613
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00308',
-    municipio: 'Alexânia',
-    pop: 28009
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00506',
-    municipio: 'Aloândia',
-    pop: 1984
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00555',
-    municipio: 'Alto Horizonte',
-    pop: 6375
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00605',
-    municipio: 'Alto Paraíso de Goiás',
-    pop: 10936
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00803',
-    municipio: 'Alvorada do Norte',
-    pop: 8597
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00829',
-    municipio: 'Amaralina',
-    pop: 3281
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00852',
-    municipio: 'Americano do Brasil',
-    pop: 5281
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '00902',
-    municipio: 'Amorinópolis',
-    pop: 2952
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01108',
-    municipio: 'Anápolis',
-    pop: 415847
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01207',
-    municipio: 'Anhanguera',
-    pop: 921
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01306',
-    municipio: 'Anicuns',
-    pop: 18443
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01405',
-    municipio: 'Aparecida de Goiânia',
-    pop: 550925
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01454',
-    municipio: 'Aparecida do Rio Doce',
-    pop: 3012
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01504',
-    municipio: 'Aporé',
-    pop: 4452
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01603',
-    municipio: 'Araçu',
-    pop: 3842
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01702',
-    municipio: 'Aragarças',
-    pop: 18604
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '01801',
-    municipio: 'Aragoiânia',
-    pop: 12554
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '02155',
-    municipio: 'Araguapaz',
-    pop: 7182
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '02353',
-    municipio: 'Arenópolis',
-    pop: 2930
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '02502',
-    municipio: 'Aruanã',
-    pop: 8515
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '02601',
-    municipio: 'Aurilândia',
-    pop: 3266
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '02809',
-    municipio: 'Avelinópolis',
-    pop: 2963
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03104',
-    municipio: 'Baliza',
-    pop: 3335
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03203',
-    municipio: 'Barro Alto',
-    pop: 10738
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03302',
-    municipio: 'Bela Vista de Goiás',
-    pop: 36583
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03401',
-    municipio: 'Bom Jardim de Goiás',
-    pop: 7824
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03500',
-    municipio: 'Bom Jesus de Goiás',
-    pop: 24701
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03559',
-    municipio: 'Bonfinópolis',
-    pop: 10828
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03575',
-    municipio: 'Bonópolis',
-    pop: 3306
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03609',
-    municipio: 'Brazabrantes',
-    pop: 4149
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03807',
-    municipio: 'Britânia',
-    pop: 5788
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03906',
-    municipio: 'Buriti Alegre',
-    pop: 10831
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03939',
-    municipio: 'Buriti de Goiás',
-    pop: 2789
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '03962',
-    municipio: 'Buritinópolis',
-    pop: 3154
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04003',
-    municipio: 'Cabeceiras',
-    pop: 7678
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04102',
-    municipio: 'Cachoeira Alta',
-    pop: 11789
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04201',
-    municipio: 'Cachoeira de Goiás',
-    pop: 1419
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04250',
-    municipio: 'Cachoeira Dourada',
-    pop: 7801
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04300',
-    municipio: 'Caçu',
-    pop: 14006
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04409',
-    municipio: 'Caiapônia',
-    pop: 16655
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04508',
-    municipio: 'Caldas Novas',
-    pop: 104788
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04557',
-    municipio: 'Caldazinha',
-    pop: 4735
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04607',
-    municipio: 'Campestre de Goiás',
-    pop: 3854
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04656',
-    municipio: 'Campinaçu',
-    pop: 3758
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04706',
-    municipio: 'Campinorte',
-    pop: 12879
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04805',
-    municipio: 'Campo Alegre de Goiás',
-    pop: 7711
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04854',
-    municipio: 'Campo Limpo de Goiás',
-    pop: 8449
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04904',
-    municipio: 'Campos Belos',
-    pop: 18258
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '04953',
-    municipio: 'Campos Verdes',
-    pop: 3899
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05000',
-    municipio: 'Carmo do Rio Verde',
-    pop: 9937
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05059',
-    municipio: 'Castelândia',
-    pop: 2921
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05109',
-    municipio: 'Catalão',
-    pop: 120789
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05208',
-    municipio: 'Caturaí',
-    pop: 5318
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05307',
-    municipio: 'Cavalcante',
-    pop: 9721
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05406',
-    municipio: 'Ceres',
-    pop: 22484
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05455',
-    municipio: 'Cezarina',
-    pop: 8265
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05471',
-    municipio: 'Chapadão do Céu',
-    pop: 13897
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05497',
-    municipio: 'Cidade Ocidental',
-    pop: 98963
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05513',
-    municipio: 'Cocalzinho de Goiás',
-    pop: 26638
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05521',
-    municipio: 'Colinas do Sul',
-    pop: 4153
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05703',
-    municipio: 'Córrego do Ouro',
-    pop: 2456
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05802',
-    municipio: 'Corumbá de Goiás',
-    pop: 10714
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '05901',
-    municipio: 'Corumbaíba',
-    pop: 9416
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06206',
-    municipio: 'Cristalina',
-    pop: 65705
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06305',
-    municipio: 'Cristianópolis',
-    pop: 3630
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06404',
-    municipio: 'Crixás',
-    pop: 17445
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06503',
-    municipio: 'Cromínia',
-    pop: 3977
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06602',
-    municipio: 'Cumari',
-    pop: 2955
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06701',
-    municipio: 'Damianópolis',
-    pop: 3884
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06800',
-    municipio: 'Damolândia',
-    pop: 2755
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '06909',
-    municipio: 'Davinópolis',
-    pop: 1901
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07105',
-    municipio: 'Diorama',
-    pop: 2023
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07253',
-    municipio: 'Doverlândia',
-    pop: 6895
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07352',
-    municipio: 'Edealina',
-    pop: 4087
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07402',
-    municipio: 'Edéia',
-    pop: 11953
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07501',
-    municipio: 'Estrela do Norte',
-    pop: 3224
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07535',
-    municipio: 'Faina',
-    pop: 7164
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07600',
-    municipio: 'Fazenda Nova',
-    pop: 5878
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07808',
-    municipio: 'Firminópolis',
-    pop: 10365
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '07907',
-    municipio: 'Flores de Goiás',
-    pop: 14156
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08004',
-    municipio: 'Formosa',
-    pop: 120478
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08103',
-    municipio: 'Formoso',
-    pop: 4681
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08152',
-    municipio: 'Gameleira de Goiás',
-    pop: 3542
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08301',
-    municipio: 'Divinópolis de Goiás',
-    pop: 4440
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08400',
-    municipio: 'Goianápolis',
-    pop: 14555
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08509',
-    municipio: 'Goiandira',
-    pop: 4986
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08608',
-    municipio: 'Goianésia',
-    pop: 77014
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08707',
-    municipio: 'Goiânia',
-    pop: 1494599
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08806',
-    municipio: 'Goianira',
-    pop: 78754
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '08905',
-    municipio: 'Goiás',
-    pop: 24233
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09101',
-    municipio: 'Goiatuba',
-    pop: 36777
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09150',
-    municipio: 'Gouvelândia',
-    pop: 4356
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09200',
-    municipio: 'Guapó',
-    pop: 20588
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09291',
-    municipio: 'Guaraíta',
-    pop: 2185
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09408',
-    municipio: 'Guarani de Goiás',
-    pop: 4106
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09457',
-    municipio: 'Guarinos',
-    pop: 2165
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09606',
-    municipio: 'Heitoraí',
-    pop: 3360
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09705',
-    municipio: 'Hidrolândia',
-    pop: 29827
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09804',
-    municipio: 'Hidrolina',
-    pop: 3514
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09903',
-    municipio: 'Iaciara',
-    pop: 10430
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09937',
-    municipio: 'Inaciolândia',
-    pop: 6061
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: '09952',
-    municipio: 'Indiara',
-    pop: 17747
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10000,
-    municipio: 'Inhumas',
-    pop: 53629
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10109,
-    municipio: 'Ipameri',
-    pop: 26163
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10158,
-    municipio: 'Ipiranga de Goiás',
-    pop: 2964
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10208,
-    municipio: 'Iporá',
-    pop: 36983
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10307,
-    municipio: 'Israelândia',
-    pop: 2540
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10406,
-    municipio: 'Itaberaí',
-    pop: 46943
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10562,
-    municipio: 'Itaguari',
-    pop: 5088
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10604,
-    municipio: 'Itaguaru',
-    pop: 4880
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10802,
-    municipio: 'Itajá',
-    pop: 4328
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 10901,
-    municipio: 'Itapaci',
-    pop: 21708
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11008,
-    municipio: 'Itapirapuã',
-    pop: 8125
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11206,
-    municipio: 'Itapuranga',
-    pop: 26574
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11305,
-    municipio: 'Itarumã',
-    pop: 6142
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11404,
-    municipio: 'Itauçu',
-    pop: 7701
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11503,
-    municipio: 'Itumbiara',
-    pop: 112289
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11602,
-    municipio: 'Ivolândia',
-    pop: 2729
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11701,
-    municipio: 'Jandaia',
-    pop: 6360
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11800,
-    municipio: 'Jaraguá',
-    pop: 46427
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 11909,
-    municipio: 'Jataí',
-    pop: 110404
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12006,
-    municipio: 'Jaupaci',
-    pop: 2946
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12055,
-    municipio: 'Jesúpolis',
-    pop: 2124
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12105,
-    municipio: 'Joviânia',
-    pop: 7247
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12204,
-    municipio: 'Jussara',
-    pop: 19901
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12253,
-    municipio: 'Lagoa Santa',
-    pop: 1426
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12303,
-    municipio: 'Leopoldo de Bulhões',
-    pop: 9035
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12501,
-    municipio: 'Luziânia',
-    pop: 218872
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12600,
-    municipio: 'Mairipotaba',
-    pop: 2618
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12709,
-    municipio: 'Mambaí',
-    pop: 8405
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12808,
-    municipio: 'Mara Rosa',
-    pop: 10815
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12907,
-    municipio: 'Marzagão',
-    pop: 2893
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 12956,
-    municipio: 'Matrinchã',
-    pop: 4033
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13004,
-    municipio: 'Maurilândia',
-    pop: 10239
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13053,
-    municipio: 'Mimoso de Goiás',
-    pop: 2633
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13087,
-    municipio: 'Minaçu',
-    pop: 26939
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13103,
-    municipio: 'Mineiros',
-    pop: 73781
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13400,
-    municipio: 'Moiporá',
-    pop: 1693
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13509,
-    municipio: 'Monte Alegre de Goiás',
-    pop: 6613
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13707,
-    municipio: 'Montes Claros de Goiás',
-    pop: 8972
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13756,
-    municipio: 'Montividiu',
-    pop: 12957
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13772,
-    municipio: 'Montividiu do Norte',
-    pop: 3770
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13806,
-    municipio: 'Morrinhos',
-    pop: 53640
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13855,
-    municipio: 'Morro Agudo de Goiás',
-    pop: 2499
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 13905,
-    municipio: 'Mossâmedes',
-    pop: 4655
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14002,
-    municipio: 'Mozarlândia',
-    pop: 15109
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14051,
-    municipio: 'Mundo Novo',
-    pop: 6223
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14101,
-    municipio: 'Mutunópolis',
-    pop: 3562
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14408,
-    municipio: 'Nazário',
-    pop: 8330
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14507,
-    municipio: 'Nerópolis',
-    pop: 33706
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14606,
-    municipio: 'Niquelândia',
-    pop: 34466
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14705,
-    municipio: 'Nova América',
-    pop: 2375
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14804,
-    municipio: 'Nova Aurora',
-    pop: 2130
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14838,
-    municipio: 'Nova Crixás',
-    pop: 13095
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14861,
-    municipio: 'Nova Glória',
-    pop: 8375
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14879,
-    municipio: 'Nova Iguaçu de Goiás',
-    pop: 3072
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 14903,
-    municipio: 'Nova Roma',
-    pop: 3053
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15009,
-    municipio: 'Nova Veneza',
-    pop: 9790
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15207,
-    municipio: 'Novo Brasil',
-    pop: 3568
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15231,
-    municipio: 'Novo Gama',
-    pop: 107092
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15256,
-    municipio: 'Novo Planalto',
-    pop: 3723
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15306,
-    municipio: 'Orizona',
-    pop: 16890
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15405,
-    municipio: 'Ouro Verde de Goiás',
-    pop: 4108
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15504,
-    municipio: 'Ouvidor',
-    pop: 7542
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15603,
-    municipio: 'Padre Bernardo',
-    pop: 36692
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15652,
-    municipio: 'Palestina de Goiás',
-    pop: 3132
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15702,
-    municipio: 'Palmeiras de Goiás',
-    pop: 33749
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15801,
-    municipio: 'Palmelo',
-    pop: 2273
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 15900,
-    municipio: 'Palminópolis',
-    pop: 3939
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 16007,
-    municipio: 'Panamá',
-    pop: 2449
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 16304,
-    municipio: 'Paranaiguara',
-    pop: 7470
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 16403,
-    municipio: 'Paraúna',
-    pop: 10749
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 16452,
-    municipio: 'Perolândia',
-    pop: 3000
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 16809,
-    municipio: 'Petrolina de Goiás',
-    pop: 9577
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 16908,
-    municipio: 'Pilar de Goiás',
-    pop: 2288
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 17104,
-    municipio: 'Piracanjuba',
-    pop: 25309
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 17203,
-    municipio: 'Piranhas',
-    pop: 11913
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 17302,
-    municipio: 'Pirenópolis',
-    pop: 27757
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 17401,
-    municipio: 'Pires do Rio',
-    pop: 33494
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 17609,
-    municipio: 'Planaltina',
-    pop: 110619
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 17708,
-    municipio: 'Pontalina',
-    pop: 18685
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18003,
-    municipio: 'Porangatu',
-    pop: 45400
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18052,
-    municipio: 'Porteirão',
-    pop: 4225
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18102,
-    municipio: 'Portelândia',
-    pop: 3234
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18300,
-    municipio: 'Posse',
-    pop: 36060
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18391,
-    municipio: 'Professor Jamil',
-    pop: 3732
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18508,
-    municipio: 'Quirinópolis',
-    pop: 49986
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18607,
-    municipio: 'Rialma',
-    pop: 12551
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18706,
-    municipio: 'Rianápolis',
-    pop: 3938
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18789,
-    municipio: 'Rio Quente',
-    pop: 3994
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18805,
-    municipio: 'Rio Verde',
-    pop: 238025
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 18904,
-    municipio: 'Rubiataba',
-    pop: 20132
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19001,
-    municipio: 'Sanclerlândia',
-    pop: 8063
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19100,
-    municipio: 'Santa Bárbara de Goiás',
-    pop: 6280
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19209,
-    municipio: 'Santa Cruz de Goiás',
-    pop: 3016
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19258,
-    municipio: 'Santa Fé de Goiás',
-    pop: 5036
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19308,
-    municipio: 'Santa Helena de Goiás',
-    pop: 39481
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19357,
-    municipio: 'Santa Isabel',
-    pop: 3556
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19407,
-    municipio: 'Santa Rita do Araguaia',
-    pop: 5842
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19456,
-    municipio: 'Santa Rita do Novo Destino',
-    pop: 2648
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19506,
-    municipio: 'Santa Rosa de Goiás',
-    pop: 2837
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19605,
-    municipio: 'Santa Tereza de Goiás',
-    pop: 3225
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19704,
-    municipio: 'Santa Terezinha de Goiás',
-    pop: 10818
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19712,
-    municipio: 'Santo Antônio da Barra',
-    pop: 4293
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19738,
-    municipio: 'Santo Antônio de Goiás',
-    pop: 7873
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19753,
-    municipio: 'Santo Antônio do Descoberto',
-    pop: 74614
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19803,
-    municipio: 'São Domingos',
-    pop: 9581
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 19902,
-    municipio: 'São Francisco de Goiás',
-    pop: 6491
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20009,
-    municipio: "São João d'Aliança",
-    pop: 14757
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20058,
-    municipio: 'São João da Paraúna',
-    pop: 1807
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20108,
-    municipio: 'São Luís de Montes Belos',
-    pop: 35031
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20157,
-    municipio: 'São Luiz do Norte',
-    pop: 4926
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20207,
-    municipio: 'São Miguel do Araguaia',
-    pop: 22079
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20264,
-    municipio: 'São Miguel do Passa Quatro',
-    pop: 4621
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20280,
-    municipio: 'São Patrício',
-    pop: 2190
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20405,
-    municipio: 'São Simão',
-    pop: 17194
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20454,
-    municipio: 'Senador Canedo',
-    pop: 169849
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20504,
-    municipio: 'Serranópolis',
-    pop: 8201
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20603,
-    municipio: 'Silvânia',
-    pop: 22939
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20686,
-    municipio: 'Simolândia',
-    pop: 5693
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 20702,
-    municipio: "Sítio d'Abadia",
-    pop: 2973
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21007,
-    municipio: 'Taquaral de Goiás',
-    pop: 4146
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21080,
-    municipio: 'Teresina de Goiás',
-    pop: 2685
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21197,
-    municipio: 'Terezópolis de Goiás',
-    pop: 8243
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21304,
-    municipio: 'Três Ranchos',
-    pop: 2970
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21403,
-    municipio: 'Trindade',
-    pop: 150858
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21452,
-    municipio: 'Trombas',
-    pop: 3106
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21502,
-    municipio: 'Turvânia',
-    pop: 4478
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21551,
-    municipio: 'Turvelândia',
-    pop: 5130
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21577,
-    municipio: 'Uirapuru',
-    pop: 2809
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21601,
-    municipio: 'Uruaçu',
-    pop: 44150
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21700,
-    municipio: 'Uruana',
-    pop: 13871
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21809,
-    municipio: 'Urutaí',
-    pop: 3667
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21858,
-    municipio: 'Valparaíso de Goiás',
-    pop: 213506
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 21908,
-    municipio: 'Varjão',
-    pop: 3768
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 22005,
-    municipio: 'Vianópolis',
-    pop: 15476
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 22054,
-    municipio: 'Vicentinópolis',
-    pop: 9077
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 22203,
-    municipio: 'Vila Boa',
-    pop: 4185
-  },
-  {
-    uf: 'GO',
-    uf_id: 52,
-    municipio_id: 22302,
-    municipio: 'Vila Propício',
-    pop: 5982
-  },
-  {
-    uf: 'DF',
-    uf_id: 53,
-    municipio_id: '00108',
-    municipio: 'Brasília',
-    pop: 2982818
-  }
+const municipios = [
+  [1100015, "Alta Floresta D'Oeste", 'RO', 21494],
+  [1100023, 'Ariquemes', 'RO', 96833],
+  [1100031, 'Cabixi', 'RO', 5351],
+  [1100049, 'Cacoal', 'RO', 86887],
+  [1100056, 'Cerejeiras', 'RO', 15890],
+  [1100064, 'Colorado do Oeste', 'RO', 15663],
+  [1100072, 'Corumbiara', 'RO', 7519],
+  [1100080, 'Costa Marques', 'RO', 12627],
+  [1100098, "Espigão D'Oeste", 'RO', 29414],
+  [1100106, 'Guajará-Mirim', 'RO', 39387],
+  [1100114, 'Jaru', 'RO', 50591],
+  [1100122, 'Ji-Paraná', 'RO', 124333],
+  [1100130, "Machadinho D'Oeste", 'RO', 30707],
+  [1100148, "Nova Brasilândia D'Oeste", 'RO', 15679],
+  [1100155, 'Ouro Preto do Oeste', 'RO', 35044],
+  [1100189, 'Pimenta Bueno', 'RO', 35079],
+  [1100205, 'Porto Velho', 'RO', 460434],
+  [1100254, 'Presidente Médici', 'RO', 19327],
+  [1100262, 'Rio Crespo', 'RO', 3471],
+  [1100288, 'Rolim de Moura', 'RO', 56406],
+  [1100296, "Santa Luzia D'Oeste", 'RO', 7419],
+  [1100304, 'Vilhena', 'RO', 95832],
+  [1100320, 'São Miguel do Guaporé', 'RO', 21635],
+  [1100338, 'Nova Mamoré', 'RO', 25444],
+  [1100346, "Alvorada D'Oeste", 'RO', 13117],
+  [1100379, 'Alto Alegre dos Parecis', 'RO', 11479],
+  [1100403, 'Alto Paraíso', 'RO', 16320],
+  [1100452, 'Buritis', 'RO', 27992],
+  [1100502, 'Novo Horizonte do Oeste', 'RO', 7667],
+  [1100601, 'Cacaulândia', 'RO', 4150],
+  [1100700, 'Campo Novo de Rondônia', 'RO', 8844],
+  [1100809, 'Candeias do Jamari', 'RO', 22310],
+  [1100908, 'Castanheiras', 'RO', 3233],
+  [1100924, 'Chupinguaia', 'RO', 9324],
+  [1100940, 'Cujubim', 'RO', 14863],
+  [1101005, 'Governador Jorge Teixeira', 'RO', 8001],
+  [1101104, 'Itapuã do Oeste', 'RO', 8548],
+  [1101203, 'Ministro Andreazza', 'RO', 6466],
+  [1101302, 'Mirante da Serra', 'RO', 9235],
+  [1101401, 'Monte Negro', 'RO', 11548],
+  [1101435, 'Nova União', 'RO', 6200],
+  [1101450, 'Parecis', 'RO', 4125],
+  [1101468, 'Pimenteiras do Oeste', 'RO', 2156],
+  [1101476, 'Primavera de Rondônia', 'RO', 3076],
+  [1101484, "São Felipe D'Oeste", 'RO', 5258],
+  [1101492, 'São Francisco do Guaporé', 'RO', 16286],
+  [1101500, 'Seringueiras', 'RO', 11171],
+  [1101559, 'Teixeirópolis', 'RO', 4256],
+  [1101609, 'Theobroma', 'RO', 8113],
+  [1101708, 'Urupá', 'RO', 10725],
+  [1101757, 'Vale do Anari', 'RO', 7788],
+  [1101807, 'Vale do Paraíso', 'RO', 6479],
+  [1200013, 'Acrelândia', 'AC', 14021],
+  [1200054, 'Assis Brasil', 'AC', 8100],
+  [1200104, 'Brasiléia', 'AC', 26000],
+  [1200138, 'Bujari', 'AC', 12917],
+  [1200179, 'Capixaba', 'AC', 10392],
+  [1200203, 'Cruzeiro do Sul', 'AC', 91888],
+  [1200252, 'Epitaciolândia', 'AC', 18757],
+  [1200302, 'Feijó', 'AC', 35426],
+  [1200328, 'Jordão', 'AC', 9222],
+  [1200336, 'Mâncio Lima', 'AC', 19294],
+  [1200344, 'Manoel Urbano', 'AC', 11996],
+  [1200351, 'Marechal Thaumaturgo', 'AC', 17093],
+  [1200385, 'Plácido de Castro', 'AC', 16560],
+  [1200393, 'Porto Walter', 'AC', 10735],
+  [1200401, 'Rio Branco', 'AC', 364756],
+  [1200427, 'Rodrigues Alves', 'AC', 14938],
+  [1200435, 'Santa Rosa do Purus', 'AC', 6723],
+  [1200450, 'Senador Guiomard', 'AC', 21454],
+  [1200500, 'Sena Madureira', 'AC', 41343],
+  [1200609, 'Tarauacá', 'AC', 43467],
+  [1200708, 'Xapuri', 'AC', 18243],
+  [1200807, 'Porto Acre', 'AC', 16693],
+  [1300029, 'Alvarães', 'AM', 15866],
+  [1300060, 'Amaturá', 'AM', 10819],
+  [1300086, 'Anamã', 'AM', 9962],
+  [1300102, 'Anori', 'AM', 17194],
+  [1300144, 'Apuí', 'AM', 20647],
+  [1300201, 'Atalaia do Norte', 'AM', 15314],
+  [1300300, 'Autazes', 'AM', 41564],
+  [1300409, 'Barcelos', 'AM', 18834],
+  [1300508, 'Barreirinha', 'AM', 31051],
+  [1300607, 'Benjamin Constant', 'AM', 37648],
+  [1300631, 'Beruri', 'AM', 20718],
+  [1300680, 'Boa Vista do Ramos', 'AM', 23785],
+  [1300706, 'Boca do Acre', 'AM', 35447],
+  [1300805, 'Borba', 'AM', 33080],
+  [1300839, 'Caapiranga', 'AM', 13469],
+  [1300904, 'Canutama', 'AM', 16869],
+  [1301001, 'Carauari', 'AM', 28742],
+  [1301100, 'Careiro', 'AM', 30792],
+  [1301159, 'Careiro da Várzea', 'AM', 19637],
+  [1301209, 'Coari', 'AM', 70616],
+  [1301308, 'Codajás', 'AM', 23549],
+  [1301407, 'Eirunepé', 'AM', 33170],
+  [1301506, 'Envira', 'AM', 17186],
+  [1301605, 'Fonte Boa', 'AM', 25871],
+  [1301654, 'Guajará', 'AM', 13815],
+  [1301704, 'Humaitá', 'AM', 57473],
+  [1301803, 'Ipixuna', 'AM', 24311],
+  [1301852, 'Iranduba', 'AM', 61163],
+  [1301902, 'Itacoatiara', 'AM', 103598],
+  [1301951, 'Itamarati', 'AM', 10937],
+  [1302009, 'Itapiranga', 'AM', 10162],
+  [1302108, 'Japurá', 'AM', 8858],
+  [1302207, 'Juruá', 'AM', 10742],
+  [1302306, 'Jutaí', 'AM', 25172],
+  [1302405, 'Lábrea', 'AM', 45448],
+  [1302504, 'Manacapuru', 'AM', 101883],
+  [1302553, 'Manaquiri', 'AM', 17107],
+  [1302603, 'Manaus', 'AM', 2063689],
+  [1302702, 'Manicoré', 'AM', 53914],
+  [1302801, 'Maraã', 'AM', 15529],
+  [1302900, 'Maués', 'AM', 61204],
+  [1303007, 'Nhamundá', 'AM', 20136],
+  [1303106, 'Nova Olinda do Norte', 'AM', 27062],
+  [1303205, 'Novo Airão', 'AM', 15761],
+  [1303304, 'Novo Aripuanã', 'AM', 23818],
+  [1303403, 'Parintins', 'AM', 96372],
+  [1303502, 'Pauini', 'AM', 19373],
+  [1303536, 'Presidente Figueiredo', 'AM', 30668],
+  [1303569, 'Rio Preto da Eva', 'AM', 24936],
+  [1303601, 'Santa Isabel do Rio Negro', 'AM', 14164],
+  [1303700, 'Santo Antônio do Içá', 'AM', 28211],
+  [1303809, 'São Gabriel da Cachoeira', 'AM', 51795],
+  [1303908, 'São Paulo de Olivença', 'AM', 32967],
+  [1303957, 'São Sebastião do Uatumã', 'AM', 11670],
+  [1304005, 'Silves', 'AM', 11559],
+  [1304062, 'Tabatinga', 'AM', 66764],
+  [1304104, 'Tapauá', 'AM', 19599],
+  [1304203, 'Tefé', 'AM', 73669],
+  [1304237, 'Tonantins', 'AM', 19247],
+  [1304260, 'Uarini', 'AM', 14431],
+  [1304302, 'Urucará', 'AM', 18631],
+  [1304401, 'Urucurituba', 'AM', 23945],
+  [1400027, 'Amajari', 'RR', 13927],
+  [1400050, 'Alto Alegre', 'RR', 21096],
+  [1400100, 'Boa Vista', 'RR', 413486],
+  [1400159, 'Bonfim', 'RR', 13923],
+  [1400175, 'Cantá', 'RR', 18682],
+  [1400209, 'Caracaraí', 'RR', 20957],
+  [1400233, 'Caroebe', 'RR', 10656],
+  [1400282, 'Iracema', 'RR', 10023],
+  [1400308, 'Mucajaí', 'RR', 18095],
+  [1400407, 'Normandia', 'RR', 13986],
+  [1400456, 'Pacaraima', 'RR', 19305],
+  [1400472, 'Rorainópolis', 'RR', 32647],
+  [1400506, 'São João da Baliza', 'RR', 8858],
+  [1400605, 'São Luiz', 'RR', 7315],
+  [1400704, 'Uiramutã', 'RR', 13751],
+  [1500107, 'Abaetetuba', 'PA', 158188],
+  [1500131, 'Abel Figueiredo', 'PA', 6136],
+  [1500206, 'Acará', 'PA', 59023],
+  [1500305, 'Afuá', 'PA', 37765],
+  [1500347, 'Água Azul do Norte', 'PA', 18080],
+  [1500404, 'Alenquer', 'PA', 69377],
+  [1500503, 'Almeirim', 'PA', 34280],
+  [1500602, 'Altamira', 'PA', 126279],
+  [1500701, 'Anajás', 'PA', 28011],
+  [1500800, 'Ananindeua', 'PA', 478778],
+  [1500859, 'Anapu', 'PA', 31850],
+  [1500909, 'Augusto Corrêa', 'PA', 44573],
+  [1500958, 'Aurora do Pará', 'PA', 23774],
+  [1501006, 'Aveiro', 'PA', 18290],
+  [1501105, 'Bagre', 'PA', 31892],
+  [1501204, 'Baião', 'PA', 51641],
+  [1501253, 'Bannach', 'PA', 4031],
+  [1501303, 'Barcarena', 'PA', 126650],
+  [1501402, 'Belém', 'PA', 1303403],
+  [1501451, 'Belterra', 'PA', 18099],
+  [1501501, 'Benevides', 'PA', 63567],
+  [1501576, 'Bom Jesus do Tocantins', 'PA', 18005],
+  [1501600, 'Bonito', 'PA', 12622],
+  [1501709, 'Bragança', 'PA', 123082],
+  [1501725, 'Brasil Novo', 'PA', 24718],
+  [1501758, 'Brejo Grande do Araguaia', 'PA', 6783],
+  [1501782, 'Breu Branco', 'PA', 45712],
+  [1501808, 'Breves', 'PA', 106968],
+  [1501907, 'Bujaru', 'PA', 24383],
+  [1501956, 'Cachoeira do Piriá', 'PA', 19630],
+  [1502004, 'Cachoeira do Arari', 'PA', 23981],
+  [1502103, 'Cametá', 'PA', 134184],
+  [1502152, 'Canaã dos Carajás', 'PA', 77079],
+  [1502202, 'Capanema', 'PA', 70394],
+  [1502301, 'Capitão Poço', 'PA', 56506],
+  [1502400, 'Castanhal', 'PA', 192256],
+  [1502509, 'Chaves', 'PA', 20757],
+  [1502608, 'Colares', 'PA', 12868],
+  [1502707, 'Conceição do Araguaia', 'PA', 44617],
+  [1502756, 'Concórdia do Pará', 'PA', 26881],
+  [1502764, 'Cumaru do Norte', 'PA', 14036],
+  [1502772, 'Curionópolis', 'PA', 19950],
+  [1502806, 'Curralinho', 'PA', 33903],
+  [1502855, 'Curuá', 'PA', 14117],
+  [1502905, 'Curuçá', 'PA', 41262],
+  [1502939, 'Dom Eliseu', 'PA', 58484],
+  [1502954, 'Eldorado do Carajás', 'PA', 28192],
+  [1503002, 'Faro', 'PA', 8728],
+  [1503044, 'Floresta do Araguaia', 'PA', 17898],
+  [1503077, 'Garrafão do Norte', 'PA', 24703],
+  [1503093, 'Goianésia do Pará', 'PA', 26362],
+  [1503101, 'Gurupá', 'PA', 31786],
+  [1503200, 'Igarapé-Açu', 'PA', 35797],
+  [1503309, 'Igarapé-Miri', 'PA', 64831],
+  [1503408, 'Inhangapi', 'PA', 10325],
+  [1503457, 'Ipixuna do Pará', 'PA', 30329],
+  [1503507, 'Irituia', 'PA', 30955],
+  [1503606, 'Itaituba', 'PA', 123314],
+  [1503705, 'Itupiranga', 'PA', 49754],
+  [1503754, 'Jacareacanga', 'PA', 24042],
+  [1503804, 'Jacundá', 'PA', 37707],
+  [1503903, 'Juruti', 'PA', 50881],
+  [1504000, 'Limoeiro do Ajuru', 'PA', 29569],
+  [1504059, 'Mãe do Rio', 'PA', 34353],
+  [1504109, 'Magalhães Barata', 'PA', 8115],
+  [1504208, 'Marabá', 'PA', 266533],
+  [1504307, 'Maracanã', 'PA', 25971],
+  [1504406, 'Marapanim', 'PA', 26573],
+  [1504422, 'Marituba', 'PA', 111785],
+  [1504455, 'Medicilândia', 'PA', 27094],
+  [1504505, 'Melgaço', 'PA', 27881],
+  [1504604, 'Mocajuba', 'PA', 27198],
+  [1504703, 'Moju', 'PA', 84094],
+  [1504752, 'Mojuí dos Campos', 'PA', 23501],
+  [1504802, 'Monte Alegre', 'PA', 60012],
+  [1504901, 'Muaná', 'PA', 45368],
+  [1504950, 'Nova Esperança do Piriá', 'PA', 20478],
+  [1504976, 'Nova Ipixuna', 'PA', 13955],
+  [1505007, 'Nova Timboteua', 'PA', 12806],
+  [1505031, 'Novo Progresso', 'PA', 33638],
+  [1505064, 'Novo Repartimento', 'PA', 60732],
+  [1505106, 'Óbidos', 'PA', 52229],
+  [1505205, 'Oeiras do Pará', 'PA', 33844],
+  [1505304, 'Oriximiná', 'PA', 68294],
+  [1505403, 'Ourém', 'PA', 17855],
+  [1505437, 'Ourilândia do Norte', 'PA', 32467],
+  [1505486, 'Pacajá', 'PA', 41097],
+  [1505494, 'Palestina do Pará', 'PA', 6885],
+  [1505502, 'Paragominas', 'PA', 105550],
+  [1505536, 'Parauapebas', 'PA', 267836],
+  [1505551, "Pau D'Arco", 'PA', 6931],
+  [1505601, 'Peixe-Boi', 'PA', 8285],
+  [1505635, 'Piçarra', 'PA', 12832],
+  [1505650, 'Placas', 'PA', 18668],
+  [1505700, 'Ponta de Pedras', 'PA', 24984],
+  [1505809, 'Portel', 'PA', 62503],
+  [1505908, 'Porto de Moz', 'PA', 40597],
+  [1506005, 'Prainha', 'PA', 35577],
+  [1506104, 'Primavera', 'PA', 10851],
+  [1506112, 'Quatipuru', 'PA', 11524],
+  [1506138, 'Redenção', 'PA', 85597],
+  [1506161, 'Rio Maria', 'PA', 18384],
+  [1506187, 'Rondon do Pará', 'PA', 53143],
+  [1506195, 'Rurópolis', 'PA', 35769],
+  [1506203, 'Salinópolis', 'PA', 44772],
+  [1506302, 'Salvaterra', 'PA', 24129],
+  [1506351, 'Santa Bárbara do Pará', 'PA', 21087],
+  [1506401, 'Santa Cruz do Arari', 'PA', 7445],
+  [1506500, 'Santa Izabel do Pará', 'PA', 73019],
+  [1506559, 'Santa Luzia do Pará', 'PA', 20370],
+  [1506583, 'Santa Maria das Barreiras', 'PA', 16548],
+  [1506609, 'Santa Maria do Pará', 'PA', 24624],
+  [1506708, 'Santana do Araguaia', 'PA', 32413],
+  [1506807, 'Santarém', 'PA', 331942],
+  [1506906, 'Santarém Novo', 'PA', 6116],
+  [1507003, 'Santo Antônio do Tauá', 'PA', 27461],
+  [1507102, 'São Caetano de Odivelas', 'PA', 16666],
+  [1507151, 'São Domingos do Araguaia', 'PA', 21092],
+  [1507201, 'São Domingos do Capim', 'PA', 30599],
+  [1507300, 'São Félix do Xingu', 'PA', 65418],
+  [1507409, 'São Francisco do Pará', 'PA', 14894],
+  [1507458, 'São Geraldo do Araguaia', 'PA', 24255],
+  [1507466, 'São João da Ponta', 'PA', 4430],
+  [1507474, 'São João de Pirabas', 'PA', 20689],
+  [1507508, 'São João do Araguaia', 'PA', 13664],
+  [1507607, 'São Miguel do Guamá', 'PA', 52894],
+  [1507706, 'São Sebastião da Boa Vista', 'PA', 25643],
+  [1507755, 'Sapucaia', 'PA', 5847],
+  [1507805, 'Senador José Porfírio', 'PA', 22576],
+  [1507904, 'Soure', 'PA', 24204],
+  [1507953, 'Tailândia', 'PA', 72493],
+  [1507961, 'Terra Alta', 'PA', 10400],
+  [1507979, 'Terra Santa', 'PA', 18782],
+  [1508001, 'Tomé-Açu', 'PA', 67585],
+  [1508035, 'Tracuateua', 'PA', 28595],
+  [1508050, 'Trairão', 'PA', 15242],
+  [1508084, 'Tucumã', 'PA', 39550],
+  [1508100, 'Tucuruí', 'PA', 91306],
+  [1508126, 'Ulianópolis', 'PA', 37972],
+  [1508159, 'Uruará', 'PA', 43558],
+  [1508209, 'Vigia', 'PA', 50832],
+  [1508308, 'Viseu', 'PA', 58692],
+  [1508357, 'Vitória do Xingu', 'PA', 15607],
+  [1508407, 'Xinguara', 'PA', 52893],
+  [1600055, 'Serra do Navio', 'AP', 4673],
+  [1600105, 'Amapá', 'AP', 7943],
+  [1600154, 'Pedra Branca do Amapari', 'AP', 12847],
+  [1600204, 'Calçoene', 'AP', 10612],
+  [1600212, 'Cutias', 'AP', 4461],
+  [1600238, 'Ferreira Gomes', 'AP', 6666],
+  [1600253, 'Itaubal', 'AP', 5599],
+  [1600279, 'Laranjal do Jari', 'AP', 35114],
+  [1600303, 'Macapá', 'AP', 442933],
+  [1600402, 'Mazagão', 'AP', 21924],
+  [1600501, 'Oiapoque', 'AP', 27482],
+  [1600535, 'Porto Grande', 'AP', 17848],
+  [1600550, 'Pracuúba', 'AP', 3803],
+  [1600600, 'Santana', 'AP', 107618],
+  [1600709, 'Tartarugalzinho', 'AP', 12945],
+  [1600808, 'Vitória do Jari', 'AP', 11291],
+  [1700251, 'Abreulândia', 'TO', 2576],
+  [1700301, 'Aguiarnópolis', 'TO', 4497],
+  [1700350, 'Aliança do Tocantins', 'TO', 5147],
+  [1700400, 'Almas', 'TO', 6499],
+  [1700707, 'Alvorada', 'TO', 8802],
+  [1701002, 'Ananás', 'TO', 10325],
+  [1701051, 'Angico', 'TO', 2876],
+  [1701101, 'Aparecida do Rio Negro', 'TO', 4856],
+  [1701309, 'Aragominas', 'TO', 5290],
+  [1701903, 'Araguacema', 'TO', 5927],
+  [1702000, 'Araguaçu', 'TO', 8133],
+  [1702109, 'Araguaína', 'TO', 171301],
+  [1702158, 'Araguanã', 'TO', 4310],
+  [1702208, 'Araguatins', 'TO', 31918],
+  [1702307, 'Arapoema', 'TO', 5550],
+  [1702406, 'Arraias', 'TO', 10287],
+  [1702554, 'Augustinópolis', 'TO', 17484],
+  [1702703, 'Aurora do Tocantins', 'TO', 3342],
+  [1702901, 'Axixá do Tocantins', 'TO', 10262],
+  [1703008, 'Babaçulândia', 'TO', 7880],
+  [1703057, 'Bandeirantes do Tocantins', 'TO', 3407],
+  [1703073, 'Barra do Ouro', 'TO', 4476],
+  [1703107, 'Barrolândia', 'TO', 4846],
+  [1703206, 'Bernardo Sayão', 'TO', 4229],
+  [1703305, 'Bom Jesus do Tocantins', 'TO', 4038],
+  [1703602, 'Brasilândia do Tocantins', 'TO', 1974],
+  [1703701, 'Brejinho de Nazaré', 'TO', 4725],
+  [1703800, 'Buriti do Tocantins', 'TO', 10307],
+  [1703826, 'Cachoeirinha', 'TO', 1961],
+  [1703842, 'Campos Lindos', 'TO', 8653],
+  [1703867, 'Cariri do Tocantins', 'TO', 4007],
+  [1703883, 'Carmolândia', 'TO', 2201],
+  [1703891, 'Carrasco Bonito', 'TO', 3318],
+  [1703909, 'Caseara', 'TO', 4847],
+  [1704105, 'Centenário', 'TO', 2131],
+  [1704600, 'Chapada de Areia', 'TO', 1501],
+  [1705102, 'Chapada da Natividade', 'TO', 3117],
+  [1705508, 'Colinas do Tocantins', 'TO', 34233],
+  [1705557, 'Combinado', 'TO', 4756],
+  [1705607, 'Conceição do Tocantins', 'TO', 3887],
+  [1706001, 'Couto Magalhães', 'TO', 5331],
+  [1706100, 'Cristalândia', 'TO', 6371],
+  [1706258, 'Crixás do Tocantins', 'TO', 1470],
+  [1706506, 'Darcinópolis', 'TO', 5827],
+  [1707009, 'Dianópolis', 'TO', 17739],
+  [1707108, 'Divinópolis do Tocantins', 'TO', 7024],
+  [1707207, 'Dois Irmãos do Tocantins', 'TO', 6327],
+  [1707306, 'Dueré', 'TO', 4248],
+  [1707405, 'Esperantina', 'TO', 7530],
+  [1707553, 'Fátima', 'TO', 3467],
+  [1707652, 'Figueirópolis', 'TO', 5211],
+  [1707702, 'Filadélfia', 'TO', 7712],
+  [1708205, 'Formoso do Araguaia', 'TO', 18881],
+  [1708254, 'Tabocão', 'TO', 3455],
+  [1708304, 'Goianorte', 'TO', 4738],
+  [1709005, 'Goiatins', 'TO', 12433],
+  [1709302, 'Guaraí', 'TO', 24775],
+  [1709500, 'Gurupi', 'TO', 85125],
+  [1709807, 'Ipueiras', 'TO', 1590],
+  [1710508, 'Itacajá', 'TO', 6819],
+  [1710706, 'Itaguatins', 'TO', 5172],
+  [1710904, 'Itapiratins', 'TO', 3577],
+  [1711100, 'Itaporã do Tocantins', 'TO', 2404],
+  [1711506, 'Jaú do Tocantins', 'TO', 3334],
+  [1711803, 'Juarina', 'TO', 2243],
+  [1711902, 'Lagoa da Confusão', 'TO', 15288],
+  [1711951, 'Lagoa do Tocantins', 'TO', 3516],
+  [1712009, 'Lajeado', 'TO', 3357],
+  [1712157, 'Lavandeira', 'TO', 1626],
+  [1712405, 'Lizarda', 'TO', 2999],
+  [1712454, 'Luzinópolis', 'TO', 2717],
+  [1712504, 'Marianópolis do Tocantins', 'TO', 4615],
+  [1712702, 'Mateiros', 'TO', 2748],
+  [1712801, 'Maurilândia do Tocantins', 'TO', 3095],
+  [1713205, 'Miracema do Tocantins', 'TO', 18566],
+  [1713304, 'Miranorte', 'TO', 12701],
+  [1713601, 'Monte do Carmo', 'TO', 5694],
+  [1713700, 'Monte Santo do Tocantins', 'TO', 2396],
+  [1713809, 'Palmeiras do Tocantins', 'TO', 4872],
+  [1713957, 'Muricilândia', 'TO', 3367],
+  [1714203, 'Natividade', 'TO', 8754],
+  [1714302, 'Nazaré', 'TO', 4521],
+  [1714880, 'Nova Olinda', 'TO', 10367],
+  [1715002, 'Nova Rosalândia', 'TO', 3362],
+  [1715101, 'Novo Acordo', 'TO', 3969],
+  [1715150, 'Novo Alegre', 'TO', 1846],
+  [1715259, 'Novo Jardim', 'TO', 2230],
+  [1715507, 'Oliveira de Fátima', 'TO', 1164],
+  [1715705, 'Palmeirante', 'TO', 4798],
+  [1715754, 'Palmeirópolis', 'TO', 6975],
+  [1716109, 'Paraíso do Tocantins', 'TO', 52360],
+  [1716208, 'Paranã', 'TO', 10542],
+  [1716307, "Pau D'Arco", 'TO', 4043],
+  [1716505, 'Pedro Afonso', 'TO', 14055],
+  [1716604, 'Peixe', 'TO', 9317],
+  [1716653, 'Pequizeiro', 'TO', 4921],
+  [1716703, 'Colméia', 'TO', 8941],
+  [1717008, 'Pindorama do Tocantins', 'TO', 4478],
+  [1717206, 'Piraquê', 'TO', 2282],
+  [1717503, 'Pium', 'TO', 7128],
+  [1717800, 'Ponte Alta do Bom Jesus', 'TO', 4220],
+  [1717909, 'Ponte Alta do Tocantins', 'TO', 7586],
+  [1718006, 'Porto Alegre do Tocantins', 'TO', 2866],
+  [1718204, 'Porto Nacional', 'TO', 64418],
+  [1718303, 'Praia Norte', 'TO', 9044],
+  [1718402, 'Presidente Kennedy', 'TO', 3047],
+  [1718451, 'Pugmil', 'TO', 2193],
+  [1718501, 'Recursolândia', 'TO', 3421],
+  [1718550, 'Riachinho', 'TO', 3960],
+  [1718659, 'Rio da Conceição', 'TO', 1768],
+  [1718709, 'Rio dos Bois', 'TO', 2738],
+  [1718758, 'Rio Sono', 'TO', 4841],
+  [1718808, 'Sampaio', 'TO', 4215],
+  [1718840, 'Sandolândia', 'TO', 3723],
+  [1718865, 'Santa Fé do Araguaia', 'TO', 7216],
+  [1718881, 'Santa Maria do Tocantins', 'TO', 2680],
+  [1718899, 'Santa Rita do Tocantins', 'TO', 2219],
+  [1718907, 'Santa Rosa do Tocantins', 'TO', 4653],
+  [1719004, 'Santa Tereza do Tocantins', 'TO', 2781],
+  [1720002, 'Santa Terezinha do Tocantins', 'TO', 2406],
+  [1720101, 'São Bento do Tocantins', 'TO', 5654],
+  [1720150, 'São Félix do Tocantins', 'TO', 1783],
+  [1720200, 'São Miguel do Tocantins', 'TO', 13241],
+  [1720259, 'São Salvador do Tocantins', 'TO', 2385],
+  [1720309, 'São Sebastião do Tocantins', 'TO', 4100],
+  [1720499, 'São Valério', 'TO', 4422],
+  [1720655, 'Silvanópolis', 'TO', 5108],
+  [1720804, 'Sítio Novo do Tocantins', 'TO', 10830],
+  [1720853, 'Sucupira', 'TO', 1577],
+  [1720903, 'Taguatinga', 'TO', 14011],
+  [1720937, 'Taipas do Tocantins', 'TO', 2021],
+  [1720978, 'Talismã', 'TO', 2456],
+  [1721000, 'Palmas', 'TO', 302692],
+  [1721109, 'Tocantínia', 'TO', 7459],
+  [1721208, 'Tocantinópolis', 'TO', 22615],
+  [1721257, 'Tupirama', 'TO', 1909],
+  [1721307, 'Tupiratins', 'TO', 1874],
+  [1722081, 'Wanderlândia', 'TO', 10522],
+  [1722107, 'Xambioá', 'TO', 10517],
+  [2100055, 'Açailândia', 'MA', 106550],
+  [2100105, 'Afonso Cunha', 'MA', 6144],
+  [2100154, 'Água Doce do Maranhão', 'MA', 12142],
+  [2100204, 'Alcântara', 'MA', 18467],
+  [2100303, 'Aldeias Altas', 'MA', 23286],
+  [2100402, 'Altamira do Maranhão', 'MA', 6447],
+  [2100436, 'Alto Alegre do Maranhão', 'MA', 24048],
+  [2100477, 'Alto Alegre do Pindaré', 'MA', 25710],
+  [2100501, 'Alto Parnaíba', 'MA', 11109],
+  [2100550, 'Amapá do Maranhão', 'MA', 7170],
+  [2100600, 'Amarante do Maranhão', 'MA', 37085],
+  [2100709, 'Anajatuba', 'MA', 25322],
+  [2100808, 'Anapurus', 'MA', 13793],
+  [2100832, 'Apicum-Açu', 'MA', 17519],
+  [2100873, 'Araguanã', 'MA', 11181],
+  [2100907, 'Araioses', 'MA', 39052],
+  [2100956, 'Arame', 'MA', 25517],
+  [2101004, 'Arari', 'MA', 29472],
+  [2101103, 'Axixá', 'MA', 11790],
+  [2101202, 'Bacabal', 'MA', 103711],
+  [2101251, 'Bacabeira', 'MA', 16966],
+  [2101301, 'Bacuri', 'MA', 16290],
+  [2101350, 'Bacurituba', 'MA', 5252],
+  [2101400, 'Balsas', 'MA', 101767],
+  [2101509, 'Barão de Grajaú', 'MA', 18984],
+  [2101608, 'Barra do Corda', 'MA', 84532],
+  [2101707, 'Barreirinhas', 'MA', 65589],
+  [2101731, 'Belágua', 'MA', 8460],
+  [2101772, 'Bela Vista do Maranhão', 'MA', 11750],
+  [2101806, 'Benedito Leite', 'MA', 5469],
+  [2101905, 'Bequimão', 'MA', 19584],
+  [2101939, 'Bernardo do Mearim', 'MA', 5840],
+  [2101970, 'Boa Vista do Gurupi', 'MA', 7574],
+  [2102002, 'Bom Jardim', 'MA', 33100],
+  [2102036, 'Bom Jesus das Selvas', 'MA', 28599],
+  [2102077, 'Bom Lugar', 'MA', 12212],
+  [2102101, 'Brejo', 'MA', 34120],
+  [2102150, 'Brejo de Areia', 'MA', 9218],
+  [2102200, 'Buriti', 'MA', 29685],
+  [2102309, 'Buriti Bravo', 'MA', 22455],
+  [2102325, 'Buriticupu', 'MA', 55499],
+  [2102358, 'Buritirana', 'MA', 12918],
+  [2102374, 'Cachoeira Grande', 'MA', 9732],
+  [2102408, 'Cajapió', 'MA', 10121],
+  [2102507, 'Cajari', 'MA', 16412],
+  [2102556, 'Campestre do Maranhão', 'MA', 12301],
+  [2102606, 'Cândido Mendes', 'MA', 19932],
+  [2102705, 'Cantanhede', 'MA', 24303],
+  [2102754, 'Capinzal do Norte', 'MA', 11374],
+  [2102804, 'Carolina', 'MA', 24062],
+  [2102903, 'Carutapera', 'MA', 24238],
+  [2103000, 'Caxias', 'MA', 156973],
+  [2103109, 'Cedral', 'MA', 10208],
+  [2103125, 'Central do Maranhão', 'MA', 7094],
+  [2103158, 'Centro do Guilherme', 'MA', 12342],
+  [2103174, 'Centro Novo do Maranhão', 'MA', 16267],
+  [2103208, 'Chapadinha', 'MA', 81386],
+  [2103257, 'Cidelândia', 'MA', 12878],
+  [2103307, 'Codó', 'MA', 114275],
+  [2103406, 'Coelho Neto', 'MA', 41658],
+  [2103505, 'Colinas', 'MA', 40316],
+  [2103554, 'Conceição do Lago-Açu', 'MA', 14915],
+  [2103604, 'Coroatá', 'MA', 59566],
+  [2103703, 'Cururupu', 'MA', 31558],
+  [2103752, 'Davinópolis', 'MA', 14404],
+  [2103802, 'Dom Pedro', 'MA', 23053],
+  [2103901, 'Duque Bacelar', 'MA', 10223],
+  [2104008, 'Esperantinópolis', 'MA', 18311],
+  [2104057, 'Estreito', 'MA', 33294],
+  [2104073, 'Feira Nova do Maranhão', 'MA', 8048],
+  [2104081, 'Fernando Falcão', 'MA', 10873],
+  [2104099, 'Formosa da Serra Negra', 'MA', 17719],
+  [2104107, 'Fortaleza dos Nogueiras', 'MA', 12640],
+  [2104206, 'Fortuna', 'MA', 16976],
+  [2104305, 'Godofredo Viana', 'MA', 10186],
+  [2104404, 'Gonçalves Dias', 'MA', 17206],
+  [2104503, 'Governador Archer', 'MA', 10231],
+  [2104552, 'Governador Edison Lobão', 'MA', 18411],
+  [2104602, 'Governador Eugênio Barros', 'MA', 13930],
+  [2104628, 'Governador Luiz Rocha', 'MA', 7063],
+  [2104651, 'Governador Newton Bello', 'MA', 10713],
+  [2104677, 'Governador Nunes Freire', 'MA', 23128],
+  [2104701, 'Graça Aranha', 'MA', 6023],
+  [2104800, 'Grajaú', 'MA', 73872],
+  [2104909, 'Guimarães', 'MA', 10290],
+  [2105005, 'Humberto de Campos', 'MA', 25680],
+  [2105104, 'Icatu', 'MA', 24794],
+  [2105153, 'Igarapé do Meio', 'MA', 13974],
+  [2105203, 'Igarapé Grande', 'MA', 10231],
+  [2105302, 'Imperatriz', 'MA', 273110],
+  [2105351, 'Itaipava do Grajaú', 'MA', 13828],
+  [2105401, 'Itapecuru Mirim', 'MA', 60440],
+  [2105427, 'Itinga do Maranhão', 'MA', 22513],
+  [2105450, 'Jatobá', 'MA', 7471],
+  [2105476, 'Jenipapo dos Vieiras', 'MA', 17076],
+  [2105500, 'João Lisboa', 'MA', 24709],
+  [2105609, 'Joselândia', 'MA', 14924],
+  [2105658, 'Junco do Maranhão', 'MA', 5146],
+  [2105708, 'Lago da Pedra', 'MA', 44403],
+  [2105807, 'Lago do Junco', 'MA', 9506],
+  [2105906, 'Lago Verde', 'MA', 14769],
+  [2105922, 'Lagoa do Mato', 'MA', 10572],
+  [2105948, 'Lago dos Rodrigues', 'MA', 8758],
+  [2105963, 'Lagoa Grande do Maranhão', 'MA', 11411],
+  [2105989, 'Lajeado Novo', 'MA', 7057],
+  [2106003, 'Lima Campos', 'MA', 11297],
+  [2106102, 'Loreto', 'MA', 11597],
+  [2106201, 'Luís Domingues', 'MA', 7161],
+  [2106300, 'Magalhães de Almeida', 'MA', 13807],
+  [2106326, 'Maracaçumé', 'MA', 21149],
+  [2106359, 'Marajá do Sena', 'MA', 7027],
+  [2106375, 'Maranhãozinho', 'MA', 13761],
+  [2106409, 'Mata Roma', 'MA', 17090],
+  [2106508, 'Matinha', 'MA', 22034],
+  [2106607, 'Matões', 'MA', 32174],
+  [2106631, 'Matões do Norte', 'MA', 17432],
+  [2106672, 'Milagres do Maranhão', 'MA', 8818],
+  [2106706, 'Mirador', 'MA', 21030],
+  [2106755, 'Miranda do Norte', 'MA', 23864],
+  [2106805, 'Mirinzal', 'MA', 13978],
+  [2106904, 'Monção', 'MA', 27751],
+  [2107001, 'Montes Altos', 'MA', 9106],
+  [2107100, 'Morros', 'MA', 18554],
+  [2107209, 'Nina Rodrigues', 'MA', 14176],
+  [2107258, 'Nova Colinas', 'MA', 5021],
+  [2107308, 'Nova Iorque', 'MA', 4320],
+  [2107357, 'Nova Olinda do Maranhão', 'MA', 14314],
+  [2107407, "Olho d'Água das Cunhãs", 'MA', 17919],
+  [2107456, 'Olinda Nova do Maranhão', 'MA', 13577],
+  [2107506, 'Paço do Lumiar', 'MA', 145643],
+  [2107605, 'Palmeirândia', 'MA', 21059],
+  [2107704, 'Paraibano', 'MA', 18274],
+  [2107803, 'Parnarama', 'MA', 31250],
+  [2107902, 'Passagem Franca', 'MA', 17220],
+  [2108009, 'Pastos Bons', 'MA', 18802],
+  [2108058, 'Paulino Neves', 'MA', 17056],
+  [2108108, 'Paulo Ramos', 'MA', 20341],
+  [2108207, 'Pedreiras', 'MA', 37050],
+  [2108256, 'Pedro do Rosário', 'MA', 24320],
+  [2108306, 'Penalva', 'MA', 32511],
+  [2108405, 'Peri Mirim', 'MA', 11108],
+  [2108454, 'Peritoró', 'MA', 20479],
+  [2108504, 'Pindaré-Mirim', 'MA', 31429],
+  [2108603, 'Pinheiro', 'MA', 84621],
+  [2108702, 'Pio XII', 'MA', 21886],
+  [2108801, 'Pirapemas', 'MA', 17714],
+  [2108900, 'Poção de Pedras', 'MA', 17161],
+  [2109007, 'Porto Franco', 'MA', 23903],
+  [2109056, 'Porto Rico do Maranhão', 'MA', 5954],
+  [2109106, 'Presidente Dutra', 'MA', 45155],
+  [2109205, 'Presidente Juscelino', 'MA', 11356],
+  [2109239, 'Presidente Médici', 'MA', 4696],
+  [2109270, 'Presidente Sarney', 'MA', 17511],
+  [2109304, 'Presidente Vargas', 'MA', 10549],
+  [2109403, 'Primeira Cruz', 'MA', 13614],
+  [2109452, 'Raposa', 'MA', 30839],
+  [2109502, 'Riachão', 'MA', 22145],
+  [2109551, 'Ribamar Fiquene', 'MA', 7420],
+  [2109601, 'Rosário', 'MA', 38475],
+  [2109700, 'Sambaíba', 'MA', 5568],
+  [2109759, 'Santa Filomena do Maranhão', 'MA', 6697],
+  [2109809, 'Santa Helena', 'MA', 41561],
+  [2109908, 'Santa Inês', 'MA', 85014],
+  [2110005, 'Santa Luzia', 'MA', 57635],
+  [2110039, 'Santa Luzia do Paruá', 'MA', 24307],
+  [2110104, 'Santa Quitéria do Maranhão', 'MA', 23957],
+  [2110203, 'Santa Rita', 'MA', 37035],
+  [2110237, 'Santana do Maranhão', 'MA', 10567],
+  [2110278, 'Santo Amaro do Maranhão', 'MA', 13949],
+  [2110302, 'Santo Antônio dos Lopes', 'MA', 14304],
+  [2110401, 'São Benedito do Rio Preto', 'MA', 18364],
+  [2110500, 'São Bento', 'MA', 46395],
+  [2110609, 'São Bernardo', 'MA', 26943],
+  [2110658, 'São Domingos do Azeitão', 'MA', 7992],
+  [2110708, 'São Domingos do Maranhão', 'MA', 34034],
+  [2110807, 'São Félix de Balsas', 'MA', 4402],
+  [2110856, 'São Francisco do Brejão', 'MA', 9051],
+  [2110906, 'São Francisco do Maranhão', 'MA', 12064],
+  [2111003, 'São João Batista', 'MA', 18544],
+  [2111029, 'São João do Carú', 'MA', 12251],
+  [2111052, 'São João do Paraíso', 'MA', 9904],
+  [2111078, 'São João do Soter', 'MA', 16889],
+  [2111102, 'São João dos Patos', 'MA', 25020],
+  [2111201, 'São José de Ribamar', 'MA', 244579],
+  [2111250, 'São José dos Basílios', 'MA', 6957],
+  [2111300, 'São Luís', 'MA', 1037775],
+  [2111409, 'São Luís Gonzaga do Maranhão', 'MA', 17818],
+  [2111508, 'São Mateus do Maranhão', 'MA', 38829],
+  [2111532, 'São Pedro da Água Branca', 'MA', 14338],
+  [2111573, 'São Pedro dos Crentes', 'MA', 5783],
+  [2111607, 'São Raimundo das Mangabeiras', 'MA', 18672],
+  [2111631, 'São Raimundo do Doca Bezerra', 'MA', 5650],
+  [2111672, 'São Roberto', 'MA', 4544],
+  [2111706, 'São Vicente Ferrer', 'MA', 19498],
+  [2111722, 'Satubinha', 'MA', 8784],
+  [2111748, 'Senador Alexandre Costa', 'MA', 10207],
+  [2111763, 'Senador La Rocque', 'MA', 14700],
+  [2111789, 'Serrano do Maranhão', 'MA', 10202],
+  [2111805, 'Sítio Novo', 'MA', 17074],
+  [2111904, 'Sucupira do Norte', 'MA', 10238],
+  [2111953, 'Sucupira do Riachão', 'MA', 4985],
+  [2112001, 'Tasso Fragoso', 'MA', 8862],
+  [2112100, 'Timbiras', 'MA', 26484],
+  [2112209, 'Timon', 'MA', 174465],
+  [2112233, 'Trizidela do Vale', 'MA', 22484],
+  [2112274, 'Tufilândia', 'MA', 5507],
+  [2112308, 'Tuntum', 'MA', 36251],
+  [2112407, 'Turiaçu', 'MA', 37491],
+  [2112456, 'Turilândia', 'MA', 31638],
+  [2112506, 'Tutóia', 'MA', 53356],
+  [2112605, 'Urbano Santos', 'MA', 32812],
+  [2112704, 'Vargem Grande', 'MA', 43261],
+  [2112803, 'Viana', 'MA', 51442],
+  [2112852, 'Vila Nova dos Martírios', 'MA', 10362],
+  [2112902, 'Vitória do Mearim', 'MA', 30805],
+  [2113009, 'Vitorino Freire', 'MA', 30845],
+  [2114007, 'Zé Doca', 'MA', 40801],
+  [2200053, 'Acauã', 'PI', 6420],
+  [2200103, 'Agricolândia', 'PI', 4940],
+  [2200202, 'Água Branca', 'PI', 17573],
+  [2200251, 'Alagoinha do Piauí', 'PI', 6819],
+  [2200277, 'Alegrete do Piauí', 'PI', 4634],
+  [2200301, 'Alto Longá', 'PI', 13479],
+  [2200400, 'Altos', 'PI', 47453],
+  [2200459, 'Alvorada do Gurguéia', 'PI', 5322],
+  [2200509, 'Amarante', 'PI', 17234],
+  [2200608, 'Angical do Piauí', 'PI', 6827],
+  [2200707, 'Anísio de Abreu', 'PI', 9407],
+  [2200806, 'Antônio Almeida', 'PI', 3152],
+  [2200905, 'Aroazes', 'PI', 5369],
+  [2200954, 'Aroeiras do Itaim', 'PI', 2690],
+  [2201002, 'Arraial', 'PI', 4520],
+  [2201051, 'Assunção do Piauí', 'PI', 7452],
+  [2201101, 'Avelino Lopes', 'PI', 10866],
+  [2201150, 'Baixa Grande do Ribeiro', 'PI', 13272],
+  [2201176, "Barra D'Alcântara", 'PI', 3995],
+  [2201200, 'Barras', 'PI', 47938],
+  [2201309, 'Barreiras do Piauí', 'PI', 3264],
+  [2201408, 'Barro Duro', 'PI', 6640],
+  [2201507, 'Batalha', 'PI', 26300],
+  [2201556, 'Bela Vista do Piauí', 'PI', 4091],
+  [2201572, 'Belém do Piauí', 'PI', 3423],
+  [2201606, 'Beneditinos', 'PI', 9929],
+  [2201705, 'Bertolínia', 'PI', 5562],
+  [2201739, 'Betânia do Piauí', 'PI', 6220],
+  [2201770, 'Boa Hora', 'PI', 6902],
+  [2201804, 'Bocaina', 'PI', 4078],
+  [2201903, 'Bom Jesus', 'PI', 28796],
+  [2201919, 'Bom Princípio do Piauí', 'PI', 5636],
+  [2201929, 'Bonfim do Piauí', 'PI', 5913],
+  [2201945, 'Boqueirão do Piauí', 'PI', 6545],
+  [2201960, 'Brasileira', 'PI', 8436],
+  [2201988, 'Brejo do Piauí', 'PI', 3904],
+  [2202000, 'Buriti dos Lopes', 'PI', 19654],
+  [2202026, 'Buriti dos Montes', 'PI', 7434],
+  [2202059, 'Cabeceiras do Piauí', 'PI', 10212],
+  [2202075, 'Cajazeiras do Piauí', 'PI', 3108],
+  [2202083, 'Cajueiro da Praia', 'PI', 7957],
+  [2202091, 'Caldeirão Grande do Piauí', 'PI', 5503],
+  [2202109, 'Campinas do Piauí', 'PI', 4938],
+  [2202117, 'Campo Alegre do Fidalgo', 'PI', 4616],
+  [2202133, 'Campo Grande do Piauí', 'PI', 6020],
+  [2202174, 'Campo Largo do Piauí', 'PI', 7419],
+  [2202208, 'Campo Maior', 'PI', 45793],
+  [2202251, 'Canavieira', 'PI', 3414],
+  [2202307, 'Canto do Buriti', 'PI', 19365],
+  [2202406, 'Capitão de Campos', 'PI', 11100],
+  [2202455, 'Capitão Gervásio Oliveira', 'PI', 3974],
+  [2202505, 'Caracol', 'PI', 10318],
+  [2202539, 'Caraúbas do Piauí', 'PI', 5630],
+  [2202554, 'Caridade do Piauí', 'PI', 5033],
+  [2202604, 'Castelo do Piauí', 'PI', 19288],
+  [2202653, 'Caxingó', 'PI', 5496],
+  [2202703, 'Cocal', 'PI', 28212],
+  [2202711, 'Cocal de Telha', 'PI', 4911],
+  [2202729, 'Cocal dos Alves', 'PI', 6386],
+  [2202737, 'Coivaras', 'PI', 4117],
+  [2202752, 'Colônia do Gurguéia', 'PI', 6150],
+  [2202778, 'Colônia do Piauí', 'PI', 6994],
+  [2202802, 'Conceição do Canindé', 'PI', 4932],
+  [2202851, 'Coronel José Dias', 'PI', 4250],
+  [2202901, 'Corrente', 'PI', 27278],
+  [2203008, 'Cristalândia do Piauí', 'PI', 7356],
+  [2203107, 'Cristino Castro', 'PI', 10503],
+  [2203206, 'Curimatá', 'PI', 11270],
+  [2203230, 'Currais', 'PI', 4854],
+  [2203255, 'Curralinhos', 'PI', 4413],
+  [2203271, 'Curral Novo do Piauí', 'PI', 5073],
+  [2203305, 'Demerval Lobão', 'PI', 16352],
+  [2203354, 'Dirceu Arcoverde', 'PI', 7054],
+  [2203404, 'Dom Expedito Lopes', 'PI', 6320],
+  [2203420, 'Domingos Mourão', 'PI', 4075],
+  [2203453, 'Dom Inocêncio', 'PI', 9159],
+  [2203503, 'Elesbão Veloso', 'PI', 13607],
+  [2203602, 'Eliseu Martins', 'PI', 4377],
+  [2203701, 'Esperantina', 'PI', 40970],
+  [2203750, 'Fartura do Piauí', 'PI', 5284],
+  [2203800, 'Flores do Piauí', 'PI', 4414],
+  [2203859, 'Floresta do Piauí', 'PI', 2333],
+  [2203909, 'Floriano', 'PI', 62036],
+  [2204006, 'Francinópolis', 'PI', 4505],
+  [2204105, 'Francisco Ayres', 'PI', 4412],
+  [2204154, 'Francisco Macedo', 'PI', 2929],
+  [2204204, 'Francisco Santos', 'PI', 8237],
+  [2204303, 'Fronteiras', 'PI', 10259],
+  [2204352, 'Geminiano', 'PI', 5445],
+  [2204402, 'Gilbués', 'PI', 10892],
+  [2204501, 'Guadalupe', 'PI', 10270],
+  [2204550, 'Guaribas', 'PI', 4276],
+  [2204600, 'Hugo Napoleão', 'PI', 3518],
+  [2204659, 'Ilha Grande', 'PI', 9274],
+  [2204709, 'Inhuma', 'PI', 14958],
+  [2204808, 'Ipiranga do Piauí', 'PI', 9420],
+  [2204907, 'Isaías Coelho', 'PI', 7774],
+  [2205003, 'Itainópolis', 'PI', 10790],
+  [2205102, 'Itaueira', 'PI', 10323],
+  [2205151, 'Jacobina do Piauí', 'PI', 5613],
+  [2205201, 'Jaicós', 'PI', 17527],
+  [2205250, 'Jardim do Mulato', 'PI', 4180],
+  [2205276, 'Jatobá do Piauí', 'PI', 4494],
+  [2205300, 'Jerumenha', 'PI', 4497],
+  [2205359, 'João Costa', 'PI', 2970],
+  [2205409, 'Joaquim Pires', 'PI', 13886],
+  [2205458, 'Joca Marques', 'PI', 5394],
+  [2205508, 'José de Freitas', 'PI', 42559],
+  [2205516, 'Juazeiro do Piauí', 'PI', 5214],
+  [2205524, 'Júlio Borges', 'PI', 5388],
+  [2205532, 'Jurema', 'PI', 4425],
+  [2205540, 'Lagoinha do Piauí', 'PI', 2939],
+  [2205557, 'Lagoa Alegre', 'PI', 8256],
+  [2205565, 'Lagoa do Barro do Piauí', 'PI', 4995],
+  [2205573, 'Lagoa de São Francisco', 'PI', 6331],
+  [2205581, 'Lagoa do Piauí', 'PI', 4810],
+  [2205599, 'Lagoa do Sítio', 'PI', 4520],
+  [2205607, 'Landri Sales', 'PI', 5213],
+  [2205706, 'Luís Correia', 'PI', 30641],
+  [2205805, 'Luzilândia', 'PI', 25375],
+  [2205854, 'Madeiro', 'PI', 8032],
+  [2205904, 'Manoel Emídio', 'PI', 5209],
+  [2205953, 'Marcolândia', 'PI', 8533],
+  [2206001, 'Marcos Parente', 'PI', 4724],
+  [2206050, 'Massapê do Piauí', 'PI', 5218],
+  [2206100, 'Matias Olímpio', 'PI', 10641],
+  [2206209, 'Miguel Alves', 'PI', 32150],
+  [2206308, 'Miguel Leão', 'PI', 1318],
+  [2206357, 'Milton Brandão', 'PI', 6542],
+  [2206407, 'Monsenhor Gil', 'PI', 10255],
+  [2206506, 'Monsenhor Hipólito', 'PI', 7577],
+  [2206605, 'Monte Alegre do Piauí', 'PI', 10660],
+  [2206654, 'Morro Cabeça no Tempo', 'PI', 4377],
+  [2206670, 'Morro do Chapéu do Piauí', 'PI', 6425],
+  [2206696, 'Murici dos Portelas', 'PI', 9797],
+  [2206704, 'Nazaré do Piauí', 'PI', 6665],
+  [2206720, 'Nazária', 'PI', 10262],
+  [2206753, 'Nossa Senhora de Nazaré', 'PI', 5228],
+  [2206803, 'Nossa Senhora dos Remédios', 'PI', 8525],
+  [2206902, 'Novo Oriente do Piauí', 'PI', 6097],
+  [2206951, 'Novo Santo Antônio', 'PI', 2827],
+  [2207009, 'Oeiras', 'PI', 38161],
+  [2207108, "Olho D'Água do Piauí", 'PI', 2637],
+  [2207207, 'Padre Marcos', 'PI', 6382],
+  [2207306, 'Paes Landim', 'PI', 4088],
+  [2207355, 'Pajeú do Piauí', 'PI', 3000],
+  [2207405, 'Palmeira do Piauí', 'PI', 4952],
+  [2207504, 'Palmeirais', 'PI', 13264],
+  [2207553, 'Paquetá', 'PI', 3813],
+  [2207603, 'Parnaguá', 'PI', 10103],
+  [2207702, 'Parnaíba', 'PI', 162159],
+  [2207751, 'Passagem Franca do Piauí', 'PI', 4135],
+  [2207777, 'Patos do Piauí', 'PI', 5425],
+  [2207793, "Pau D'Arco do Piauí", 'PI', 3880],
+  [2207801, 'Paulistana', 'PI', 21055],
+  [2207850, 'Pavussu', 'PI', 3628],
+  [2207900, 'Pedro II', 'PI', 37894],
+  [2207934, 'Pedro Laurentino', 'PI', 2458],
+  [2207959, 'Nova Santa Rita', 'PI', 4076],
+  [2208007, 'Picos', 'PI', 83090],
+  [2208106, 'Pimenteiras', 'PI', 11341],
+  [2208205, 'Pio IX', 'PI', 17613],
+  [2208304, 'Piracuruca', 'PI', 28846],
+  [2208403, 'Piripiri', 'PI', 65538],
+  [2208502, 'Porto', 'PI', 12052],
+  [2208551, 'Porto Alegre do Piauí', 'PI', 2364],
+  [2208601, 'Prata do Piauí', 'PI', 3042],
+  [2208650, 'Queimada Nova', 'PI', 8738],
+  [2208700, 'Redenção do Gurguéia', 'PI', 8394],
+  [2208809, 'Regeneração', 'PI', 17133],
+  [2208858, 'Riacho Frio', 'PI', 4165],
+  [2208874, 'Ribeira do Piauí', 'PI', 4055],
+  [2208908, 'Ribeiro Gonçalves', 'PI', 6164],
+  [2209005, 'Rio Grande do Piauí', 'PI', 5801],
+  [2209104, 'Santa Cruz do Piauí', 'PI', 5831],
+  [2209153, 'Santa Cruz dos Milagres', 'PI', 3435],
+  [2209203, 'Santa Filomena', 'PI', 6087],
+  [2209302, 'Santa Luz', 'PI', 5336],
+  [2209351, 'Santana do Piauí', 'PI', 4125],
+  [2209377, 'Santa Rosa do Piauí', 'PI', 4650],
+  [2209401, 'Santo Antônio de Lisboa', 'PI', 5839],
+  [2209450, 'Santo Antônio dos Milagres', 'PI', 2138],
+  [2209500, 'Santo Inácio do Piauí', 'PI', 3646],
+  [2209559, 'São Braz do Piauí', 'PI', 4358],
+  [2209609, 'São Félix do Piauí', 'PI', 2842],
+  [2209658, 'São Francisco de Assis do Piauí', 'PI', 5572],
+  [2209708, 'São Francisco do Piauí', 'PI', 5392],
+  [2209757, 'São Gonçalo do Gurguéia', 'PI', 2947],
+  [2209807, 'São Gonçalo do Piauí', 'PI', 4837],
+  [2209856, 'São João da Canabrava', 'PI', 4242],
+  [2209872, 'São João da Fronteira', 'PI', 5522],
+  [2209906, 'São João da Serra', 'PI', 6114],
+  [2209955, 'São João da Varjota', 'PI', 4383],
+  [2209971, 'São João do Arraial', 'PI', 8186],
+  [2210003, 'São João do Piauí', 'PI', 21421],
+  [2210052, 'São José do Divino', 'PI', 4841],
+  [2210102, 'São José do Peixe', 'PI', 3297],
+  [2210201, 'São José do Piauí', 'PI', 6597],
+  [2210300, 'São Julião', 'PI', 6025],
+  [2210359, 'São Lourenço do Piauí', 'PI', 4410],
+  [2210375, 'São Luis do Piauí', 'PI', 2309],
+  [2210383, 'São Miguel da Baixa Grande', 'PI', 2269],
+  [2210391, 'São Miguel do Fidalgo', 'PI', 2829],
+  [2210409, 'São Miguel do Tapuio', 'PI', 17554],
+  [2210508, 'São Pedro do Piauí', 'PI', 13755],
+  [2210607, 'São Raimundo Nonato', 'PI', 38934],
+  [2210623, 'Sebastião Barros', 'PI', 3202],
+  [2210631, 'Sebastião Leal', 'PI', 4446],
+  [2210656, 'Sigefredo Pacheco', 'PI', 9460],
+  [2210706, 'Simões', 'PI', 14350],
+  [2210805, 'Simplício Mendes', 'PI', 13870],
+  [2210904, 'Socorro do Piauí', 'PI', 4141],
+  [2210938, 'Sussuapara', 'PI', 6220],
+  [2210953, 'Tamboril do Piauí', 'PI', 2949],
+  [2210979, 'Tanque do Piauí', 'PI', 2316],
+  [2211001, 'Teresina', 'PI', 866300],
+  [2211100, 'União', 'PI', 46119],
+  [2211209, 'Uruçuí', 'PI', 25203],
+  [2211308, 'Valença do Piauí', 'PI', 22279],
+  [2211357, 'Várzea Branca', 'PI', 5055],
+  [2211407, 'Várzea Grande', 'PI', 4417],
+  [2211506, 'Vera Mendes', 'PI', 3185],
+  [2211605, 'Vila Nova do Piauí', 'PI', 2935],
+  [2211704, 'Wall Ferraz', 'PI', 4059],
+  [2300101, 'Abaiara', 'CE', 10038],
+  [2300150, 'Acarape', 'CE', 14027],
+  [2300200, 'Acaraú', 'CE', 65264],
+  [2300309, 'Acopiara', 'CE', 44962],
+  [2300408, 'Aiuaba', 'CE', 14076],
+  [2300507, 'Alcântaras', 'CE', 11369],
+  [2300606, 'Altaneira', 'CE', 6782],
+  [2300705, 'Alto Santo', 'CE', 14155],
+  [2300754, 'Amontada', 'CE', 42156],
+  [2300804, 'Antonina do Norte', 'CE', 7245],
+  [2300903, 'Apuiarés', 'CE', 12928],
+  [2301000, 'Aquiraz', 'CE', 80645],
+  [2301109, 'Aracati', 'CE', 75113],
+  [2301208, 'Aracoiaba', 'CE', 25553],
+  [2301257, 'Ararendá', 'CE', 11096],
+  [2301307, 'Araripe', 'CE', 19783],
+  [2301406, 'Aratuba', 'CE', 11224],
+  [2301505, 'Arneiroz', 'CE', 7429],
+  [2301604, 'Assaré', 'CE', 21697],
+  [2301703, 'Aurora', 'CE', 23714],
+  [2301802, 'Baixio', 'CE', 5704],
+  [2301851, 'Banabuiú', 'CE', 17195],
+  [2301901, 'Barbalha', 'CE', 75033],
+  [2301950, 'Barreira', 'CE', 22392],
+  [2302008, 'Barro', 'CE', 19381],
+  [2302057, 'Barroquinha', 'CE', 14567],
+  [2302107, 'Baturité', 'CE', 35218],
+  [2302206, 'Beberibe', 'CE', 53114],
+  [2302305, 'Bela Cruz', 'CE', 32775],
+  [2302404, 'Boa Viagem', 'CE', 50411],
+  [2302503, 'Brejo Santo', 'CE', 51090],
+  [2302602, 'Camocim', 'CE', 62326],
+  [2302701, 'Campos Sales', 'CE', 25135],
+  [2302800, 'Canindé', 'CE', 74174],
+  [2302909, 'Capistrano', 'CE', 17254],
+  [2303006, 'Caridade', 'CE', 16377],
+  [2303105, 'Cariré', 'CE', 17632],
+  [2303204, 'Caririaçu', 'CE', 26320],
+  [2303303, 'Cariús', 'CE', 17015],
+  [2303402, 'Carnaubal', 'CE', 17210],
+  [2303501, 'Cascavel', 'CE', 72720],
+  [2303600, 'Catarina', 'CE', 10243],
+  [2303659, 'Catunda', 'CE', 10444],
+  [2303709, 'Caucaia', 'CE', 355679],
+  [2303808, 'Cedro', 'CE', 22344],
+  [2303907, 'Chaval', 'CE', 12462],
+  [2303931, 'Choró', 'CE', 12113],
+  [2303956, 'Chorozinho', 'CE', 20163],
+  [2304004, 'Coreaú', 'CE', 20953],
+  [2304103, 'Crateús', 'CE', 76390],
+  [2304202, 'Crato', 'CE', 131050],
+  [2304236, 'Croatá', 'CE', 17481],
+  [2304251, 'Cruz', 'CE', 29761],
+  [2304269, 'Deputado Irapuan Pinheiro', 'CE', 8932],
+  [2304277, 'Ereré', 'CE', 6474],
+  [2304285, 'Eusébio', 'CE', 74170],
+  [2304301, 'Farias Brito', 'CE', 18217],
+  [2304350, 'Forquilha', 'CE', 24173],
+  [2304400, 'Fortaleza', 'CE', 2428708],
+  [2304459, 'Fortim', 'CE', 17294],
+  [2304509, 'Frecheirinha', 'CE', 15657],
+  [2304608, 'General Sampaio', 'CE', 6734],
+  [2304657, 'Graça', 'CE', 13801],
+  [2304707, 'Granja', 'CE', 53344],
+  [2304806, 'Granjeiro', 'CE', 4841],
+  [2304905, 'Groaíras', 'CE', 10910],
+  [2304954, 'Guaiúba', 'CE', 24325],
+  [2305001, 'Guaraciaba do Norte', 'CE', 42053],
+  [2305100, 'Guaramiranga', 'CE', 5654],
+  [2305209, 'Hidrolândia', 'CE', 17855],
+  [2305233, 'Horizonte', 'CE', 74755],
+  [2305266, 'Ibaretama', 'CE', 11956],
+  [2305308, 'Ibiapina', 'CE', 23965],
+  [2305332, 'Ibicuitinga', 'CE', 11611],
+  [2305357, 'Icapuí', 'CE', 21433],
+  [2305407, 'Icó', 'CE', 62642],
+  [2305506, 'Iguatu', 'CE', 98064],
+  [2305605, 'Independência', 'CE', 24024],
+  [2305654, 'Ipaporanga', 'CE', 11575],
+  [2305704, 'Ipaumirim', 'CE', 12083],
+  [2305803, 'Ipu', 'CE', 41081],
+  [2305902, 'Ipueiras', 'CE', 36798],
+  [2306009, 'Iracema', 'CE', 14001],
+  [2306108, 'Irauçuba', 'CE', 23915],
+  [2306207, 'Itaiçaba', 'CE', 7536],
+  [2306256, 'Itaitinga', 'CE', 64650],
+  [2306306, 'Itapajé', 'CE', 46426],
+  [2306405, 'Itapipoca', 'CE', 131123],
+  [2306504, 'Itapiúna', 'CE', 17841],
+  [2306553, 'Itarema', 'CE', 42957],
+  [2306603, 'Itatira', 'CE', 20424],
+  [2306702, 'Jaguaretama', 'CE', 17232],
+  [2306801, 'Jaguaribara', 'CE', 10356],
+  [2306900, 'Jaguaribe', 'CE', 33726],
+  [2307007, 'Jaguaruana', 'CE', 31701],
+  [2307106, 'Jardim', 'CE', 27411],
+  [2307205, 'Jati', 'CE', 7861],
+  [2307254, 'Jijoca de Jericoacoara', 'CE', 25555],
+  [2307304, 'Juazeiro do Norte', 'CE', 286120],
+  [2307403, 'Jucás', 'CE', 23922],
+  [2307502, 'Lavras da Mangabeira', 'CE', 30802],
+  [2307601, 'Limoeiro do Norte', 'CE', 59560],
+  [2307635, 'Madalena', 'CE', 16896],
+  [2307650, 'Maracanaú', 'CE', 234509],
+  [2307700, 'Maranguape', 'CE', 105093],
+  [2307809, 'Marco', 'CE', 25799],
+  [2307908, 'Martinópole', 'CE', 10846],
+  [2308005, 'Massapê', 'CE', 37697],
+  [2308104, 'Mauriti', 'CE', 45561],
+  [2308203, 'Meruoca', 'CE', 15157],
+  [2308302, 'Milagres', 'CE', 25900],
+  [2308351, 'Milhã', 'CE', 14123],
+  [2308377, 'Miraíma', 'CE', 14196],
+  [2308401, 'Missão Velha', 'CE', 36822],
+  [2308500, 'Mombaça', 'CE', 37735],
+  [2308609, 'Monsenhor Tabosa', 'CE', 17149],
+  [2308708, 'Morada Nova', 'CE', 61443],
+  [2308807, 'Moraújo', 'CE', 8254],
+  [2308906, 'Morrinhos', 'CE', 22753],
+  [2309003, 'Mucambo', 'CE', 13666],
+  [2309102, 'Mulungu', 'CE', 10569],
+  [2309201, 'Nova Olinda', 'CE', 15399],
+  [2309300, 'Nova Russas', 'CE', 30699],
+  [2309409, 'Novo Oriente', 'CE', 27545],
+  [2309458, 'Ocara', 'CE', 24493],
+  [2309508, 'Orós', 'CE', 19675],
+  [2309607, 'Pacajus', 'CE', 70983],
+  [2309706, 'Pacatuba', 'CE', 81524],
+  [2309805, 'Pacoti', 'CE', 11186],
+  [2309904, 'Pacujá', 'CE', 6175],
+  [2310001, 'Palhano', 'CE', 9346],
+  [2310100, 'Palmácia', 'CE', 10242],
+  [2310209, 'Paracuru', 'CE', 38980],
+  [2310258, 'Paraipaba', 'CE', 32216],
+  [2310308, 'Parambu', 'CE', 31445],
+  [2310407, 'Paramoti', 'CE', 10384],
+  [2310506, 'Pedra Branca', 'CE', 40187],
+  [2310605, 'Penaforte', 'CE', 8972],
+  [2310704, 'Pentecoste', 'CE', 37813],
+  [2310803, 'Pereiro', 'CE', 15274],
+  [2310852, 'Pindoretama', 'CE', 23391],
+  [2310902, 'Piquet Carneiro', 'CE', 16616],
+  [2310951, 'Pires Ferreira', 'CE', 10606],
+  [2311009, 'Poranga', 'CE', 12065],
+  [2311108, 'Porteiras', 'CE', 17050],
+  [2311207, 'Potengi', 'CE', 8833],
+  [2311231, 'Potiretama', 'CE', 5974],
+  [2311264, 'Quiterianópolis', 'CE', 20213],
+  [2311306, 'Quixadá', 'CE', 84168],
+  [2311355, 'Quixelô', 'CE', 15910],
+  [2311405, 'Quixeramobim', 'CE', 82177],
+  [2311504, 'Quixeré', 'CE', 20874],
+  [2311603, 'Redenção', 'CE', 27214],
+  [2311702, 'Reriutaba', 'CE', 18606],
+  [2311801, 'Russas', 'CE', 72928],
+  [2311900, 'Saboeiro', 'CE', 13854],
+  [2311959, 'Salitre', 'CE', 16633],
+  [2312007, 'Santana do Acaraú', 'CE', 30628],
+  [2312106, 'Santana do Cariri', 'CE', 16954],
+  [2312205, 'Santa Quitéria', 'CE', 40183],
+  [2312304, 'São Benedito', 'CE', 47640],
+  [2312403, 'São Gonçalo do Amarante', 'CE', 54143],
+  [2312502, 'São João do Jaguaribe', 'CE', 5855],
+  [2312601, 'São Luís do Curu', 'CE', 10822],
+  [2312700, 'Senador Pompeu', 'CE', 24266],
+  [2312809, 'Senador Sá', 'CE', 7262],
+  [2312908, 'Sobral', 'CE', 203023],
+  [2313005, 'Solonópole', 'CE', 18179],
+  [2313104, 'Tabuleiro do Norte', 'CE', 30652],
+  [2313203, 'Tamboril', 'CE', 24815],
+  [2313252, 'Tarrafas', 'CE', 7529],
+  [2313302, 'Tauá', 'CE', 61227],
+  [2313351, 'Tejuçuoca', 'CE', 17154],
+  [2313401, 'Tianguá', 'CE', 81506],
+  [2313500, 'Trairi', 'CE', 58415],
+  [2313559, 'Tururu', 'CE', 15412],
+  [2313609, 'Ubajara', 'CE', 32767],
+  [2313708, 'Umari', 'CE', 6871],
+  [2313757, 'Umirim', 'CE', 17470],
+  [2313807, 'Uruburetama', 'CE', 20189],
+  [2313906, 'Uruoca', 'CE', 13746],
+  [2313955, 'Varjota', 'CE', 18105],
+  [2314003, 'Várzea Alegre', 'CE', 38984],
+  [2314102, 'Viçosa do Ceará', 'CE', 59712],
+  [2400109, 'Acari', 'RN', 10597],
+  [2400208, 'Açu', 'RN', 56496],
+  [2400307, 'Afonso Bezerra', 'RN', 10839],
+  [2400406, 'Água Nova', 'RN', 2946],
+  [2400505, 'Alexandria', 'RN', 13640],
+  [2400604, 'Almino Afonso', 'RN', 4687],
+  [2400703, 'Alto do Rodrigues', 'RN', 12484],
+  [2400802, 'Angicos', 'RN', 11632],
+  [2400901, 'Antônio Martins', 'RN', 6577],
+  [2401008, 'Apodi', 'RN', 36093],
+  [2401107, 'Areia Branca', 'RN', 24093],
+  [2401206, 'Arês', 'RN', 13251],
+  [2401305, 'Campo Grande', 'RN', 9730],
+  [2401404, 'Baía Formosa', 'RN', 8825],
+  [2401453, 'Baraúna', 'RN', 26913],
+  [2401503, 'Barcelona', 'RN', 3986],
+  [2401602, 'Bento Fernandes', 'RN', 4807],
+  [2401651, 'Bodó', 'RN', 2306],
+  [2401701, 'Bom Jesus', 'RN', 9952],
+  [2401800, 'Brejinho', 'RN', 12202],
+  [2401859, 'Caiçara do Norte', 'RN', 6293],
+  [2401909, 'Caiçara do Rio do Vento', 'RN', 3268],
+  [2402006, 'Caicó', 'RN', 61146],
+  [2402105, 'Campo Redondo', 'RN', 10215],
+  [2402204, 'Canguaretama', 'RN', 29668],
+  [2402303, 'Caraúbas', 'RN', 19727],
+  [2402402, 'Carnaúba dos Dantas', 'RN', 7992],
+  [2402501, 'Carnaubais', 'RN', 9714],
+  [2402600, 'Ceará-Mirim', 'RN', 79115],
+  [2402709, 'Cerro Corá', 'RN', 11000],
+  [2402808, 'Coronel Ezequiel', 'RN', 5117],
+  [2402907, 'Coronel João Pessoa', 'RN', 4237],
+  [2403004, 'Cruzeta', 'RN', 8005],
+  [2403103, 'Currais Novos', 'RN', 41313],
+  [2403202, 'Doutor Severiano', 'RN', 7044],
+  [2403251, 'Parnamirim', 'RN', 252716],
+  [2403301, 'Encanto', 'RN', 6016],
+  [2403400, 'Equador', 'RN', 5360],
+  [2403509, 'Espírito Santo', 'RN', 10620],
+  [2403608, 'Extremoz', 'RN', 61635],
+  [2403707, 'Felipe Guerra', 'RN', 5944],
+  [2403756, 'Fernando Pedroza', 'RN', 2938],
+  [2403806, 'Florânia', 'RN', 10196],
+  [2403905, 'Francisco Dantas', 'RN', 2700],
+  [2404002, 'Frutuoso Gomes', 'RN', 4122],
+  [2404101, 'Galinhos', 'RN', 2104],
+  [2404200, 'Goianinha', 'RN', 26741],
+  [2404309, 'Governador Dix-Sept Rosado', 'RN', 11938],
+  [2404408, 'Grossos', 'RN', 9924],
+  [2404507, 'Guamaré', 'RN', 15295],
+  [2404606, 'Ielmo Marinho', 'RN', 11615],
+  [2404705, 'Ipanguaçu', 'RN', 14131],
+  [2404804, 'Ipueira', 'RN', 2035],
+  [2404853, 'Itajá', 'RN', 7292],
+  [2404903, 'Itaú', 'RN', 5320],
+  [2405009, 'Jaçanã', 'RN', 7834],
+  [2405108, 'Jandaíra', 'RN', 6562],
+  [2405207, 'Janduís', 'RN', 4746],
+  [2405306, 'Januário Cicco', 'RN', 9051],
+  [2405405, 'Japi', 'RN', 5117],
+  [2405504, 'Jardim de Angicos', 'RN', 2437],
+  [2405603, 'Jardim de Piranhas', 'RN', 13977],
+  [2405702, 'Jardim do Seridó', 'RN', 11655],
+  [2405801, 'João Câmara', 'RN', 33290],
+  [2405900, 'João Dias', 'RN', 2076],
+  [2406007, 'José da Penha', 'RN', 5803],
+  [2406106, 'Jucurutu', 'RN', 17793],
+  [2406155, 'Jundiá', 'RN', 3739],
+  [2406205, "Lagoa d'Anta", 'RN', 6654],
+  [2406304, 'Lagoa de Pedras', 'RN', 7338],
+  [2406403, 'Lagoa de Velhos', 'RN', 2567],
+  [2406502, 'Lagoa Nova', 'RN', 15573],
+  [2406601, 'Lagoa Salgada', 'RN', 8319],
+  [2406700, 'Lajes', 'RN', 9866],
+  [2406809, 'Lajes Pintadas', 'RN', 4787],
+  [2406908, 'Lucrécia', 'RN', 3490],
+  [2407005, 'Luís Gomes', 'RN', 9070],
+  [2407104, 'Macaíba', 'RN', 82249],
+  [2407203, 'Macau', 'RN', 27369],
+  [2407252, 'Major Sales', 'RN', 3924],
+  [2407302, 'Marcelino Vieira', 'RN', 7896],
+  [2407401, 'Martins', 'RN', 8179],
+  [2407500, 'Maxaranguape', 'RN', 10255],
+  [2407609, 'Messias Targino', 'RN', 4274],
+  [2407708, 'Montanhas', 'RN', 11444],
+  [2407807, 'Monte Alegre', 'RN', 23031],
+  [2407906, 'Monte das Gameleiras', 'RN', 2276],
+  [2408003, 'Mossoró', 'RN', 264577],
+  [2408102, 'Natal', 'RN', 751300],
+  [2408201, 'Nísia Floresta', 'RN', 31942],
+  [2408300, 'Nova Cruz', 'RN', 34269],
+  [2408409, "Olho d'Água do Borges", 'RN', 3905],
+  [2408508, 'Ouro Branco', 'RN', 4913],
+  [2408607, 'Paraná', 'RN', 3934],
+  [2408706, 'Paraú', 'RN', 3579],
+  [2408805, 'Parazinho', 'RN', 4801],
+  [2408904, 'Parelhas', 'RN', 21499],
+  [2408953, 'Rio do Fogo', 'RN', 10351],
+  [2409100, 'Passa e Fica', 'RN', 10896],
+  [2409209, 'Passagem', 'RN', 3115],
+  [2409308, 'Patu', 'RN', 11007],
+  [2409332, 'Santa Maria', 'RN', 4847],
+  [2409407, 'Pau dos Ferros', 'RN', 30479],
+  [2409506, 'Pedra Grande', 'RN', 3618],
+  [2409605, 'Pedra Preta', 'RN', 2441],
+  [2409704, 'Pedro Avelino', 'RN', 6242],
+  [2409803, 'Pedro Velho', 'RN', 13824],
+  [2409902, 'Pendências', 'RN', 12278],
+  [2410009, 'Pilões', 'RN', 2965],
+  [2410108, 'Poço Branco', 'RN', 12390],
+  [2410207, 'Portalegre', 'RN', 7601],
+  [2410256, 'Porto do Mangue', 'RN', 5228],
+  [2410306, 'Serra Caiada', 'RN', 10125],
+  [2410405, 'Pureza', 'RN', 9362],
+  [2410504, 'Rafael Fernandes', 'RN', 5432],
+  [2410603, 'Rafael Godeiro', 'RN', 2934],
+  [2410702, 'Riacho da Cruz', 'RN', 2701],
+  [2410801, 'Riacho de Santana', 'RN', 4127],
+  [2410900, 'Riachuelo', 'RN', 7389],
+  [2411007, 'Rodolfo Fernandes', 'RN', 4242],
+  [2411056, 'Tibau', 'RN', 5382],
+  [2411106, 'Ruy Barbosa', 'RN', 3206],
+  [2411205, 'Santa Cruz', 'RN', 37313],
+  [2411403, 'Santana do Matos', 'RN', 12456],
+  [2411429, 'Santana do Seridó', 'RN', 2696],
+  [2411502, 'Santo Antônio', 'RN', 22177],
+  [2411601, 'São Bento do Norte', 'RN', 3304],
+  [2411700, 'São Bento do Trairí', 'RN', 3792],
+  [2411809, 'São Fernando', 'RN', 3492],
+  [2411908, 'São Francisco do Oeste', 'RN', 4161],
+  [2412005, 'São Gonçalo do Amarante', 'RN', 115838],
+  [2412104, 'São João do Sabugi', 'RN', 5956],
+  [2412203, 'São José de Mipibu', 'RN', 47286],
+  [2412302, 'São José do Campestre', 'RN', 11121],
+  [2412401, 'São José do Seridó', 'RN', 4558],
+  [2412500, 'São Miguel', 'RN', 23537],
+  [2412559, 'São Miguel do Gostoso', 'RN', 10221],
+  [2412609, 'São Paulo do Potengi', 'RN', 16786],
+  [2412708, 'São Pedro', 'RN', 5776],
+  [2412807, 'São Rafael', 'RN', 7711],
+  [2412906, 'São Tomé', 'RN', 9972],
+  [2413003, 'São Vicente', 'RN', 6310],
+  [2413102, 'Senador Elói de Souza', 'RN', 5965],
+  [2413201, 'Senador Georgino Avelino', 'RN', 4065],
+  [2413300, 'Serra de São Bento', 'RN', 5703],
+  [2413359, 'Serra do Mel', 'RN', 13091],
+  [2413409, 'Serra Negra do Norte', 'RN', 7597],
+  [2413508, 'Serrinha', 'RN', 6436],
+  [2413557, 'Serrinha dos Pintos', 'RN', 4659],
+  [2413607, 'Severiano Melo', 'RN', 5487],
+  [2413706, 'Sítio Novo', 'RN', 4654],
+  [2413805, 'Taboleiro Grande', 'RN', 2338],
+  [2413904, 'Taipu', 'RN', 11422],
+  [2414001, 'Tangará', 'RN', 13281],
+  [2414100, 'Tenente Ananias', 'RN', 10262],
+  [2414159, 'Tenente Laurentino Cruz', 'RN', 5891],
+  [2414209, 'Tibau do Sul', 'RN', 16929],
+  [2414308, 'Timbaúba dos Batistas', 'RN', 2348],
+  [2414407, 'Touros', 'RN', 33035],
+  [2414456, 'Triunfo Potiguar', 'RN', 3376],
+  [2414506, 'Umarizal', 'RN', 10078],
+  [2414605, 'Upanema', 'RN', 13577],
+  [2414704, 'Várzea', 'RN', 5233],
+  [2414753, 'Venha-Ver', 'RN', 3014],
+  [2414803, 'Vera Cruz', 'RN', 10735],
+  [2414902, 'Viçosa', 'RN', 1822],
+  [2415008, 'Vila Flor', 'RN', 3174],
+  [2500106, 'Água Branca', 'PB', 9335],
+  [2500205, 'Aguiar', 'PB', 5003],
+  [2500304, 'Alagoa Grande', 'PB', 26062],
+  [2500403, 'Alagoa Nova', 'PB', 21013],
+  [2500502, 'Alagoinha', 'PB', 13725],
+  [2500536, 'Alcantil', 'PB', 5578],
+  [2500577, 'Algodão de Jandaíra', 'PB', 2953],
+  [2500601, 'Alhandra', 'PB', 21730],
+  [2500700, 'São João do Rio do Peixe', 'PB', 17964],
+  [2500734, 'Amparo', 'PB', 2234],
+  [2500775, 'Aparecida', 'PB', 7960],
+  [2500809, 'Araçagi', 'PB', 16646],
+  [2500908, 'Arara', 'PB', 12212],
+  [2501005, 'Araruna', 'PB', 17189],
+  [2501104, 'Areia', 'PB', 22633],
+  [2501153, 'Areia de Baraúnas', 'PB', 2005],
+  [2501203, 'Areial', 'PB', 7128],
+  [2501302, 'Aroeiras', 'PB', 18705],
+  [2501351, 'Assunção', 'PB', 4152],
+  [2501401, 'Baía da Traição', 'PB', 9224],
+  [2501500, 'Bananeiras', 'PB', 23134],
+  [2501534, 'Baraúna', 'PB', 4762],
+  [2501575, 'Barra de Santana', 'PB', 8059],
+  [2501609, 'Barra de Santa Rosa', 'PB', 12904],
+  [2501708, 'Barra de São Miguel', 'PB', 5906],
+  [2501807, 'Bayeux', 'PB', 82742],
+  [2501906, 'Belém', 'PB', 16401],
+  [2502003, 'Belém do Brejo do Cruz', 'PB', 6268],
+  [2502052, 'Bernardino Batista', 'PB', 3504],
+  [2502102, 'Boa Ventura', 'PB', 5207],
+  [2502151, 'Boa Vista', 'PB', 6377],
+  [2502201, 'Bom Jesus', 'PB', 2286],
+  [2502300, 'Bom Sucesso', 'PB', 4661],
+  [2502409, 'Bonito de Santa Fé', 'PB', 10252],
+  [2502508, 'Boqueirão', 'PB', 17598],
+  [2502607, 'Igaracy', 'PB', 5648],
+  [2502706, 'Borborema', 'PB', 4214],
+  [2502805, 'Brejo do Cruz', 'PB', 13613],
+  [2502904, 'Brejo dos Santos', 'PB', 5742],
+  [2503001, 'Caaporã', 'PB', 21193],
+  [2503100, 'Cabaceiras', 'PB', 5335],
+  [2503209, 'Cabedelo', 'PB', 66519],
+  [2503308, 'Cachoeira dos Índios', 'PB', 9151],
+  [2503407, 'Cacimba de Areia', 'PB', 3291],
+  [2503506, 'Cacimba de Dentro', 'PB', 16064],
+  [2503555, 'Cacimbas', 'PB', 7223],
+  [2503605, 'Caiçara', 'PB', 6602],
+  [2503704, 'Cajazeiras', 'PB', 63239],
+  [2503753, 'Cajazeirinhas', 'PB', 2740],
+  [2503803, 'Caldas Brandão', 'PB', 5753],
+  [2503902, 'Camalaú', 'PB', 6085],
+  [2504009, 'Campina Grande', 'PB', 419379],
+  [2504033, 'Capim', 'PB', 6970],
+  [2504074, 'Caraúbas', 'PB', 3944],
+  [2504108, 'Carrapateira', 'PB', 2312],
+  [2504157, 'Casserengue', 'PB', 6889],
+  [2504207, 'Catingueira', 'PB', 4491],
+  [2504306, 'Catolé do Rocha', 'PB', 30661],
+  [2504355, 'Caturité', 'PB', 5254],
+  [2504405, 'Conceição', 'PB', 18260],
+  [2504504, 'Condado', 'PB', 6451],
+  [2504603, 'Conde', 'PB', 27605],
+  [2504702, 'Congo', 'PB', 4933],
+  [2504801, 'Coremas', 'PB', 14683],
+  [2504850, 'Coxixola', 'PB', 1824],
+  [2504900, 'Cruz do Espírito Santo', 'PB', 17095],
+  [2505006, 'Cubati', 'PB', 7580],
+  [2505105, 'Cuité', 'PB', 19719],
+  [2505204, 'Cuitegi', 'PB', 6730],
+  [2505238, 'Cuité de Mamanguape', 'PB', 6251],
+  [2505279, 'Curral de Cima', 'PB', 5254],
+  [2505303, 'Curral Velho', 'PB', 2292],
+  [2505352, 'Damião', 'PB', 4982],
+  [2505402, 'Desterro', 'PB', 8067],
+  [2505501, 'Vista Serrana', 'PB', 3641],
+  [2505600, 'Diamante', 'PB', 6299],
+  [2505709, 'Dona Inês', 'PB', 10380],
+  [2505808, 'Duas Estradas', 'PB', 3327],
+  [2505907, 'Emas', 'PB', 3011],
+  [2506004, 'Esperança', 'PB', 31231],
+  [2506103, 'Fagundes', 'PB', 11049],
+  [2506202, 'Frei Martinho', 'PB', 2846],
+  [2506251, 'Gado Bravo', 'PB', 8179],
+  [2506301, 'Guarabira', 'PB', 57484],
+  [2506400, 'Gurinhém', 'PB', 13766],
+  [2506509, 'Gurjão', 'PB', 3242],
+  [2506608, 'Ibiara', 'PB', 5631],
+  [2506707, 'Imaculada', 'PB', 10392],
+  [2506806, 'Ingá', 'PB', 17692],
+  [2506905, 'Itabaiana', 'PB', 23182],
+  [2507002, 'Itaporanga', 'PB', 23940],
+  [2507101, 'Itapororoca', 'PB', 18382],
+  [2507200, 'Itatuba', 'PB', 10499],
+  [2507309, 'Jacaraú', 'PB', 14477],
+  [2507408, 'Jericó', 'PB', 7516],
+  [2507507, 'João Pessoa', 'PB', 833932],
+  [2507606, 'Juarez Távora', 'PB', 7796],
+  [2507705, 'Juazeirinho', 'PB', 17007],
+  [2507804, 'Junco do Seridó', 'PB', 6793],
+  [2507903, 'Juripiranga', 'PB', 10012],
+  [2508000, 'Juru', 'PB', 9234],
+  [2508109, 'Lagoa', 'PB', 4415],
+  [2508208, 'Lagoa de Dentro', 'PB', 7819],
+  [2508307, 'Lagoa Seca', 'PB', 27730],
+  [2508406, 'Lastro', 'PB', 3162],
+  [2508505, 'Livramento', 'PB', 6877],
+  [2508554, 'Logradouro', 'PB', 4797],
+  [2508604, 'Lucena', 'PB', 12560],
+  [2508703, "Mãe d'Água", 'PB', 3583],
+  [2508802, 'Malta', 'PB', 6046],
+  [2508901, 'Mamanguape', 'PB', 44599],
+  [2509008, 'Manaíra', 'PB', 10434],
+  [2509057, 'Marcação', 'PB', 8999],
+  [2509107, 'Mari', 'PB', 21512],
+  [2509156, 'Marizópolis', 'PB', 6705],
+  [2509206, 'Massaranduba', 'PB', 14139],
+  [2509305, 'Mataraca', 'PB', 8244],
+  [2509339, 'Matinhas', 'PB', 4571],
+  [2509370, 'Mato Grosso', 'PB', 2543],
+  [2509396, 'Maturéia', 'PB', 6433],
+  [2509404, 'Mogeiro', 'PB', 13899],
+  [2509503, 'Montadas', 'PB', 5812],
+  [2509602, 'Monte Horebe', 'PB', 4338],
+  [2509701, 'Monteiro', 'PB', 32277],
+  [2509800, 'Mulungu', 'PB', 8791],
+  [2509909, 'Natuba', 'PB', 8945],
+  [2510006, 'Nazarezinho', 'PB', 7203],
+  [2510105, 'Nova Floresta', 'PB', 9724],
+  [2510204, 'Nova Olinda', 'PB', 5787],
+  [2510303, 'Nova Palmeira', 'PB', 4259],
+  [2510402, "Olho d'Água", 'PB', 6060],
+  [2510501, 'Olivedos', 'PB', 3580],
+  [2510600, 'Ouro Velho', 'PB', 2918],
+  [2510659, 'Parari', 'PB', 1720],
+  [2510709, 'Passagem', 'PB', 2463],
+  [2510808, 'Patos', 'PB', 103165],
+  [2510907, 'Paulista', 'PB', 11834],
+  [2511004, 'Pedra Branca', 'PB', 3739],
+  [2511103, 'Pedra Lavrada', 'PB', 6859],
+  [2511202, 'Pedras de Fogo', 'PB', 29662],
+  [2511301, 'Piancó', 'PB', 16441],
+  [2511400, 'Picuí', 'PB', 18333],
+  [2511509, 'Pilar', 'PB', 12311],
+  [2511608, 'Pilões', 'PB', 6815],
+  [2511707, 'Pilõezinhos', 'PB', 5329],
+  [2511806, 'Pirpirituba', 'PB', 9340],
+  [2511905, 'Pitimbu', 'PB', 16751],
+  [2512002, 'Pocinhos', 'PB', 17469],
+  [2512036, 'Poço Dantas', 'PB', 3830],
+  [2512077, 'Poço de José de Moura', 'PB', 4006],
+  [2512101, 'Pombal', 'PB', 32473],
+  [2512200, 'Prata', 'PB', 3915],
+  [2512309, 'Princesa Isabel', 'PB', 21114],
+  [2512408, 'Puxinanã', 'PB', 14277],
+  [2512507, 'Queimadas', 'PB', 47658],
+  [2512606, 'Quixaba', 'PB', 1743],
+  [2512705, 'Remígio', 'PB', 17885],
+  [2512721, 'Pedro Régis', 'PB', 5766],
+  [2512747, 'Riachão', 'PB', 2927],
+  [2512754, 'Riachão do Bacamarte', 'PB', 4690],
+  [2512762, 'Riachão do Poço', 'PB', 4738],
+  [2512788, 'Riacho de Santo Antônio', 'PB', 1955],
+  [2512804, 'Riacho dos Cavalos', 'PB', 8493],
+  [2512903, 'Rio Tinto', 'PB', 24581],
+  [2513000, 'Salgadinho', 'PB', 3355],
+  [2513109, 'Salgado de São Félix', 'PB', 11505],
+  [2513158, 'Santa Cecília', 'PB', 7670],
+  [2513208, 'Santa Cruz', 'PB', 5947],
+  [2513307, 'Santa Helena', 'PB', 5865],
+  [2513356, 'Santa Inês', 'PB', 3227],
+  [2513406, 'Santa Luzia', 'PB', 14959],
+  [2513505, 'Santana de Mangueira', 'PB', 5010],
+  [2513604, 'Santana dos Garrotes', 'PB', 6569],
+  [2513653, 'Joca Claudino', 'PB', 2539],
+  [2513703, 'Santa Rita', 'PB', 149910],
+  [2513802, 'Santa Teresinha', 'PB', 4402],
+  [2513851, 'Santo André', 'PB', 2622],
+  [2513901, 'São Bento', 'PB', 32235],
+  [2513927, 'São Bentinho', 'PB', 4327],
+  [2513943, 'São Domingos do Cariri', 'PB', 2585],
+  [2513968, 'São Domingos', 'PB', 2595],
+  [2513984, 'São Francisco', 'PB', 3137],
+  [2514008, 'São João do Cariri', 'PB', 4226],
+  [2514107, 'São João do Tigre', 'PB', 4263],
+  [2514206, 'São José da Lagoa Tapada', 'PB', 7126],
+  [2514305, 'São José de Caiana', 'PB', 5034],
+  [2514404, 'São José de Espinharas', 'PB', 4083],
+  [2514453, 'São José dos Ramos', 'PB', 5891],
+  [2514503, 'São José de Piranhas', 'PB', 19067],
+  [2514552, 'São José de Princesa', 'PB', 3416],
+  [2514602, 'São José do Bonfim', 'PB', 3242],
+  [2514651, 'São José do Brejo do Cruz', 'PB', 1699],
+  [2514701, 'São José do Sabugi', 'PB', 4138],
+  [2514800, 'São José dos Cordeiros', 'PB', 3411],
+  [2514909, 'São Mamede', 'PB', 7470],
+  [2515005, 'São Miguel de Taipu', 'PB', 7066],
+  [2515104, 'São Sebastião de Lagoa de Roça', 'PB', 11040],
+  [2515203, 'São Sebastião do Umbuzeiro', 'PB', 3279],
+  [2515302, 'Sapé', 'PB', 51306],
+  [2515401, 'São Vicente do Seridó', 'PB', 10291],
+  [2515500, 'Serra Branca', 'PB', 13614],
+  [2515609, 'Serra da Raiz', 'PB', 3094],
+  [2515708, 'Serra Grande', 'PB', 2942],
+  [2515807, 'Serra Redonda', 'PB', 6828],
+  [2515906, 'Serraria', 'PB', 4885],
+  [2515930, 'Sertãozinho', 'PB', 5054],
+  [2515971, 'Sobrado', 'PB', 8236],
+  [2516003, 'Solânea', 'PB', 26774],
+  [2516102, 'Soledade', 'PB', 13968],
+  [2516151, 'Sossêgo', 'PB', 3345],
+  [2516201, 'Sousa', 'PB', 67259],
+  [2516300, 'Sumé', 'PB', 17166],
+  [2516409, 'Tacima', 'PB', 8010],
+  [2516508, 'Taperoá', 'PB', 14068],
+  [2516607, 'Tavares', 'PB', 14101],
+  [2516706, 'Teixeira', 'PB', 14631],
+  [2516755, 'Tenório', 'PB', 2966],
+  [2516805, 'Triunfo', 'PB', 9892],
+  [2516904, 'Uiraúna', 'PB', 14930],
+  [2517001, 'Umbuzeiro', 'PB', 9124],
+  [2517100, 'Várzea', 'PB', 2668],
+  [2517209, 'Vieirópolis', 'PB', 4864],
+  [2517407, 'Zabelê', 'PB', 2228],
+  [2600054, 'Abreu e Lima', 'PE', 98462],
+  [2600104, 'Afogados da Ingazeira', 'PE', 40241],
+  [2600203, 'Afrânio', 'PE', 18674],
+  [2600302, 'Agrestina', 'PE', 23779],
+  [2600401, 'Água Preta', 'PE', 26461],
+  [2600500, 'Águas Belas', 'PE', 41548],
+  [2600609, 'Alagoinha', 'PE', 13542],
+  [2600708, 'Aliança', 'PE', 35741],
+  [2600807, 'Altinho', 'PE', 20674],
+  [2600906, 'Amaraji', 'PE', 18205],
+  [2601003, 'Angelim', 'PE', 10241],
+  [2601052, 'Araçoiaba', 'PE', 19243],
+  [2601102, 'Araripina', 'PE', 85088],
+  [2601201, 'Arcoverde', 'PE', 77742],
+  [2601300, 'Barra de Guabiraba', 'PE', 12263],
+  [2601409, 'Barreiros', 'PE', 40121],
+  [2601508, 'Belém de Maria', 'PE', 10378],
+  [2601607, 'Belém do São Francisco', 'PE', 18301],
+  [2601706, 'Belo Jardim', 'PE', 79507],
+  [2601805, 'Betânia', 'PE', 11232],
+  [2601904, 'Bezerros', 'PE', 61694],
+  [2602001, 'Bodocó', 'PE', 34478],
+  [2602100, 'Bom Conselho', 'PE', 44294],
+  [2602209, 'Bom Jardim', 'PE', 37629],
+  [2602308, 'Bonito', 'PE', 37474],
+  [2602407, 'Brejão', 'PE', 9079],
+  [2602506, 'Brejinho', 'PE', 7720],
+  [2602605, 'Brejo da Madre de Deus', 'PE', 48648],
+  [2602704, 'Buenos Aires', 'PE', 12808],
+  [2602803, 'Buíque', 'PE', 52097],
+  [2602902, 'Cabo de Santo Agostinho', 'PE', 203440],
+  [2603009, 'Cabrobó', 'PE', 30294],
+  [2603108, 'Cachoeirinha', 'PE', 19899],
+  [2603207, 'Caetés', 'PE', 28827],
+  [2603306, 'Calçado', 'PE', 11093],
+  [2603405, 'Calumbi', 'PE', 5228],
+  [2603454, 'Camaragibe', 'PE', 147771],
+  [2603504, 'Camocim de São Félix', 'PE', 17419],
+  [2603603, 'Camutanga', 'PE', 7750],
+  [2603702, 'Canhotinho', 'PE', 24329],
+  [2603801, 'Capoeiras', 'PE', 18338],
+  [2603900, 'Carnaíba', 'PE', 18644],
+  [2603926, 'Carnaubeira da Penha', 'PE', 12239],
+  [2604007, 'Carpina', 'PE', 79293],
+  [2604106, 'Caruaru', 'PE', 378048],
+  [2604155, 'Casinhas', 'PE', 12967],
+  [2604205, 'Catende', 'PE', 32156],
+  [2604304, 'Cedro', 'PE', 10518],
+  [2604403, 'Chã de Alegria', 'PE', 12984],
+  [2604502, 'Chã Grande', 'PE', 20546],
+  [2604601, 'Condado', 'PE', 24587],
+  [2604700, 'Correntes', 'PE', 17131],
+  [2604809, 'Cortês', 'PE', 10198],
+  [2604908, 'Cumaru', 'PE', 15920],
+  [2605004, 'Cupira', 'PE', 23518],
+  [2605103, 'Custódia', 'PE', 37699],
+  [2605152, 'Dormentes', 'PE', 17188],
+  [2605202, 'Escada', 'PE', 59891],
+  [2605301, 'Exu', 'PE', 31843],
+  [2605400, 'Feira Nova', 'PE', 21427],
+  [2605459, 'Fernando de Noronha', 'PE', 3167],
+  [2605509, 'Ferreiros', 'PE', 15026],
+  [2605608, 'Flores', 'PE', 20347],
+  [2605707, 'Floresta', 'PE', 30137],
+  [2605806, 'Frei Miguelinho', 'PE', 13636],
+  [2605905, 'Gameleira', 'PE', 18214],
+  [2606002, 'Garanhuns', 'PE', 142506],
+  [2606101, 'Glória do Goitá', 'PE', 29347],
+  [2606200, 'Goiana', 'PE', 81055],
+  [2606309, 'Granito', 'PE', 6967],
+  [2606408, 'Gravatá', 'PE', 86516],
+  [2606507, 'Iati', 'PE', 17165],
+  [2606606, 'Ibimirim', 'PE', 26593],
+  [2606705, 'Ibirajuba', 'PE', 7140],
+  [2606804, 'Igarassu', 'PE', 115196],
+  [2606903, 'Iguaracy', 'PE', 11081],
+  [2607000, 'Inajá', 'PE', 25603],
+  [2607109, 'Ingazeira', 'PE', 4765],
+  [2607208, 'Ipojuca', 'PE', 98932],
+  [2607307, 'Ipubi', 'PE', 29009],
+  [2607406, 'Itacuruba', 'PE', 4284],
+  [2607505, 'Itaíba', 'PE', 32650],
+  [2607604, 'Ilha de Itamaracá', 'PE', 24540],
+  [2607653, 'Itambé', 'PE', 34935],
+  [2607703, 'Itapetim', 'PE', 13791],
+  [2607752, 'Itapissuma', 'PE', 27749],
+  [2607802, 'Itaquitinga', 'PE', 16554],
+  [2607901, 'Jaboatão dos Guararapes', 'PE', 644037],
+  [2607950, 'Jaqueira', 'PE', 10247],
+  [2608008, 'Jataúba', 'PE', 15843],
+  [2608057, 'Jatobá', 'PE', 14020],
+  [2608107, 'João Alfredo', 'PE', 27725],
+  [2608206, 'Joaquim Nabuco', 'PE', 13269],
+  [2608255, 'Jucati', 'PE', 11517],
+  [2608305, 'Jupi', 'PE', 15329],
+  [2608404, 'Jurema', 'PE', 13648],
+  [2608453, 'Lagoa do Carro', 'PE', 17981],
+  [2608503, 'Lagoa de Itaenga', 'PE', 19003],
+  [2608602, 'Lagoa do Ouro', 'PE', 11933],
+  [2608701, 'Lagoa dos Gatos', 'PE', 14076],
+  [2608750, 'Lagoa Grande', 'PE', 24088],
+  [2608800, 'Lajedo', 'PE', 39582],
+  [2608909, 'Limoeiro', 'PE', 56510],
+  [2609006, 'Macaparana', 'PE', 23879],
+  [2609105, 'Machados', 'PE', 11333],
+  [2609154, 'Manari', 'PE', 23763],
+  [2609204, 'Maraial', 'PE', 9359],
+  [2609303, 'Mirandiba', 'PE', 14166],
+  [2609402, 'Moreno', 'PE', 55292],
+  [2609501, 'Nazaré da Mata', 'PE', 30648],
+  [2609600, 'Olinda', 'PE', 349976],
+  [2609709, 'Orobó', 'PE', 21808],
+  [2609808, 'Orocó', 'PE', 13613],
+  [2609907, 'Ouricuri', 'PE', 65245],
+  [2610004, 'Palmares', 'PE', 54584],
+  [2610103, 'Palmeirina', 'PE', 7031],
+  [2610202, 'Panelas', 'PE', 22991],
+  [2610301, 'Paranatama', 'PE', 12199],
+  [2610400, 'Parnamirim', 'PE', 18612],
+  [2610509, 'Passira', 'PE', 28340],
+  [2610608, 'Paudalho', 'PE', 56665],
+  [2610707, 'Paulista', 'PE', 342167],
+  [2610806, 'Pedra', 'PE', 22795],
+  [2610905, 'Pesqueira', 'PE', 62722],
+  [2611002, 'Petrolândia', 'PE', 34161],
+  [2611101, 'Petrolina', 'PE', 386791],
+  [2611200, 'Poção', 'PE', 10500],
+  [2611309, 'Pombos', 'PE', 27552],
+  [2611408, 'Primavera', 'PE', 13838],
+  [2611507, 'Quipapá', 'PE', 17928],
+  [2611533, 'Quixaba', 'PE', 6554],
+  [2611606, 'Recife', 'PE', 1488920],
+  [2611705, 'Riacho das Almas', 'PE', 20639],
+  [2611804, 'Ribeirão', 'PE', 33507],
+  [2611903, 'Rio Formoso', 'PE', 20009],
+  [2612000, 'Sairé', 'PE', 10887],
+  [2612109, 'Salgadinho', 'PE', 5727],
+  [2612208, 'Salgueiro', 'PE', 62372],
+  [2612307, 'Saloá', 'PE', 13836],
+  [2612406, 'Sanharó', 'PE', 18624],
+  [2612455, 'Santa Cruz', 'PE', 13841],
+  [2612471, 'Santa Cruz da Baixa Verde', 'PE', 11567],
+  [2612505, 'Santa Cruz do Capibaribe', 'PE', 98254],
+  [2612554, 'Santa Filomena', 'PE', 12106],
+  [2612604, 'Santa Maria da Boa Vista', 'PE', 40578],
+  [2612703, 'Santa Maria do Cambucá', 'PE', 14013],
+  [2612802, 'Santa Terezinha', 'PE', 10244],
+  [2612901, 'São Benedito do Sul', 'PE', 13113],
+  [2613008, 'São Bento do Una', 'PE', 49449],
+  [2613107, 'São Caitano', 'PE', 37126],
+  [2613206, 'São João', 'PE', 23837],
+  [2613305, 'São Joaquim do Monte', 'PE', 20037],
+  [2613404, 'São José da Coroa Grande', 'PE', 18825],
+  [2613503, 'São José do Belmonte', 'PE', 34843],
+  [2613602, 'São José do Egito', 'PE', 31004],
+  [2613701, 'São Lourenço da Mata', 'PE', 111249],
+  [2613800, 'São Vicente Férrer', 'PE', 16677],
+  [2613909, 'Serra Talhada', 'PE', 92228],
+  [2614006, 'Serrita', 'PE', 18207],
+  [2614105, 'Sertânia', 'PE', 32811],
+  [2614204, 'Sirinhaém', 'PE', 37596],
+  [2614303, 'Moreilândia', 'PE', 10540],
+  [2614402, 'Solidão', 'PE', 5210],
+  [2614501, 'Surubim', 'PE', 64120],
+  [2614600, 'Tabira', 'PE', 27681],
+  [2614709, 'Tacaimbó', 'PE', 13738],
+  [2614808, 'Tacaratu', 'PE', 23902],
+  [2614857, 'Tamandaré', 'PE', 23561],
+  [2615003, 'Taquaritinga do Norte', 'PE', 24736],
+  [2615102, 'Terezinha', 'PE', 6513],
+  [2615201, 'Terra Nova', 'PE', 8920],
+  [2615300, 'Timbaúba', 'PE', 46147],
+  [2615409, 'Toritama', 'PE', 41137],
+  [2615508, 'Tracunhaém', 'PE', 13867],
+  [2615607, 'Trindade', 'PE', 30321],
+  [2615706, 'Triunfo', 'PE', 14705],
+  [2615805, 'Tupanatinga', 'PE', 26937],
+  [2615904, 'Tuparetama', 'PE', 8005],
+  [2616001, 'Venturosa', 'PE', 17251],
+  [2616100, 'Verdejante', 'PE', 9169],
+  [2616183, 'Vertente do Lério', 'PE', 7558],
+  [2616209, 'Vertentes', 'PE', 21959],
+  [2616308, 'Vicência', 'PE', 26359],
+  [2616407, 'Vitória de Santo Antão', 'PE', 134084],
+  [2616506, 'Xexéu', 'PE', 11611],
+  [2700102, 'Água Branca', 'AL', 19008],
+  [2700201, 'Anadia', 'AL', 13966],
+  [2700300, 'Arapiraca', 'AL', 234696],
+  [2700409, 'Atalaia', 'AL', 37512],
+  [2700508, 'Barra de Santo Antônio', 'AL', 16365],
+  [2700607, 'Barra de São Miguel', 'AL', 7944],
+  [2700706, 'Batalha', 'AL', 16448],
+  [2700805, 'Belém', 'AL', 4722],
+  [2700904, 'Belo Monte', 'AL', 5936],
+  [2701001, 'Boca da Mata', 'AL', 21187],
+  [2701100, 'Branquinha', 'AL', 9603],
+  [2701209, 'Cacimbinhas', 'AL', 10482],
+  [2701308, 'Cajueiro', 'AL', 16024],
+  [2701357, 'Campestre', 'AL', 6665],
+  [2701407, 'Campo Alegre', 'AL', 32106],
+  [2701506, 'Campo Grande', 'AL', 8143],
+  [2701605, 'Canapi', 'AL', 15559],
+  [2701704, 'Capela', 'AL', 15032],
+  [2701803, 'Carneiros', 'AL', 8999],
+  [2701902, 'Chã Preta', 'AL', 5910],
+  [2702009, 'Coité do Nóia', 'AL', 10810],
+  [2702108, 'Colônia Leopoldina', 'AL', 15816],
+  [2702207, 'Coqueiro Seco', 'AL', 5581],
+  [2702306, 'Coruripe', 'AL', 50414],
+  [2702355, 'Craíbas', 'AL', 25397],
+  [2702405, 'Delmiro Gouveia', 'AL', 51318],
+  [2702504, 'Dois Riachos', 'AL', 9805],
+  [2702553, 'Estrela de Alagoas', 'AL', 15429],
+  [2702603, 'Feira Grande', 'AL', 22712],
+  [2702702, 'Feliz Deserto', 'AL', 3963],
+  [2702801, 'Flexeiras', 'AL', 9618],
+  [2702900, 'Girau do Ponciano', 'AL', 36102],
+  [2703007, 'Ibateguara', 'AL', 13731],
+  [2703106, 'Igaci', 'AL', 23995],
+  [2703205, 'Igreja Nova', 'AL', 21372],
+  [2703304, 'Inhapi', 'AL', 15167],
+  [2703403, 'Jacaré dos Homens', 'AL', 5083],
+  [2703502, 'Jacuípe', 'AL', 5352],
+  [2703601, 'Japaratinga', 'AL', 9219],
+  [2703700, 'Jaramataia', 'AL', 4985],
+  [2703759, 'Jequiá da Praia', 'AL', 9470],
+  [2703809, 'Joaquim Gomes', 'AL', 17150],
+  [2703908, 'Jundiá', 'AL', 4092],
+  [2704005, 'Junqueiro', 'AL', 23907],
+  [2704104, 'Lagoa da Canoa', 'AL', 18457],
+  [2704203, 'Limoeiro de Anadia', 'AL', 24740],
+  [2704302, 'Maceió', 'AL', 957916],
+  [2704401, 'Major Isidoro', 'AL', 17700],
+  [2704500, 'Maragogi', 'AL', 32174],
+  [2704609, 'Maravilha', 'AL', 9534],
+  [2704708, 'Marechal Deodoro', 'AL', 60370],
+  [2704807, 'Maribondo', 'AL', 13679],
+  [2704906, 'Mar Vermelho', 'AL', 3155],
+  [2705002, 'Mata Grande', 'AL', 21844],
+  [2705101, 'Matriz de Camaragibe', 'AL', 23857],
+  [2705200, 'Messias', 'AL', 15405],
+  [2705309, 'Minador do Negrão', 'AL', 4845],
+  [2705408, 'Monteirópolis', 'AL', 7184],
+  [2705507, 'Murici', 'AL', 25187],
+  [2705606, 'Novo Lino', 'AL', 10020],
+  [2705705, "Olho d'Água das Flores", 'AL', 20695],
+  [2705804, "Olho d'Água do Casado", 'AL', 8349],
+  [2705903, "Olho d'Água Grande", 'AL', 4330],
+  [2706000, 'Olivença', 'AL', 10812],
+  [2706109, 'Ouro Branco', 'AL', 11446],
+  [2706208, 'Palestina', 'AL', 4325],
+  [2706307, 'Palmeira dos Índios', 'AL', 71574],
+  [2706406, 'Pão de Açúcar', 'AL', 23823],
+  [2706422, 'Pariconha', 'AL', 10573],
+  [2706448, 'Paripueira', 'AL', 13835],
+  [2706505, 'Passo de Camaragibe', 'AL', 13804],
+  [2706604, 'Paulo Jacinto', 'AL', 6576],
+  [2706703, 'Penedo', 'AL', 58650],
+  [2706802, 'Piaçabuçu', 'AL', 15908],
+  [2706901, 'Pilar', 'AL', 35370],
+  [2707008, 'Pindoba', 'AL', 2731],
+  [2707107, 'Piranhas', 'AL', 22609],
+  [2707206, 'Poço das Trincheiras', 'AL', 12518],
+  [2707305, 'Porto Calvo', 'AL', 24071],
+  [2707404, 'Porto de Pedras', 'AL', 9295],
+  [2707503, 'Porto Real do Colégio', 'AL', 20082],
+  [2707602, 'Quebrangulo', 'AL', 11080],
+  [2707701, 'Rio Largo', 'AL', 93927],
+  [2707800, 'Roteiro', 'AL', 6474],
+  [2707909, 'Santa Luzia do Norte', 'AL', 6919],
+  [2708006, 'Santana do Ipanema', 'AL', 46220],
+  [2708105, 'Santana do Mundaú', 'AL', 11323],
+  [2708204, 'São Brás', 'AL', 6555],
+  [2708303, 'São José da Laje', 'AL', 20813],
+  [2708402, 'São José da Tapera', 'AL', 30604],
+  [2708501, 'São Luís do Quitunde', 'AL', 30873],
+  [2708600, 'São Miguel dos Campos', 'AL', 51990],
+  [2708709, 'São Miguel dos Milagres', 'AL', 8482],
+  [2708808, 'São Sebastião', 'AL', 31786],
+  [2708907, 'Satuba', 'AL', 24278],
+  [2708956, 'Senador Rui Palmeira', 'AL', 12303],
+  [2709004, "Tanque d'Arca", 'AL', 5796],
+  [2709103, 'Taquarana', 'AL', 19032],
+  [2709152, 'Teotônio Vilela', 'AL', 38053],
+  [2709202, 'Traipu', 'AL', 23565],
+  [2709301, 'União dos Palmares', 'AL', 59280],
+  [2709400, 'Viçosa', 'AL', 24092],
+  [2800100, 'Amparo do São Francisco', 'SE', 2170],
+  [2800209, 'Aquidabã', 'SE', 20131],
+  [2800308, 'Aracaju', 'SE', 602757],
+  [2800407, 'Arauá', 'SE', 10318],
+  [2800506, 'Areia Branca', 'SE', 18081],
+  [2800605, 'Barra dos Coqueiros', 'SE', 41511],
+  [2800670, 'Boquim', 'SE', 24636],
+  [2800704, 'Brejo Grande', 'SE', 7841],
+  [2801009, 'Campo do Brito', 'SE', 18149],
+  [2801108, 'Canhoba', 'SE', 3791],
+  [2801207, 'Canindé de São Francisco', 'SE', 26834],
+  [2801306, 'Capela', 'SE', 31645],
+  [2801405, 'Carira', 'SE', 19939],
+  [2801504, 'Carmópolis', 'SE', 13853],
+  [2801603, 'Cedro de São João', 'SE', 5391],
+  [2801702, 'Cristinápolis', 'SE', 17100],
+  [2801900, 'Cumbe', 'SE', 3824],
+  [2802007, 'Divina Pastora', 'SE', 4340],
+  [2802106, 'Estância', 'SE', 65078],
+  [2802205, 'Feira Nova', 'SE', 5975],
+  [2802304, 'Frei Paulo', 'SE', 14530],
+  [2802403, 'Gararu', 'SE', 11096],
+  [2802502, 'General Maynard', 'SE', 3037],
+  [2802601, 'Graccho Cardoso', 'SE', 5834],
+  [2802700, 'Ilha das Flores', 'SE', 8321],
+  [2802809, 'Indiaroba', 'SE', 16549],
+  [2802908, 'Itabaiana', 'SE', 103440],
+  [2803005, 'Itabaianinha', 'SE', 40678],
+  [2803104, 'Itabi', 'SE', 4745],
+  [2803203, "Itaporanga d'Ajuda", 'SE', 34411],
+  [2803302, 'Japaratuba', 'SE', 16209],
+  [2803401, 'Japoatã', 'SE', 13407],
+  [2803500, 'Lagarto', 'SE', 101579],
+  [2803609, 'Laranjeiras', 'SE', 23975],
+  [2803708, 'Macambira', 'SE', 6838],
+  [2803807, 'Malhada dos Bois', 'SE', 3579],
+  [2803906, 'Malhador', 'SE', 11533],
+  [2804003, 'Maruim', 'SE', 15719],
+  [2804102, 'Moita Bonita', 'SE', 11050],
+  [2804201, 'Monte Alegre de Sergipe', 'SE', 14336],
+  [2804300, 'Muribeca', 'SE', 7822],
+  [2804409, 'Neópolis', 'SE', 16426],
+  [2804458, 'Nossa Senhora Aparecida', 'SE', 9232],
+  [2804508, 'Nossa Senhora da Glória', 'SE', 41212],
+  [2804607, 'Nossa Senhora das Dores', 'SE', 24996],
+  [2804706, 'Nossa Senhora de Lourdes', 'SE', 6268],
+  [2804805, 'Nossa Senhora do Socorro', 'SE', 192330],
+  [2804904, 'Pacatuba', 'SE', 12502],
+  [2805000, 'Pedra Mole', 'SE', 2778],
+  [2805109, 'Pedrinhas', 'SE', 7396],
+  [2805208, 'Pinhão', 'SE', 5677],
+  [2805307, 'Pirambu', 'SE', 7913],
+  [2805406, 'Poço Redondo', 'SE', 33439],
+  [2805505, 'Poço Verde', 'SE', 21794],
+  [2805604, 'Porto da Folha', 'SE', 26576],
+  [2805703, 'Propriá', 'SE', 26618],
+  [2805802, 'Riachão do Dantas', 'SE', 18313],
+  [2805901, 'Riachuelo', 'SE', 8748],
+  [2806008, 'Ribeirópolis', 'SE', 17033],
+  [2806107, 'Rosário do Catete', 'SE', 9295],
+  [2806206, 'Salgado', 'SE', 20279],
+  [2806305, 'Santa Luzia do Itanhy', 'SE', 13616],
+  [2806404, 'Santana do São Francisco', 'SE', 7346],
+  [2806503, 'Santa Rosa de Lima', 'SE', 3937],
+  [2806602, 'Santo Amaro das Brotas', 'SE', 11092],
+  [2806701, 'São Cristóvão', 'SE', 95612],
+  [2806800, 'São Domingos', 'SE', 10327],
+  [2806909, 'São Francisco', 'SE', 3243],
+  [2807006, 'São Miguel do Aleixo', 'SE', 3434],
+  [2807105, 'Simão Dias', 'SE', 42578],
+  [2807204, 'Siriri', 'SE', 7834],
+  [2807303, 'Telha', 'SE', 3274],
+  [2807402, 'Tobias Barreto', 'SE', 50905],
+  [2807501, 'Tomar do Geru', 'SE', 12012],
+  [2807600, 'Umbaúba', 'SE', 23917],
+  [2900108, 'Abaíra', 'BA', 7301],
+  [2900207, 'Abaré', 'BA', 17639],
+  [2900306, 'Acajutiba', 'BA', 13795],
+  [2900355, 'Adustina', 'BA', 14201],
+  [2900405, 'Água Fria', 'BA', 14497],
+  [2900504, 'Érico Cardoso', 'BA', 10604],
+  [2900603, 'Aiquara', 'BA', 4447],
+  [2900702, 'Alagoinhas', 'BA', 151055],
+  [2900801, 'Alcobaça', 'BA', 24530],
+  [2900900, 'Almadina', 'BA', 5218],
+  [2901007, 'Amargosa', 'BA', 36521],
+  [2901106, 'Amélia Rodrigues', 'BA', 24138],
+  [2901155, 'América Dourada', 'BA', 15137],
+  [2901205, 'Anagé', 'BA', 25438],
+  [2901304, 'Andaraí', 'BA', 13080],
+  [2901353, 'Andorinha', 'BA', 15012],
+  [2901403, 'Angical', 'BA', 13732],
+  [2901502, 'Anguera', 'BA', 11031],
+  [2901601, 'Antas', 'BA', 14206],
+  [2901700, 'Antônio Cardoso', 'BA', 11146],
+  [2901809, 'Antônio Gonçalves', 'BA', 10862],
+  [2901908, 'Aporá', 'BA', 15922],
+  [2901957, 'Apuarema', 'BA', 6913],
+  [2902005, 'Aracatu', 'BA', 13936],
+  [2902054, 'Araçás', 'BA', 11557],
+  [2902104, 'Araci', 'BA', 48294],
+  [2902203, 'Aramari', 'BA', 9833],
+  [2902252, 'Arataca', 'BA', 10191],
+  [2902302, 'Aratuípe', 'BA', 8677],
+  [2902401, 'Aurelino Leal', 'BA', 11179],
+  [2902500, 'Baianópolis', 'BA', 13614],
+  [2902609, 'Baixa Grande', 'BA', 18220],
+  [2902658, 'Banzaê', 'BA', 11958],
+  [2902708, 'Barra', 'BA', 51092],
+  [2902807, 'Barra da Estiva', 'BA', 26026],
+  [2902906, 'Barra do Choça', 'BA', 36539],
+  [2903003, 'Barra do Mendes', 'BA', 13836],
+  [2903102, 'Barra do Rocha', 'BA', 5775],
+  [2903201, 'Barreiras', 'BA', 159734],
+  [2903235, 'Barro Alto', 'BA', 13453],
+  [2903276, 'Barrocas', 'BA', 15203],
+  [2903300, 'Barro Preto', 'BA', 5833],
+  [2903409, 'Belmonte', 'BA', 20121],
+  [2903508, 'Belo Campo', 'BA', 18412],
+  [2903607, 'Biritinga', 'BA', 15146],
+  [2903706, 'Boa Nova', 'BA', 13690],
+  [2903805, 'Boa Vista do Tupim', 'BA', 16873],
+  [2903904, 'Bom Jesus da Lapa', 'BA', 65550],
+  [2903953, 'Bom Jesus da Serra', 'BA', 9730],
+  [2904001, 'Boninal', 'BA', 13622],
+  [2904050, 'Bonito', 'BA', 15844],
+  [2904100, 'Boquira', 'BA', 19322],
+  [2904209, 'Botuporã', 'BA', 11024],
+  [2904308, 'Brejões', 'BA', 12943],
+  [2904407, 'Brejolândia', 'BA', 9108],
+  [2904506, 'Brotas de Macaúbas', 'BA', 11765],
+  [2904605, 'Brumado', 'BA', 70510],
+  [2904704, 'Buerarema', 'BA', 14804],
+  [2904753, 'Buritirama', 'BA', 19589],
+  [2904803, 'Caatiba', 'BA', 6205],
+  [2904852, 'Cabaceiras do Paraguaçu', 'BA', 16559],
+  [2904902, 'Cachoeira', 'BA', 29250],
+  [2905008, 'Caculé', 'BA', 22462],
+  [2905107, 'Caém', 'BA', 10384],
+  [2905156, 'Caetanos', 'BA', 11266],
+  [2905206, 'Caetité', 'BA', 52012],
+  [2905305, 'Cafarnaum', 'BA', 17466],
+  [2905404, 'Cairu', 'BA', 17761],
+  [2905503, 'Caldeirão Grande', 'BA', 13080],
+  [2905602, 'Camacan', 'BA', 22579],
+  [2905701, 'Camaçari', 'BA', 300372],
+  [2905800, 'Camamu', 'BA', 30469],
+  [2905909, 'Campo Alegre de Lourdes', 'BA', 30671],
+  [2906006, 'Campo Formoso', 'BA', 71377],
+  [2906105, 'Canápolis', 'BA', 10225],
+  [2906204, 'Canarana', 'BA', 24206],
+  [2906303, 'Canavieiras', 'BA', 32683],
+  [2906402, 'Candeal', 'BA', 7772],
+  [2906501, 'Candeias', 'BA', 72382],
+  [2906600, 'Candiba', 'BA', 13016],
+  [2906709, 'Cândido Sales', 'BA', 25247],
+  [2906808, 'Cansanção', 'BA', 37439],
+  [2906824, 'Canudos', 'BA', 16105],
+  [2906857, 'Capela do Alto Alegre', 'BA', 10744],
+  [2906873, 'Capim Grosso', 'BA', 33235],
+  [2906899, 'Caraíbas', 'BA', 9940],
+  [2906907, 'Caravelas', 'BA', 20580],
+  [2907004, 'Cardeal da Silva', 'BA', 8365],
+  [2907103, 'Carinhanha', 'BA', 28869],
+  [2907202, 'Casa Nova', 'BA', 72086],
+  [2907301, 'Castro Alves', 'BA', 24712],
+  [2907400, 'Catolândia', 'BA', 3434],
+  [2907509, 'Catu', 'BA', 48148],
+  [2907558, 'Caturama', 'BA', 8841],
+  [2907608, 'Central', 'BA', 16348],
+  [2907707, 'Chorrochó', 'BA', 10579],
+  [2907806, 'Cícero Dantas', 'BA', 30907],
+  [2907905, 'Cipó', 'BA', 17230],
+  [2908002, 'Coaraci', 'BA', 17333],
+  [2908101, 'Cocos', 'BA', 19151],
+  [2908200, 'Conceição da Feira', 'BA', 20800],
+  [2908309, 'Conceição do Almeida', 'BA', 15794],
+  [2908408, 'Conceição do Coité', 'BA', 67825],
+  [2908507, 'Conceição do Jacuípe', 'BA', 35308],
+  [2908606, 'Conde', 'BA', 23654],
+  [2908705, 'Condeúba', 'BA', 17053],
+  [2908804, 'Contendas do Sincorá', 'BA', 4333],
+  [2908903, 'Coração de Maria', 'BA', 26692],
+  [2909000, 'Cordeiros', 'BA', 7546],
+  [2909109, 'Coribe', 'BA', 13990],
+  [2909208, 'Coronel João Sá', 'BA', 17056],
+  [2909307, 'Correntina', 'BA', 32457],
+  [2909406, 'Cotegipe', 'BA', 13063],
+  [2909505, 'Cravolândia', 'BA', 4415],
+  [2909604, 'Crisópolis', 'BA', 19729],
+  [2909703, 'Cristópolis', 'BA', 13993],
+  [2909802, 'Cruz das Almas', 'BA', 60348],
+  [2909901, 'Curaçá', 'BA', 34180],
+  [2910008, 'Dário Meira', 'BA', 10820],
+  [2910057, "Dias d'Ávila", 'BA', 71485],
+  [2910107, 'Dom Basílio', 'BA', 11884],
+  [2910206, 'Dom Macedo Costa', 'BA', 4407],
+  [2910305, 'Elísio Medrado', 'BA', 7808],
+  [2910404, 'Encruzilhada', 'BA', 19107],
+  [2910503, 'Entre Rios', 'BA', 38098],
+  [2910602, 'Esplanada', 'BA', 32554],
+  [2910701, 'Euclides da Cunha', 'BA', 61456],
+  [2910727, 'Eunápolis', 'BA', 113710],
+  [2910750, 'Fátima', 'BA', 17895],
+  [2910776, 'Feira da Mata', 'BA', 5631],
+  [2910800, 'Feira de Santana', 'BA', 616272],
+  [2910859, 'Filadélfia', 'BA', 17897],
+  [2910909, 'Firmino Alves', 'BA', 4873],
+  [2911006, 'Floresta Azul', 'BA', 11059],
+  [2911105, 'Formosa do Rio Preto', 'BA', 25899],
+  [2911204, 'Gandu', 'BA', 32178],
+  [2911253, 'Gavião', 'BA', 4360],
+  [2911303, 'Gentio do Ouro', 'BA', 10884],
+  [2911402, 'Glória', 'BA', 15524],
+  [2911501, 'Gongogi', 'BA', 5555],
+  [2911600, 'Governador Mangabeira', 'BA', 20605],
+  [2911659, 'Guajeru', 'BA', 8050],
+  [2911709, 'Guanambi', 'BA', 87817],
+  [2911808, 'Guaratinga', 'BA', 19049],
+  [2911857, 'Heliópolis', 'BA', 12309],
+  [2911907, 'Iaçu', 'BA', 24607],
+  [2912004, 'Ibiassucê', 'BA', 10429],
+  [2912103, 'Ibicaraí', 'BA', 21665],
+  [2912202, 'Ibicoara', 'BA', 20785],
+  [2912301, 'Ibicuí', 'BA', 13934],
+  [2912400, 'Ibipeba', 'BA', 16603],
+  [2912509, 'Ibipitanga', 'BA', 13863],
+  [2912608, 'Ibiquera', 'BA', 3725],
+  [2912707, 'Ibirapitanga', 'BA', 25344],
+  [2912806, 'Ibirapuã', 'BA', 8896],
+  [2912905, 'Ibirataia', 'BA', 18792],
+  [2913002, 'Ibitiara', 'BA', 14637],
+  [2913101, 'Ibititá', 'BA', 16969],
+  [2913200, 'Ibotirama', 'BA', 26309],
+  [2913309, 'Ichu', 'BA', 6190],
+  [2913408, 'Igaporã', 'BA', 15527],
+  [2913457, 'Igrapiúna', 'BA', 13151],
+  [2913507, 'Iguaí', 'BA', 21491],
+  [2913606, 'Ilhéus', 'BA', 178649],
+  [2913705, 'Inhambupe', 'BA', 33790],
+  [2913804, 'Ipecaetá', 'BA', 13709],
+  [2913903, 'Ipiaú', 'BA', 40706],
+  [2914000, 'Ipirá', 'BA', 56876],
+  [2914109, 'Ipupiara', 'BA', 9935],
+  [2914208, 'Irajuba', 'BA', 6101],
+  [2914307, 'Iramaia', 'BA', 10752],
+  [2914406, 'Iraquara', 'BA', 23879],
+  [2914505, 'Irará', 'BA', 28043],
+  [2914604, 'Irecê', 'BA', 74507],
+  [2914653, 'Itabela', 'BA', 28165],
+  [2914703, 'Itaberaba', 'BA', 65073],
+  [2914802, 'Itabuna', 'BA', 186708],
+  [2914901, 'Itacaré', 'BA', 27704],
+  [2915007, 'Itaeté', 'BA', 13472],
+  [2915106, 'Itagi', 'BA', 13803],
+  [2915205, 'Itagibá', 'BA', 15310],
+  [2915304, 'Itagimirim', 'BA', 6347],
+  [2915353, 'Itaguaçu da Bahia', 'BA', 12311],
+  [2915403, 'Itaju do Colônia', 'BA', 6037],
+  [2915502, 'Itajuípe', 'BA', 18781],
+  [2915601, 'Itamaraju', 'BA', 59605],
+  [2915700, 'Itamari', 'BA', 7051],
+  [2915809, 'Itambé', 'BA', 24394],
+  [2915908, 'Itanagra', 'BA', 5914],
+  [2916005, 'Itanhém', 'BA', 17813],
+  [2916104, 'Itaparica', 'BA', 19789],
+  [2916203, 'Itapé', 'BA', 10341],
+  [2916302, 'Itapebi', 'BA', 9174],
+  [2916401, 'Itapetinga', 'BA', 65897],
+  [2916500, 'Itapicuru', 'BA', 31679],
+  [2916609, 'Itapitanga', 'BA', 10279],
+  [2916708, 'Itaquara', 'BA', 8153],
+  [2916807, 'Itarantim', 'BA', 17052],
+  [2916856, 'Itatim', 'BA', 15737],
+  [2916906, 'Itiruçu', 'BA', 10999],
+  [2917003, 'Itiúba', 'BA', 33872],
+  [2917102, 'Itororó', 'BA', 16617],
+  [2917201, 'Ituaçu', 'BA', 17914],
+  [2917300, 'Ituberá', 'BA', 21902],
+  [2917334, 'Iuiu', 'BA', 11118],
+  [2917359, 'Jaborandi', 'BA', 9275],
+  [2917409, 'Jacaraci', 'BA', 14436],
+  [2917508, 'Jacobina', 'BA', 82590],
+  [2917607, 'Jaguaquara', 'BA', 45964],
+  [2917706, 'Jaguarari', 'BA', 32703],
+  [2917805, 'Jaguaripe', 'BA', 17659],
+  [2917904, 'Jandaíra', 'BA', 9285],
+  [2918001, 'Jequié', 'BA', 158813],
+  [2918100, 'Jeremoabo', 'BA', 37626],
+  [2918209, 'Jiquiriçá', 'BA', 13629],
+  [2918308, 'Jitaúna', 'BA', 14355],
+  [2918357, 'João Dourado', 'BA', 24854],
+  [2918407, 'Juazeiro', 'BA', 237821],
+  [2918456, 'Jucuruçu', 'BA', 9655],
+  [2918506, 'Jussara', 'BA', 16354],
+  [2918555, 'Jussari', 'BA', 5888],
+  [2918605, 'Jussiape', 'BA', 7379],
+  [2918704, 'Lafaiete Coutinho', 'BA', 4075],
+  [2918753, 'Lagoa Real', 'BA', 14105],
+  [2918803, 'Laje', 'BA', 21052],
+  [2918902, 'Lajedão', 'BA', 3845],
+  [2919009, 'Lajedinho', 'BA', 3527],
+  [2919058, 'Lajedo do Tabocal', 'BA', 7494],
+  [2919108, 'Lamarão', 'BA', 9015],
+  [2919157, 'Lapão', 'BA', 25736],
+  [2919207, 'Lauro de Freitas', 'BA', 203331],
+  [2919306, 'Lençóis', 'BA', 10774],
+  [2919405, 'Licínio de Almeida', 'BA', 11834],
+  [2919504, 'Livramento de Nossa Senhora', 'BA', 43903],
+  [2919553, 'Luís Eduardo Magalhães', 'BA', 107909],
+  [2919603, 'Macajuba', 'BA', 10454],
+  [2919702, 'Macarani', 'BA', 21599],
+  [2919801, 'Macaúbas', 'BA', 41859],
+  [2919900, 'Macururé', 'BA', 7256],
+  [2919926, 'Madre de Deus', 'BA', 18504],
+  [2919959, 'Maetinga', 'BA', 6973],
+  [2920007, 'Maiquinique', 'BA', 8731],
+  [2920106, 'Mairi', 'BA', 17674],
+  [2920205, 'Malhada', 'BA', 15398],
+  [2920304, 'Malhada de Pedras', 'BA', 8670],
+  [2920403, 'Manoel Vitorino', 'BA', 13860],
+  [2920452, 'Mansidão', 'BA', 13919],
+  [2920502, 'Maracás', 'BA', 27620],
+  [2920601, 'Maragogipe', 'BA', 35859],
+  [2920700, 'Maraú', 'BA', 24527],
+  [2920809, 'Marcionílio Souza', 'BA', 9267],
+  [2920908, 'Mascote', 'BA', 13544],
+  [2921005, 'Mata de São João', 'BA', 42566],
+  [2921054, 'Matina', 'BA', 10330],
+  [2921104, 'Medeiros Neto', 'BA', 22194],
+  [2921203, 'Miguel Calmon', 'BA', 24661],
+  [2921302, 'Milagres', 'BA', 11071],
+  [2921401, 'Mirangaba', 'BA', 15734],
+  [2921450, 'Mirante', 'BA', 10187],
+  [2921500, 'Monte Santo', 'BA', 47780],
+  [2921609, 'Morpará', 'BA', 7996],
+  [2921708, 'Morro do Chapéu', 'BA', 33594],
+  [2921807, 'Mortugaba', 'BA', 11143],
+  [2921906, 'Mucugê', 'BA', 12137],
+  [2922003, 'Mucuri', 'BA', 37977],
+  [2922052, 'Mulungu do Morro', 'BA', 13152],
+  [2922102, 'Mundo Novo', 'BA', 17305],
+  [2922201, 'Muniz Ferreira', 'BA', 7190],
+  [2922250, 'Muquém do São Francisco', 'BA', 10443],
+  [2922300, 'Muritiba', 'BA', 28707],
+  [2922409, 'Mutuípe', 'BA', 20037],
+  [2922508, 'Nazaré', 'BA', 27060],
+  [2922607, 'Nilo Peçanha', 'BA', 12063],
+  [2922656, 'Nordestina', 'BA', 18523],
+  [2922706, 'Nova Canaã', 'BA', 13715],
+  [2922730, 'Nova Fátima', 'BA', 7967],
+  [2922755, 'Nova Ibiá', 'BA', 6501],
+  [2922805, 'Nova Itarana', 'BA', 7780],
+  [2922854, 'Nova Redenção', 'BA', 7538],
+  [2922904, 'Nova Soure', 'BA', 24236],
+  [2923001, 'Nova Viçosa', 'BA', 39509],
+  [2923035, 'Novo Horizonte', 'BA', 11162],
+  [2923050, 'Novo Triunfo', 'BA', 10660],
+  [2923100, 'Olindina', 'BA', 22633],
+  [2923209, 'Oliveira dos Brejinhos', 'BA', 20715],
+  [2923308, 'Ouriçangas', 'BA', 7716],
+  [2923357, 'Ourolândia', 'BA', 19243],
+  [2923407, 'Palmas de Monte Alto', 'BA', 20078],
+  [2923506, 'Palmeiras', 'BA', 10339],
+  [2923605, 'Paramirim', 'BA', 20351],
+  [2923704, 'Paratinga', 'BA', 29252],
+  [2923803, 'Paripiranga', 'BA', 26604],
+  [2923902, 'Pau Brasil', 'BA', 9370],
+  [2924009, 'Paulo Afonso', 'BA', 112870],
+  [2924058, 'Pé de Serra', 'BA', 13243],
+  [2924108, 'Pedrão', 'BA', 6235],
+  [2924207, 'Pedro Alexandre', 'BA', 13954],
+  [2924306, 'Piatã', 'BA', 20086],
+  [2924405, 'Pilão Arcado', 'BA', 35357],
+  [2924504, 'Pindaí', 'BA', 14731],
+  [2924603, 'Pindobaçu', 'BA', 19083],
+  [2924652, 'Pintadas', 'BA', 10325],
+  [2924678, 'Piraí do Norte', 'BA', 10974],
+  [2924702, 'Piripá', 'BA', 9152],
+  [2924801, 'Piritiba', 'BA', 17566],
+  [2924900, 'Planaltino', 'BA', 8022],
+  [2925006, 'Planalto', 'BA', 23334],
+  [2925105, 'Poções', 'BA', 48293],
+  [2925204, 'Pojuca', 'BA', 32136],
+  [2925253, 'Ponto Novo', 'BA', 17938],
+  [2925303, 'Porto Seguro', 'BA', 168326],
+  [2925402, 'Potiraguá', 'BA', 10274],
+  [2925501, 'Prado', 'BA', 35003],
+  [2925600, 'Presidente Dutra', 'BA', 15130],
+  [2925709, 'Presidente Jânio Quadros', 'BA', 12621],
+  [2925758, 'Presidente Tancredo Neves', 'BA', 27734],
+  [2925808, 'Queimadas', 'BA', 25988],
+  [2925907, 'Quijingue', 'BA', 25272],
+  [2925931, 'Quixabeira', 'BA', 9461],
+  [2925956, 'Rafael Jambeiro', 'BA', 19662],
+  [2926004, 'Remanso', 'BA', 40586],
+  [2926103, 'Retirolândia', 'BA', 13651],
+  [2926202, 'Riachão das Neves', 'BA', 21642],
+  [2926301, 'Riachão do Jacuípe', 'BA', 33386],
+  [2926400, 'Riacho de Santana', 'BA', 30711],
+  [2926509, 'Ribeira do Amparo', 'BA', 13841],
+  [2926608, 'Ribeira do Pombal', 'BA', 54010],
+  [2926657, 'Ribeirão do Largo', 'BA', 9740],
+  [2926707, 'Rio de Contas', 'BA', 13184],
+  [2926806, 'Rio do Antônio', 'BA', 13146],
+  [2926905, 'Rio do Pires', 'BA', 10497],
+  [2927002, 'Rio Real', 'BA', 35362],
+  [2927101, 'Rodelas', 'BA', 10308],
+  [2927200, 'Ruy Barbosa', 'BA', 28282],
+  [2927309, 'Salinas da Margarida', 'BA', 14987],
+  [2927408, 'Salvador', 'BA', 2417678],
+  [2927507, 'Santa Bárbara', 'BA', 20952],
+  [2927606, 'Santa Brígida', 'BA', 14965],
+  [2927705, 'Santa Cruz Cabrália', 'BA', 29185],
+  [2927804, 'Santa Cruz da Vitória', 'BA', 4681],
+  [2927903, 'Santa Inês', 'BA', 10300],
+  [2928000, 'Santaluz', 'BA', 37834],
+  [2928059, 'Santa Luzia', 'BA', 13896],
+  [2928109, 'Santa Maria da Vitória', 'BA', 38604],
+  [2928208, 'Santana', 'BA', 24755],
+  [2928307, 'Santanópolis', 'BA', 8716],
+  [2928406, 'Santa Rita de Cássia', 'BA', 27390],
+  [2928505, 'Santa Terezinha', 'BA', 10441],
+  [2928604, 'Santo Amaro', 'BA', 56012],
+  [2928703, 'Santo Antônio de Jesus', 'BA', 103055],
+  [2928802, 'Santo Estêvão', 'BA', 52276],
+  [2928901, 'São Desidério', 'BA', 32828],
+  [2928950, 'São Domingos', 'BA', 8426],
+  [2929008, 'São Félix', 'BA', 11026],
+  [2929057, 'São Félix do Coribe', 'BA', 15194],
+  [2929107, 'São Felipe', 'BA', 20283],
+  [2929206, 'São Francisco do Conde', 'BA', 38733],
+  [2929255, 'São Gabriel', 'BA', 18600],
+  [2929305, 'São Gonçalo dos Campos', 'BA', 39513],
+  [2929354, 'São José da Vitória', 'BA', 5315],
+  [2929370, 'São José do Jacuípe', 'BA', 10187],
+  [2929404, 'São Miguel das Matas', 'BA', 10334],
+  [2929503, 'São Sebastião do Passé', 'BA', 40958],
+  [2929602, 'Sapeaçu', 'BA', 17963],
+  [2929701, 'Sátiro Dias', 'BA', 16008],
+  [2929750, 'Saubara', 'BA', 11438],
+  [2929800, 'Saúde', 'BA', 10478],
+  [2929909, 'Seabra', 'BA', 46160],
+  [2930006, 'Sebastião Laranjeiras', 'BA', 9360],
+  [2930105, 'Senhor do Bonfim', 'BA', 74523],
+  [2930154, 'Serra do Ramalho', 'BA', 34222],
+  [2930204, 'Sento Sé', 'BA', 38154],
+  [2930303, 'Serra Dourada', 'BA', 17066],
+  [2930402, 'Serra Preta', 'BA', 17996],
+  [2930501, 'Serrinha', 'BA', 80435],
+  [2930600, 'Serrolândia', 'BA', 13335],
+  [2930709, 'Simões Filho', 'BA', 114559],
+  [2930758, 'Sítio do Mato', 'BA', 13408],
+  [2930766, 'Sítio do Quinto', 'BA', 14773],
+  [2930774, 'Sobradinho', 'BA', 25475],
+  [2930808, 'Souto Soares', 'BA', 17054],
+  [2930907, 'Tabocas do Brejo Velho', 'BA', 11979],
+  [2931004, 'Tanhaçu', 'BA', 21006],
+  [2931053, 'Tanque Novo', 'BA', 17158],
+  [2931103, 'Tanquinho', 'BA', 7717],
+  [2931202, 'Taperoá', 'BA', 18044],
+  [2931301, 'Tapiramutá', 'BA', 15818],
+  [2931350, 'Teixeira de Freitas', 'BA', 145216],
+  [2931400, 'Teodoro Sampaio', 'BA', 7110],
+  [2931509, 'Teofilândia', 'BA', 21176],
+  [2931608, 'Teolândia', 'BA', 15332],
+  [2931707, 'Terra Nova', 'BA', 10798],
+  [2931806, 'Tremedal', 'BA', 16296],
+  [2931905, 'Tucano', 'BA', 48736],
+  [2932002, 'Uauá', 'BA', 24665],
+  [2932101, 'Ubaíra', 'BA', 18626],
+  [2932200, 'Ubaitaba', 'BA', 17596],
+  [2932309, 'Ubatã', 'BA', 16094],
+  [2932408, 'Uibaí', 'BA', 13432],
+  [2932457, 'Umburanas', 'BA', 13642],
+  [2932507, 'Una', 'BA', 18131],
+  [2932606, 'Urandi', 'BA', 15355],
+  [2932705, 'Uruçuca', 'BA', 21420],
+  [2932804, 'Utinga', 'BA', 16277],
+  [2932903, 'Valença', 'BA', 85655],
+  [2933000, 'Valente', 'BA', 24362],
+  [2933059, 'Várzea da Roça', 'BA', 13800],
+  [2933109, 'Várzea do Poço', 'BA', 8101],
+  [2933158, 'Várzea Nova', 'BA', 13377],
+  [2933174, 'Varzedo', 'BA', 9913],
+  [2933208, 'Vera Cruz', 'BA', 42529],
+  [2933257, 'Vereda', 'BA', 6003],
+  [2933307, 'Vitória da Conquista', 'BA', 370879],
+  [2933406, 'Wagner', 'BA', 9503],
+  [2933455, 'Wanderley', 'BA', 12968],
+  [2933505, 'Wenceslau Guimarães', 'BA', 24474],
+  [2933604, 'Xique-Xique', 'BA', 44757],
+  [3100104, 'Abadia dos Dourados', 'MG', 6272],
+  [3100203, 'Abaeté', 'MG', 22675],
+  [3100302, 'Abre Campo', 'MG', 13927],
+  [3100401, 'Acaiaca', 'MG', 3909],
+  [3100500, 'Açucena', 'MG', 8943],
+  [3100609, 'Água Boa', 'MG', 12589],
+  [3100708, 'Água Comprida', 'MG', 2108],
+  [3100807, 'Aguanil', 'MG', 4357],
+  [3100906, 'Águas Formosas', 'MG', 18448],
+  [3101003, 'Águas Vermelhas', 'MG', 14037],
+  [3101102, 'Aimorés', 'MG', 25269],
+  [3101201, 'Aiuruoca', 'MG', 6233],
+  [3101300, 'Alagoa', 'MG', 2749],
+  [3101409, 'Albertina', 'MG', 2952],
+  [3101508, 'Além Paraíba', 'MG', 30717],
+  [3101607, 'Alfenas', 'MG', 78970],
+  [3101631, 'Alfredo Vasconcelos', 'MG', 6931],
+  [3101706, 'Almenara', 'MG', 40364],
+  [3101805, 'Alpercata', 'MG', 6903],
+  [3101904, 'Alpinópolis', 'MG', 18300],
+  [3102001, 'Alterosa', 'MG', 13915],
+  [3102050, 'Alto Caparaó', 'MG', 5795],
+  [3102100, 'Alto Rio Doce', 'MG', 10891],
+  [3102209, 'Alvarenga', 'MG', 3975],
+  [3102308, 'Alvinópolis', 'MG', 15059],
+  [3102407, 'Alvorada de Minas', 'MG', 4159],
+  [3102506, 'Amparo do Serra', 'MG', 4541],
+  [3102605, 'Andradas', 'MG', 40553],
+  [3102704, 'Cachoeira de Pajeú', 'MG', 9110],
+  [3102803, 'Andrelândia', 'MG', 11927],
+  [3102852, 'Angelândia', 'MG', 7718],
+  [3102902, 'Antônio Carlos', 'MG', 11095],
+  [3103009, 'Antônio Dias', 'MG', 9219],
+  [3103108, 'Antônio Prado de Minas', 'MG', 1538],
+  [3103207, 'Araçaí', 'MG', 2181],
+  [3103306, 'Aracitaba', 'MG', 2049],
+  [3103405, 'Araçuaí', 'MG', 34297],
+  [3103504, 'Araguari', 'MG', 117808],
+  [3103603, 'Arantina', 'MG', 2915],
+  [3103702, 'Araponga', 'MG', 8048],
+  [3103751, 'Araporã', 'MG', 8479],
+  [3103801, 'Arapuá', 'MG', 2631],
+  [3103900, 'Araújos', 'MG', 9199],
+  [3104007, 'Araxá', 'MG', 111691],
+  [3104106, 'Arceburgo', 'MG', 9177],
+  [3104205, 'Arcos', 'MG', 41416],
+  [3104304, 'Areado', 'MG', 13881],
+  [3104403, 'Argirita', 'MG', 2688],
+  [3104452, 'Aricanduva', 'MG', 4719],
+  [3104502, 'Arinos', 'MG', 17272],
+  [3104601, 'Astolfo Dutra', 'MG', 14138],
+  [3104700, 'Ataléia', 'MG', 13736],
+  [3104809, 'Augusto de Lima', 'MG', 4538],
+  [3104908, 'Baependi', 'MG', 18366],
+  [3105004, 'Baldim', 'MG', 7492],
+  [3105103, 'Bambuí', 'MG', 23546],
+  [3105202, 'Bandeira', 'MG', 4741],
+  [3105301, 'Bandeira do Sul', 'MG', 5943],
+  [3105400, 'Barão de Cocais', 'MG', 30778],
+  [3105509, 'Barão do Monte Alto', 'MG', 4964],
+  [3105608, 'Barbacena', 'MG', 125317],
+  [3105707, 'Barra Longa', 'MG', 5666],
+  [3105905, 'Barroso', 'MG', 20080],
+  [3106002, 'Bela Vista de Minas', 'MG', 10167],
+  [3106101, 'Belmiro Braga', 'MG', 3244],
+  [3106200, 'Belo Horizonte', 'MG', 2315560],
+  [3106309, 'Belo Oriente', 'MG', 23928],
+  [3106408, 'Belo Vale', 'MG', 8627],
+  [3106507, 'Berilo', 'MG', 9826],
+  [3106606, 'Bertópolis', 'MG', 4451],
+  [3106655, 'Berizal', 'MG', 4201],
+  [3106705, 'Betim', 'MG', 411846],
+  [3106804, 'Bias Fortes', 'MG', 3361],
+  [3106903, 'Bicas', 'MG', 13978],
+  [3107000, 'Biquinhas', 'MG', 2383],
+  [3107109, 'Boa Esperança', 'MG', 39848],
+  [3107208, 'Bocaina de Minas', 'MG', 5348],
+  [3107307, 'Bocaiúva', 'MG', 48032],
+  [3107406, 'Bom Despacho', 'MG', 51737],
+  [3107505, 'Bom Jardim de Minas', 'MG', 6783],
+  [3107604, 'Bom Jesus da Penha', 'MG', 4474],
+  [3107703, 'Bom Jesus do Amparo', 'MG', 5631],
+  [3107802, 'Bom Jesus do Galho', 'MG', 14536],
+  [3107901, 'Bom Repouso', 'MG', 12649],
+  [3108008, 'Bom Sucesso', 'MG', 17151],
+  [3108107, 'Bonfim', 'MG', 7434],
+  [3108206, 'Bonfinópolis de Minas', 'MG', 5528],
+  [3108255, 'Bonito de Minas', 'MG', 10204],
+  [3108305, 'Borda da Mata', 'MG', 17404],
+  [3108404, 'Botelhos', 'MG', 14828],
+  [3108503, 'Botumirim', 'MG', 5790],
+  [3108552, 'Brasilândia de Minas', 'MG', 15020],
+  [3108602, 'Brasília de Minas', 'MG', 32025],
+  [3108701, 'Brás Pires', 'MG', 4260],
+  [3108800, 'Braúnas', 'MG', 4441],
+  [3108909, 'Brazópolis', 'MG', 14246],
+  [3109006, 'Brumadinho', 'MG', 38915],
+  [3109105, 'Bueno Brandão', 'MG', 10911],
+  [3109204, 'Buenópolis', 'MG', 9150],
+  [3109253, 'Bugre', 'MG', 4041],
+  [3109303, 'Buritis', 'MG', 24030],
+  [3109402, 'Buritizeiro', 'MG', 23910],
+  [3109451, 'Cabeceira Grande', 'MG', 6627],
+  [3109501, 'Cabo Verde', 'MG', 11410],
+  [3109600, 'Cachoeira da Prata', 'MG', 3693],
+  [3109709, 'Cachoeira de Minas', 'MG', 11883],
+  [3109808, 'Cachoeira Dourada', 'MG', 2315],
+  [3109907, 'Caetanópolis', 'MG', 11435],
+  [3110004, 'Caeté', 'MG', 38776],
+  [3110103, 'Caiana', 'MG', 5304],
+  [3110202, 'Cajuri', 'MG', 4088],
+  [3110301, 'Caldas', 'MG', 14217],
+  [3110400, 'Camacho', 'MG', 2838],
+  [3110509, 'Camanducaia', 'MG', 26097],
+  [3110608, 'Cambuí', 'MG', 29536],
+  [3110707, 'Cambuquira', 'MG', 12313],
+  [3110806, 'Campanário', 'MG', 2923],
+  [3110905, 'Campanha', 'MG', 15935],
+  [3111002, 'Campestre', 'MG', 20696],
+  [3111101, 'Campina Verde', 'MG', 18011],
+  [3111150, 'Campo Azul', 'MG', 3714],
+  [3111200, 'Campo Belo', 'MG', 52277],
+  [3111309, 'Campo do Meio', 'MG', 11377],
+  [3111408, 'Campo Florido', 'MG', 8466],
+  [3111507, 'Campos Altos', 'MG', 12979],
+  [3111606, 'Campos Gerais', 'MG', 26105],
+  [3111705, 'Canaã', 'MG', 4715],
+  [3111804, 'Canápolis', 'MG', 10608],
+  [3111903, 'Cana Verde', 'MG', 5272],
+  [3112000, 'Candeias', 'MG', 14001],
+  [3112059, 'Cantagalo', 'MG', 3974],
+  [3112109, 'Caparaó', 'MG', 5048],
+  [3112208, 'Capela Nova', 'MG', 4362],
+  [3112307, 'Capelinha', 'MG', 39626],
+  [3112406, 'Capetinga', 'MG', 6562],
+  [3112505, 'Capim Branco', 'MG', 10663],
+  [3112604, 'Capinópolis', 'MG', 14655],
+  [3112653, 'Capitão Andrade', 'MG', 4585],
+  [3112703, 'Capitão Enéas', 'MG', 14108],
+  [3112802, 'Capitólio', 'MG', 10380],
+  [3112901, 'Caputira', 'MG', 8936],
+  [3113008, 'Caraí', 'MG', 19548],
+  [3113107, 'Caranaíba', 'MG', 2933],
+  [3113206, 'Carandaí', 'MG', 23812],
+  [3113305, 'Carangola', 'MG', 31240],
+  [3113404, 'Caratinga', 'MG', 87360],
+  [3113503, 'Carbonita', 'MG', 8512],
+  [3113602, 'Careaçu', 'MG', 6816],
+  [3113701, 'Carlos Chagas', 'MG', 18615],
+  [3113800, 'Carmésia', 'MG', 2605],
+  [3113909, 'Carmo da Cachoeira', 'MG', 11547],
+  [3114006, 'Carmo da Mata', 'MG', 11019],
+  [3114105, 'Carmo de Minas', 'MG', 13797],
+  [3114204, 'Carmo do Cajuru', 'MG', 23479],
+  [3114303, 'Carmo do Paranaíba', 'MG', 29011],
+  [3114402, 'Carmo do Rio Claro', 'MG', 20954],
+  [3114501, 'Carmópolis de Minas', 'MG', 18003],
+  [3114550, 'Carneirinho', 'MG', 9422],
+  [3114600, 'Carrancas', 'MG', 4049],
+  [3114709, 'Carvalhópolis', 'MG', 3341],
+  [3114808, 'Carvalhos', 'MG', 4422],
+  [3114907, 'Casa Grande', 'MG', 2214],
+  [3115003, 'Cascalho Rico', 'MG', 2712],
+  [3115102, 'Cássia', 'MG', 17155],
+  [3115201, 'Conceição da Barra de Minas', 'MG', 3560],
+  [3115300, 'Cataguases', 'MG', 66261],
+  [3115359, 'Catas Altas', 'MG', 5473],
+  [3115409, 'Catas Altas da Noruega', 'MG', 3110],
+  [3115458, 'Catuji', 'MG', 7030],
+  [3115474, 'Catuti', 'MG', 4739],
+  [3115508, 'Caxambu', 'MG', 21056],
+  [3115607, 'Cedro do Abaeté', 'MG', 1081],
+  [3115706, 'Central de Minas', 'MG', 6171],
+  [3115805, 'Centralina', 'MG', 10207],
+  [3115904, 'Chácara', 'MG', 3075],
+  [3116001, 'Chalé', 'MG', 6075],
+  [3116100, 'Chapada do Norte', 'MG', 10337],
+  [3116159, 'Chapada Gaúcha', 'MG', 12355],
+  [3116209, 'Chiador', 'MG', 2800],
+  [3116308, 'Cipotânea', 'MG', 5581],
+  [3116407, 'Claraval', 'MG', 4658],
+  [3116506, 'Claro dos Poções', 'MG', 7166],
+  [3116605, 'Cláudio', 'MG', 30159],
+  [3116704, 'Coimbra', 'MG', 7117],
+  [3116803, 'Coluna', 'MG', 8163],
+  [3116902, 'Comendador Gomes', 'MG', 2773],
+  [3117009, 'Comercinho', 'MG', 6660],
+  [3117108, 'Conceição da Aparecida', 'MG', 10371],
+  [3117207, 'Conceição das Pedras', 'MG', 2772],
+  [3117306, 'Conceição das Alagoas', 'MG', 28381],
+  [3117405, 'Conceição de Ipanema', 'MG', 4409],
+  [3117504, 'Conceição do Mato Dentro', 'MG', 23163],
+  [3117603, 'Conceição do Pará', 'MG', 5415],
+  [3117702, 'Conceição do Rio Verde', 'MG', 12541],
+  [3117801, 'Conceição dos Ouros', 'MG', 10880],
+  [3117836, 'Cônego Marinho', 'MG', 7237],
+  [3117876, 'Confins', 'MG', 7350],
+  [3117900, 'Congonhal', 'MG', 11083],
+  [3118007, 'Congonhas', 'MG', 52890],
+  [3118106, 'Congonhas do Norte', 'MG', 4831],
+  [3118205, 'Conquista', 'MG', 6694],
+  [3118304, 'Conselheiro Lafaiete', 'MG', 131621],
+  [3118403, 'Conselheiro Pena', 'MG', 20824],
+  [3118502, 'Consolação', 'MG', 1563],
+  [3118601, 'Contagem', 'MG', 621863],
+  [3118700, 'Coqueiral', 'MG', 9023],
+  [3118809, 'Coração de Jesus', 'MG', 25377],
+  [3118908, 'Cordisburgo', 'MG', 7547],
+  [3119005, 'Cordislândia', 'MG', 3200],
+  [3119104, 'Corinto', 'MG', 23532],
+  [3119203, 'Coroaci', 'MG', 10884],
+  [3119302, 'Coromandel', 'MG', 28894],
+  [3119401, 'Coronel Fabriciano', 'MG', 104736],
+  [3119500, 'Coronel Murta', 'MG', 8200],
+  [3119609, 'Coronel Pacheco', 'MG', 2762],
+  [3119708, 'Coronel Xavier Chaves', 'MG', 3486],
+  [3119807, 'Córrego Danta', 'MG', 2960],
+  [3119906, 'Córrego do Bom Jesus', 'MG', 4272],
+  [3119955, 'Córrego Fundo', 'MG', 6133],
+  [3120003, 'Córrego Novo', 'MG', 2875],
+  [3120102, 'Couto de Magalhães de Minas', 'MG', 4245],
+  [3120151, 'Crisólita', 'MG', 5265],
+  [3120201, 'Cristais', 'MG', 12197],
+  [3120300, 'Cristália', 'MG', 5121],
+  [3120409, 'Cristiano Otoni', 'MG', 4667],
+  [3120508, 'Cristina', 'MG', 10374],
+  [3120607, 'Crucilândia', 'MG', 5434],
+  [3120706, 'Cruzeiro da Fortaleza', 'MG', 3521],
+  [3120805, 'Cruzília', 'MG', 15362],
+  [3120839, 'Cuparaque', 'MG', 3983],
+  [3120870, 'Curral de Dentro', 'MG', 7406],
+  [3120904, 'Curvelo', 'MG', 80665],
+  [3121001, 'Datas', 'MG', 5465],
+  [3121100, 'Delfim Moreira', 'MG', 7952],
+  [3121209, 'Delfinópolis', 'MG', 8393],
+  [3121258, 'Delta', 'MG', 10494],
+  [3121308, 'Descoberto', 'MG', 4928],
+  [3121407, 'Desterro de Entre Rios', 'MG', 7653],
+  [3121506, 'Desterro do Melo', 'MG', 2994],
+  [3121605, 'Diamantina', 'MG', 47702],
+  [3121704, 'Diogo de Vasconcelos', 'MG', 3549],
+  [3121803, 'Dionísio', 'MG', 6847],
+  [3121902, 'Divinésia', 'MG', 4226],
+  [3122009, 'Divino', 'MG', 20706],
+  [3122108, 'Divino das Laranjeiras', 'MG', 4178],
+  [3122207, 'Divinolândia de Minas', 'MG', 6516],
+  [3122306, 'Divinópolis', 'MG', 231091],
+  [3122355, 'Divisa Alegre', 'MG', 6321],
+  [3122405, 'Divisa Nova', 'MG', 5851],
+  [3122454, 'Divisópolis', 'MG', 10213],
+  [3122470, 'Dom Bosco', 'MG', 3697],
+  [3122504, 'Dom Cavati', 'MG', 4904],
+  [3122603, 'Dom Joaquim', 'MG', 4899],
+  [3122702, 'Dom Silvério', 'MG', 5228],
+  [3122801, 'Dom Viçoso', 'MG', 3095],
+  [3122900, 'Dona Euzébia', 'MG', 6093],
+  [3123007, 'Dores de Campos', 'MG', 10007],
+  [3123106, 'Dores de Guanhães', 'MG', 5029],
+  [3123205, 'Dores do Indaiá', 'MG', 12630],
+  [3123304, 'Dores do Turvo', 'MG', 4987],
+  [3123403, 'Doresópolis', 'MG', 1461],
+  [3123502, 'Douradoquara', 'MG', 1829],
+  [3123528, 'Durandé', 'MG', 7817],
+  [3123601, 'Elói Mendes', 'MG', 26336],
+  [3123700, 'Engenheiro Caldas', 'MG', 13622],
+  [3123809, 'Engenheiro Navarro', 'MG', 6354],
+  [3123858, 'Entre Folhas', 'MG', 5179],
+  [3123908, 'Entre Rios de Minas', 'MG', 14746],
+  [3124005, 'Ervália', 'MG', 20255],
+  [3124104, 'Esmeraldas', 'MG', 85598],
+  [3124203, 'Espera Feliz', 'MG', 24102],
+  [3124302, 'Espinosa', 'MG', 30443],
+  [3124401, 'Espírito Santo do Dourado', 'MG', 6611],
+  [3124500, 'Estiva', 'MG', 11502],
+  [3124609, 'Estrela Dalva', 'MG', 2186],
+  [3124708, 'Estrela do Indaiá', 'MG', 2772],
+  [3124807, 'Estrela do Sul', 'MG', 6840],
+  [3124906, 'Eugenópolis', 'MG', 10801],
+  [3125002, 'Ewbank da Câmara', 'MG', 3875],
+  [3125101, 'Extrema', 'MG', 53482],
+  [3125200, 'Fama', 'MG', 2578],
+  [3125309, 'Faria Lemos', 'MG', 3188],
+  [3125408, 'Felício dos Santos', 'MG', 5133],
+  [3125507, 'São Gonçalo do Rio Preto', 'MG', 3032],
+  [3125606, 'Felisburgo', 'MG', 6489],
+  [3125705, 'Felixlândia', 'MG', 13978],
+  [3125804, 'Fernandes Tourinho', 'MG', 2789],
+  [3125903, 'Ferros', 'MG', 9590],
+  [3125952, 'Fervedouro', 'MG', 10445],
+  [3126000, 'Florestal', 'MG', 8045],
+  [3126109, 'Formiga', 'MG', 68248],
+  [3126208, 'Formoso', 'MG', 7949],
+  [3126307, 'Fortaleza de Minas', 'MG', 3477],
+  [3126406, 'Fortuna de Minas', 'MG', 3093],
+  [3126505, 'Francisco Badaró', 'MG', 7366],
+  [3126604, 'Francisco Dumont', 'MG', 4503],
+  [3126703, 'Francisco Sá', 'MG', 23476],
+  [3126752, 'Franciscópolis', 'MG', 5034],
+  [3126802, 'Frei Gaspar', 'MG', 5640],
+  [3126901, 'Frei Inocêncio', 'MG', 8226],
+  [3126950, 'Frei Lagonegro', 'MG', 3391],
+  [3127008, 'Fronteira', 'MG', 14540],
+  [3127057, 'Fronteira dos Vales', 'MG', 4345],
+  [3127073, 'Fruta de Leite', 'MG', 4647],
+  [3127107, 'Frutal', 'MG', 58588],
+  [3127206, 'Funilândia', 'MG', 4686],
+  [3127305, 'Galiléia', 'MG', 6222],
+  [3127339, 'Gameleiras', 'MG', 4793],
+  [3127354, 'Glaucilândia', 'MG', 2928],
+  [3127370, 'Goiabeira', 'MG', 2830],
+  [3127388, 'Goianá', 'MG', 4053],
+  [3127404, 'Gonçalves', 'MG', 4727],
+  [3127503, 'Gonzaga', 'MG', 5230],
+  [3127602, 'Gouveia', 'MG', 11331],
+  [3127701, 'Governador Valadares', 'MG', 257171],
+  [3127800, 'Grão Mogol', 'MG', 13901],
+  [3127909, 'Grupiara', 'MG', 1392],
+  [3128006, 'Guanhães', 'MG', 32244],
+  [3128105, 'Guapé', 'MG', 13772],
+  [3128204, 'Guaraciaba', 'MG', 9753],
+  [3128253, 'Guaraciama', 'MG', 5051],
+  [3128303, 'Guaranésia', 'MG', 19150],
+  [3128402, 'Guarani', 'MG', 7714],
+  [3128501, 'Guarará', 'MG', 3149],
+  [3128600, 'Guarda-Mor', 'MG', 6539],
+  [3128709, 'Guaxupé', 'MG', 50911],
+  [3128808, 'Guidoval', 'MG', 7131],
+  [3128907, 'Guimarânia', 'MG', 8478],
+  [3129004, 'Guiricema', 'MG', 7778],
+  [3129103, 'Gurinhatã', 'MG', 5192],
+  [3129202, 'Heliodora', 'MG', 6134],
+  [3129301, 'Iapu', 'MG', 12030],
+  [3129400, 'Ibertioga', 'MG', 5198],
+  [3129509, 'Ibiá', 'MG', 22229],
+  [3129608, 'Ibiaí', 'MG', 6286],
+  [3129657, 'Ibiracatu', 'MG', 5081],
+  [3129707, 'Ibiraci', 'MG', 10948],
+  [3129806, 'Ibirité', 'MG', 170537],
+  [3129905, 'Ibitiúra de Minas', 'MG', 3365],
+  [3130002, 'Ibituruna', 'MG', 2698],
+  [3130051, 'Icaraí de Minas', 'MG', 10677],
+  [3130101, 'Igarapé', 'MG', 45847],
+  [3130200, 'Igaratinga', 'MG', 10830],
+  [3130309, 'Iguatama', 'MG', 6826],
+  [3130408, 'Ijaci', 'MG', 7003],
+  [3130507, 'Ilicínea', 'MG', 12741],
+  [3130556, 'Imbé de Minas', 'MG', 6986],
+  [3130606, 'Inconfidentes', 'MG', 7301],
+  [3130655, 'Indaiabira', 'MG', 6346],
+  [3130705, 'Indianópolis', 'MG', 6171],
+  [3130804, 'Ingaí', 'MG', 2580],
+  [3130903, 'Inhapim', 'MG', 22692],
+  [3131000, 'Inhaúma', 'MG', 6239],
+  [3131109, 'Inimutaba', 'MG', 7371],
+  [3131158, 'Ipaba', 'MG', 17136],
+  [3131208, 'Ipanema', 'MG', 19522],
+  [3131307, 'Ipatinga', 'MG', 227731],
+  [3131406, 'Ipiaçu', 'MG', 3775],
+  [3131505, 'Ipuiúna', 'MG', 9135],
+  [3131604, 'Iraí de Minas', 'MG', 7180],
+  [3131703, 'Itabira', 'MG', 113343],
+  [3131802, 'Itabirinha', 'MG', 10362],
+  [3131901, 'Itabirito', 'MG', 53365],
+  [3132008, 'Itacambira', 'MG', 4252],
+  [3132107, 'Itacarambi', 'MG', 17208],
+  [3132206, 'Itaguara', 'MG', 13846],
+  [3132305, 'Itaipé', 'MG', 10463],
+  [3132404, 'Itajubá', 'MG', 93073],
+  [3132503, 'Itamarandiba', 'MG', 32948],
+  [3132602, 'Itamarati de Minas', 'MG', 3690],
+  [3132701, 'Itambacuri', 'MG', 21042],
+  [3132800, 'Itambé do Mato Dentro', 'MG', 2142],
+  [3132909, 'Itamogi', 'MG', 10770],
+  [3133006, 'Itamonte', 'MG', 14786],
+  [3133105, 'Itanhandu', 'MG', 15236],
+  [3133204, 'Itanhomi', 'MG', 11128],
+  [3133303, 'Itaobim', 'MG', 19151],
+  [3133402, 'Itapagipe', 'MG', 13690],
+  [3133501, 'Itapecerica', 'MG', 21046],
+  [3133600, 'Itapeva', 'MG', 12692],
+  [3133709, 'Itatiaiuçu', 'MG', 12966],
+  [3133758, 'Itaú de Minas', 'MG', 14406],
+  [3133808, 'Itaúna', 'MG', 97669],
+  [3133907, 'Itaverava', 'MG', 5642],
+  [3134004, 'Itinga', 'MG', 13745],
+  [3134103, 'Itueta', 'MG', 6055],
+  [3134202, 'Ituiutaba', 'MG', 102217],
+  [3134301, 'Itumirim', 'MG', 6638],
+  [3134400, 'Iturama', 'MG', 38295],
+  [3134509, 'Itutinga', 'MG', 4217],
+  [3134608, 'Jaboticatubas', 'MG', 20406],
+  [3134707, 'Jacinto', 'MG', 11042],
+  [3134806, 'Jacuí', 'MG', 7495],
+  [3134905, 'Jacutinga', 'MG', 25525],
+  [3135001, 'Jaguaraçu', 'MG', 3092],
+  [3135050, 'Jaíba', 'MG', 37660],
+  [3135076, 'Jampruca', 'MG', 4296],
+  [3135100, 'Janaúba', 'MG', 70699],
+  [3135209, 'Januária', 'MG', 65150],
+  [3135308, 'Japaraíba', 'MG', 4506],
+  [3135357, 'Japonvar', 'MG', 8127],
+  [3135407, 'Jeceaba', 'MG', 6197],
+  [3135456, 'Jenipapo de Minas', 'MG', 6100],
+  [3135506, 'Jequeri', 'MG', 12419],
+  [3135605, 'Jequitaí', 'MG', 6484],
+  [3135704, 'Jequitibá', 'MG', 5883],
+  [3135803, 'Jequitinhonha', 'MG', 24007],
+  [3135902, 'Jesuânia', 'MG', 5138],
+  [3136009, 'Joaíma', 'MG', 13888],
+  [3136108, 'Joanésia', 'MG', 4329],
+  [3136207, 'João Monlevade', 'MG', 80187],
+  [3136306, 'João Pinheiro', 'MG', 46801],
+  [3136405, 'Joaquim Felício', 'MG', 3854],
+  [3136504, 'Jordânia', 'MG', 10304],
+  [3136520, 'José Gonçalves de Minas', 'MG', 3969],
+  [3136553, 'José Raydan', 'MG', 4268],
+  [3136579, 'Josenópolis', 'MG', 3630],
+  [3136603, 'Nova União', 'MG', 5909],
+  [3136652, 'Juatuba', 'MG', 30716],
+  [3136702, 'Juiz de Fora', 'MG', 540756],
+  [3136801, 'Juramento', 'MG', 3768],
+  [3136900, 'Juruaia', 'MG', 11084],
+  [3136959, 'Juvenília', 'MG', 5789],
+  [3137007, 'Ladainha', 'MG', 14383],
+  [3137106, 'Lagamar', 'MG', 6631],
+  [3137205, 'Lagoa da Prata', 'MG', 51412],
+  [3137304, 'Lagoa dos Patos', 'MG', 3313],
+  [3137403, 'Lagoa Dourada', 'MG', 12769],
+  [3137502, 'Lagoa Formosa', 'MG', 18904],
+  [3137536, 'Lagoa Grande', 'MG', 8969],
+  [3137601, 'Lagoa Santa', 'MG', 75145],
+  [3137700, 'Lajinha', 'MG', 20835],
+  [3137809, 'Lambari', 'MG', 20414],
+  [3137908, 'Lamim', 'MG', 3184],
+  [3138005, 'Laranjal', 'MG', 5963],
+  [3138104, 'Lassance', 'MG', 7124],
+  [3138203, 'Lavras', 'MG', 104761],
+  [3138302, 'Leandro Ferreira', 'MG', 3199],
+  [3138351, 'Leme do Prado', 'MG', 4341],
+  [3138401, 'Leopoldina', 'MG', 51145],
+  [3138500, 'Liberdade', 'MG', 4737],
+  [3138609, 'Lima Duarte', 'MG', 17221],
+  [3138625, 'Limeira do Oeste', 'MG', 8687],
+  [3138658, 'Lontra', 'MG', 8790],
+  [3138674, 'Luisburgo', 'MG', 6956],
+  [3138682, 'Luislândia', 'MG', 6210],
+  [3138708, 'Luminárias', 'MG', 5586],
+  [3138807, 'Luz', 'MG', 17875],
+  [3138906, 'Machacalis', 'MG', 6487],
+  [3139003, 'Machado', 'MG', 37684],
+  [3139102, 'Madre de Deus de Minas', 'MG', 5191],
+  [3139201, 'Malacacheta', 'MG', 17516],
+  [3139250, 'Mamonas', 'MG', 5997],
+  [3139300, 'Manga', 'MG', 18886],
+  [3139409, 'Manhuaçu', 'MG', 91886],
+  [3139508, 'Manhumirim', 'MG', 20613],
+  [3139607, 'Mantena', 'MG', 26535],
+  [3139706, 'Maravilhas', 'MG', 7333],
+  [3139805, 'Mar de Espanha', 'MG', 12721],
+  [3139904, 'Maria da Fé', 'MG', 14247],
+  [3140001, 'Mariana', 'MG', 61387],
+  [3140100, 'Marilac', 'MG', 4224],
+  [3140159, 'Mário Campos', 'MG', 15900],
+  [3140209, 'Maripá de Minas', 'MG', 3387],
+  [3140308, 'Marliéria', 'MG', 4592],
+  [3140407, 'Marmelópolis', 'MG', 3200],
+  [3140506, 'Martinho Campos', 'MG', 14003],
+  [3140530, 'Martins Soares', 'MG', 8396],
+  [3140555, 'Mata Verde', 'MG', 9112],
+  [3140605, 'Materlândia', 'MG', 3963],
+  [3140704, 'Mateus Leme', 'MG', 37841],
+  [3140803, 'Matias Barbosa', 'MG', 14121],
+  [3140852, 'Matias Cardoso', 'MG', 8895],
+  [3140902, 'Matipó', 'MG', 18552],
+  [3141009, 'Mato Verde', 'MG', 12038],
+  [3141108, 'Matozinhos', 'MG', 37618],
+  [3141207, 'Matutina', 'MG', 3814],
+  [3141306, 'Medeiros', 'MG', 3900],
+  [3141405, 'Medina', 'MG', 20156],
+  [3141504, 'Mendes Pimentel', 'MG', 5606],
+  [3141603, 'Mercês', 'MG', 10373],
+  [3141702, 'Mesquita', 'MG', 5040],
+  [3141801, 'Minas Novas', 'MG', 24405],
+  [3141900, 'Minduri', 'MG', 3741],
+  [3142007, 'Mirabela', 'MG', 13651],
+  [3142106, 'Miradouro', 'MG', 8968],
+  [3142205, 'Miraí', 'MG', 13633],
+  [3142254, 'Miravânia', 'MG', 3985],
+  [3142304, 'Moeda', 'MG', 5125],
+  [3142403, 'Moema', 'MG', 7548],
+  [3142502, 'Monjolos', 'MG', 2169],
+  [3142601, 'Monsenhor Paulo', 'MG', 8340],
+  [3142700, 'Montalvânia', 'MG', 14060],
+  [3142809, 'Monte Alegre de Minas', 'MG', 20170],
+  [3142908, 'Monte Azul', 'MG', 20328],
+  [3143005, 'Monte Belo', 'MG', 13046],
+  [3143104, 'Monte Carmelo', 'MG', 47692],
+  [3143153, 'Monte Formoso', 'MG', 4381],
+  [3143203, 'Monte Santo de Minas', 'MG', 20890],
+  [3143302, 'Montes Claros', 'MG', 414240],
+  [3143401, 'Monte Sião', 'MG', 24089],
+  [3143450, 'Montezuma', 'MG', 6888],
+  [3143500, 'Morada Nova de Minas', 'MG', 9067],
+  [3143609, 'Morro da Garça', 'MG', 2411],
+  [3143708, 'Morro do Pilar', 'MG', 3133],
+  [3143807, 'Munhoz', 'MG', 7451],
+  [3143906, 'Muriaé', 'MG', 104108],
+  [3144003, 'Mutum', 'MG', 27635],
+  [3144102, 'Muzambinho', 'MG', 21891],
+  [3144201, 'Nacip Raydan', 'MG', 2459],
+  [3144300, 'Nanuque', 'MG', 35038],
+  [3144359, 'Naque', 'MG', 6303],
+  [3144375, 'Natalândia', 'MG', 3520],
+  [3144409, 'Natércia', 'MG', 4691],
+  [3144508, 'Nazareno', 'MG', 8179],
+  [3144607, 'Nepomuceno', 'MG', 25018],
+  [3144656, 'Ninheira', 'MG', 10588],
+  [3144672, 'Nova Belém', 'MG', 3151],
+  [3144706, 'Nova Era', 'MG', 17438],
+  [3144805, 'Nova Lima', 'MG', 111697],
+  [3144904, 'Nova Módica', 'MG', 3663],
+  [3145000, 'Nova Ponte', 'MG', 14598],
+  [3145059, 'Nova Porteirinha', 'MG', 6706],
+  [3145109, 'Nova Resende', 'MG', 16387],
+  [3145208, 'Nova Serrana', 'MG', 105552],
+  [3145307, 'Novo Cruzeiro', 'MG', 26975],
+  [3145356, 'Novo Oriente de Minas', 'MG', 10275],
+  [3145372, 'Novorizonte', 'MG', 4571],
+  [3145406, 'Olaria', 'MG', 1945],
+  [3145455, "Olhos-d'Água", 'MG', 5385],
+  [3145505, 'Olímpio Noronha', 'MG', 2555],
+  [3145604, 'Oliveira', 'MG', 39262],
+  [3145703, 'Oliveira Fortes', 'MG', 2027],
+  [3145802, 'Onça de Pitangui', 'MG', 2969],
+  [3145851, 'Oratórios', 'MG', 4917],
+  [3145877, 'Orizânia', 'MG', 8437],
+  [3145901, 'Ouro Branco', 'MG', 38724],
+  [3146008, 'Ouro Fino', 'MG', 32094],
+  [3146107, 'Ouro Preto', 'MG', 74821],
+  [3146206, 'Ouro Verde de Minas', 'MG', 5757],
+  [3146255, 'Padre Carvalho', 'MG', 5058],
+  [3146305, 'Padre Paraíso', 'MG', 17334],
+  [3146404, 'Paineiras', 'MG', 4224],
+  [3146503, 'Pains', 'MG', 8142],
+  [3146552, 'Pai Pedro', 'MG', 5551],
+  [3146602, 'Paiva', 'MG', 1474],
+  [3146701, 'Palma', 'MG', 5707],
+  [3146750, 'Palmópolis', 'MG', 6301],
+  [3146909, 'Papagaios', 'MG', 13920],
+  [3147006, 'Paracatu', 'MG', 94023],
+  [3147105, 'Pará de Minas', 'MG', 97139],
+  [3147204, 'Paraguaçu', 'MG', 21723],
+  [3147303, 'Paraisópolis', 'MG', 20445],
+  [3147402, 'Paraopeba', 'MG', 24107],
+  [3147501, 'Passabém', 'MG', 1600],
+  [3147600, 'Passa Quatro', 'MG', 15515],
+  [3147709, 'Passa Tempo', 'MG', 8473],
+  [3147808, 'Passa Vinte', 'MG', 2233],
+  [3147907, 'Passos', 'MG', 111939],
+  [3147956, 'Patis', 'MG', 4837],
+  [3148004, 'Patos de Minas', 'MG', 159235],
+  [3148103, 'Patrocínio', 'MG', 89826],
+  [3148202, 'Patrocínio do Muriaé', 'MG', 5576],
+  [3148301, 'Paula Cândido', 'MG', 8659],
+  [3148400, 'Paulistas', 'MG', 4389],
+  [3148509, 'Pavão', 'MG', 8047],
+  [3148608, 'Peçanha', 'MG', 17446],
+  [3148707, 'Pedra Azul', 'MG', 24410],
+  [3148756, 'Pedra Bonita', 'MG', 7320],
+  [3148806, 'Pedra do Anta', 'MG', 3311],
+  [3148905, 'Pedra do Indaiá', 'MG', 4112],
+  [3149002, 'Pedra Dourada', 'MG', 2757],
+  [3149101, 'Pedralva', 'MG', 10760],
+  [3149150, 'Pedras de Maria da Cruz', 'MG', 10433],
+  [3149200, 'Pedrinópolis', 'MG', 3344],
+  [3149309, 'Pedro Leopoldo', 'MG', 62580],
+  [3149408, 'Pedro Teixeira', 'MG', 1810],
+  [3149507, 'Pequeri', 'MG', 3351],
+  [3149606, 'Pequi', 'MG', 4155],
+  [3149705, 'Perdigão', 'MG', 12268],
+  [3149804, 'Perdizes', 'MG', 17151],
+  [3149903, 'Perdões', 'MG', 21384],
+  [3149952, 'Periquito', 'MG', 6553],
+  [3150000, 'Pescador', 'MG', 3570],
+  [3150109, 'Piau', 'MG', 2796],
+  [3150158, 'Piedade de Caratinga', 'MG', 8529],
+  [3150208, 'Piedade de Ponte Nova', 'MG', 3976],
+  [3150307, 'Piedade do Rio Grande', 'MG', 4604],
+  [3150406, 'Piedade dos Gerais', 'MG', 5019],
+  [3150505, 'Pimenta', 'MG', 8563],
+  [3150539, "Pingo-d'Água", 'MG', 4706],
+  [3150570, 'Pintópolis', 'MG', 7084],
+  [3150604, 'Piracema', 'MG', 6700],
+  [3150703, 'Pirajuba', 'MG', 5537],
+  [3150802, 'Piranga', 'MG', 17018],
+  [3150901, 'Piranguçu', 'MG', 6041],
+  [3151008, 'Piranguinho', 'MG', 9120],
+  [3151107, 'Pirapetinga', 'MG', 11077],
+  [3151206, 'Pirapora', 'MG', 55606],
+  [3151305, 'Piraúba', 'MG', 11610],
+  [3151404, 'Pitangui', 'MG', 26685],
+  [3151503, 'Piumhi', 'MG', 36062],
+  [3151602, 'Planura', 'MG', 11145],
+  [3151701, 'Poço Fundo', 'MG', 16390],
+  [3151800, 'Poços de Caldas', 'MG', 163742],
+  [3151909, 'Pocrane', 'MG', 8350],
+  [3152006, 'Pompéu', 'MG', 31047],
+  [3152105, 'Ponte Nova', 'MG', 57776],
+  [3152131, 'Ponto Chique', 'MG', 3747],
+  [3152170, 'Ponto dos Volantes', 'MG', 10883],
+  [3152204, 'Porteirinha', 'MG', 37438],
+  [3152303, 'Porto Firme', 'MG', 10569],
+  [3152402, 'Poté', 'MG', 13666],
+  [3152501, 'Pouso Alegre', 'MG', 152217],
+  [3152600, 'Pouso Alto', 'MG', 6566],
+  [3152709, 'Prados', 'MG', 9048],
+  [3152808, 'Prata', 'MG', 28342],
+  [3152907, 'Pratápolis', 'MG', 8406],
+  [3153004, 'Pratinha', 'MG', 3559],
+  [3153103, 'Presidente Bernardes', 'MG', 4850],
+  [3153202, 'Presidente Juscelino', 'MG', 3465],
+  [3153301, 'Presidente Kubitschek', 'MG', 3071],
+  [3153400, 'Presidente Olegário', 'MG', 18765],
+  [3153509, 'Alto Jequitibá', 'MG', 8397],
+  [3153608, 'Prudente de Morais', 'MG', 11466],
+  [3153707, 'Quartel Geral', 'MG', 3179],
+  [3153806, 'Queluzito', 'MG', 1770],
+  [3153905, 'Raposos', 'MG', 16279],
+  [3154002, 'Raul Soares', 'MG', 23423],
+  [3154101, 'Recreio', 'MG', 11007],
+  [3154150, 'Reduto', 'MG', 7848],
+  [3154200, 'Resende Costa', 'MG', 11230],
+  [3154309, 'Resplendor', 'MG', 17226],
+  [3154408, 'Ressaquinha', 'MG', 4548],
+  [3154457, 'Riachinho', 'MG', 6863],
+  [3154507, 'Riacho dos Machados', 'MG', 8756],
+  [3154606, 'Ribeirão das Neves', 'MG', 329794],
+  [3154705, 'Ribeirão Vermelho', 'MG', 4080],
+  [3154804, 'Rio Acima', 'MG', 10261],
+  [3154903, 'Rio Casca', 'MG', 12789],
+  [3155009, 'Rio Doce', 'MG', 2484],
+  [3155108, 'Rio do Prado', 'MG', 4639],
+  [3155207, 'Rio Espera', 'MG', 5429],
+  [3155306, 'Rio Manso', 'MG', 5568],
+  [3155405, 'Rio Novo', 'MG', 8518],
+  [3155504, 'Rio Paranaíba', 'MG', 14532],
+  [3155603, 'Rio Pardo de Minas', 'MG', 28271],
+  [3155702, 'Rio Piracicaba', 'MG', 14631],
+  [3155801, 'Rio Pomba', 'MG', 17443],
+  [3155900, 'Rio Preto', 'MG', 5141],
+  [3156007, 'Rio Vermelho', 'MG', 12641],
+  [3156106, 'Ritápolis', 'MG', 4994],
+  [3156205, 'Rochedo de Minas', 'MG', 2291],
+  [3156304, 'Rodeiro', 'MG', 8664],
+  [3156403, 'Romaria', 'MG', 3386],
+  [3156452, 'Rosário da Limeira', 'MG', 4734],
+  [3156502, 'Rubelita', 'MG', 5679],
+  [3156601, 'Rubim', 'MG', 10298],
+  [3156700, 'Sabará', 'MG', 129380],
+  [3156809, 'Sabinópolis', 'MG', 14240],
+  [3156908, 'Sacramento', 'MG', 26670],
+  [3157005, 'Salinas', 'MG', 40178],
+  [3157104, 'Salto da Divisa', 'MG', 6110],
+  [3157203, 'Santa Bárbara', 'MG', 30466],
+  [3157252, 'Santa Bárbara do Leste', 'MG', 8458],
+  [3157278, 'Santa Bárbara do Monte Verde', 'MG', 3095],
+  [3157302, 'Santa Bárbara do Tugúrio', 'MG', 4208],
+  [3157336, 'Santa Cruz de Minas', 'MG', 8109],
+  [3157377, 'Santa Cruz de Salinas', 'MG', 3910],
+  [3157401, 'Santa Cruz do Escalvado', 'MG', 4673],
+  [3157500, 'Santa Efigênia de Minas', 'MG', 4039],
+  [3157609, 'Santa Fé de Minas', 'MG', 3522],
+  [3157658, 'Santa Helena de Minas', 'MG', 5938],
+  [3157708, 'Santa Juliana', 'MG', 15734],
+  [3157807, 'Santa Luzia', 'MG', 219132],
+  [3157906, 'Santa Margarida', 'MG', 16395],
+  [3158003, 'Santa Maria de Itabira', 'MG', 10485],
+  [3158102, 'Santa Maria do Salto', 'MG', 4755],
+  [3158201, 'Santa Maria do Suaçuí', 'MG', 12788],
+  [3158300, 'Santana da Vargem', 'MG', 6691],
+  [3158409, 'Santana de Cataguases', 'MG', 3489],
+  [3158508, 'Santana de Pirapama', 'MG', 7030],
+  [3158607, 'Santana do Deserto', 'MG', 3747],
+  [3158706, 'Santana do Garambéu', 'MG', 2137],
+  [3158805, 'Santana do Jacaré', 'MG', 4214],
+  [3158904, 'Santana do Manhuaçu', 'MG', 8987],
+  [3158953, 'Santana do Paraíso', 'MG', 44800],
+  [3159001, 'Santana do Riacho', 'MG', 5313],
+  [3159100, 'Santana dos Montes', 'MG', 3469],
+  [3159209, 'Santa Rita de Caldas', 'MG', 8460],
+  [3159308, 'Santa Rita de Jacutinga', 'MG', 4755],
+  [3159357, 'Santa Rita de Minas', 'MG', 6773],
+  [3159407, 'Santa Rita de Ibitipoca', 'MG', 3301],
+  [3159506, 'Santa Rita do Itueto', 'MG', 5826],
+  [3159605, 'Santa Rita do Sapucaí', 'MG', 40635],
+  [3159704, 'Santa Rosa da Serra', 'MG', 3382],
+  [3159803, 'Santa Vitória', 'MG', 20973],
+  [3159902, 'Santo Antônio do Amparo', 'MG', 17285],
+  [3160009, 'Santo Antônio do Aventureiro', 'MG', 3769],
+  [3160108, 'Santo Antônio do Grama', 'MG', 4229],
+  [3160207, 'Santo Antônio do Itambé', 'MG', 3915],
+  [3160306, 'Santo Antônio do Jacinto', 'MG', 10327],
+  [3160405, 'Santo Antônio do Monte', 'MG', 27295],
+  [3160454, 'Santo Antônio do Retiro', 'MG', 6629],
+  [3160504, 'Santo Antônio do Rio Abaixo', 'MG', 1808],
+  [3160603, 'Santo Hipólito', 'MG', 2717],
+  [3160702, 'Santos Dumont', 'MG', 42406],
+  [3160801, 'São Bento Abade', 'MG', 4713],
+  [3160900, 'São Brás do Suaçuí', 'MG', 3989],
+  [3160959, 'São Domingos das Dores', 'MG', 5626],
+  [3161007, 'São Domingos do Prata', 'MG', 17392],
+  [3161056, 'São Félix de Minas', 'MG', 3200],
+  [3161106, 'São Francisco', 'MG', 52762],
+  [3161205, 'São Francisco de Paula', 'MG', 6187],
+  [3161304, 'São Francisco de Sales', 'MG', 5732],
+  [3161403, 'São Francisco do Glória', 'MG', 4800],
+  [3161502, 'São Geraldo', 'MG', 10282],
+  [3161601, 'São Geraldo da Piedade', 'MG', 3305],
+  [3161650, 'São Geraldo do Baixio', 'MG', 3143],
+  [3161700, 'São Gonçalo do Abaeté', 'MG', 7375],
+  [3161809, 'São Gonçalo do Pará', 'MG', 11770],
+  [3161908, 'São Gonçalo do Rio Abaixo', 'MG', 11850],
+  [3162005, 'São Gonçalo do Sapucaí', 'MG', 23959],
+  [3162104, 'São Gotardo', 'MG', 40910],
+  [3162203, 'São João Batista do Glória', 'MG', 7652],
+  [3162252, 'São João da Lagoa', 'MG', 4822],
+  [3162302, 'São João da Mata', 'MG', 2914],
+  [3162401, 'São João da Ponte', 'MG', 23930],
+  [3162450, 'São João das Missões', 'MG', 13024],
+  [3162500, 'São João del Rei', 'MG', 90225],
+  [3162559, 'São João do Manhuaçu', 'MG', 11246],
+  [3162575, 'São João do Manteninha', 'MG', 5331],
+  [3162609, 'São João do Oriente', 'MG', 7070],
+  [3162658, 'São João do Pacuí', 'MG', 3972],
+  [3162708, 'São João do Paraíso', 'MG', 23910],
+  [3162807, 'São João Evangelista', 'MG', 15315],
+  [3162906, 'São João Nepomuceno', 'MG', 25565],
+  [3162922, 'São Joaquim de Bicas', 'MG', 34348],
+  [3162948, 'São José da Barra', 'MG', 7793],
+  [3162955, 'São José da Lapa', 'MG', 26090],
+  [3163003, 'São José da Safira', 'MG', 3806],
+  [3163102, 'São José da Varginha', 'MG', 4536],
+  [3163201, 'São José do Alegre', 'MG', 4133],
+  [3163300, 'São José do Divino', 'MG', 3464],
+  [3163409, 'São José do Goiabal', 'MG', 5396],
+  [3163508, 'São José do Jacuri', 'MG', 6197],
+  [3163607, 'São José do Mantimento', 'MG', 2753],
+  [3163706, 'São Lourenço', 'MG', 44798],
+  [3163805, 'São Miguel do Anta', 'MG', 6334],
+  [3163904, 'São Pedro da União', 'MG', 4885],
+  [3164001, 'São Pedro dos Ferros', 'MG', 7166],
+  [3164100, 'São Pedro do Suaçuí', 'MG', 5103],
+  [3164209, 'São Romão', 'MG', 10315],
+  [3164308, 'São Roque de Minas', 'MG', 7129],
+  [3164407, 'São Sebastião da Bela Vista', 'MG', 6387],
+  [3164431, 'São Sebastião da Vargem Alegre', 'MG', 3113],
+  [3164472, 'São Sebastião do Anta', 'MG', 6194],
+  [3164506, 'São Sebastião do Maranhão', 'MG', 10079],
+  [3164605, 'São Sebastião do Oeste', 'MG', 8815],
+  [3164704, 'São Sebastião do Paraíso', 'MG', 71796],
+  [3164803, 'São Sebastião do Rio Preto', 'MG', 1259],
+  [3164902, 'São Sebastião do Rio Verde', 'MG', 2300],
+  [3165008, 'São Tiago', 'MG', 11192],
+  [3165107, 'São Tomás de Aquino', 'MG', 6740],
+  [3165206, 'São Tomé das Letras', 'MG', 6904],
+  [3165305, 'São Vicente de Minas', 'MG', 6804],
+  [3165404, 'Sapucaí-Mirim', 'MG', 6311],
+  [3165503, 'Sardoá', 'MG', 5104],
+  [3165537, 'Sarzedo', 'MG', 36844],
+  [3165552, 'Setubinha', 'MG', 9917],
+  [3165560, 'Sem-Peixe', 'MG', 2433],
+  [3165578, 'Senador Amaral', 'MG', 6206],
+  [3165602, 'Senador Cortes', 'MG', 2240],
+  [3165701, 'Senador Firmino', 'MG', 7716],
+  [3165800, 'Senador José Bento', 'MG', 2068],
+  [3165909, 'Senador Modestino Gonçalves', 'MG', 4008],
+  [3166006, 'Senhora de Oliveira', 'MG', 5483],
+  [3166105, 'Senhora do Porto', 'MG', 3067],
+  [3166204, 'Senhora dos Remédios', 'MG', 10384],
+  [3166303, 'Sericita', 'MG', 7345],
+  [3166402, 'Seritinga', 'MG', 1819],
+  [3166501, 'Serra Azul de Minas', 'MG', 3792],
+  [3166600, 'Serra da Saudade', 'MG', 833],
+  [3166709, 'Serra dos Aimorés', 'MG', 6944],
+  [3166808, 'Serra do Salitre', 'MG', 11801],
+  [3166907, 'Serrania', 'MG', 7621],
+  [3166956, 'Serranópolis de Minas', 'MG', 4399],
+  [3167004, 'Serranos', 'MG', 1990],
+  [3167103, 'Serro', 'MG', 21952],
+  [3167202, 'Sete Lagoas', 'MG', 227397],
+  [3167301, 'Silveirânia', 'MG', 2323],
+  [3167400, 'Silvianópolis', 'MG', 6179],
+  [3167509, 'Simão Pereira', 'MG', 2947],
+  [3167608, 'Simonésia', 'MG', 19750],
+  [3167707, 'Sobrália', 'MG', 5137],
+  [3167806, 'Soledade de Minas', 'MG', 5613],
+  [3167905, 'Tabuleiro', 'MG', 4014],
+  [3168002, 'Taiobeiras', 'MG', 33050],
+  [3168051, 'Taparuba', 'MG', 3387],
+  [3168101, 'Tapira', 'MG', 4118],
+  [3168200, 'Tapiraí', 'MG', 1690],
+  [3168309, 'Taquaraçu de Minas', 'MG', 4224],
+  [3168408, 'Tarumirim', 'MG', 14709],
+  [3168507, 'Teixeiras', 'MG', 12255],
+  [3168606, 'Teófilo Otoni', 'MG', 137418],
+  [3168705, 'Timóteo', 'MG', 81579],
+  [3168804, 'Tiradentes', 'MG', 7744],
+  [3168903, 'Tiros', 'MG', 7883],
+  [3169000, 'Tocantins', 'MG', 16185],
+  [3169059, 'Tocos do Moji', 'MG', 3826],
+  [3169109, 'Toledo', 'MG', 7214],
+  [3169208, 'Tombos', 'MG', 8609],
+  [3169307, 'Três Corações', 'MG', 75485],
+  [3169356, 'Três Marias', 'MG', 28895],
+  [3169406, 'Três Pontas', 'MG', 55255],
+  [3169505, 'Tumiritinga', 'MG', 5886],
+  [3169604, 'Tupaciguara', 'MG', 25470],
+  [3169703, 'Turmalina', 'MG', 20000],
+  [3169802, 'Turvolândia', 'MG', 4935],
+  [3169901, 'Ubá', 'MG', 103365],
+  [3170008, 'Ubaí', 'MG', 11708],
+  [3170057, 'Ubaporanga', 'MG', 13017],
+  [3170107, 'Uberaba', 'MG', 337836],
+  [3170206, 'Uberlândia', 'MG', 713224],
+  [3170305, 'Umburatiba', 'MG', 2684],
+  [3170404, 'Unaí', 'MG', 86619],
+  [3170438, 'União de Minas', 'MG', 3828],
+  [3170479, 'Uruana de Minas', 'MG', 3282],
+  [3170503, 'Urucânia', 'MG', 10600],
+  [3170529, 'Urucuia', 'MG', 17479],
+  [3170578, 'Vargem Alegre', 'MG', 5780],
+  [3170602, 'Vargem Bonita', 'MG', 2158],
+  [3170651, 'Vargem Grande do Rio Pardo', 'MG', 4633],
+  [3170701, 'Varginha', 'MG', 136467],
+  [3170750, 'Varjão de Minas', 'MG', 6969],
+  [3170800, 'Várzea da Palma', 'MG', 33744],
+  [3170909, 'Varzelândia', 'MG', 18840],
+  [3171006, 'Vazante', 'MG', 19975],
+  [3171030, 'Verdelândia', 'MG', 7672],
+  [3171071, 'Veredinha', 'MG', 5181],
+  [3171105, 'Veríssimo', 'MG', 3411],
+  [3171154, 'Vermelho Novo', 'MG', 4899],
+  [3171204, 'Vespasiano', 'MG', 129246],
+  [3171303, 'Viçosa', 'MG', 76430],
+  [3171402, 'Vieiras', 'MG', 3700],
+  [3171501, 'Mathias Lobato', 'MG', 3038],
+  [3171600, 'Virgem da Lapa', 'MG', 11804],
+  [3171709, 'Virgínia', 'MG', 8908],
+  [3171808, 'Virginópolis', 'MG', 10314],
+  [3171907, 'Virgolândia', 'MG', 4552],
+  [3172004, 'Visconde do Rio Branco', 'MG', 39160],
+  [3172103, 'Volta Grande', 'MG', 4443],
+  [3172202, 'Wenceslau Braz', 'MG', 2356],
+  [3200102, 'Afonso Cláudio', 'ES', 30684],
+  [3200136, 'Águia Branca', 'ES', 9711],
+  [3200169, 'Água Doce do Norte', 'ES', 12042],
+  [3200201, 'Alegre', 'ES', 29177],
+  [3200300, 'Alfredo Chaves', 'ES', 13836],
+  [3200359, 'Alto Rio Novo', 'ES', 7434],
+  [3200409, 'Anchieta', 'ES', 29984],
+  [3200508, 'Apiacá', 'ES', 7223],
+  [3200607, 'Aracruz', 'ES', 94765],
+  [3200706, 'Atílio Vivácqua', 'ES', 10540],
+  [3200805, 'Baixo Guandu', 'ES', 30674],
+  [3200904, 'Barra de São Francisco', 'ES', 42498],
+  [3201001, 'Boa Esperança', 'ES', 13608],
+  [3201100, 'Bom Jesus do Norte', 'ES', 10254],
+  [3201159, 'Brejetuba', 'ES', 12985],
+  [3201209, 'Cachoeiro de Itapemirim', 'ES', 185786],
+  [3201308, 'Cariacica', 'ES', 353491],
+  [3201407, 'Castelo', 'ES', 36930],
+  [3201506, 'Colatina', 'ES', 120033],
+  [3201605, 'Conceição da Barra', 'ES', 27458],
+  [3201704, 'Conceição do Castelo', 'ES', 11937],
+  [3201803, 'Divino de São Lourenço', 'ES', 5083],
+  [3201902, 'Domingos Martins', 'ES', 35416],
+  [3202009, 'Dores do Rio Preto', 'ES', 6596],
+  [3202108, 'Ecoporanga', 'ES', 21992],
+  [3202207, 'Fundão', 'ES', 18014],
+  [3202256, 'Governador Lindenberg', 'ES', 11009],
+  [3202306, 'Guaçuí', 'ES', 29358],
+  [3202405, 'Guarapari', 'ES', 124656],
+  [3202454, 'Ibatiba', 'ES', 25380],
+  [3202504, 'Ibiraçu', 'ES', 11723],
+  [3202553, 'Ibitirama', 'ES', 9520],
+  [3202603, 'Iconha', 'ES', 12326],
+  [3202652, 'Irupi', 'ES', 13710],
+  [3202702, 'Itaguaçu', 'ES', 13589],
+  [3202801, 'Itapemirim', 'ES', 39832],
+  [3202900, 'Itarana', 'ES', 10597],
+  [3203007, 'Iúna', 'ES', 28590],
+  [3203056, 'Jaguaré', 'ES', 28931],
+  [3203106, 'Jerônimo Monteiro', 'ES', 11575],
+  [3203130, 'João Neiva', 'ES', 14079],
+  [3203163, 'Laranja da Terra', 'ES', 11094],
+  [3203205, 'Linhares', 'ES', 166786],
+  [3203304, 'Mantenópolis', 'ES', 12770],
+  [3203320, 'Marataízes', 'ES', 41929],
+  [3203346, 'Marechal Floriano', 'ES', 17641],
+  [3203353, 'Marilândia', 'ES', 12387],
+  [3203403, 'Mimoso do Sul', 'ES', 24475],
+  [3203502, 'Montanha', 'ES', 18900],
+  [3203601, 'Mucurici', 'ES', 5466],
+  [3203700, 'Muniz Freire', 'ES', 18153],
+  [3203809, 'Muqui', 'ES', 13745],
+  [3203908, 'Nova Venécia', 'ES', 49065],
+  [3204005, 'Pancas', 'ES', 18893],
+  [3204054, 'Pedro Canário', 'ES', 21522],
+  [3204104, 'Pinheiros', 'ES', 23915],
+  [3204203, 'Piúma', 'ES', 22300],
+  [3204252, 'Ponto Belo', 'ES', 6497],
+  [3204302, 'Presidente Kennedy', 'ES', 13696],
+  [3204351, 'Rio Bananal', 'ES', 19274],
+  [3204401, 'Rio Novo do Sul', 'ES', 11069],
+  [3204500, 'Santa Leopoldina', 'ES', 13106],
+  [3204559, 'Santa Maria de Jetibá', 'ES', 41636],
+  [3204609, 'Santa Teresa', 'ES', 22808],
+  [3204658, 'São Domingos do Norte', 'ES', 8589],
+  [3204708, 'São Gabriel da Palha', 'ES', 32252],
+  [3204807, 'São José do Calçado', 'ES', 10878],
+  [3204906, 'São Mateus', 'ES', 123752],
+  [3204955, 'São Roque do Canaã', 'ES', 10886],
+  [3205002, 'Serra', 'ES', 520653],
+  [3205010, 'Sooretama', 'ES', 26502],
+  [3205036, 'Vargem Alta', 'ES', 19563],
+  [3205069, 'Venda Nova do Imigrante', 'ES', 23831],
+  [3205101, 'Viana', 'ES', 73423],
+  [3205150, 'Vila Pavão', 'ES', 8911],
+  [3205176, 'Vila Valério', 'ES', 13728],
+  [3205200, 'Vila Velha', 'ES', 467722],
+  [3205309, 'Vitória', 'ES', 322869],
+  [3300100, 'Angra dos Reis', 'RJ', 167434],
+  [3300159, 'Aperibé', 'RJ', 11034],
+  [3300209, 'Araruama', 'RJ', 129671],
+  [3300225, 'Areal', 'RJ', 11828],
+  [3300233, 'Armação dos Búzios', 'RJ', 40006],
+  [3300258, 'Arraial do Cabo', 'RJ', 30986],
+  [3300308, 'Barra do Piraí', 'RJ', 92883],
+  [3300407, 'Barra Mansa', 'RJ', 169894],
+  [3300456, 'Belford Roxo', 'RJ', 483087],
+  [3300506, 'Bom Jardim', 'RJ', 28102],
+  [3300605, 'Bom Jesus do Itabapoana', 'RJ', 35173],
+  [3300704, 'Cabo Frio', 'RJ', 222161],
+  [3300803, 'Cachoeiras de Macacu', 'RJ', 56943],
+  [3300902, 'Cambuci', 'RJ', 14616],
+  [3300936, 'Carapebus', 'RJ', 13847],
+  [3300951, 'Comendador Levy Gasparian', 'RJ', 8741],
+  [3301009, 'Campos dos Goytacazes', 'RJ', 483540],
+  [3301108, 'Cantagalo', 'RJ', 19390],
+  [3301157, 'Cardoso Moreira', 'RJ', 12958],
+  [3301207, 'Carmo', 'RJ', 17198],
+  [3301306, 'Casimiro de Abreu', 'RJ', 46110],
+  [3301405, 'Conceição de Macabu', 'RJ', 21104],
+  [3301504, 'Cordeiro', 'RJ', 20783],
+  [3301603, 'Duas Barras', 'RJ', 10980],
+  [3301702, 'Duque de Caxias', 'RJ', 808161],
+  [3301801, 'Engenheiro Paulo de Frontin', 'RJ', 12242],
+  [3301850, 'Guapimirim', 'RJ', 51696],
+  [3301876, 'Iguaba Grande', 'RJ', 27920],
+  [3301900, 'Itaboraí', 'RJ', 224267],
+  [3302007, 'Itaguaí', 'RJ', 116841],
+  [3302056, 'Italva', 'RJ', 14073],
+  [3302106, 'Itaocara', 'RJ', 22919],
+  [3302205, 'Itaperuna', 'RJ', 101041],
+  [3302254, 'Itatiaia', 'RJ', 30908],
+  [3302270, 'Japeri', 'RJ', 96289],
+  [3302304, 'Laje do Muriaé', 'RJ', 7336],
+  [3302403, 'Macaé', 'RJ', 246391],
+  [3302452, 'Macuco', 'RJ', 5415],
+  [3302502, 'Magé', 'RJ', 228127],
+  [3302601, 'Mangaratiba', 'RJ', 41220],
+  [3302700, 'Maricá', 'RJ', 197277],
+  [3302809, 'Mendes', 'RJ', 17502],
+  [3302858, 'Mesquita', 'RJ', 167127],
+  [3302908, 'Miguel Pereira', 'RJ', 26582],
+  [3303005, 'Miracema', 'RJ', 26881],
+  [3303104, 'Natividade', 'RJ', 15074],
+  [3303203, 'Nilópolis', 'RJ', 146774],
+  [3303302, 'Niterói', 'RJ', 481749],
+  [3303401, 'Nova Friburgo', 'RJ', 189939],
+  [3303500, 'Nova Iguaçu', 'RJ', 785867],
+  [3303609, 'Paracambi', 'RJ', 41375],
+  [3303708, 'Paraíba do Sul', 'RJ', 42063],
+  [3303807, 'Paraty', 'RJ', 45243],
+  [3303856, 'Paty do Alferes', 'RJ', 29619],
+  [3303906, 'Petrópolis', 'RJ', 278881],
+  [3303955, 'Pinheiral', 'RJ', 24298],
+  [3304003, 'Piraí', 'RJ', 27474],
+  [3304102, 'Porciúncula', 'RJ', 17288],
+  [3304110, 'Porto Real', 'RJ', 20373],
+  [3304128, 'Quatis', 'RJ', 13682],
+  [3304144, 'Queimados', 'RJ', 140523],
+  [3304151, 'Quissamã', 'RJ', 22393],
+  [3304201, 'Resende', 'RJ', 129612],
+  [3304300, 'Rio Bonito', 'RJ', 56276],
+  [3304409, 'Rio Claro', 'RJ', 17401],
+  [3304508, 'Rio das Flores', 'RJ', 8954],
+  [3304524, 'Rio das Ostras', 'RJ', 156491],
+  [3304557, 'Rio de Janeiro', 'RJ', 6211223],
+  [3304607, 'Santa Maria Madalena', 'RJ', 10232],
+  [3304706, 'Santo Antônio de Pádua', 'RJ', 41325],
+  [3304755, 'São Francisco de Itabapoana', 'RJ', 45059],
+  [3304805, 'São Fidélis', 'RJ', 38961],
+  [3304904, 'São Gonçalo', 'RJ', 896744],
+  [3305000, 'São João da Barra', 'RJ', 36573],
+  [3305109, 'São João de Meriti', 'RJ', 440962],
+  [3305133, 'São José de Ubá', 'RJ', 7070],
+  [3305158, 'São José do Vale do Rio Preto', 'RJ', 22080],
+  [3305208, 'São Pedro da Aldeia', 'RJ', 104029],
+  [3305307, 'São Sebastião do Alto', 'RJ', 7750],
+  [3305406, 'Sapucaia', 'RJ', 17729],
+  [3305505, 'Saquarema', 'RJ', 89559],
+  [3305554, 'Seropédica', 'RJ', 80596],
+  [3305604, 'Silva Jardim', 'RJ', 21352],
+  [3305703, 'Sumidouro', 'RJ', 15206],
+  [3305752, 'Tanguá', 'RJ', 31086],
+  [3305802, 'Teresópolis', 'RJ', 165123],
+  [3305901, 'Trajano de Moraes', 'RJ', 10302],
+  [3306008, 'Três Rios', 'RJ', 78346],
+  [3306107, 'Valença', 'RJ', 68088],
+  [3306156, 'Varre-Sai', 'RJ', 10207],
+  [3306206, 'Vassouras', 'RJ', 33976],
+  [3306305, 'Volta Redonda', 'RJ', 261563],
+  [3500105, 'Adamantina', 'SP', 34687],
+  [3500204, 'Adolfo', 'SP', 4351],
+  [3500303, 'Aguaí', 'SP', 32072],
+  [3500402, 'Águas da Prata', 'SP', 7369],
+  [3500501, 'Águas de Lindóia', 'SP', 17930],
+  [3500550, 'Águas de Santa Bárbara', 'SP', 7177],
+  [3500600, 'Águas de São Pedro', 'SP', 2780],
+  [3500709, 'Agudos', 'SP', 37680],
+  [3500758, 'Alambari', 'SP', 6141],
+  [3500808, 'Alfredo Marcondes', 'SP', 4445],
+  [3500907, 'Altair', 'SP', 3451],
+  [3501004, 'Altinópolis', 'SP', 16818],
+  [3501103, 'Alto Alegre', 'SP', 3841],
+  [3501152, 'Alumínio', 'SP', 17301],
+  [3501202, 'Álvares Florence', 'SP', 3915],
+  [3501301, 'Álvares Machado', 'SP', 27255],
+  [3501400, 'Álvaro de Carvalho', 'SP', 4808],
+  [3501509, 'Alvinlândia', 'SP', 2885],
+  [3501608, 'Americana', 'SP', 237240],
+  [3501707, 'Américo Brasiliense', 'SP', 33019],
+  [3501806, 'Américo de Campos', 'SP', 5870],
+  [3501905, 'Amparo', 'SP', 68008],
+  [3502002, 'Analândia', 'SP', 4589],
+  [3502101, 'Andradina', 'SP', 59783],
+  [3502200, 'Angatuba', 'SP', 24022],
+  [3502309, 'Anhembi', 'SP', 5674],
+  [3502408, 'Anhumas', 'SP', 4023],
+  [3502507, 'Aparecida', 'SP', 32569],
+  [3502606, "Aparecida d'Oeste", 'SP', 4086],
+  [3502705, 'Apiaí', 'SP', 24585],
+  [3502754, 'Araçariguama', 'SP', 21522],
+  [3502804, 'Araçatuba', 'SP', 200124],
+  [3502903, 'Araçoiaba da Serra', 'SP', 32443],
+  [3503000, 'Aramina', 'SP', 5420],
+  [3503109, 'Arandu', 'SP', 6885],
+  [3503158, 'Arapeí', 'SP', 2330],
+  [3503208, 'Araraquara', 'SP', 242228],
+  [3503307, 'Araras', 'SP', 130866],
+  [3503356, 'Arco-Íris', 'SP', 2044],
+  [3503406, 'Arealva', 'SP', 8130],
+  [3503505, 'Areias', 'SP', 3577],
+  [3503604, 'Areiópolis', 'SP', 10130],
+  [3503703, 'Ariranha', 'SP', 7602],
+  [3503802, 'Artur Nogueira', 'SP', 51456],
+  [3503901, 'Arujá', 'SP', 86678],
+  [3503950, 'Aspásia', 'SP', 1842],
+  [3504008, 'Assis', 'SP', 101409],
+  [3504107, 'Atibaia', 'SP', 158647],
+  [3504206, 'Auriflama', 'SP', 13692],
+  [3504305, 'Avaí', 'SP', 4483],
+  [3504404, 'Avanhandava', 'SP', 11263],
+  [3504503, 'Avaré', 'SP', 92805],
+  [3504602, 'Bady Bassitt', 'SP', 27260],
+  [3504701, 'Balbinos', 'SP', 3887],
+  [3504800, 'Bálsamo', 'SP', 9596],
+  [3504909, 'Bananal', 'SP', 9969],
+  [3505005, 'Barão de Antonina', 'SP', 3531],
+  [3505104, 'Barbosa', 'SP', 5640],
+  [3505203, 'Bariri', 'SP', 31595],
+  [3505302, 'Barra Bonita', 'SP', 34346],
+  [3505351, 'Barra do Chapéu', 'SP', 5179],
+  [3505401, 'Barra do Turvo', 'SP', 6876],
+  [3505500, 'Barretos', 'SP', 122485],
+  [3505609, 'Barrinha', 'SP', 32092],
+  [3505708, 'Barueri', 'SP', 316473],
+  [3505807, 'Bastos', 'SP', 21503],
+  [3505906, 'Batatais', 'SP', 58402],
+  [3506003, 'Bauru', 'SP', 379146],
+  [3506102, 'Bebedouro', 'SP', 76373],
+  [3506201, 'Bento de Abreu', 'SP', 2606],
+  [3506300, 'Bernardino de Campos', 'SP', 11607],
+  [3506359, 'Bertioga', 'SP', 64188],
+  [3506409, 'Bilac', 'SP', 7319],
+  [3506508, 'Birigui', 'SP', 118979],
+  [3506607, 'Biritiba Mirim', 'SP', 29683],
+  [3506706, 'Boa Esperança do Sul', 'SP', 12978],
+  [3506805, 'Bocaina', 'SP', 11259],
+  [3506904, 'Bofete', 'SP', 10460],
+  [3507001, 'Boituva', 'SP', 61081],
+  [3507100, 'Bom Jesus dos Perdões', 'SP', 22006],
+  [3507159, 'Bom Sucesso de Itararé', 'SP', 3555],
+  [3507209, 'Borá', 'SP', 907],
+  [3507308, 'Boracéia', 'SP', 4715],
+  [3507407, 'Borborema', 'SP', 14226],
+  [3507456, 'Borebi', 'SP', 2713],
+  [3507506, 'Botucatu', 'SP', 145155],
+  [3507605, 'Bragança Paulista', 'SP', 176811],
+  [3507704, 'Braúna', 'SP', 5356],
+  [3507753, 'Brejo Alegre', 'SP', 2565],
+  [3507803, 'Brodowski', 'SP', 25201],
+  [3507902, 'Brotas', 'SP', 23898],
+  [3508009, 'Buri', 'SP', 20250],
+  [3508108, 'Buritama', 'SP', 17210],
+  [3508207, 'Buritizal', 'SP', 4356],
+  [3508306, 'Cabrália Paulista', 'SP', 4299],
+  [3508405, 'Cabreúva', 'SP', 47011],
+  [3508504, 'Caçapava', 'SP', 96202],
+  [3508603, 'Cachoeira Paulista', 'SP', 31564],
+  [3508702, 'Caconde', 'SP', 17101],
+  [3508801, 'Cafelândia', 'SP', 16654],
+  [3508900, 'Caiabu', 'SP', 3712],
+  [3509007, 'Caieiras', 'SP', 95032],
+  [3509106, 'Caiuá', 'SP', 5466],
+  [3509205, 'Cajamar', 'SP', 92689],
+  [3509254, 'Cajati', 'SP', 28515],
+  [3509304, 'Cajobi', 'SP', 9133],
+  [3509403, 'Cajuru', 'SP', 23830],
+  [3509452, 'Campina do Monte Alegre', 'SP', 5954],
+  [3509502, 'Campinas', 'SP', 1139047],
+  [3509601, 'Campo Limpo Paulista', 'SP', 77632],
+  [3509700, 'Campos do Jordão', 'SP', 46974],
+  [3509809, 'Campos Novos Paulista', 'SP', 4888],
+  [3509908, 'Cananéia', 'SP', 12289],
+  [3509957, 'Canas', 'SP', 4931],
+  [3510005, 'Cândido Mota', 'SP', 29449],
+  [3510104, 'Cândido Rodrigues', 'SP', 2889],
+  [3510153, 'Canitar', 'SP', 6283],
+  [3510203, 'Capão Bonito', 'SP', 46337],
+  [3510302, 'Capela do Alto', 'SP', 22866],
+  [3510401, 'Capivari', 'SP', 50068],
+  [3510500, 'Caraguatatuba', 'SP', 134873],
+  [3510609, 'Carapicuíba', 'SP', 386984],
+  [3510708, 'Cardoso', 'SP', 11345],
+  [3510807, 'Casa Branca', 'SP', 28083],
+  [3510906, 'Cássia dos Coqueiros', 'SP', 2799],
+  [3511003, 'Castilho', 'SP', 19977],
+  [3511102, 'Catanduva', 'SP', 115791],
+  [3511201, 'Catiguá', 'SP', 7003],
+  [3511300, 'Cedral', 'SP', 12618],
+  [3511409, 'Cerqueira César', 'SP', 21469],
+  [3511508, 'Cerquilho', 'SP', 44695],
+  [3511607, 'Cesário Lange', 'SP', 19048],
+  [3511706, 'Charqueada', 'SP', 15535],
+  [3511904, 'Clementina', 'SP', 6982],
+  [3512001, 'Colina', 'SP', 18486],
+  [3512100, 'Colômbia', 'SP', 6629],
+  [3512209, 'Conchal', 'SP', 28101],
+  [3512308, 'Conchas', 'SP', 15232],
+  [3512407, 'Cordeirópolis', 'SP', 24514],
+  [3512506, 'Coroados', 'SP', 5400],
+  [3512605, 'Coronel Macedo', 'SP', 4280],
+  [3512704, 'Corumbataí', 'SP', 4195],
+  [3512803, 'Cosmópolis', 'SP', 59773],
+  [3512902, 'Cosmorama', 'SP', 8719],
+  [3513009, 'Cotia', 'SP', 274413],
+  [3513108, 'Cravinhos', 'SP', 33281],
+  [3513207, 'Cristais Paulista', 'SP', 9272],
+  [3513306, 'Cruzália', 'SP', 2108],
+  [3513405, 'Cruzeiro', 'SP', 74961],
+  [3513504, 'Cubatão', 'SP', 112476],
+  [3513603, 'Cunha', 'SP', 22110],
+  [3513702, 'Descalvado', 'SP', 31756],
+  [3513801, 'Diadema', 'SP', 393237],
+  [3513850, 'Dirce Reis', 'SP', 1620],
+  [3513900, 'Divinolândia', 'SP', 11158],
+  [3514007, 'Dobrada', 'SP', 8759],
+  [3514106, 'Dois Córregos', 'SP', 24510],
+  [3514205, 'Dolcinópolis', 'SP', 2207],
+  [3514304, 'Dourado', 'SP', 8096],
+  [3514403, 'Dracena', 'SP', 45474],
+  [3514502, 'Duartina', 'SP', 12328],
+  [3514601, 'Dumont', 'SP', 9471],
+  [3514700, 'Echaporã', 'SP', 6205],
+  [3514809, 'Eldorado', 'SP', 13069],
+  [3514908, 'Elias Fausto', 'SP', 17699],
+  [3514924, 'Elisiário', 'SP', 3138],
+  [3514957, 'Embaúba', 'SP', 2323],
+  [3515004, 'Embu das Artes', 'SP', 250691],
+  [3515103, 'Embu-Guaçu', 'SP', 66970],
+  [3515129, 'Emilianópolis', 'SP', 3014],
+  [3515152, 'Engenheiro Coelho', 'SP', 19566],
+  [3515186, 'Espírito Santo do Pinhal', 'SP', 39816],
+  [3515194, 'Espírito Santo do Turvo', 'SP', 4157],
+  [3515202, "Estrela d'Oeste", 'SP', 9417],
+  [3515301, 'Estrela do Norte', 'SP', 2703],
+  [3515350, 'Euclides da Cunha Paulista', 'SP', 7924],
+  [3515400, 'Fartura', 'SP', 16641],
+  [3515509, 'Fernandópolis', 'SP', 71186],
+  [3515608, 'Fernando Prestes', 'SP', 5942],
+  [3515657, 'Fernão', 'SP', 1656],
+  [3515707, 'Ferraz de Vasconcelos', 'SP', 179198],
+  [3515806, 'Flora Rica', 'SP', 1487],
+  [3515905, 'Floreal', 'SP', 2733],
+  [3516002, 'Flórida Paulista', 'SP', 12958],
+  [3516101, 'Florínea', 'SP', 3851],
+  [3516200, 'Franca', 'SP', 352536],
+  [3516309, 'Francisco Morato', 'SP', 165139],
+  [3516408, 'Franco da Rocha', 'SP', 144849],
+  [3516507, 'Gabriel Monteiro', 'SP', 2763],
+  [3516606, 'Gália', 'SP', 6380],
+  [3516705, 'Garça', 'SP', 42110],
+  [3516804, 'Gastão Vidigal', 'SP', 3252],
+  [3516853, 'Gavião Peixoto', 'SP', 4702],
+  [3516903, 'General Salgado', 'SP', 10312],
+  [3517000, 'Getulina', 'SP', 10232],
+  [3517109, 'Glicério', 'SP', 4138],
+  [3517208, 'Guaiçara', 'SP', 11239],
+  [3517307, 'Guaimbê', 'SP', 5512],
+  [3517406, 'Guaíra', 'SP', 39279],
+  [3517505, 'Guapiaçu', 'SP', 21711],
+  [3517604, 'Guapiara', 'SP', 17071],
+  [3517703, 'Guará', 'SP', 18606],
+  [3517802, 'Guaraçaí', 'SP', 7441],
+  [3517901, 'Guaraci', 'SP', 10350],
+  [3518008, "Guarani d'Oeste", 'SP', 1968],
+  [3518107, 'Guarantã', 'SP', 6427],
+  [3518206, 'Guararapes', 'SP', 31043],
+  [3518305, 'Guararema', 'SP', 31236],
+  [3518404, 'Guaratinguetá', 'SP', 118044],
+  [3518503, 'Guareí', 'SP', 15013],
+  [3518602, 'Guariba', 'SP', 37498],
+  [3518701, 'Guarujá', 'SP', 287634],
+  [3518800, 'Guarulhos', 'SP', 1291771],
+  [3518859, 'Guatapará', 'SP', 7320],
+  [3518909, 'Guzolândia', 'SP', 4246],
+  [3519006, 'Herculândia', 'SP', 9125],
+  [3519055, 'Holambra', 'SP', 15094],
+  [3519071, 'Hortolândia', 'SP', 236641],
+  [3519105, 'Iacanga', 'SP', 10437],
+  [3519204, 'Iacri', 'SP', 6131],
+  [3519253, 'Iaras', 'SP', 8010],
+  [3519303, 'Ibaté', 'SP', 32178],
+  [3519402, 'Ibirá', 'SP', 11690],
+  [3519501, 'Ibirarema', 'SP', 6385],
+  [3519600, 'Ibitinga', 'SP', 60033],
+  [3519709, 'Ibiúna', 'SP', 75605],
+  [3519808, 'Icém', 'SP', 7819],
+  [3519907, 'Iepê', 'SP', 7619],
+  [3520004, 'Igaraçu do Tietê', 'SP', 23106],
+  [3520103, 'Igarapava', 'SP', 26212],
+  [3520202, 'Igaratá', 'SP', 10605],
+  [3520301, 'Iguape', 'SP', 29115],
+  [3520400, 'Ilhabela', 'SP', 34934],
+  [3520426, 'Ilha Comprida', 'SP', 13419],
+  [3520442, 'Ilha Solteira', 'SP', 25549],
+  [3520509, 'Indaiatuba', 'SP', 255748],
+  [3520608, 'Indiana', 'SP', 5090],
+  [3520707, 'Indiaporã', 'SP', 4035],
+  [3520806, 'Inúbia Paulista', 'SP', 3615],
+  [3520905, 'Ipaussu', 'SP', 13712],
+  [3521002, 'Iperó', 'SP', 36459],
+  [3521101, 'Ipeúna', 'SP', 6831],
+  [3521150, 'Ipiguá', 'SP', 6761],
+  [3521200, 'Iporanga', 'SP', 4046],
+  [3521309, 'Ipuã', 'SP', 14454],
+  [3521408, 'Iracemápolis', 'SP', 21967],
+  [3521507, 'Irapuã', 'SP', 6867],
+  [3521606, 'Irapuru', 'SP', 7085],
+  [3521705, 'Itaberá', 'SP', 17983],
+  [3521804, 'Itaí', 'SP', 25180],
+  [3521903, 'Itajobi', 'SP', 16989],
+  [3522000, 'Itaju', 'SP', 3618],
+  [3522109, 'Itanhaém', 'SP', 112476],
+  [3522158, 'Itaoca', 'SP', 3422],
+  [3522208, 'Itapecerica da Serra', 'SP', 158522],
+  [3522307, 'Itapetininga', 'SP', 157790],
+  [3522406, 'Itapeva', 'SP', 89728],
+  [3522505, 'Itapevi', 'SP', 232297],
+  [3522604, 'Itapira', 'SP', 72022],
+  [3522653, 'Itapirapuã Paulista', 'SP', 4306],
+  [3522703, 'Itápolis', 'SP', 39493],
+  [3522802, 'Itaporanga', 'SP', 14085],
+  [3522901, 'Itapuí', 'SP', 13659],
+  [3523008, 'Itapura', 'SP', 3979],
+  [3523107, 'Itaquaquecetuba', 'SP', 369275],
+  [3523206, 'Itararé', 'SP', 44438],
+  [3523305, 'Itariri', 'SP', 15528],
+  [3523404, 'Itatiba', 'SP', 121590],
+  [3523503, 'Itatinga', 'SP', 19070],
+  [3523602, 'Itirapina', 'SP', 16148],
+  [3523701, 'Itirapuã', 'SP', 5779],
+  [3523800, 'Itobi', 'SP', 8046],
+  [3523909, 'Itu', 'SP', 168240],
+  [3524006, 'Itupeva', 'SP', 70616],
+  [3524105, 'Ituverava', 'SP', 37571],
+  [3524204, 'Jaborandi', 'SP', 6221],
+  [3524303, 'Jaboticabal', 'SP', 71821],
+  [3524402, 'Jacareí', 'SP', 240275],
+  [3524501, 'Jaci', 'SP', 7613],
+  [3524600, 'Jacupiranga', 'SP', 16097],
+  [3524709, 'Jaguariúna', 'SP', 59347],
+  [3524808, 'Jales', 'SP', 48776],
+  [3524907, 'Jambeiro', 'SP', 6397],
+  [3525003, 'Jandira', 'SP', 118045],
+  [3525102, 'Jardinópolis', 'SP', 45282],
+  [3525201, 'Jarinu', 'SP', 37535],
+  [3525300, 'Jaú', 'SP', 133497],
+  [3525409, 'Jeriquara', 'SP', 3863],
+  [3525508, 'Joanópolis', 'SP', 12815],
+  [3525607, 'João Ramalho', 'SP', 4371],
+  [3525706, 'José Bonifácio', 'SP', 36633],
+  [3525805, 'Júlio Mesquita', 'SP', 4254],
+  [3525854, 'Jumirim', 'SP', 3056],
+  [3525904, 'Jundiaí', 'SP', 443221],
+  [3526001, 'Junqueirópolis', 'SP', 20448],
+  [3526100, 'Juquiá', 'SP', 17154],
+  [3526209, 'Juquitiba', 'SP', 27404],
+  [3526308, 'Lagoinha', 'SP', 5083],
+  [3526407, 'Laranjal Paulista', 'SP', 26261],
+  [3526506, 'Lavínia', 'SP', 9689],
+  [3526605, 'Lavrinhas', 'SP', 7171],
+  [3526704, 'Leme', 'SP', 98161],
+  [3526803, 'Lençóis Paulista', 'SP', 66505],
+  [3526902, 'Limeira', 'SP', 291869],
+  [3527009, 'Lindóia', 'SP', 7014],
+  [3527108, 'Lins', 'SP', 74779],
+  [3527207, 'Lorena', 'SP', 84855],
+  [3527256, 'Lourdes', 'SP', 1950],
+  [3527306, 'Louveira', 'SP', 51847],
+  [3527405, 'Lucélia', 'SP', 20061],
+  [3527504, 'Lucianópolis', 'SP', 2372],
+  [3527603, 'Luís Antônio', 'SP', 12265],
+  [3527702, 'Luiziânia', 'SP', 4701],
+  [3527801, 'Lupércio', 'SP', 3981],
+  [3527900, 'Lutécia', 'SP', 2661],
+  [3528007, 'Macatuba', 'SP', 16829],
+  [3528106, 'Macaubal', 'SP', 7481],
+  [3528205, 'Macedônia', 'SP', 3963],
+  [3528304, 'Magda', 'SP', 3165],
+  [3528403, 'Mairinque', 'SP', 50027],
+  [3528502, 'Mairiporã', 'SP', 93853],
+  [3528601, 'Manduri', 'SP', 9871],
+  [3528700, 'Marabá Paulista', 'SP', 4573],
+  [3528809, 'Maracaí', 'SP', 12673],
+  [3528858, 'Marapoama', 'SP', 3292],
+  [3528908, 'Mariápolis', 'SP', 3513],
+  [3529005, 'Marília', 'SP', 237627],
+  [3529104, 'Marinópolis', 'SP', 1860],
+  [3529203, 'Martinópolis', 'SP', 24881],
+  [3529302, 'Matão', 'SP', 79033],
+  [3529401, 'Mauá', 'SP', 418261],
+  [3529500, 'Mendonça', 'SP', 6159],
+  [3529609, 'Meridiano', 'SP', 4572],
+  [3529658, 'Mesópolis', 'SP', 1952],
+  [3529708, 'Miguelópolis', 'SP', 19441],
+  [3529807, 'Mineiros do Tietê', 'SP', 11230],
+  [3529906, 'Miracatu', 'SP', 18553],
+  [3530003, 'Mira Estrela', 'SP', 3126],
+  [3530102, 'Mirandópolis', 'SP', 27983],
+  [3530201, 'Mirante do Paranapanema', 'SP', 15917],
+  [3530300, 'Mirassol', 'SP', 63337],
+  [3530409, 'Mirassolândia', 'SP', 4669],
+  [3530508, 'Mococa', 'SP', 67681],
+  [3530607, 'Mogi das Cruzes', 'SP', 451505],
+  [3530706, 'Mogi Guaçu', 'SP', 153658],
+  [3530805, 'Mogi Mirim', 'SP', 92558],
+  [3530904, 'Mombuca', 'SP', 3722],
+  [3531001, 'Monções', 'SP', 1937],
+  [3531100, 'Mongaguá', 'SP', 61951],
+  [3531209, 'Monte Alegre do Sul', 'SP', 8627],
+  [3531308, 'Monte Alto', 'SP', 47574],
+  [3531407, 'Monte Aprazível', 'SP', 22280],
+  [3531506, 'Monte Azul Paulista', 'SP', 18151],
+  [3531605, 'Monte Castelo', 'SP', 4222],
+  [3531704, 'Monteiro Lobato', 'SP', 4138],
+  [3531803, 'Monte Mor', 'SP', 64662],
+  [3531902, 'Morro Agudo', 'SP', 27933],
+  [3532009, 'Morungaba', 'SP', 13720],
+  [3532058, 'Motuca', 'SP', 4034],
+  [3532108, 'Murutinga do Sul', 'SP', 3737],
+  [3532157, 'Nantes', 'SP', 2660],
+  [3532207, 'Narandiba', 'SP', 5713],
+  [3532306, 'Natividade da Serra', 'SP', 6999],
+  [3532405, 'Nazaré Paulista', 'SP', 18217],
+  [3532504, 'Neves Paulista', 'SP', 9699],
+  [3532603, 'Nhandeara', 'SP', 9852],
+  [3532702, 'Nipoã', 'SP', 4750],
+  [3532801, 'Nova Aliança', 'SP', 6693],
+  [3532827, 'Nova Campina', 'SP', 8497],
+  [3532843, 'Nova Canaã Paulista', 'SP', 2032],
+  [3532868, 'Nova Castilho', 'SP', 1062],
+  [3532900, 'Nova Europa', 'SP', 9311],
+  [3533007, 'Nova Granada', 'SP', 19419],
+  [3533106, 'Nova Guataporanga', 'SP', 2156],
+  [3533205, 'Nova Independência', 'SP', 4609],
+  [3533254, 'Novais', 'SP', 4412],
+  [3533304, 'Nova Luzitânia', 'SP', 2837],
+  [3533403, 'Nova Odessa', 'SP', 62019],
+  [3533502, 'Novo Horizonte', 'SP', 38324],
+  [3533601, 'Nuporanga', 'SP', 7391],
+  [3533700, 'Ocauçu', 'SP', 4331],
+  [3533809, 'Óleo', 'SP', 2512],
+  [3533908, 'Olímpia', 'SP', 55074],
+  [3534005, 'Onda Verde', 'SP', 4771],
+  [3534104, 'Oriente', 'SP', 6085],
+  [3534203, 'Orindiúva', 'SP', 6024],
+  [3534302, 'Orlândia', 'SP', 38319],
+  [3534401, 'Osasco', 'SP', 728615],
+  [3534500, 'Oscar Bressane', 'SP', 2470],
+  [3534609, 'Osvaldo Cruz', 'SP', 31272],
+  [3534708, 'Ourinhos', 'SP', 103970],
+  [3534757, 'Ouroeste', 'SP', 10294],
+  [3534807, 'Ouro Verde', 'SP', 7779],
+  [3534906, 'Pacaembu', 'SP', 14877],
+  [3535002, 'Palestina', 'SP', 11476],
+  [3535101, 'Palmares Paulista', 'SP', 9650],
+  [3535200, "Palmeira d'Oeste", 'SP', 8903],
+  [3535309, 'Palmital', 'SP', 19594],
+  [3535408, 'Panorama', 'SP', 14964],
+  [3535507, 'Paraguaçu Paulista', 'SP', 41120],
+  [3535606, 'Paraibuna', 'SP', 17667],
+  [3535705, 'Paraíso', 'SP', 6099],
+  [3535804, 'Paranapanema', 'SP', 19395],
+  [3535903, 'Paranapuã', 'SP', 4031],
+  [3536000, 'Parapuã', 'SP', 10580],
+  [3536109, 'Pardinho', 'SP', 7153],
+  [3536208, 'Pariquera-Açu', 'SP', 19233],
+  [3536257, 'Parisi', 'SP', 2892],
+  [3536307, 'Patrocínio Paulista', 'SP', 14512],
+  [3536406, 'Paulicéia', 'SP', 7955],
+  [3536505, 'Paulínia', 'SP', 110537],
+  [3536570, 'Paulistânia', 'SP', 2090],
+  [3536604, 'Paulo de Faria', 'SP', 7400],
+  [3536703, 'Pederneiras', 'SP', 44827],
+  [3536802, 'Pedra Bela', 'SP', 6557],
+  [3536901, 'Pedranópolis', 'SP', 2787],
+  [3537008, 'Pedregulho', 'SP', 15525],
+  [3537107, 'Pedreira', 'SP', 43112],
+  [3537156, 'Pedrinhas Paulista', 'SP', 2804],
+  [3537206, 'Pedro de Toledo', 'SP', 11281],
+  [3537305, 'Penápolis', 'SP', 61679],
+  [3537404, 'Pereira Barreto', 'SP', 24095],
+  [3537503, 'Pereiras', 'SP', 8737],
+  [3537602, 'Peruíbe', 'SP', 68352],
+  [3537701, 'Piacatu', 'SP', 5519],
+  [3537800, 'Piedade', 'SP', 52970],
+  [3537909, 'Pilar do Sul', 'SP', 27619],
+  [3538006, 'Pindamonhangaba', 'SP', 165428],
+  [3538105, 'Pindorama', 'SP', 14542],
+  [3538204, 'Pinhalzinho', 'SP', 15224],
+  [3538303, 'Piquerobi', 'SP', 3264],
+  [3538501, 'Piquete', 'SP', 12490],
+  [3538600, 'Piracaia', 'SP', 26029],
+  [3538709, 'Piracicaba', 'SP', 423323],
+  [3538808, 'Piraju', 'SP', 29436],
+  [3538907, 'Pirajuí', 'SP', 22431],
+  [3539004, 'Pirangi', 'SP', 10885],
+  [3539103, 'Pirapora do Bom Jesus', 'SP', 18370],
+  [3539202, 'Pirapozinho', 'SP', 25348],
+  [3539301, 'Pirassununga', 'SP', 73545],
+  [3539400, 'Piratininga', 'SP', 15108],
+  [3539509, 'Pitangueiras', 'SP', 33674],
+  [3539608, 'Planalto', 'SP', 4389],
+  [3539707, 'Platina', 'SP', 3025],
+  [3539806, 'Poá', 'SP', 103765],
+  [3539905, 'Poloni', 'SP', 5592],
+  [3540002, 'Pompéia', 'SP', 20196],
+  [3540101, 'Pongaí', 'SP', 3395],
+  [3540200, 'Pontal', 'SP', 37607],
+  [3540259, 'Pontalinda', 'SP', 4127],
+  [3540309, 'Pontes Gestal', 'SP', 2387],
+  [3540408, 'Populina', 'SP', 4127],
+  [3540507, 'Porangaba', 'SP', 10451],
+  [3540606, 'Porto Feliz', 'SP', 56497],
+  [3540705, 'Porto Ferreira', 'SP', 52649],
+  [3540754, 'Potim', 'SP', 20392],
+  [3540804, 'Potirendaba', 'SP', 18496],
+  [3540853, 'Pracinha', 'SP', 2578],
+  [3540903, 'Pradópolis', 'SP', 17078],
+  [3541000, 'Praia Grande', 'SP', 349935],
+  [3541059, 'Pratânia', 'SP', 5126],
+  [3541109, 'Presidente Alves', 'SP', 3804],
+  [3541208, 'Presidente Bernardes', 'SP', 14490],
+  [3541307, 'Presidente Epitácio', 'SP', 39505],
+  [3541406, 'Presidente Prudente', 'SP', 225668],
+  [3541505, 'Presidente Venceslau', 'SP', 35201],
+  [3541604, 'Promissão', 'SP', 35131],
+  [3541653, 'Quadra', 'SP', 3405],
+  [3541703, 'Quatá', 'SP', 13163],
+  [3541802, 'Queiroz', 'SP', 3265],
+  [3541901, 'Queluz', 'SP', 9159],
+  [3542008, 'Quintana', 'SP', 7038],
+  [3542107, 'Rafard', 'SP', 8965],
+  [3542206, 'Rancharia', 'SP', 28588],
+  [3542305, 'Redenção da Serra', 'SP', 4494],
+  [3542404, 'Regente Feijó', 'SP', 20145],
+  [3542503, 'Reginópolis', 'SP', 7662],
+  [3542602, 'Registro', 'SP', 59947],
+  [3542701, 'Restinga', 'SP', 6404],
+  [3542800, 'Ribeira', 'SP', 3132],
+  [3542909, 'Ribeirão Bonito', 'SP', 10989],
+  [3543006, 'Ribeirão Branco', 'SP', 18627],
+  [3543105, 'Ribeirão Corrente', 'SP', 4608],
+  [3543204, 'Ribeirão do Sul', 'SP', 4677],
+  [3543238, 'Ribeirão dos Índios', 'SP', 2025],
+  [3543253, 'Ribeirão Grande', 'SP', 7450],
+  [3543303, 'Ribeirão Pires', 'SP', 115559],
+  [3543402, 'Ribeirão Preto', 'SP', 698642],
+  [3543501, 'Riversul', 'SP', 5599],
+  [3543600, 'Rifaina', 'SP', 4049],
+  [3543709, 'Rincão', 'SP', 9098],
+  [3543808, 'Rinópolis', 'SP', 9259],
+  [3543907, 'Rio Claro', 'SP', 201418],
+  [3544004, 'Rio das Pedras', 'SP', 31328],
+  [3544103, 'Rio Grande da Serra', 'SP', 44170],
+  [3544202, 'Riolândia', 'SP', 10309],
+  [3544251, 'Rosana', 'SP', 17440],
+  [3544301, 'Roseira', 'SP', 10832],
+  [3544400, 'Rubiácea', 'SP', 2700],
+  [3544509, 'Rubinéia', 'SP', 3833],
+  [3544608, 'Sabino', 'SP', 5112],
+  [3544707, 'Sagres', 'SP', 2474],
+  [3544806, 'Sales', 'SP', 6437],
+  [3544905, 'Sales Oliveira', 'SP', 11411],
+  [3545001, 'Salesópolis', 'SP', 15202],
+  [3545100, 'Salmourão', 'SP', 4808],
+  [3545159, 'Saltinho', 'SP', 8161],
+  [3545209, 'Salto', 'SP', 134319],
+  [3545308, 'Salto de Pirapora', 'SP', 43748],
+  [3545407, 'Salto Grande', 'SP', 9050],
+  [3545506, 'Sandovalina', 'SP', 3645],
+  [3545605, 'Santa Adélia', 'SP', 14018],
+  [3545704, 'Santa Albertina', 'SP', 6393],
+  [3545803, "Santa Bárbara d'Oeste", 'SP', 183347],
+  [3546009, 'Santa Branca', 'SP', 13975],
+  [3546108, "Santa Clara d'Oeste", 'SP', 2598],
+  [3546207, 'Santa Cruz da Conceição', 'SP', 4277],
+  [3546256, 'Santa Cruz da Esperança', 'SP', 2116],
+  [3546306, 'Santa Cruz das Palmeiras', 'SP', 28864],
+  [3546405, 'Santa Cruz do Rio Pardo', 'SP', 46442],
+  [3546504, 'Santa Ernestina', 'SP', 6118],
+  [3546603, 'Santa Fé do Sul', 'SP', 34794],
+  [3546702, 'Santa Gertrudes', 'SP', 23611],
+  [3546801, 'Santa Isabel', 'SP', 53174],
+  [3546900, 'Santa Lúcia', 'SP', 7149],
+  [3547007, 'Santa Maria da Serra', 'SP', 5243],
+  [3547106, 'Santa Mercedes', 'SP', 2956],
+  [3547205, 'Santana da Ponte Pensa', 'SP', 1670],
+  [3547304, 'Santana de Parnaíba', 'SP', 154105],
+  [3547403, "Santa Rita d'Oeste", 'SP', 2733],
+  [3547502, 'Santa Rita do Passa Quatro', 'SP', 24833],
+  [3547601, 'Santa Rosa de Viterbo', 'SP', 23411],
+  [3547650, 'Santa Salete', 'SP', 1645],
+  [3547700, 'Santo Anastácio', 'SP', 17963],
+  [3547809, 'Santo André', 'SP', 748919],
+  [3547908, 'Santo Antônio da Alegria', 'SP', 6775],
+  [3548005, 'Santo Antônio de Posse', 'SP', 23244],
+  [3548054, 'Santo Antônio do Aracanguá', 'SP', 8379],
+  [3548104, 'Santo Antônio do Jardim', 'SP', 6126],
+  [3548203, 'Santo Antônio do Pinhal', 'SP', 7133],
+  [3548302, 'Santo Expedito', 'SP', 3000],
+  [3548401, 'Santópolis do Aguapeí', 'SP', 3899],
+  [3548500, 'Santos', 'SP', 418608],
+  [3548609, 'São Bento do Sapucaí', 'SP', 11674],
+  [3548708, 'São Bernardo do Campo', 'SP', 810729],
+  [3548807, 'São Caetano do Sul', 'SP', 165655],
+  [3548906, 'São Carlos', 'SP', 254857],
+  [3549003, 'São Francisco', 'SP', 2602],
+  [3549102, 'São João da Boa Vista', 'SP', 92547],
+  [3549201, 'São João das Duas Pontes', 'SP', 2580],
+  [3549250, 'São João de Iracema', 'SP', 1846],
+  [3549300, "São João do Pau d'Alho", 'SP', 2242],
+  [3549409, 'São Joaquim da Barra', 'SP', 48558],
+  [3549508, 'São José da Bela Vista', 'SP', 7626],
+  [3549607, 'São José do Barreiro', 'SP', 3853],
+  [3549706, 'São José do Rio Pardo', 'SP', 52205],
+  [3549805, 'São José do Rio Preto', 'SP', 480393],
+  [3549904, 'São José dos Campos', 'SP', 697054],
+  [3549953, 'São Lourenço da Serra', 'SP', 16067],
+  [3550001, 'São Luiz do Paraitinga', 'SP', 10337],
+  [3550100, 'São Manuel', 'SP', 37289],
+  [3550209, 'São Miguel Arcanjo', 'SP', 32039],
+  [3550308, 'São Paulo', 'SP', 11451999],
+  [3550407, 'São Pedro', 'SP', 38256],
+  [3550506, 'São Pedro do Turvo', 'SP', 7217],
+  [3550605, 'São Roque', 'SP', 79484],
+  [3550704, 'São Sebastião', 'SP', 81595],
+  [3550803, 'São Sebastião da Grama', 'SP', 10441],
+  [3550902, 'São Simão', 'SP', 13442],
+  [3551009, 'São Vicente', 'SP', 329911],
+  [3551108, 'Sarapuí', 'SP', 10369],
+  [3551207, 'Sarutaiá', 'SP', 3704],
+  [3551306, 'Sebastianópolis do Sul', 'SP', 3130],
+  [3551405, 'Serra Azul', 'SP', 12746],
+  [3551504, 'Serrana', 'SP', 43909],
+  [3551603, 'Serra Negra', 'SP', 29894],
+  [3551702, 'Sertãozinho', 'SP', 126887],
+  [3551801, 'Sete Barras', 'SP', 12730],
+  [3551900, 'Severínia', 'SP', 14576],
+  [3552007, 'Silveiras', 'SP', 6186],
+  [3552106, 'Socorro', 'SP', 40122],
+  [3552205, 'Sorocaba', 'SP', 723682],
+  [3552304, 'Sud Mennucci', 'SP', 7355],
+  [3552403, 'Sumaré', 'SP', 279545],
+  [3552502, 'Suzano', 'SP', 307429],
+  [3552551, 'Suzanápolis', 'SP', 3408],
+  [3552601, 'Tabapuã', 'SP', 11323],
+  [3552700, 'Tabatinga', 'SP', 14769],
+  [3552809, 'Taboão da Serra', 'SP', 273542],
+  [3552908, 'Taciba', 'SP', 6260],
+  [3553005, 'Taguaí', 'SP', 12669],
+  [3553104, 'Taiaçu', 'SP', 5677],
+  [3553203, 'Taiúva', 'SP', 6548],
+  [3553302, 'Tambaú', 'SP', 21435],
+  [3553401, 'Tanabi', 'SP', 25265],
+  [3553500, 'Tapiraí', 'SP', 7996],
+  [3553609, 'Tapiratiba', 'SP', 11816],
+  [3553658, 'Taquaral', 'SP', 2619],
+  [3553708, 'Taquaritinga', 'SP', 52260],
+  [3553807, 'Taquarituba', 'SP', 24350],
+  [3553856, 'Taquarivaí', 'SP', 6876],
+  [3553906, 'Tarabai', 'SP', 6536],
+  [3553955, 'Tarumã', 'SP', 14882],
+  [3554003, 'Tatuí', 'SP', 123942],
+  [3554102, 'Taubaté', 'SP', 310739],
+  [3554201, 'Tejupá', 'SP', 4127],
+  [3554300, 'Teodoro Sampaio', 'SP', 22173],
+  [3554409, 'Terra Roxa', 'SP', 7904],
+  [3554508, 'Tietê', 'SP', 37663],
+  [3554607, 'Timburi', 'SP', 2464],
+  [3554656, 'Torre de Pedra', 'SP', 2046],
+  [3554706, 'Torrinha', 'SP', 9335],
+  [3554755, 'Trabiju', 'SP', 1682],
+  [3554805, 'Tremembé', 'SP', 51173],
+  [3554904, 'Três Fronteiras', 'SP', 6804],
+  [3554953, 'Tuiuti', 'SP', 6778],
+  [3555000, 'Tupã', 'SP', 63928],
+  [3555109, 'Tupi Paulista', 'SP', 15854],
+  [3555208, 'Turiúba', 'SP', 1818],
+  [3555307, 'Turmalina', 'SP', 1669],
+  [3555356, 'Ubarana', 'SP', 5365],
+  [3555406, 'Ubatuba', 'SP', 92981],
+  [3555505, 'Ubirajara', 'SP', 5132],
+  [3555604, 'Uchoa', 'SP', 10394],
+  [3555703, 'União Paulista', 'SP', 1603],
+  [3555802, 'Urânia', 'SP', 8833],
+  [3555901, 'Uru', 'SP', 1387],
+  [3556008, 'Urupês', 'SP', 13744],
+  [3556107, 'Valentim Gentil', 'SP', 14098],
+  [3556206, 'Valinhos', 'SP', 126373],
+  [3556305, 'Valparaíso', 'SP', 24241],
+  [3556354, 'Vargem', 'SP', 10512],
+  [3556404, 'Vargem Grande do Sul', 'SP', 40133],
+  [3556453, 'Vargem Grande Paulista', 'SP', 50415],
+  [3556503, 'Várzea Paulista', 'SP', 115771],
+  [3556602, 'Vera Cruz', 'SP', 10176],
+  [3556701, 'Vinhedo', 'SP', 76540],
+  [3556800, 'Viradouro', 'SP', 17414],
+  [3556909, 'Vista Alegre do Alto', 'SP', 8109],
+  [3556958, 'Vitória Brasil', 'SP', 1794],
+  [3557006, 'Votorantim', 'SP', 127923],
+  [3557105, 'Votuporanga', 'SP', 96634],
+  [3557154, 'Zacarias', 'SP', 2692],
+  [3557204, 'Chavantes', 'SP', 12211],
+  [3557303, 'Estiva Gerbi', 'SP', 11295],
+  [4100103, 'Abatiá', 'PR', 7241],
+  [4100202, 'Adrianópolis', 'PR', 6256],
+  [4100301, 'Agudos do Sul', 'PR', 10233],
+  [4100400, 'Almirante Tamandaré', 'PR', 119825],
+  [4100459, 'Altamira do Paraná', 'PR', 3590],
+  [4100509, 'Altônia', 'PR', 18742],
+  [4100608, 'Alto Paraná', 'PR', 13909],
+  [4100707, 'Alto Piquiri', 'PR', 9727],
+  [4100806, 'Alvorada do Sul', 'PR', 10326],
+  [4100905, 'Amaporã', 'PR', 4762],
+  [4101002, 'Ampére', 'PR', 19620],
+  [4101051, 'Anahy', 'PR', 2918],
+  [4101101, 'Andirá', 'PR', 19878],
+  [4101150, 'Ângulo', 'PR', 3235],
+  [4101200, 'Antonina', 'PR', 18091],
+  [4101309, 'Antônio Olinto', 'PR', 7018],
+  [4101408, 'Apucarana', 'PR', 130134],
+  [4101507, 'Arapongas', 'PR', 119138],
+  [4101606, 'Arapoti', 'PR', 25777],
+  [4101655, 'Arapuã', 'PR', 3527],
+  [4101705, 'Araruna', 'PR', 14485],
+  [4101804, 'Araucária', 'PR', 151666],
+  [4101853, 'Ariranha do Ivaí', 'PR', 2329],
+  [4101903, 'Assaí', 'PR', 13797],
+  [4102000, 'Assis Chateaubriand', 'PR', 36808],
+  [4102109, 'Astorga', 'PR', 25475],
+  [4102208, 'Atalaia', 'PR', 3980],
+  [4102307, 'Balsa Nova', 'PR', 13395],
+  [4102406, 'Bandeirantes', 'PR', 31273],
+  [4102505, 'Barbosa Ferraz', 'PR', 10795],
+  [4102604, 'Barracão', 'PR', 9759],
+  [4102703, 'Barra do Jacaré', 'PR', 2814],
+  [4102752, 'Bela Vista da Caroba', 'PR', 4031],
+  [4102802, 'Bela Vista do Paraíso', 'PR', 14833],
+  [4102901, 'Bituruna', 'PR', 15533],
+  [4103008, 'Boa Esperança', 'PR', 4558],
+  [4103024, 'Boa Esperança do Iguaçu', 'PR', 2455],
+  [4103040, 'Boa Ventura de São Roque', 'PR', 6378],
+  [4103057, 'Boa Vista da Aparecida', 'PR', 7924],
+  [4103107, 'Bocaiúva do Sul', 'PR', 13299],
+  [4103156, 'Bom Jesus do Sul', 'PR', 3980],
+  [4103206, 'Bom Sucesso', 'PR', 6581],
+  [4103222, 'Bom Sucesso do Sul', 'PR', 3202],
+  [4103305, 'Borrazópolis', 'PR', 7735],
+  [4103354, 'Braganey', 'PR', 4854],
+  [4103370, 'Brasilândia do Sul', 'PR', 3708],
+  [4103404, 'Cafeara', 'PR', 2627],
+  [4103453, 'Cafelândia', 'PR', 18997],
+  [4103479, 'Cafezal do Sul', 'PR', 4473],
+  [4103503, 'Califórnia', 'PR', 8710],
+  [4103602, 'Cambará', 'PR', 23212],
+  [4103701, 'Cambé', 'PR', 107208],
+  [4103800, 'Cambira', 'PR', 9460],
+  [4103909, 'Campina da Lagoa', 'PR', 15723],
+  [4103958, 'Campina do Simão', 'PR', 3936],
+  [4104006, 'Campina Grande do Sul', 'PR', 47825],
+  [4104055, 'Campo Bonito', 'PR', 4027],
+  [4104105, 'Campo do Tenente', 'PR', 7508],
+  [4104204, 'Campo Largo', 'PR', 136327],
+  [4104253, 'Campo Magro', 'PR', 30160],
+  [4104303, 'Campo Mourão', 'PR', 99432],
+  [4104402, 'Cândido de Abreu', 'PR', 15244],
+  [4104428, 'Candói', 'PR', 14973],
+  [4104451, 'Cantagalo', 'PR', 10933],
+  [4104501, 'Capanema', 'PR', 20481],
+  [4104600, 'Capitão Leônidas Marques', 'PR', 14648],
+  [4104659, 'Carambeí', 'PR', 23283],
+  [4104709, 'Carlópolis', 'PR', 16905],
+  [4104808, 'Cascavel', 'PR', 348051],
+  [4104907, 'Castro', 'PR', 73075],
+  [4105003, 'Catanduvas', 'PR', 10446],
+  [4105102, 'Centenário do Sul', 'PR', 10832],
+  [4105201, 'Cerro Azul', 'PR', 16134],
+  [4105300, 'Céu Azul', 'PR', 11087],
+  [4105409, 'Chopinzinho', 'PR', 21085],
+  [4105508, 'Cianorte', 'PR', 79527],
+  [4105607, 'Cidade Gaúcha', 'PR', 11467],
+  [4105706, 'Clevelândia', 'PR', 15070],
+  [4105805, 'Colombo', 'PR', 232212],
+  [4105904, 'Colorado', 'PR', 22896],
+  [4106001, 'Congonhinhas', 'PR', 8320],
+  [4106100, 'Conselheiro Mairinck', 'PR', 3461],
+  [4106209, 'Contenda', 'PR', 19128],
+  [4106308, 'Corbélia', 'PR', 17470],
+  [4106407, 'Cornélio Procópio', 'PR', 45206],
+  [4106456, 'Coronel Domingos Soares', 'PR', 5649],
+  [4106506, 'Coronel Vivida', 'PR', 23331],
+  [4106555, 'Corumbataí do Sul', 'PR', 3760],
+  [4106571, 'Cruzeiro do Iguaçu', 'PR', 4133],
+  [4106605, 'Cruzeiro do Oeste', 'PR', 23831],
+  [4106704, 'Cruzeiro do Sul', 'PR', 4494],
+  [4106803, 'Cruz Machado', 'PR', 15978],
+  [4106852, 'Cruzmaltina', 'PR', 2892],
+  [4106902, 'Curitiba', 'PR', 1773718],
+  [4107009, 'Curiúva', 'PR', 13647],
+  [4107108, 'Diamante do Norte', 'PR', 5142],
+  [4107124, 'Diamante do Sul', 'PR', 3171],
+  [4107157, "Diamante D'Oeste", 'PR', 4557],
+  [4107207, 'Dois Vizinhos', 'PR', 44869],
+  [4107256, 'Douradina', 'PR', 9161],
+  [4107306, 'Doutor Camargo', 'PR', 6327],
+  [4107405, 'Enéas Marques', 'PR', 5999],
+  [4107504, 'Engenheiro Beltrão', 'PR', 12454],
+  [4107520, 'Esperança Nova', 'PR', 1849],
+  [4107538, 'Entre Rios do Oeste', 'PR', 4575],
+  [4107546, 'Espigão Alto do Iguaçu', 'PR', 4797],
+  [4107553, 'Farol', 'PR', 3039],
+  [4107603, 'Faxinal', 'PR', 16389],
+  [4107652, 'Fazenda Rio Grande', 'PR', 148873],
+  [4107702, 'Fênix', 'PR', 4492],
+  [4107736, 'Fernandes Pinheiro', 'PR', 6255],
+  [4107751, 'Figueira', 'PR', 8062],
+  [4107801, 'Floraí', 'PR', 4792],
+  [4107850, 'Flor da Serra do Sul', 'PR', 4364],
+  [4107900, 'Floresta', 'PR', 10458],
+  [4108007, 'Florestópolis', 'PR', 11446],
+  [4108106, 'Flórida', 'PR', 2652],
+  [4108205, 'Formosa do Oeste', 'PR', 7635],
+  [4108304, 'Foz do Iguaçu', 'PR', 285415],
+  [4108320, 'Francisco Alves', 'PR', 8116],
+  [4108403, 'Francisco Beltrão', 'PR', 96666],
+  [4108452, 'Foz do Jordão', 'PR', 4926],
+  [4108502, 'General Carneiro', 'PR', 11062],
+  [4108551, 'Godoy Moreira', 'PR', 2977],
+  [4108601, 'Goioerê', 'PR', 28437],
+  [4108650, 'Goioxim', 'PR', 6566],
+  [4108700, 'Grandes Rios', 'PR', 5641],
+  [4108809, 'Guaíra', 'PR', 32097],
+  [4108908, 'Guairaçá', 'PR', 6587],
+  [4108957, 'Guamiranga', 'PR', 7856],
+  [4109005, 'Guapirama', 'PR', 4626],
+  [4109104, 'Guaporema', 'PR', 2191],
+  [4109203, 'Guaraci', 'PR', 4748],
+  [4109302, 'Guaraniaçu', 'PR', 13735],
+  [4109401, 'Guarapuava', 'PR', 182093],
+  [4109500, 'Guaraqueçaba', 'PR', 7430],
+  [4109609, 'Guaratuba', 'PR', 42062],
+  [4109658, 'Honório Serpa', 'PR', 4941],
+  [4109708, 'Ibaiti', 'PR', 28830],
+  [4109757, 'Ibema', 'PR', 6218],
+  [4109807, 'Ibiporã', 'PR', 51603],
+  [4109906, 'Icaraíma', 'PR', 8991],
+  [4110003, 'Iguaraçu', 'PR', 5338],
+  [4110052, 'Iguatu', 'PR', 2144],
+  [4110078, 'Imbaú', 'PR', 14249],
+  [4110102, 'Imbituva', 'PR', 29924],
+  [4110201, 'Inácio Martins', 'PR', 9670],
+  [4110300, 'Inajá', 'PR', 2536],
+  [4110409, 'Indianópolis', 'PR', 4448],
+  [4110508, 'Ipiranga', 'PR', 14142],
+  [4110607, 'Iporã', 'PR', 15746],
+  [4110656, 'Iracema do Oeste', 'PR', 2343],
+  [4110706, 'Irati', 'PR', 59250],
+  [4110805, 'Iretama', 'PR', 10684],
+  [4110904, 'Itaguajé', 'PR', 4481],
+  [4110953, 'Itaipulândia', 'PR', 11485],
+  [4111001, 'Itambaracá', 'PR', 5908],
+  [4111100, 'Itambé', 'PR', 6111],
+  [4111209, "Itapejara d'Oeste", 'PR', 12344],
+  [4111258, 'Itaperuçu', 'PR', 31217],
+  [4111308, 'Itaúna do Sul', 'PR', 3572],
+  [4111407, 'Ivaí', 'PR', 13229],
+  [4111506, 'Ivaiporã', 'PR', 32720],
+  [4111555, 'Ivaté', 'PR', 6831],
+  [4111605, 'Ivatuba', 'PR', 2708],
+  [4111704, 'Jaboti', 'PR', 5427],
+  [4111803, 'Jacarezinho', 'PR', 40375],
+  [4111902, 'Jaguapitã', 'PR', 15122],
+  [4112009, 'Jaguariaíva', 'PR', 35141],
+  [4112108, 'Jandaia do Sul', 'PR', 21408],
+  [4112207, 'Janiópolis', 'PR', 5870],
+  [4112306, 'Japira', 'PR', 4972],
+  [4112405, 'Japurá', 'PR', 9144],
+  [4112504, 'Jardim Alegre', 'PR', 12004],
+  [4112603, 'Jardim Olinda', 'PR', 1343],
+  [4112702, 'Jataizinho', 'PR', 11813],
+  [4112751, 'Jesuítas', 'PR', 10506],
+  [4112801, 'Joaquim Távora', 'PR', 11945],
+  [4112900, 'Jundiaí do Sul', 'PR', 3333],
+  [4112959, 'Juranda', 'PR', 7771],
+  [4113007, 'Jussara', 'PR', 6690],
+  [4113106, 'Kaloré', 'PR', 4582],
+  [4113205, 'Lapa', 'PR', 45003],
+  [4113254, 'Laranjal', 'PR', 5600],
+  [4113304, 'Laranjeiras do Sul', 'PR', 32227],
+  [4113403, 'Leópolis', 'PR', 3752],
+  [4113429, 'Lidianópolis', 'PR', 3938],
+  [4113452, 'Lindoeste', 'PR', 5175],
+  [4113502, 'Loanda', 'PR', 23225],
+  [4113601, 'Lobato', 'PR', 4601],
+  [4113700, 'Londrina', 'PR', 555965],
+  [4113734, 'Luiziana', 'PR', 6690],
+  [4113759, 'Lunardelli', 'PR', 4872],
+  [4113809, 'Lupionópolis', 'PR', 4813],
+  [4113908, 'Mallet', 'PR', 13428],
+  [4114005, 'Mamborê', 'PR', 13452],
+  [4114104, 'Mandaguaçu', 'PR', 31457],
+  [4114203, 'Mandaguari', 'PR', 36716],
+  [4114302, 'Mandirituba', 'PR', 27439],
+  [4114351, 'Manfrinópolis', 'PR', 2770],
+  [4114401, 'Mangueirinha', 'PR', 16603],
+  [4114500, 'Manoel Ribas', 'PR', 14240],
+  [4114609, 'Marechal Cândido Rondon', 'PR', 55836],
+  [4114708, 'Maria Helena', 'PR', 5865],
+  [4114807, 'Marialva', 'PR', 41851],
+  [4114906, 'Marilândia do Sul', 'PR', 8677],
+  [4115002, 'Marilena', 'PR', 7253],
+  [4115101, 'Mariluz', 'PR', 9847],
+  [4115200, 'Maringá', 'PR', 409657],
+  [4115309, 'Mariópolis', 'PR', 6371],
+  [4115358, 'Maripá', 'PR', 6555],
+  [4115408, 'Marmeleiro', 'PR', 15901],
+  [4115457, 'Marquinho', 'PR', 4504],
+  [4115507, 'Marumbi', 'PR', 4699],
+  [4115606, 'Matelândia', 'PR', 18450],
+  [4115705, 'Matinhos', 'PR', 39259],
+  [4115739, 'Mato Rico', 'PR', 3267],
+  [4115754, 'Mauá da Serra', 'PR', 9383],
+  [4115804, 'Medianeira', 'PR', 54369],
+  [4115853, 'Mercedes', 'PR', 5931],
+  [4115903, 'Mirador', 'PR', 2238],
+  [4116000, 'Miraselva', 'PR', 1966],
+  [4116059, 'Missal', 'PR', 11064],
+  [4116109, 'Moreira Sales', 'PR', 11175],
+  [4116208, 'Morretes', 'PR', 18309],
+  [4116307, 'Munhoz de Melo', 'PR', 3951],
+  [4116406, 'Nossa Senhora das Graças', 'PR', 3669],
+  [4116505, 'Nova Aliança do Ivaí', 'PR', 1323],
+  [4116604, 'Nova América da Colina', 'PR', 3280],
+  [4116703, 'Nova Aurora', 'PR', 13765],
+  [4116802, 'Nova Cantu', 'PR', 6790],
+  [4116901, 'Nova Esperança', 'PR', 26585],
+  [4116950, 'Nova Esperança do Sudoeste', 'PR', 5597],
+  [4117008, 'Nova Fátima', 'PR', 7225],
+  [4117057, 'Nova Laranjeiras', 'PR', 12074],
+  [4117107, 'Nova Londrina', 'PR', 12923],
+  [4117206, 'Nova Olímpia', 'PR', 5833],
+  [4117214, 'Nova Santa Bárbara', 'PR', 4184],
+  [4117222, 'Nova Santa Rosa', 'PR', 8322],
+  [4117255, 'Nova Prata do Iguaçu', 'PR', 12699],
+  [4117271, 'Nova Tebas', 'PR', 6848],
+  [4117297, 'Novo Itacolomi', 'PR', 3125],
+  [4117305, 'Ortigueira', 'PR', 24192],
+  [4117404, 'Ourizona', 'PR', 3187],
+  [4117453, 'Ouro Verde do Oeste', 'PR', 6785],
+  [4117503, 'Paiçandu', 'PR', 45962],
+  [4117602, 'Palmas', 'PR', 48247],
+  [4117701, 'Palmeira', 'PR', 33855],
+  [4117800, 'Palmital', 'PR', 13033],
+  [4117909, 'Palotina', 'PR', 35011],
+  [4118006, 'Paraíso do Norte', 'PR', 13245],
+  [4118105, 'Paranacity', 'PR', 9557],
+  [4118204, 'Paranaguá', 'PR', 145829],
+  [4118303, 'Paranapoema', 'PR', 2398],
+  [4118402, 'Paranavaí', 'PR', 92001],
+  [4118451, 'Pato Bragado', 'PR', 5733],
+  [4118501, 'Pato Branco', 'PR', 91836],
+  [4118600, 'Paula Freitas', 'PR', 5666],
+  [4118709, 'Paulo Frontin', 'PR', 6343],
+  [4118808, 'Peabiru', 'PR', 13346],
+  [4118857, 'Perobal', 'PR', 7189],
+  [4118907, 'Pérola', 'PR', 11878],
+  [4119004, "Pérola d'Oeste", 'PR', 6221],
+  [4119103, 'Piên', 'PR', 13655],
+  [4119152, 'Pinhais', 'PR', 127019],
+  [4119202, 'Pinhalão', 'PR', 6566],
+  [4119251, 'Pinhal de São Bento', 'PR', 2761],
+  [4119301, 'Pinhão', 'PR', 29886],
+  [4119400, 'Piraí do Sul', 'PR', 23651],
+  [4119509, 'Piraquara', 'PR', 118730],
+  [4119608, 'Pitanga', 'PR', 33567],
+  [4119657, 'Pitangueiras', 'PR', 3046],
+  [4119707, 'Planaltina do Paraná', 'PR', 4070],
+  [4119806, 'Planalto', 'PR', 14374],
+  [4119905, 'Ponta Grossa', 'PR', 358371],
+  [4119954, 'Pontal do Paraná', 'PR', 30425],
+  [4120002, 'Porecatu', 'PR', 11624],
+  [4120101, 'Porto Amazonas', 'PR', 4098],
+  [4120150, 'Porto Barreiro', 'PR', 3110],
+  [4120200, 'Porto Rico', 'PR', 3182],
+  [4120309, 'Porto Vitória', 'PR', 3562],
+  [4120333, 'Prado Ferreira', 'PR', 3709],
+  [4120358, 'Pranchita', 'PR', 5737],
+  [4120408, 'Presidente Castelo Branco', 'PR', 4336],
+  [4120507, 'Primeiro de Maio', 'PR', 10082],
+  [4120606, 'Prudentópolis', 'PR', 49393],
+  [4120655, 'Quarto Centenário', 'PR', 4201],
+  [4120705, 'Quatiguá', 'PR', 8099],
+  [4120804, 'Quatro Barras', 'PR', 24191],
+  [4120853, 'Quatro Pontes', 'PR', 4480],
+  [4120903, 'Quedas do Iguaçu', 'PR', 30738],
+  [4121000, 'Querência do Norte', 'PR', 10685],
+  [4121109, 'Quinta do Sol', 'PR', 5001],
+  [4121208, 'Quitandinha', 'PR', 18398],
+  [4121257, 'Ramilândia', 'PR', 4221],
+  [4121307, 'Rancho Alegre', 'PR', 3512],
+  [4121356, "Rancho Alegre D'Oeste", 'PR', 2618],
+  [4121406, 'Realeza', 'PR', 19247],
+  [4121505, 'Rebouças', 'PR', 14514],
+  [4121604, 'Renascença', 'PR', 6845],
+  [4121703, 'Reserva', 'PR', 24573],
+  [4121752, 'Reserva do Iguaçu', 'PR', 6553],
+  [4121802, 'Ribeirão Claro', 'PR', 12364],
+  [4121901, 'Ribeirão do Pinhal', 'PR', 13060],
+  [4122008, 'Rio Azul', 'PR', 14025],
+  [4122107, 'Rio Bom', 'PR', 3197],
+  [4122156, 'Rio Bonito do Iguaçu', 'PR', 13929],
+  [4122172, 'Rio Branco do Ivaí', 'PR', 3808],
+  [4122206, 'Rio Branco do Sul', 'PR', 37558],
+  [4122305, 'Rio Negro', 'PR', 31324],
+  [4122404, 'Rolândia', 'PR', 71670],
+  [4122503, 'Roncador', 'PR', 11251],
+  [4122602, 'Rondon', 'PR', 9097],
+  [4122651, 'Rosário do Ivaí', 'PR', 5435],
+  [4122701, 'Sabáudia', 'PR', 8822],
+  [4122800, 'Salgado Filho', 'PR', 4075],
+  [4122909, 'Salto do Itararé', 'PR', 5192],
+  [4123006, 'Salto do Lontra', 'PR', 15223],
+  [4123105, 'Santa Amélia', 'PR', 3394],
+  [4123204, 'Santa Cecília do Pavão', 'PR', 3365],
+  [4123303, 'Santa Cruz de Monte Castelo', 'PR', 8613],
+  [4123402, 'Santa Fé', 'PR', 11378],
+  [4123501, 'Santa Helena', 'PR', 25492],
+  [4123600, 'Santa Inês', 'PR', 1748],
+  [4123709, 'Santa Isabel do Ivaí', 'PR', 8912],
+  [4123808, 'Santa Izabel do Oeste', 'PR', 14070],
+  [4123824, 'Santa Lúcia', 'PR', 3644],
+  [4123857, 'Santa Maria do Oeste', 'PR', 9934],
+  [4123907, 'Santa Mariana', 'PR', 11066],
+  [4123956, 'Santa Mônica', 'PR', 3356],
+  [4124004, 'Santana do Itararé', 'PR', 5514],
+  [4124020, 'Santa Tereza do Oeste', 'PR', 13174],
+  [4124053, 'Santa Terezinha de Itaipu', 'PR', 24262],
+  [4124103, 'Santo Antônio da Platina', 'PR', 44369],
+  [4124202, 'Santo Antônio do Caiuá', 'PR', 2493],
+  [4124301, 'Santo Antônio do Paraíso', 'PR', 2125],
+  [4124400, 'Santo Antônio do Sudoeste', 'PR', 23673],
+  [4124509, 'Santo Inácio', 'PR', 6181],
+  [4124608, 'São Carlos do Ivaí', 'PR', 6587],
+  [4124707, 'São Jerônimo da Serra', 'PR', 10830],
+  [4124806, 'São João', 'PR', 11886],
+  [4124905, 'São João do Caiuá', 'PR', 5586],
+  [4125001, 'São João do Ivaí', 'PR', 10667],
+  [4125100, 'São João do Triunfo', 'PR', 13726],
+  [4125209, "São Jorge d'Oeste", 'PR', 9378],
+  [4125308, 'São Jorge do Ivaí', 'PR', 5168],
+  [4125357, 'São Jorge do Patrocínio', 'PR', 6504],
+  [4125407, 'São José da Boa Vista', 'PR', 6040],
+  [4125456, 'São José das Palmeiras', 'PR', 3957],
+  [4125506, 'São José dos Pinhais', 'PR', 329628],
+  [4125555, 'São Manoel do Paraná', 'PR', 2138],
+  [4125605, 'São Mateus do Sul', 'PR', 42366],
+  [4125704, 'São Miguel do Iguaçu', 'PR', 29122],
+  [4125753, 'São Pedro do Iguaçu', 'PR', 5784],
+  [4125803, 'São Pedro do Ivaí', 'PR', 8690],
+  [4125902, 'São Pedro do Paraná', 'PR', 2661],
+  [4126009, 'São Sebastião da Amoreira', 'PR', 8063],
+  [4126108, 'São Tomé', 'PR', 5232],
+  [4126207, 'Sapopema', 'PR', 6695],
+  [4126256, 'Sarandi', 'PR', 118455],
+  [4126272, 'Saudade do Iguaçu', 'PR', 6108],
+  [4126306, 'Sengés', 'PR', 17270],
+  [4126355, 'Serranópolis do Iguaçu', 'PR', 5007],
+  [4126405, 'Sertaneja', 'PR', 5616],
+  [4126504, 'Sertanópolis', 'PR', 15930],
+  [4126603, 'Siqueira Campos', 'PR', 22811],
+  [4126652, 'Sulina', 'PR', 3440],
+  [4126678, 'Tamarana', 'PR', 10707],
+  [4126702, 'Tamboara', 'PR', 4880],
+  [4126801, 'Tapejara', 'PR', 15869],
+  [4126900, 'Tapira', 'PR', 5745],
+  [4127007, 'Teixeira Soares', 'PR', 9547],
+  [4127106, 'Telêmaco Borba', 'PR', 75042],
+  [4127205, 'Terra Boa', 'PR', 17568],
+  [4127304, 'Terra Rica', 'PR', 14842],
+  [4127403, 'Terra Roxa', 'PR', 18119],
+  [4127502, 'Tibagi', 'PR', 19961],
+  [4127601, 'Tijucas do Sul', 'PR', 17621],
+  [4127700, 'Toledo', 'PR', 150470],
+  [4127809, 'Tomazina', 'PR', 8426],
+  [4127858, 'Três Barras do Paraná', 'PR', 11135],
+  [4127882, 'Tunas do Paraná', 'PR', 6219],
+  [4127908, 'Tuneiras do Oeste', 'PR', 8067],
+  [4127957, 'Tupãssi', 'PR', 8077],
+  [4127965, 'Turvo', 'PR', 14231],
+  [4128005, 'Ubiratã', 'PR', 24749],
+  [4128104, 'Umuarama', 'PR', 117095],
+  [4128203, 'União da Vitória', 'PR', 55033],
+  [4128302, 'Uniflor', 'PR', 2136],
+  [4128401, 'Uraí', 'PR', 10406],
+  [4128500, 'Wenceslau Braz', 'PR', 19188],
+  [4128534, 'Ventania', 'PR', 9681],
+  [4128559, 'Vera Cruz do Oeste', 'PR', 8215],
+  [4128609, 'Verê', 'PR', 7932],
+  [4128625, 'Alto Paraíso', 'PR', 3055],
+  [4128633, 'Doutor Ulysses', 'PR', 5697],
+  [4128658, 'Virmond', 'PR', 3811],
+  [4128708, 'Vitorino', 'PR', 9706],
+  [4128807, 'Xambrê', 'PR', 5798],
+  [4200051, 'Abdon Batista', 'SC', 2598],
+  [4200101, 'Abelardo Luz', 'SC', 17392],
+  [4200200, 'Agrolândia', 'SC', 10990],
+  [4200309, 'Agronômica', 'SC', 6055],
+  [4200408, 'Água Doce', 'SC', 6508],
+  [4200507, 'Águas de Chapecó', 'SC', 6036],
+  [4200556, 'Águas Frias', 'SC', 2839],
+  [4200606, 'Águas Mornas', 'SC', 6743],
+  [4200705, 'Alfredo Wagner', 'SC', 10481],
+  [4200754, 'Alto Bela Vista', 'SC', 1856],
+  [4200804, 'Anchieta', 'SC', 5943],
+  [4200903, 'Angelina', 'SC', 5358],
+  [4201000, 'Anita Garibaldi', 'SC', 8285],
+  [4201109, 'Anitápolis', 'SC', 3593],
+  [4201208, 'Antônio Carlos', 'SC', 11224],
+  [4201257, 'Apiúna', 'SC', 9811],
+  [4201273, 'Arabutã', 'SC', 4378],
+  [4201307, 'Araquari', 'SC', 45283],
+  [4201406, 'Araranguá', 'SC', 71922],
+  [4201505, 'Armazém', 'SC', 8834],
+  [4201604, 'Arroio Trinta', 'SC', 3556],
+  [4201653, 'Arvoredo', 'SC', 2510],
+  [4201703, 'Ascurra', 'SC', 8319],
+  [4201802, 'Atalanta', 'SC', 3227],
+  [4201901, 'Aurora', 'SC', 6780],
+  [4201950, 'Balneário Arroio do Silva', 'SC', 15820],
+  [4202008, 'Balneário Camboriú', 'SC', 139155],
+  [4202057, 'Balneário Barra do Sul', 'SC', 14912],
+  [4202073, 'Balneário Gaivota', 'SC', 15669],
+  [4202081, 'Bandeirante', 'SC', 3144],
+  [4202099, 'Barra Bonita', 'SC', 1668],
+  [4202107, 'Barra Velha', 'SC', 45369],
+  [4202131, 'Bela Vista do Toldo', 'SC', 5872],
+  [4202156, 'Belmonte', 'SC', 2658],
+  [4202206, 'Benedito Novo', 'SC', 10520],
+  [4202305, 'Biguaçu', 'SC', 76773],
+  [4202404, 'Blumenau', 'SC', 361261],
+  [4202438, 'Bocaina do Sul', 'SC', 3515],
+  [4202453, 'Bombinhas', 'SC', 25058],
+  [4202503, 'Bom Jardim da Serra', 'SC', 4026],
+  [4202537, 'Bom Jesus', 'SC', 2777],
+  [4202578, 'Bom Jesus do Oeste', 'SC', 2187],
+  [4202602, 'Bom Retiro', 'SC', 8418],
+  [4202701, 'Botuverá', 'SC', 5363],
+  [4202800, 'Braço do Norte', 'SC', 33773],
+  [4202859, 'Braço do Trombudo', 'SC', 4026],
+  [4202875, 'Brunópolis', 'SC', 2489],
+  [4202909, 'Brusque', 'SC', 141385],
+  [4203006, 'Caçador', 'SC', 73720],
+  [4203105, 'Caibi', 'SC', 6304],
+  [4203154, 'Calmon', 'SC', 3443],
+  [4203204, 'Camboriú', 'SC', 103074],
+  [4203253, 'Capão Alto', 'SC', 2625],
+  [4203303, 'Campo Alegre', 'SC', 12501],
+  [4203402, 'Campo Belo do Sul', 'SC', 7257],
+  [4203501, 'Campo Erê', 'SC', 9623],
+  [4203600, 'Campos Novos', 'SC', 36932],
+  [4203709, 'Canelinha', 'SC', 12821],
+  [4203808, 'Canoinhas', 'SC', 55016],
+  [4203907, 'Capinzal', 'SC', 23314],
+  [4203956, 'Capivari de Baixo', 'SC', 23975],
+  [4204004, 'Catanduvas', 'SC', 10566],
+  [4204103, 'Caxambu do Sul', 'SC', 4614],
+  [4204152, 'Celso Ramos', 'SC', 2805],
+  [4204178, 'Cerro Negro', 'SC', 3317],
+  [4204194, 'Chapadão do Lageado', 'SC', 2950],
+  [4204202, 'Chapecó', 'SC', 254785],
+  [4204251, 'Cocal do Sul', 'SC', 17240],
+  [4204301, 'Concórdia', 'SC', 81646],
+  [4204350, 'Cordilheira Alta', 'SC', 4781],
+  [4204400, 'Coronel Freitas', 'SC', 10388],
+  [4204459, 'Coronel Martins', 'SC', 2065],
+  [4204509, 'Corupá', 'SC', 15267],
+  [4204558, 'Correia Pinto', 'SC', 15727],
+  [4204608, 'Criciúma', 'SC', 214493],
+  [4204707, 'Cunha Porã', 'SC', 10953],
+  [4204756, 'Cunhataí', 'SC', 1968],
+  [4204806, 'Curitibanos', 'SC', 40045],
+  [4204905, 'Descanso', 'SC', 8530],
+  [4205001, 'Dionísio Cerqueira', 'SC', 15008],
+  [4205100, 'Dona Emma', 'SC', 4221],
+  [4205159, 'Doutor Pedrinho', 'SC', 3637],
+  [4205175, 'Entre Rios', 'SC', 3402],
+  [4205191, 'Ermo', 'SC', 2269],
+  [4205209, 'Erval Velho', 'SC', 4885],
+  [4205308, 'Faxinal dos Guedes', 'SC', 11192],
+  [4205357, 'Flor do Sertão', 'SC', 1783],
+  [4205407, 'Florianópolis', 'SC', 537211],
+  [4205431, 'Formosa do Sul', 'SC', 2682],
+  [4205456, 'Forquilhinha', 'SC', 31431],
+  [4205506, 'Fraiburgo', 'SC', 33481],
+  [4205555, 'Frei Rogério', 'SC', 2411],
+  [4205605, 'Galvão', 'SC', 3210],
+  [4205704, 'Garopaba', 'SC', 29959],
+  [4205803, 'Garuva', 'SC', 18545],
+  [4205902, 'Gaspar', 'SC', 72570],
+  [4206009, 'Governador Celso Ramos', 'SC', 16915],
+  [4206108, 'Grão-Pará', 'SC', 6277],
+  [4206207, 'Gravatal', 'SC', 12435],
+  [4206306, 'Guabiruba', 'SC', 24543],
+  [4206405, 'Guaraciaba', 'SC', 10796],
+  [4206504, 'Guaramirim', 'SC', 46711],
+  [4206603, 'Guarujá do Sul', 'SC', 4829],
+  [4206652, 'Guatambú', 'SC', 8425],
+  [4206702, "Herval d'Oeste", 'SC', 21724],
+  [4206751, 'Ibiam', 'SC', 2008],
+  [4206801, 'Ibicaré', 'SC', 3269],
+  [4206900, 'Ibirama', 'SC', 19862],
+  [4207007, 'Içara', 'SC', 59035],
+  [4207106, 'Ilhota', 'SC', 17046],
+  [4207205, 'Imaruí', 'SC', 11881],
+  [4207304, 'Imbituba', 'SC', 52579],
+  [4207403, 'Imbuia', 'SC', 5982],
+  [4207502, 'Indaial', 'SC', 71549],
+  [4207577, 'Iomerê', 'SC', 2877],
+  [4207601, 'Ipira', 'SC', 4578],
+  [4207650, 'Iporã do Oeste', 'SC', 9335],
+  [4207684, 'Ipuaçu', 'SC', 7730],
+  [4207700, 'Ipumirim', 'SC', 7816],
+  [4207759, 'Iraceminha', 'SC', 3986],
+  [4207809, 'Irani', 'SC', 10195],
+  [4207858, 'Irati', 'SC', 2069],
+  [4207908, 'Irineópolis', 'SC', 10285],
+  [4208005, 'Itá', 'SC', 7067],
+  [4208104, 'Itaiópolis', 'SC', 22051],
+  [4208203, 'Itajaí', 'SC', 264054],
+  [4208302, 'Itapema', 'SC', 75940],
+  [4208401, 'Itapiranga', 'SC', 16638],
+  [4208450, 'Itapoá', 'SC', 30750],
+  [4208500, 'Ituporanga', 'SC', 26525],
+  [4208609, 'Jaborá', 'SC', 4310],
+  [4208708, 'Jacinto Machado', 'SC', 10624],
+  [4208807, 'Jaguaruna', 'SC', 20375],
+  [4208906, 'Jaraguá do Sul', 'SC', 182660],
+  [4208955, 'Jardinópolis', 'SC', 1776],
+  [4209003, 'Joaçaba', 'SC', 30146],
+  [4209102, 'Joinville', 'SC', 616317],
+  [4209151, 'José Boiteux', 'SC', 5985],
+  [4209177, 'Jupiá', 'SC', 2555],
+  [4209201, 'Lacerdópolis', 'SC', 2248],
+  [4209300, 'Lages', 'SC', 164981],
+  [4209409, 'Laguna', 'SC', 42785],
+  [4209458, 'Lajeado Grande', 'SC', 1702],
+  [4209508, 'Laurentino', 'SC', 7932],
+  [4209607, 'Lauro Müller', 'SC', 14381],
+  [4209706, 'Lebon Régis', 'SC', 11472],
+  [4209805, 'Leoberto Leal', 'SC', 3330],
+  [4209854, 'Lindóia do Sul', 'SC', 4549],
+  [4209904, 'Lontras', 'SC', 12873],
+  [4210001, 'Luiz Alves', 'SC', 11684],
+  [4210035, 'Luzerna', 'SC', 5794],
+  [4210050, 'Macieira', 'SC', 1778],
+  [4210100, 'Mafra', 'SC', 55286],
+  [4210209, 'Major Gercino', 'SC', 3214],
+  [4210308, 'Major Vieira', 'SC', 7425],
+  [4210407, 'Maracajá', 'SC', 7815],
+  [4210506, 'Maravilha', 'SC', 28251],
+  [4210555, 'Marema', 'SC', 2184],
+  [4210605, 'Massaranduba', 'SC', 17162],
+  [4210704, 'Matos Costa', 'SC', 2761],
+  [4210803, 'Meleiro', 'SC', 7006],
+  [4210852, 'Mirim Doce', 'SC', 2511],
+  [4210902, 'Modelo', 'SC', 4080],
+  [4211009, 'Mondaí', 'SC', 10066],
+  [4211058, 'Monte Carlo', 'SC', 9117],
+  [4211108, 'Monte Castelo', 'SC', 7736],
+  [4211207, 'Morro da Fumaça', 'SC', 18537],
+  [4211256, 'Morro Grande', 'SC', 3010],
+  [4211306, 'Navegantes', 'SC', 86401],
+  [4211405, 'Nova Erechim', 'SC', 5155],
+  [4211454, 'Nova Itaberaba', 'SC', 4536],
+  [4211504, 'Nova Trento', 'SC', 13727],
+  [4211603, 'Nova Veneza', 'SC', 13664],
+  [4211652, 'Novo Horizonte', 'SC', 2643],
+  [4211702, 'Orleans', 'SC', 23661],
+  [4211751, 'Otacílio Costa', 'SC', 17312],
+  [4211801, 'Ouro', 'SC', 7032],
+  [4211850, 'Ouro Verde', 'SC', 2181],
+  [4211876, 'Paial', 'SC', 1927],
+  [4211892, 'Painel', 'SC', 2215],
+  [4211900, 'Palhoça', 'SC', 222598],
+  [4212007, 'Palma Sola', 'SC', 7605],
+  [4212056, 'Palmeira', 'SC', 2561],
+  [4212106, 'Palmitos', 'SC', 15626],
+  [4212205, 'Papanduva', 'SC', 19150],
+  [4212239, 'Paraíso', 'SC', 4267],
+  [4212254, 'Passo de Torres', 'SC', 12897],
+  [4212270, 'Passos Maia', 'SC', 4034],
+  [4212304, 'Paulo Lopes', 'SC', 9063],
+  [4212403, 'Pedras Grandes', 'SC', 4245],
+  [4212502, 'Penha', 'SC', 33663],
+  [4212601, 'Peritiba', 'SC', 2992],
+  [4212650, 'Pescaria Brava', 'SC', 10190],
+  [4212700, 'Petrolândia', 'SC', 6716],
+  [4212809, 'Balneário Piçarras', 'SC', 27127],
+  [4212908, 'Pinhalzinho', 'SC', 21972],
+  [4213005, 'Pinheiro Preto', 'SC', 3473],
+  [4213104, 'Piratuba', 'SC', 5769],
+  [4213153, 'Planalto Alegre', 'SC', 2946],
+  [4213203, 'Pomerode', 'SC', 34289],
+  [4213302, 'Ponte Alta', 'SC', 4437],
+  [4213351, 'Ponte Alta do Norte', 'SC', 3210],
+  [4213401, 'Ponte Serrada', 'SC', 10649],
+  [4213500, 'Porto Belo', 'SC', 27688],
+  [4213609, 'Porto União', 'SC', 32970],
+  [4213708, 'Pouso Redondo', 'SC', 17123],
+  [4213807, 'Praia Grande', 'SC', 8270],
+  [4213906, 'Presidente Castello Branco', 'SC', 1689],
+  [4214003, 'Presidente Getúlio', 'SC', 20010],
+  [4214102, 'Presidente Nereu', 'SC', 2301],
+  [4214151, 'Princesa', 'SC', 2964],
+  [4214201, 'Quilombo', 'SC', 11022],
+  [4214300, 'Rancho Queimado', 'SC', 3279],
+  [4214409, 'Rio das Antas', 'SC', 6253],
+  [4214508, 'Rio do Campo', 'SC', 6452],
+  [4214607, 'Rio do Oeste', 'SC', 7747],
+  [4214706, 'Rio dos Cedros', 'SC', 10865],
+  [4214805, 'Rio do Sul', 'SC', 72587],
+  [4214904, 'Rio Fortuna', 'SC', 4847],
+  [4215000, 'Rio Negrinho', 'SC', 39261],
+  [4215059, 'Rio Rufino', 'SC', 2397],
+  [4215075, 'Riqueza', 'SC', 4768],
+  [4215109, 'Rodeio', 'SC', 12757],
+  [4215208, 'Romelândia', 'SC', 4823],
+  [4215307, 'Salete', 'SC', 7489],
+  [4215356, 'Saltinho', 'SC', 3632],
+  [4215406, 'Salto Veloso', 'SC', 4390],
+  [4215455, 'Sangão', 'SC', 12882],
+  [4215505, 'Santa Cecília', 'SC', 15546],
+  [4215554, 'Santa Helena', 'SC', 2425],
+  [4215604, 'Santa Rosa de Lima', 'SC', 2088],
+  [4215653, 'Santa Rosa do Sul', 'SC', 9792],
+  [4215679, 'Santa Terezinha', 'SC', 8066],
+  [4215687, 'Santa Terezinha do Progresso', 'SC', 2576],
+  [4215695, 'Santiago do Sul', 'SC', 1651],
+  [4215703, 'Santo Amaro da Imperatriz', 'SC', 27272],
+  [4215752, 'São Bernardino', 'SC', 2684],
+  [4215802, 'São Bento do Sul', 'SC', 83277],
+  [4215901, 'São Bonifácio', 'SC', 2946],
+  [4216008, 'São Carlos', 'SC', 10282],
+  [4216057, 'São Cristóvão do Sul', 'SC', 6084],
+  [4216107, 'São Domingos', 'SC', 9226],
+  [4216206, 'São Francisco do Sul', 'SC', 52674],
+  [4216255, 'São João do Oeste', 'SC', 6295],
+  [4216305, 'São João Batista', 'SC', 32687],
+  [4216354, 'São João do Itaperiú', 'SC', 4463],
+  [4216404, 'São João do Sul', 'SC', 8668],
+  [4216503, 'São Joaquim', 'SC', 25939],
+  [4216602, 'São José', 'SC', 270299],
+  [4216701, 'São José do Cedro', 'SC', 14167],
+  [4216800, 'São José do Cerrito', 'SC', 8708],
+  [4216909, 'São Lourenço do Oeste', 'SC', 24791],
+  [4217006, 'São Ludgero', 'SC', 13509],
+  [4217105, 'São Martinho', 'SC', 3405],
+  [4217154, 'São Miguel da Boa Vista', 'SC', 1781],
+  [4217204, 'São Miguel do Oeste', 'SC', 44330],
+  [4217253, 'São Pedro de Alcântara', 'SC', 5776],
+  [4217303, 'Saudades', 'SC', 10265],
+  [4217402, 'Schroeder', 'SC', 20061],
+  [4217501, 'Seara', 'SC', 18620],
+  [4217550, 'Serra Alta', 'SC', 3303],
+  [4217600, 'Siderópolis', 'SC', 13714],
+  [4217709, 'Sombrio', 'SC', 29991],
+  [4217758, 'Sul Brasil', 'SC', 2832],
+  [4217808, 'Taió', 'SC', 18310],
+  [4217907, 'Tangará', 'SC', 8143],
+  [4217956, 'Tigrinhos', 'SC', 2329],
+  [4218004, 'Tijucas', 'SC', 51592],
+  [4218103, 'Timbé do Sul', 'SC', 5386],
+  [4218202, 'Timbó', 'SC', 46099],
+  [4218251, 'Timbó Grande', 'SC', 7342],
+  [4218301, 'Três Barras', 'SC', 19746],
+  [4218350, 'Treviso', 'SC', 3782],
+  [4218400, 'Treze de Maio', 'SC', 7362],
+  [4218509, 'Treze Tílias', 'SC', 8787],
+  [4218608, 'Trombudo Central', 'SC', 7274],
+  [4218707, 'Tubarão', 'SC', 110088],
+  [4218756, 'Tunápolis', 'SC', 4916],
+  [4218806, 'Turvo', 'SC', 13043],
+  [4218855, 'União do Oeste', 'SC', 2774],
+  [4218905, 'Urubici', 'SC', 10834],
+  [4218954, 'Urupema', 'SC', 2656],
+  [4219002, 'Urussanga', 'SC', 20919],
+  [4219101, 'Vargeão', 'SC', 3634],
+  [4219150, 'Vargem', 'SC', 2627],
+  [4219176, 'Vargem Bonita', 'SC', 4576],
+  [4219200, 'Vidal Ramos', 'SC', 6189],
+  [4219309, 'Videira', 'SC', 55466],
+  [4219358, 'Vitor Meireles', 'SC', 5370],
+  [4219408, 'Witmarsum', 'SC', 4255],
+  [4219507, 'Xanxerê', 'SC', 51607],
+  [4219606, 'Xavantina', 'SC', 3653],
+  [4219705, 'Xaxim', 'SC', 31918],
+  [4219853, 'Zortéa', 'SC', 3930],
+  [4220000, 'Balneário Rincão', 'SC', 15981],
+  [4300034, 'Aceguá', 'RS', 4170],
+  [4300059, 'Água Santa', 'RS', 3912],
+  [4300109, 'Agudo', 'RS', 16041],
+  [4300208, 'Ajuricaba', 'RS', 6720],
+  [4300307, 'Alecrim', 'RS', 6123],
+  [4300406, 'Alegrete', 'RS', 72409],
+  [4300455, 'Alegria', 'RS', 3651],
+  [4300471, 'Almirante Tamandaré do Sul', 'RS', 1969],
+  [4300505, 'Alpestre', 'RS', 7117],
+  [4300554, 'Alto Alegre', 'RS', 1800],
+  [4300570, 'Alto Feliz', 'RS', 3072],
+  [4300604, 'Alvorada', 'RS', 187315],
+  [4300638, 'Amaral Ferrador', 'RS', 5310],
+  [4300646, 'Ametista do Sul', 'RS', 7650],
+  [4300661, 'André da Rocha', 'RS', 1135],
+  [4300703, 'Anta Gorda', 'RS', 5957],
+  [4300802, 'Antônio Prado', 'RS', 13045],
+  [4300851, 'Arambaré', 'RS', 4112],
+  [4300877, 'Araricá', 'RS', 8525],
+  [4300901, 'Aratiba', 'RS', 6483],
+  [4301008, 'Arroio do Meio', 'RS', 21958],
+  [4301057, 'Arroio do Sal', 'RS', 11057],
+  [4301073, 'Arroio do Padre', 'RS', 2599],
+  [4301107, 'Arroio dos Ratos', 'RS', 14601],
+  [4301206, 'Arroio do Tigre', 'RS', 12058],
+  [4301305, 'Arroio Grande', 'RS', 17558],
+  [4301404, 'Arvorezinha', 'RS', 10322],
+  [4301503, 'Augusto Pestana', 'RS', 7149],
+  [4301552, 'Áurea', 'RS', 3396],
+  [4301602, 'Bagé', 'RS', 117938],
+  [4301636, 'Balneário Pinhal', 'RS', 14955],
+  [4301651, 'Barão', 'RS', 6461],
+  [4301701, 'Barão de Cotegipe', 'RS', 7144],
+  [4301750, 'Barão do Triunfo', 'RS', 5889],
+  [4301800, 'Barracão', 'RS', 4831],
+  [4301859, 'Barra do Guarita', 'RS', 3161],
+  [4301875, 'Barra do Quaraí', 'RS', 4241],
+  [4301909, 'Barra do Ribeiro', 'RS', 12225],
+  [4301925, 'Barra do Rio Azul', 'RS', 1696],
+  [4301958, 'Barra Funda', 'RS', 2498],
+  [4302006, 'Barros Cassal', 'RS', 9296],
+  [4302055, 'Benjamin Constant do Sul', 'RS', 2082],
+  [4302105, 'Bento Gonçalves', 'RS', 123151],
+  [4302154, 'Boa Vista das Missões', 'RS', 1933],
+  [4302204, 'Boa Vista do Buricá', 'RS', 6966],
+  [4302220, 'Boa Vista do Cadeado', 'RS', 2229],
+  [4302238, 'Boa Vista do Incra', 'RS', 2271],
+  [4302253, 'Boa Vista do Sul', 'RS', 2779],
+  [4302303, 'Bom Jesus', 'RS', 11202],
+  [4302352, 'Bom Princípio', 'RS', 13142],
+  [4302378, 'Bom Progresso', 'RS', 2096],
+  [4302402, 'Bom Retiro do Sul', 'RS', 12294],
+  [4302451, 'Boqueirão do Leão', 'RS', 6247],
+  [4302501, 'Bossoroca', 'RS', 5890],
+  [4302584, 'Bozano', 'RS', 2151],
+  [4302600, 'Braga', 'RS', 3268],
+  [4302659, 'Brochier', 'RS', 4966],
+  [4302709, 'Butiá', 'RS', 19084],
+  [4302808, 'Caçapava do Sul', 'RS', 32515],
+  [4302907, 'Cacequi', 'RS', 11157],
+  [4303004, 'Cachoeira do Sul', 'RS', 80070],
+  [4303103, 'Cachoeirinha', 'RS', 136258],
+  [4303202, 'Cacique Doble', 'RS', 4603],
+  [4303301, 'Caibaté', 'RS', 4704],
+  [4303400, 'Caiçara', 'RS', 4836],
+  [4303509, 'Camaquã', 'RS', 62200],
+  [4303558, 'Camargo', 'RS', 2981],
+  [4303608, 'Cambará do Sul', 'RS', 6361],
+  [4303673, 'Campestre da Serra', 'RS', 3242],
+  [4303707, 'Campina das Missões', 'RS', 5882],
+  [4303806, 'Campinas do Sul', 'RS', 5284],
+  [4303905, 'Campo Bom', 'RS', 62886],
+  [4304002, 'Campo Novo', 'RS', 4975],
+  [4304101, 'Campos Borges', 'RS', 3613],
+  [4304200, 'Candelária', 'RS', 28906],
+  [4304309, 'Cândido Godói', 'RS', 6294],
+  [4304358, 'Candiota', 'RS', 10710],
+  [4304408, 'Canela', 'RS', 48946],
+  [4304507, 'Canguçu', 'RS', 49680],
+  [4304606, 'Canoas', 'RS', 347657],
+  [4304614, 'Canudos do Vale', 'RS', 1656],
+  [4304622, 'Capão Bonito do Sul', 'RS', 1733],
+  [4304630, 'Capão da Canoa', 'RS', 63594],
+  [4304655, 'Capão do Cipó', 'RS', 3119],
+  [4304663, 'Capão do Leão', 'RS', 26487],
+  [4304671, 'Capivari do Sul', 'RS', 3991],
+  [4304689, 'Capela de Santana', 'RS', 11159],
+  [4304697, 'Capitão', 'RS', 2921],
+  [4304705, 'Carazinho', 'RS', 61804],
+  [4304713, 'Caraá', 'RS', 7394],
+  [4304804, 'Carlos Barbosa', 'RS', 30420],
+  [4304853, 'Carlos Gomes', 'RS', 1368],
+  [4304903, 'Casca', 'RS', 9465],
+  [4304952, 'Caseiros', 'RS', 3000],
+  [4305009, 'Catuípe', 'RS', 8674],
+  [4305108, 'Caxias do Sul', 'RS', 463501],
+  [4305116, 'Centenário', 'RS', 2721],
+  [4305124, 'Cerrito', 'RS', 5808],
+  [4305132, 'Cerro Branco', 'RS', 3802],
+  [4305157, 'Cerro Grande', 'RS', 2379],
+  [4305173, 'Cerro Grande do Sul', 'RS', 9178],
+  [4305207, 'Cerro Largo', 'RS', 13705],
+  [4305306, 'Chapada', 'RS', 9540],
+  [4305355, 'Charqueadas', 'RS', 35012],
+  [4305371, 'Charrua', 'RS', 2768],
+  [4305405, 'Chiapetta', 'RS', 3913],
+  [4305439, 'Chuí', 'RS', 6262],
+  [4305447, 'Chuvisca', 'RS', 4597],
+  [4305454, 'Cidreira', 'RS', 17071],
+  [4305504, 'Ciríaco', 'RS', 4149],
+  [4305587, 'Colinas', 'RS', 2423],
+  [4305603, 'Colorado', 'RS', 3258],
+  [4305702, 'Condor', 'RS', 6406],
+  [4305801, 'Constantina', 'RS', 10385],
+  [4305835, 'Coqueiro Baixo', 'RS', 1290],
+  [4305850, 'Coqueiros do Sul', 'RS', 2211],
+  [4305871, 'Coronel Barros', 'RS', 2822],
+  [4305900, 'Coronel Bicaco', 'RS', 6144],
+  [4305934, 'Coronel Pilar', 'RS', 1607],
+  [4305959, 'Cotiporã', 'RS', 3846],
+  [4305975, 'Coxilha', 'RS', 2667],
+  [4306007, 'Crissiumal', 'RS', 12886],
+  [4306056, 'Cristal', 'RS', 7299],
+  [4306072, 'Cristal do Sul', 'RS', 2692],
+  [4306106, 'Cruz Alta', 'RS', 58913],
+  [4306130, 'Cruzaltense', 'RS', 1635],
+  [4306205, 'Cruzeiro do Sul', 'RS', 11600],
+  [4306304, 'David Canabarro', 'RS', 4321],
+  [4306320, 'Derrubadas', 'RS', 2751],
+  [4306353, 'Dezesseis de Novembro', 'RS', 2507],
+  [4306379, 'Dilermando de Aguiar', 'RS', 2806],
+  [4306403, 'Dois Irmãos', 'RS', 30709],
+  [4306429, 'Dois Irmãos das Missões', 'RS', 2090],
+  [4306452, 'Dois Lajeados', 'RS', 3097],
+  [4306502, 'Dom Feliciano', 'RS', 13051],
+  [4306551, 'Dom Pedro de Alcântara', 'RS', 2562],
+  [4306601, 'Dom Pedrito', 'RS', 36981],
+  [4306700, 'Dona Francisca', 'RS', 3079],
+  [4306734, 'Doutor Maurício Cardoso', 'RS', 4470],
+  [4306759, 'Doutor Ricardo', 'RS', 1888],
+  [4306767, 'Eldorado do Sul', 'RS', 39559],
+  [4306809, 'Encantado', 'RS', 22962],
+  [4306908, 'Encruzilhada do Sul', 'RS', 23819],
+  [4306924, 'Engenho Velho', 'RS', 1296],
+  [4306932, 'Entre-Ijuís', 'RS', 9158],
+  [4306957, 'Entre Rios do Sul', 'RS', 2685],
+  [4306973, 'Erebango', 'RS', 3054],
+  [4307005, 'Erechim', 'RS', 105705],
+  [4307054, 'Ernestina', 'RS', 3034],
+  [4307104, 'Herval', 'RS', 6191],
+  [4307203, 'Erval Grande', 'RS', 4930],
+  [4307302, 'Erval Seco', 'RS', 6787],
+  [4307401, 'Esmeralda', 'RS', 3195],
+  [4307450, 'Esperança do Sul', 'RS', 3226],
+  [4307500, 'Espumoso', 'RS', 15173],
+  [4307559, 'Estação', 'RS', 5582],
+  [4307609, 'Estância Velha', 'RS', 47924],
+  [4307708, 'Esteio', 'RS', 76137],
+  [4307807, 'Estrela', 'RS', 32183],
+  [4307815, 'Estrela Velha', 'RS', 3070],
+  [4307831, 'Eugênio de Castro', 'RS', 2633],
+  [4307864, 'Fagundes Varela', 'RS', 2566],
+  [4307906, 'Farroupilha', 'RS', 70286],
+  [4308003, 'Faxinal do Soturno', 'RS', 6702],
+  [4308052, 'Faxinalzinho', 'RS', 2520],
+  [4308078, 'Fazenda Vilanova', 'RS', 4291],
+  [4308102, 'Feliz', 'RS', 13764],
+  [4308201, 'Flores da Cunha', 'RS', 30892],
+  [4308250, 'Floriano Peixoto', 'RS', 1668],
+  [4308300, 'Fontoura Xavier', 'RS', 9550],
+  [4308409, 'Formigueiro', 'RS', 6413],
+  [4308433, 'Forquetinha', 'RS', 2393],
+  [4308458, 'Fortaleza dos Valos', 'RS', 4477],
+  [4308508, 'Frederico Westphalen', 'RS', 32627],
+  [4308607, 'Garibaldi', 'RS', 34335],
+  [4308656, 'Garruchos', 'RS', 2688],
+  [4308706, 'Gaurama', 'RS', 5665],
+  [4308805, 'General Câmara', 'RS', 7612],
+  [4308854, 'Gentil', 'RS', 1744],
+  [4308904, 'Getúlio Vargas', 'RS', 16602],
+  [4309001, 'Giruá', 'RS', 16013],
+  [4309050, 'Glorinha', 'RS', 7658],
+  [4309100, 'Gramado', 'RS', 40134],
+  [4309126, 'Gramado dos Loureiros', 'RS', 2014],
+  [4309159, 'Gramado Xavier', 'RS', 3304],
+  [4309209, 'Gravataí', 'RS', 265074],
+  [4309258, 'Guabiju', 'RS', 1417],
+  [4309308, 'Guaíba', 'RS', 92924],
+  [4309407, 'Guaporé', 'RS', 25268],
+  [4309506, 'Guarani das Missões', 'RS', 7415],
+  [4309555, 'Harmonia', 'RS', 5378],
+  [4309571, 'Herveiras', 'RS', 2565],
+  [4309605, 'Horizontina', 'RS', 18851],
+  [4309654, 'Hulha Negra', 'RS', 5976],
+  [4309704, 'Humaitá', 'RS', 4681],
+  [4309753, 'Ibarama', 'RS', 3732],
+  [4309803, 'Ibiaçá', 'RS', 4527],
+  [4309902, 'Ibiraiaras', 'RS', 6776],
+  [4309951, 'Ibirapuitã', 'RS', 3723],
+  [4310009, 'Ibirubá', 'RS', 21583],
+  [4310108, 'Igrejinha', 'RS', 32808],
+  [4310207, 'Ijuí', 'RS', 84780],
+  [4310306, 'Ilópolis', 'RS', 4157],
+  [4310330, 'Imbé', 'RS', 26824],
+  [4310363, 'Imigrante', 'RS', 3080],
+  [4310405, 'Independência', 'RS', 6427],
+  [4310413, 'Inhacorá', 'RS', 2014],
+  [4310439, 'Ipê', 'RS', 5399],
+  [4310462, 'Ipiranga do Sul', 'RS', 1720],
+  [4310504, 'Iraí', 'RS', 7482],
+  [4310538, 'Itaara', 'RS', 5572],
+  [4310553, 'Itacurubi', 'RS', 2995],
+  [4310579, 'Itapuca', 'RS', 1937],
+  [4310603, 'Itaqui', 'RS', 35768],
+  [4310652, 'Itati', 'RS', 2638],
+  [4310702, 'Itatiba do Sul', 'RS', 3208],
+  [4310751, 'Ivorá', 'RS', 1929],
+  [4310801, 'Ivoti', 'RS', 22983],
+  [4310850, 'Jaboticaba', 'RS', 3779],
+  [4310876, 'Jacuizinho', 'RS', 2040],
+  [4310900, 'Jacutinga', 'RS', 3338],
+  [4311007, 'Jaguarão', 'RS', 26603],
+  [4311106, 'Jaguari', 'RS', 10579],
+  [4311122, 'Jaquirana', 'RS', 3690],
+  [4311130, 'Jari', 'RS', 3349],
+  [4311155, 'Jóia', 'RS', 7184],
+  [4311205, 'Júlio de Castilhos', 'RS', 18226],
+  [4311239, 'Lagoa Bonita do Sul', 'RS', 2251],
+  [4311254, 'Lagoão', 'RS', 5341],
+  [4311270, 'Lagoa dos Três Cantos', 'RS', 1738],
+  [4311304, 'Lagoa Vermelha', 'RS', 27659],
+  [4311403, 'Lajeado', 'RS', 93646],
+  [4311429, 'Lajeado do Bugre', 'RS', 2601],
+  [4311502, 'Lavras do Sul', 'RS', 7157],
+  [4311601, 'Liberato Salzano', 'RS', 4781],
+  [4311627, 'Lindolfo Collor', 'RS', 6248],
+  [4311643, 'Linha Nova', 'RS', 1683],
+  [4311700, 'Machadinho', 'RS', 5735],
+  [4311718, 'Maçambará', 'RS', 4425],
+  [4311734, 'Mampituba', 'RS', 3131],
+  [4311759, 'Manoel Viana', 'RS', 6801],
+  [4311775, 'Maquiné', 'RS', 7418],
+  [4311791, 'Maratá', 'RS', 2470],
+  [4311809, 'Marau', 'RS', 45124],
+  [4311908, 'Marcelino Ramos', 'RS', 4320],
+  [4311981, 'Mariana Pimentel', 'RS', 3916],
+  [4312005, 'Mariano Moro', 'RS', 1858],
+  [4312054, 'Marques de Souza', 'RS', 3969],
+  [4312104, 'Mata', 'RS', 4698],
+  [4312138, 'Mato Castelhano', 'RS', 2553],
+  [4312153, 'Mato Leitão', 'RS', 4859],
+  [4312179, 'Mato Queimado', 'RS', 1795],
+  [4312203, 'Maximiliano de Almeida', 'RS', 4191],
+  [4312252, 'Minas do Leão', 'RS', 7505],
+  [4312302, 'Miraguaí', 'RS', 4427],
+  [4312351, 'Montauri', 'RS', 1499],
+  [4312377, 'Monte Alegre dos Campos', 'RS', 3180],
+  [4312385, 'Monte Belo do Sul', 'RS', 2557],
+  [4312401, 'Montenegro', 'RS', 64322],
+  [4312427, 'Mormaço', 'RS', 2756],
+  [4312443, 'Morrinhos do Sul', 'RS', 3071],
+  [4312450, 'Morro Redondo', 'RS', 6046],
+  [4312476, 'Morro Reuter', 'RS', 6029],
+  [4312500, 'Mostardas', 'RS', 12090],
+  [4312609, 'Muçum', 'RS', 4601],
+  [4312617, 'Muitos Capões', 'RS', 2879],
+  [4312625, 'Muliterno', 'RS', 1721],
+  [4312658, 'Não-Me-Toque', 'RS', 17898],
+  [4312674, 'Nicolau Vergueiro', 'RS', 1932],
+  [4312708, 'Nonoai', 'RS', 13719],
+  [4312757, 'Nova Alvorada', 'RS', 3163],
+  [4312807, 'Nova Araçá', 'RS', 4954],
+  [4312906, 'Nova Bassano', 'RS', 9649],
+  [4312955, 'Nova Boa Vista', 'RS', 2042],
+  [4313003, 'Nova Bréscia', 'RS', 3044],
+  [4313011, 'Nova Candelária', 'RS', 3061],
+  [4313037, 'Nova Esperança do Sul', 'RS', 4865],
+  [4313060, 'Nova Hartz', 'RS', 20088],
+  [4313086, 'Nova Pádua', 'RS', 2343],
+  [4313102, 'Nova Palma', 'RS', 5586],
+  [4313201, 'Nova Petrópolis', 'RS', 23300],
+  [4313300, 'Nova Prata', 'RS', 25692],
+  [4313334, 'Nova Ramada', 'RS', 2163],
+  [4313359, 'Nova Roma do Sul', 'RS', 3466],
+  [4313375, 'Nova Santa Rita', 'RS', 29024],
+  [4313391, 'Novo Cabrais', 'RS', 3568],
+  [4313409, 'Novo Hamburgo', 'RS', 227646],
+  [4313425, 'Novo Machado', 'RS', 3198],
+  [4313441, 'Novo Tiradentes', 'RS', 2146],
+  [4313466, 'Novo Xingu', 'RS', 1646],
+  [4313490, 'Novo Barreiro', 'RS', 4272],
+  [4313508, 'Osório', 'RS', 47396],
+  [4313607, 'Paim Filho', 'RS', 3629],
+  [4313656, 'Palmares do Sul', 'RS', 12844],
+  [4313706, 'Palmeira das Missões', 'RS', 33216],
+  [4313805, 'Palmitinho', 'RS', 7839],
+  [4313904, 'Panambi', 'RS', 43515],
+  [4313953, 'Pantano Grande', 'RS', 10212],
+  [4314001, 'Paraí', 'RS', 7194],
+  [4314027, 'Paraíso do Sul', 'RS', 6519],
+  [4314035, 'Pareci Novo', 'RS', 4319],
+  [4314050, 'Parobé', 'RS', 52058],
+  [4314068, 'Passa Sete', 'RS', 3983],
+  [4314076, 'Passo do Sobrado', 'RS', 6025],
+  [4314100, 'Passo Fundo', 'RS', 206215],
+  [4314134, 'Paulo Bento', 'RS', 2144],
+  [4314159, 'Paverama', 'RS', 7978],
+  [4314175, 'Pedras Altas', 'RS', 2061],
+  [4314209, 'Pedro Osório', 'RS', 7484],
+  [4314308, 'Pejuçara', 'RS', 3745],
+  [4314407, 'Pelotas', 'RS', 325685],
+  [4314423, 'Picada Café', 'RS', 5351],
+  [4314456, 'Pinhal', 'RS', 2959],
+  [4314464, 'Pinhal da Serra', 'RS', 2248],
+  [4314472, 'Pinhal Grande', 'RS', 3805],
+  [4314498, 'Pinheirinho do Vale', 'RS', 4540],
+  [4314506, 'Pinheiro Machado', 'RS', 11214],
+  [4314548, 'Pinto Bandeira', 'RS', 2723],
+  [4314555, 'Pirapó', 'RS', 2260],
+  [4314605, 'Piratini', 'RS', 17504],
+  [4314704, 'Planalto', 'RS', 10406],
+  [4314753, 'Poço das Antas', 'RS', 2171],
+  [4314779, 'Pontão', 'RS', 3296],
+  [4314787, 'Ponte Preta', 'RS', 1575],
+  [4314803, 'Portão', 'RS', 34071],
+  [4314902, 'Porto Alegre', 'RS', 1332845],
+  [4315008, 'Porto Lucena', 'RS', 4360],
+  [4315057, 'Porto Mauá', 'RS', 2142],
+  [4315073, 'Porto Vera Cruz', 'RS', 1560],
+  [4315107, 'Porto Xavier', 'RS', 9938],
+  [4315131, 'Pouso Novo', 'RS', 1739],
+  [4315149, 'Presidente Lucena', 'RS', 3077],
+  [4315156, 'Progresso', 'RS', 5340],
+  [4315172, 'Protásio Alves', 'RS', 2025],
+  [4315206, 'Putinga', 'RS', 3747],
+  [4315305, 'Quaraí', 'RS', 23500],
+  [4315313, 'Quatro Irmãos', 'RS', 1552],
+  [4315321, 'Quevedos', 'RS', 2507],
+  [4315354, 'Quinze de Novembro', 'RS', 3910],
+  [4315404, 'Redentora', 'RS', 9738],
+  [4315453, 'Relvado', 'RS', 1796],
+  [4315503, 'Restinga Sêca', 'RS', 14939],
+  [4315552, 'Rio dos Índios', 'RS', 2835],
+  [4315602, 'Rio Grande', 'RS', 191900],
+  [4315701, 'Rio Pardo', 'RS', 34654],
+  [4315750, 'Riozinho', 'RS', 4473],
+  [4315800, 'Roca Sales', 'RS', 10418],
+  [4315909, 'Rodeio Bonito', 'RS', 6654],
+  [4315958, 'Rolador', 'RS', 2291],
+  [4316006, 'Rolante', 'RS', 21253],
+  [4316105, 'Ronda Alta', 'RS', 9777],
+  [4316204, 'Rondinha', 'RS', 4991],
+  [4316303, 'Roque Gonzales', 'RS', 6576],
+  [4316402, 'Rosário do Sul', 'RS', 36630],
+  [4316428, 'Sagrada Família', 'RS', 2480],
+  [4316436, 'Saldanha Marinho', 'RS', 2575],
+  [4316451, 'Salto do Jacuí', 'RS', 10203],
+  [4316477, 'Salvador das Missões', 'RS', 2877],
+  [4316501, 'Salvador do Sul', 'RS', 6879],
+  [4316600, 'Sananduva', 'RS', 16399],
+  [4316709, 'Santa Bárbara do Sul', 'RS', 8122],
+  [4316733, 'Santa Cecília do Sul', 'RS', 1674],
+  [4316758, 'Santa Clara do Sul', 'RS', 6887],
+  [4316808, 'Santa Cruz do Sul', 'RS', 133230],
+  [4316907, 'Santa Maria', 'RS', 271735],
+  [4316956, 'Santa Maria do Herval', 'RS', 6340],
+  [4316972, 'Santa Margarida do Sul', 'RS', 2596],
+  [4317004, 'Santana da Boa Vista', 'RS', 7024],
+  [4317103, "Sant'Ana do Livramento", 'RS', 84421],
+  [4317202, 'Santa Rosa', 'RS', 76963],
+  [4317251, 'Santa Tereza', 'RS', 1505],
+  [4317301, 'Santa Vitória do Palmar', 'RS', 30983],
+  [4317400, 'Santiago', 'RS', 48938],
+  [4317509, 'Santo Ângelo', 'RS', 76917],
+  [4317558, 'Santo Antônio do Palma', 'RS', 2091],
+  [4317608, 'Santo Antônio da Patrulha', 'RS', 42947],
+  [4317707, 'Santo Antônio das Missões', 'RS', 10300],
+  [4317756, 'Santo Antônio do Planalto', 'RS', 2089],
+  [4317806, 'Santo Augusto', 'RS', 13902],
+  [4317905, 'Santo Cristo', 'RS', 15320],
+  [4317954, 'Santo Expedito do Sul', 'RS', 2349],
+  [4318002, 'São Borja', 'RS', 59676],
+  [4318051, 'São Domingos do Sul', 'RS', 2754],
+  [4318101, 'São Francisco de Assis', 'RS', 17618],
+  [4318200, 'São Francisco de Paula', 'RS', 21893],
+  [4318309, 'São Gabriel', 'RS', 58487],
+  [4318408, 'São Jerônimo', 'RS', 21028],
+  [4318424, 'São João da Urtiga', 'RS', 4461],
+  [4318432, 'São João do Polêsine', 'RS', 2649],
+  [4318440, 'São Jorge', 'RS', 2912],
+  [4318457, 'São José das Missões', 'RS', 2362],
+  [4318465, 'São José do Herval', 'RS', 1902],
+  [4318481, 'São José do Hortêncio', 'RS', 4447],
+  [4318499, 'São José do Inhacorá', 'RS', 2406],
+  [4318507, 'São José do Norte', 'RS', 25443],
+  [4318606, 'São José do Ouro', 'RS', 6834],
+  [4318614, 'São José do Sul', 'RS', 2380],
+  [4318622, 'São José dos Ausentes', 'RS', 4172],
+  [4318705, 'São Leopoldo', 'RS', 217409],
+  [4318804, 'São Lourenço do Sul', 'RS', 41989],
+  [4318903, 'São Luiz Gonzaga', 'RS', 34752],
+  [4319000, 'São Marcos', 'RS', 21084],
+  [4319109, 'São Martinho', 'RS', 5481],
+  [4319125, 'São Martinho da Serra', 'RS', 2860],
+  [4319158, 'São Miguel das Missões', 'RS', 7056],
+  [4319208, 'São Nicolau', 'RS', 5118],
+  [4319307, 'São Paulo das Missões', 'RS', 5846],
+  [4319356, 'São Pedro da Serra', 'RS', 3548],
+  [4319364, 'São Pedro das Missões', 'RS', 1757],
+  [4319372, 'São Pedro do Butiá', 'RS', 3070],
+  [4319406, 'São Pedro do Sul', 'RS', 15577],
+  [4319505, 'São Sebastião do Caí', 'RS', 24428],
+  [4319604, 'São Sepé', 'RS', 21219],
+  [4319703, 'São Valentim', 'RS', 3264],
+  [4319711, 'São Valentim do Sul', 'RS', 2207],
+  [4319737, 'São Valério do Sul', 'RS', 2543],
+  [4319752, 'São Vendelino', 'RS', 2251],
+  [4319802, 'São Vicente do Sul', 'RS', 8097],
+  [4319901, 'Sapiranga', 'RS', 75648],
+  [4320008, 'Sapucaia do Sul', 'RS', 132107],
+  [4320107, 'Sarandi', 'RS', 22851],
+  [4320206, 'Seberi', 'RS', 11950],
+  [4320230, 'Sede Nova', 'RS', 2704],
+  [4320263, 'Segredo', 'RS', 6009],
+  [4320305, 'Selbach', 'RS', 5107],
+  [4320321, 'Senador Salgado Filho', 'RS', 2673],
+  [4320354, 'Sentinela do Sul', 'RS', 5306],
+  [4320404, 'Serafina Corrêa', 'RS', 16961],
+  [4320453, 'Sério', 'RS', 1941],
+  [4320503, 'Sertão', 'RS', 5541],
+  [4320552, 'Sertão Santana', 'RS', 5863],
+  [4320578, 'Sete de Setembro', 'RS', 1830],
+  [4320602, 'Severiano de Almeida', 'RS', 3406],
+  [4320651, 'Silveira Martins', 'RS', 2028],
+  [4320677, 'Sinimbu', 'RS', 8578],
+  [4320701, 'Sobradinho', 'RS', 14226],
+  [4320800, 'Soledade', 'RS', 29991],
+  [4320859, 'Tabaí', 'RS', 4461],
+  [4320909, 'Tapejara', 'RS', 24557],
+  [4321006, 'Tapera', 'RS', 10592],
+  [4321105, 'Tapes', 'RS', 14695],
+  [4321204, 'Taquara', 'RS', 53242],
+  [4321303, 'Taquari', 'RS', 25198],
+  [4321329, 'Taquaruçu do Sul', 'RS', 3119],
+  [4321352, 'Tavares', 'RS', 5212],
+  [4321402, 'Tenente Portela', 'RS', 14497],
+  [4321436, 'Terra de Areia', 'RS', 10334],
+  [4321451, 'Teutônia', 'RS', 32797],
+  [4321469, 'Tio Hugo', 'RS', 3267],
+  [4321477, 'Tiradentes do Sul', 'RS', 5129],
+  [4321493, 'Toropi', 'RS', 2554],
+  [4321501, 'Torres', 'RS', 41751],
+  [4321600, 'Tramandaí', 'RS', 54387],
+  [4321626, 'Travesseiro', 'RS', 2152],
+  [4321634, 'Três Arroios', 'RS', 2591],
+  [4321667, 'Três Cachoeiras', 'RS', 10962],
+  [4321709, 'Três Coroas', 'RS', 24425],
+  [4321808, 'Três de Maio', 'RS', 24916],
+  [4321832, 'Três Forquilhas', 'RS', 2760],
+  [4321857, 'Três Palmeiras', 'RS', 4716],
+  [4321907, 'Três Passos', 'RS', 25436],
+  [4321956, 'Trindade do Sul', 'RS', 7556],
+  [4322004, 'Triunfo', 'RS', 27498],
+  [4322103, 'Tucunduva', 'RS', 5542],
+  [4322152, 'Tunas', 'RS', 3681],
+  [4322186, 'Tupanci do Sul', 'RS', 1374],
+  [4322202, 'Tupanciretã', 'RS', 20005],
+  [4322251, 'Tupandi', 'RS', 5029],
+  [4322301, 'Tuparendi', 'RS', 8363],
+  [4322327, 'Turuçu', 'RS', 3419],
+  [4322343, 'Ubiretama', 'RS', 1994],
+  [4322350, 'União da Serra', 'RS', 1170],
+  [4322376, 'Unistalda', 'RS', 1995],
+  [4322400, 'Uruguaiana', 'RS', 117210],
+  [4322509, 'Vacaria', 'RS', 64197],
+  [4322525, 'Vale Verde', 'RS', 3150],
+  [4322533, 'Vale do Sol', 'RS', 9897],
+  [4322541, 'Vale Real', 'RS', 6058],
+  [4322558, 'Vanini', 'RS', 2004],
+  [4322608, 'Venâncio Aires', 'RS', 68763],
+  [4322707, 'Vera Cruz', 'RS', 26710],
+  [4322806, 'Veranópolis', 'RS', 24021],
+  [4322855, 'Vespasiano Corrêa', 'RS', 1818],
+  [4322905, 'Viadutos', 'RS', 4769],
+  [4323002, 'Viamão', 'RS', 224112],
+  [4323101, 'Vicente Dutra', 'RS', 4665],
+  [4323200, 'Victor Graeff', 'RS', 2780],
+  [4323309, 'Vila Flores', 'RS', 3646],
+  [4323358, 'Vila Lângaro', 'RS', 2079],
+  [4323408, 'Vila Maria', 'RS', 4413],
+  [4323457, 'Vila Nova do Sul', 'RS', 3863],
+  [4323507, 'Vista Alegre', 'RS', 2660],
+  [4323606, 'Vista Alegre do Prata', 'RS', 1590],
+  [4323705, 'Vista Gaúcha', 'RS', 2783],
+  [4323754, 'Vitória das Missões', 'RS', 3260],
+  [4323770, 'Westfália', 'RS', 3098],
+  [4323804, 'Xangri-lá', 'RS', 16463],
+  [5000203, 'Água Clara', 'MS', 16741],
+  [5000252, 'Alcinópolis', 'MS', 4537],
+  [5000609, 'Amambai', 'MS', 39325],
+  [5000708, 'Anastácio', 'MS', 24114],
+  [5000807, 'Anaurilândia', 'MS', 7653],
+  [5000856, 'Angélica', 'MS', 10729],
+  [5000906, 'Antônio João', 'MS', 9303],
+  [5001003, 'Aparecida do Taboado', 'MS', 27674],
+  [5001102, 'Aquidauana', 'MS', 46803],
+  [5001243, 'Aral Moreira', 'MS', 10748],
+  [5001508, 'Bandeirantes', 'MS', 7940],
+  [5001904, 'Bataguassu', 'MS', 23031],
+  [5002001, 'Batayporã', 'MS', 10712],
+  [5002100, 'Bela Vista', 'MS', 21613],
+  [5002159, 'Bodoquena', 'MS', 8567],
+  [5002209, 'Bonito', 'MS', 23659],
+  [5002308, 'Brasilândia', 'MS', 11579],
+  [5002407, 'Caarapó', 'MS', 30612],
+  [5002605, 'Camapuã', 'MS', 13583],
+  [5002704, 'Campo Grande', 'MS', 898100],
+  [5002803, 'Caracol', 'MS', 5036],
+  [5002902, 'Cassilândia', 'MS', 20988],
+  [5002951, 'Chapadão do Sul', 'MS', 30993],
+  [5003108, 'Corguinho', 'MS', 4783],
+  [5003157, 'Coronel Sapucaia', 'MS', 14289],
+  [5003207, 'Corumbá', 'MS', 96268],
+  [5003256, 'Costa Rica', 'MS', 26037],
+  [5003306, 'Coxim', 'MS', 32151],
+  [5003454, 'Deodápolis', 'MS', 13663],
+  [5003488, 'Dois Irmãos do Buriti', 'MS', 11100],
+  [5003504, 'Douradina', 'MS', 5578],
+  [5003702, 'Dourados', 'MS', 243367],
+  [5003751, 'Eldorado', 'MS', 11386],
+  [5003801, 'Fátima do Sul', 'MS', 20609],
+  [5003900, 'Figueirão', 'MS', 3539],
+  [5004007, 'Glória de Dourados', 'MS', 10444],
+  [5004106, 'Guia Lopes da Laguna', 'MS', 9940],
+  [5004304, 'Iguatemi', 'MS', 13808],
+  [5004403, 'Inocência', 'MS', 8404],
+  [5004502, 'Itaporã', 'MS', 24137],
+  [5004601, 'Itaquiraí', 'MS', 19423],
+  [5004700, 'Ivinhema', 'MS', 27821],
+  [5004809, 'Japorã', 'MS', 8148],
+  [5004908, 'Jaraguari', 'MS', 7139],
+  [5005004, 'Jardim', 'MS', 23981],
+  [5005103, 'Jateí', 'MS', 3586],
+  [5005152, 'Juti', 'MS', 6729],
+  [5005202, 'Ladário', 'MS', 21522],
+  [5005251, 'Laguna Carapã', 'MS', 6799],
+  [5005400, 'Maracaju', 'MS', 45047],
+  [5005608, 'Miranda', 'MS', 25536],
+  [5005681, 'Mundo Novo', 'MS', 19193],
+  [5005707, 'Naviraí', 'MS', 50457],
+  [5005806, 'Nioaque', 'MS', 13220],
+  [5006002, 'Nova Alvorada do Sul', 'MS', 21822],
+  [5006200, 'Nova Andradina', 'MS', 48563],
+  [5006259, 'Novo Horizonte do Sul', 'MS', 4721],
+  [5006275, 'Paraíso das Águas', 'MS', 5510],
+  [5006309, 'Paranaíba', 'MS', 40957],
+  [5006358, 'Paranhos', 'MS', 12921],
+  [5006408, 'Pedro Gomes', 'MS', 6941],
+  [5006606, 'Ponta Porã', 'MS', 92017],
+  [5006903, 'Porto Murtinho', 'MS', 12859],
+  [5007109, 'Ribas do Rio Pardo', 'MS', 23150],
+  [5007208, 'Rio Brilhante', 'MS', 37601],
+  [5007307, 'Rio Negro', 'MS', 4841],
+  [5007406, 'Rio Verde de Mato Grosso', 'MS', 19818],
+  [5007505, 'Rochedo', 'MS', 5199],
+  [5007554, 'Santa Rita do Pardo', 'MS', 7027],
+  [5007695, 'São Gabriel do Oeste', 'MS', 29579],
+  [5007703, 'Sete Quedas', 'MS', 10994],
+  [5007802, 'Selvíria', 'MS', 8142],
+  [5007901, 'Sidrolândia', 'MS', 47118],
+  [5007935, 'Sonora', 'MS', 14516],
+  [5007950, 'Tacuru', 'MS', 10808],
+  [5007976, 'Taquarussu', 'MS', 3625],
+  [5008008, 'Terenos', 'MS', 17652],
+  [5008305, 'Três Lagoas', 'MS', 132152],
+  [5008404, 'Vicentina', 'MS', 6336],
+  [5100102, 'Acorizal', 'MT', 5014],
+  [5100201, 'Água Boa', 'MT', 29219],
+  [5100250, 'Alta Floresta', 'MT', 58613],
+  [5100300, 'Alto Araguaia', 'MT', 17193],
+  [5100359, 'Alto Boa Vista', 'MT', 5715],
+  [5100409, 'Alto Garças', 'MT', 13052],
+  [5100508, 'Alto Paraguai', 'MT', 8009],
+  [5100607, 'Alto Taquari', 'MT', 10904],
+  [5100805, 'Apiacás', 'MT', 8590],
+  [5101001, 'Araguaiana', 'MT', 3795],
+  [5101209, 'Araguainha', 'MT', 1010],
+  [5101258, 'Araputanga', 'MT', 14786],
+  [5101308, 'Arenápolis', 'MT', 10576],
+  [5101407, 'Aripuanã', 'MT', 24626],
+  [5101605, 'Barão de Melgaço', 'MT', 7253],
+  [5101704, 'Barra do Bugres', 'MT', 29403],
+  [5101803, 'Barra do Garças', 'MT', 69210],
+  [5101852, 'Bom Jesus do Araguaia', 'MT', 7280],
+  [5101902, 'Brasnorte', 'MT', 17004],
+  [5102504, 'Cáceres', 'MT', 89681],
+  [5102603, 'Campinápolis', 'MT', 15347],
+  [5102637, 'Campo Novo do Parecis', 'MT', 45899],
+  [5102678, 'Campo Verde', 'MT', 44585],
+  [5102686, 'Campos de Júlio', 'MT', 8822],
+  [5102694, 'Canabrava do Norte', 'MT', 4485],
+  [5102702, 'Canarana', 'MT', 25858],
+  [5102793, 'Carlinda', 'MT', 10332],
+  [5102850, 'Castanheira', 'MT', 7506],
+  [5103007, 'Chapada dos Guimarães', 'MT', 18990],
+  [5103056, 'Cláudia', 'MT', 9593],
+  [5103106, 'Cocalinho', 'MT', 6220],
+  [5103205, 'Colíder', 'MT', 31370],
+  [5103254, 'Colniza', 'MT', 25766],
+  [5103304, 'Comodoro', 'MT', 18238],
+  [5103353, 'Confresa', 'MT', 35075],
+  [5103361, "Conquista D'Oeste", 'MT', 3760],
+  [5103379, 'Cotriguaçu', 'MT', 11011],
+  [5103403, 'Cuiabá', 'MT', 650877],
+  [5103437, 'Curvelândia', 'MT', 4903],
+  [5103452, 'Denise', 'MT', 7014],
+  [5103502, 'Diamantino', 'MT', 21941],
+  [5103601, 'Dom Aquino', 'MT', 7872],
+  [5103700, 'Feliz Natal', 'MT', 10521],
+  [5103809, "Figueirópolis D'Oeste", 'MT', 3187],
+  [5103858, 'Gaúcha do Norte', 'MT', 8642],
+  [5103908, 'General Carneiro', 'MT', 6037],
+  [5103957, "Glória D'Oeste", 'MT', 2905],
+  [5104104, 'Guarantã do Norte', 'MT', 31024],
+  [5104203, 'Guiratinga', 'MT', 10966],
+  [5104500, 'Indiavaí', 'MT', 2213],
+  [5104526, 'Ipiranga do Norte', 'MT', 7815],
+  [5104542, 'Itanhangá', 'MT', 7539],
+  [5104559, 'Itaúba', 'MT', 5020],
+  [5104609, 'Itiquira', 'MT', 12236],
+  [5104807, 'Jaciara', 'MT', 28569],
+  [5104906, 'Jangada', 'MT', 7426],
+  [5105002, 'Jauru', 'MT', 8367],
+  [5105101, 'Juara', 'MT', 34906],
+  [5105150, 'Juína', 'MT', 45869],
+  [5105176, 'Juruena', 'MT', 10213],
+  [5105200, 'Juscimeira', 'MT', 11480],
+  [5105234, "Lambari D'Oeste", 'MT', 4790],
+  [5105259, 'Lucas do Rio Verde', 'MT', 83798],
+  [5105309, 'Luciara', 'MT', 2509],
+  [5105507, 'Vila Bela da Santíssima Trindade', 'MT', 16774],
+  [5105580, 'Marcelândia', 'MT', 11396],
+  [5105606, 'Matupá', 'MT', 20091],
+  [5105622, "Mirassol d'Oeste", 'MT', 26785],
+  [5105903, 'Nobres', 'MT', 15492],
+  [5106000, 'Nortelândia', 'MT', 5956],
+  [5106109, 'Nossa Senhora do Livramento', 'MT', 12940],
+  [5106158, 'Nova Bandeirantes', 'MT', 13635],
+  [5106174, 'Nova Nazaré', 'MT', 4200],
+  [5106182, 'Nova Lacerda', 'MT', 6670],
+  [5106190, 'Nova Santa Helena', 'MT', 4239],
+  [5106208, 'Nova Brasilândia', 'MT', 3932],
+  [5106216, 'Nova Canaã do Norte', 'MT', 11707],
+  [5106224, 'Nova Mutum', 'MT', 55839],
+  [5106232, 'Nova Olímpia', 'MT', 16352],
+  [5106240, 'Nova Ubiratã', 'MT', 11530],
+  [5106257, 'Nova Xavantina', 'MT', 24345],
+  [5106265, 'Novo Mundo', 'MT', 6520],
+  [5106273, 'Novo Horizonte do Norte', 'MT', 3349],
+  [5106281, 'Novo São Joaquim', 'MT', 6919],
+  [5106299, 'Paranaíta', 'MT', 11671],
+  [5106307, 'Paranatinga', 'MT', 26423],
+  [5106315, 'Novo Santo Antônio', 'MT', 2015],
+  [5106372, 'Pedra Preta', 'MT', 18066],
+  [5106422, 'Peixoto de Azevedo', 'MT', 32714],
+  [5106455, 'Planalto da Serra', 'MT', 3166],
+  [5106505, 'Poconé', 'MT', 31217],
+  [5106653, 'Pontal do Araguaia', 'MT', 6932],
+  [5106703, 'Ponte Branca', 'MT', 2008],
+  [5106752, 'Pontes e Lacerda', 'MT', 52018],
+  [5106778, 'Porto Alegre do Norte', 'MT', 12127],
+  [5106802, 'Porto dos Gaúchos', 'MT', 5593],
+  [5106828, 'Porto Esperidião', 'MT', 10204],
+  [5106851, 'Porto Estrela', 'MT', 3224],
+  [5107008, 'Poxoréu', 'MT', 23283],
+  [5107040, 'Primavera do Leste', 'MT', 85146],
+  [5107065, 'Querência', 'MT', 26769],
+  [5107107, 'São José dos Quatro Marcos', 'MT', 17849],
+  [5107156, 'Reserva do Cabaçal', 'MT', 2122],
+  [5107180, 'Ribeirão Cascalheira', 'MT', 10089],
+  [5107198, 'Ribeirãozinho', 'MT', 2593],
+  [5107206, 'Rio Branco', 'MT', 4535],
+  [5107248, 'Santa Carmem', 'MT', 5374],
+  [5107263, 'Santo Afonso', 'MT', 2519],
+  [5107297, 'São José do Povo', 'MT', 2875],
+  [5107305, 'São José do Rio Claro', 'MT', 14911],
+  [5107354, 'São José do Xingu', 'MT', 5964],
+  [5107404, 'São Pedro da Cipa', 'MT', 4191],
+  [5107578, 'Rondolândia', 'MT', 3505],
+  [5107602, 'Rondonópolis', 'MT', 244911],
+  [5107701, 'Rosário Oeste', 'MT', 15453],
+  [5107743, 'Santa Cruz do Xingu', 'MT', 2661],
+  [5107750, 'Salto do Céu', 'MT', 3679],
+  [5107768, 'Santa Rita do Trivelato', 'MT', 3276],
+  [5107776, 'Santa Terezinha', 'MT', 7596],
+  [5107792, 'Santo Antônio do Leste', 'MT', 4099],
+  [5107800, 'Santo Antônio de Leverger', 'MT', 15246],
+  [5107859, 'São Félix do Araguaia', 'MT', 13621],
+  [5107875, 'Sapezal', 'MT', 28944],
+  [5107883, 'Serra Nova Dourada', 'MT', 1800],
+  [5107909, 'Sinop', 'MT', 196312],
+  [5107925, 'Sorriso', 'MT', 110635],
+  [5107941, 'Tabaporã', 'MT', 9818],
+  [5107958, 'Tangará da Serra', 'MT', 106434],
+  [5108006, 'Tapurah', 'MT', 14370],
+  [5108055, 'Terra Nova do Norte', 'MT', 10616],
+  [5108105, 'Tesouro', 'MT', 3025],
+  [5108204, 'Torixoréu', 'MT', 4164],
+  [5108303, 'União do Sul', 'MT', 3838],
+  [5108352, 'Vale de São Domingos', 'MT', 2904],
+  [5108402, 'Várzea Grande', 'MT', 300078],
+  [5108501, 'Vera', 'MT', 12800],
+  [5108600, 'Vila Rica', 'MT', 19888],
+  [5108808, 'Nova Guarita', 'MT', 4590],
+  [5108857, 'Nova Marilândia', 'MT', 3529],
+  [5108907, 'Nova Maringá', 'MT', 5846],
+  [5108956, 'Nova Monte Verde', 'MT', 8313],
+  [5200050, 'Abadia de Goiás', 'GO', 19128],
+  [5200100, 'Abadiânia', 'GO', 17232],
+  [5200134, 'Acreúna', 'GO', 21568],
+  [5200159, 'Adelândia', 'GO', 2297],
+  [5200175, 'Água Fria de Goiás', 'GO', 4954],
+  [5200209, 'Água Limpa', 'GO', 1858],
+  [5200258, 'Águas Lindas de Goiás', 'GO', 225693],
+  [5200308, 'Alexânia', 'GO', 27008],
+  [5200506, 'Aloândia', 'GO', 1973],
+  [5200555, 'Alto Horizonte', 'GO', 6072],
+  [5200605, 'Alto Paraíso de Goiás', 'GO', 10306],
+  [5200803, 'Alvorada do Norte', 'GO', 8446],
+  [5200829, 'Amaralina', 'GO', 3268],
+  [5200852, 'Americano do Brasil', 'GO', 5259],
+  [5200902, 'Amorinópolis', 'GO', 3007],
+  [5201108, 'Anápolis', 'GO', 398869],
+  [5201207, 'Anhanguera', 'GO', 924],
+  [5201306, 'Anicuns', 'GO', 18503],
+  [5201405, 'Aparecida de Goiânia', 'GO', 527796],
+  [5201454, 'Aparecida do Rio Doce', 'GO', 2907],
+  [5201504, 'Aporé', 'GO', 4325],
+  [5201603, 'Araçu', 'GO', 3799],
+  [5201702, 'Aragarças', 'GO', 18390],
+  [5201801, 'Aragoiânia', 'GO', 11890],
+  [5202155, 'Araguapaz', 'GO', 7153],
+  [5202353, 'Arenópolis', 'GO', 2946],
+  [5202502, 'Aruanã', 'GO', 8300],
+  [5202601, 'Aurilândia', 'GO', 3284],
+  [5202809, 'Avelinópolis', 'GO', 2868],
+  [5203104, 'Baliza', 'GO', 3351],
+  [5203203, 'Barro Alto', 'GO', 10371],
+  [5203302, 'Bela Vista de Goiás', 'GO', 34445],
+  [5203401, 'Bom Jardim de Goiás', 'GO', 7826],
+  [5203500, 'Bom Jesus de Goiás', 'GO', 23958],
+  [5203559, 'Bonfinópolis', 'GO', 10296],
+  [5203575, 'Bonópolis', 'GO', 3299],
+  [5203609, 'Brazabrantes', 'GO', 3992],
+  [5203807, 'Britânia', 'GO', 5695],
+  [5203906, 'Buriti Alegre', 'GO', 10495],
+  [5203939, 'Buriti de Goiás', 'GO', 2732],
+  [5203962, 'Buritinópolis', 'GO', 3145],
+  [5204003, 'Cabeceiras', 'GO', 7560],
+  [5204102, 'Cachoeira Alta', 'GO', 11513],
+  [5204201, 'Cachoeira de Goiás', 'GO', 1405],
+  [5204250, 'Cachoeira Dourada', 'GO', 7782],
+  [5204300, 'Caçu', 'GO', 13774],
+  [5204409, 'Caiapônia', 'GO', 16513],
+  [5204508, 'Caldas Novas', 'GO', 98622],
+  [5204557, 'Caldazinha', 'GO', 4507],
+  [5204607, 'Campestre de Goiás', 'GO', 3755],
+  [5204656, 'Campinaçu', 'GO', 3708],
+  [5204706, 'Campinorte', 'GO', 12510],
+  [5204805, 'Campo Alegre de Goiás', 'GO', 7422],
+  [5204854, 'Campo Limpo de Goiás', 'GO', 8081],
+  [5204904, 'Campos Belos', 'GO', 18108],
+  [5204953, 'Campos Verdes', 'GO', 4005],
+  [5205000, 'Carmo do Rio Verde', 'GO', 9710],
+  [5205059, 'Castelândia', 'GO', 2985],
+  [5205109, 'Catalão', 'GO', 114427],
+  [5205208, 'Caturaí', 'GO', 5184],
+  [5205307, 'Cavalcante', 'GO', 9583],
+  [5205406, 'Ceres', 'GO', 22046],
+  [5205455, 'Cezarina', 'GO', 8090],
+  [5205471, 'Chapadão do Céu', 'GO', 12870],
+  [5205497, 'Cidade Ocidental', 'GO', 91767],
+  [5205513, 'Cocalzinho de Goiás', 'GO', 25016],
+  [5205521, 'Colinas do Sul', 'GO', 4030],
+  [5205703, 'Córrego do Ouro', 'GO', 2454],
+  [5205802, 'Corumbá de Goiás', 'GO', 10562],
+  [5205901, 'Corumbaíba', 'GO', 9164],
+  [5206206, 'Cristalina', 'GO', 62337],
+  [5206305, 'Cristianópolis', 'GO', 3504],
+  [5206404, 'Crixás', 'GO', 17065],
+  [5206503, 'Cromínia', 'GO', 3883],
+  [5206602, 'Cumari', 'GO', 2927],
+  [5206701, 'Damianópolis', 'GO', 3770],
+  [5206800, 'Damolândia', 'GO', 2724],
+  [5206909, 'Davinópolis', 'GO', 1902],
+  [5207105, 'Diorama', 'GO', 2062],
+  [5207253, 'Doverlândia', 'GO', 6956],
+  [5207352, 'Edealina', 'GO', 4001],
+  [5207402, 'Edéia', 'GO', 11747],
+  [5207501, 'Estrela do Norte', 'GO', 3205],
+  [5207535, 'Faina', 'GO', 7070],
+  [5207600, 'Fazenda Nova', 'GO', 5877],
+  [5207808, 'Firminópolis', 'GO', 10419],
+  [5207907, 'Flores de Goiás', 'GO', 13744],
+  [5208004, 'Formosa', 'GO', 115901],
+  [5208103, 'Formoso', 'GO', 4660],
+  [5208152, 'Gameleira de Goiás', 'GO', 3456],
+  [5208301, 'Divinópolis de Goiás', 'GO', 4457],
+  [5208400, 'Goianápolis', 'GO', 13967],
+  [5208509, 'Goiandira', 'GO', 4973],
+  [5208608, 'Goianésia', 'GO', 73707],
+  [5208707, 'Goiânia', 'GO', 1437366],
+  [5208806, 'Goianira', 'GO', 71916],
+  [5208905, 'Goiás', 'GO', 24071],
+  [5209101, 'Goiatuba', 'GO', 35664],
+  [5209150, 'Gouvelândia', 'GO', 4390],
+  [5209200, 'Guapó', 'GO', 19545],
+  [5209291, 'Guaraíta', 'GO', 2188],
+  [5209408, 'Guarani de Goiás', 'GO', 4085],
+  [5209457, 'Guarinos', 'GO', 2161],
+  [5209606, 'Heitoraí', 'GO', 3354],
+  [5209705, 'Hidrolândia', 'GO', 27742],
+  [5209804, 'Hidrolina', 'GO', 3545],
+  [5209903, 'Iaciara', 'GO', 10584],
+  [5209937, 'Inaciolândia', 'GO', 5954],
+  [5209952, 'Indiara', 'GO', 17061],
+  [5210000, 'Inhumas', 'GO', 52204],
+  [5210109, 'Ipameri', 'GO', 25548],
+  [5210158, 'Ipiranga de Goiás', 'GO', 2919],
+  [5210208, 'Iporá', 'GO', 35684],
+  [5210307, 'Israelândia', 'GO', 2560],
+  [5210406, 'Itaberaí', 'GO', 44734],
+  [5210562, 'Itaguari', 'GO', 4963],
+  [5210604, 'Itaguaru', 'GO', 4904],
+  [5210802, 'Itajá', 'GO', 4380],
+  [5210901, 'Itapaci', 'GO', 21087],
+  [5211008, 'Itapirapuã', 'GO', 8007],
+  [5211206, 'Itapuranga', 'GO', 26113],
+  [5211305, 'Itarumã', 'GO', 6101],
+  [5211404, 'Itauçu', 'GO', 7736],
+  [5211503, 'Itumbiara', 'GO', 107970],
+  [5211602, 'Ivolândia', 'GO', 2693],
+  [5211701, 'Jandaia', 'GO', 6272],
+  [5211800, 'Jaraguá', 'GO', 45223],
+  [5211909, 'Jataí', 'GO', 105729],
+  [5212006, 'Jaupaci', 'GO', 2924],
+  [5212055, 'Jesúpolis', 'GO', 2123],
+  [5212105, 'Joviânia', 'GO', 7159],
+  [5212204, 'Jussara', 'GO', 19620],
+  [5212253, 'Lagoa Santa', 'GO', 1390],
+  [5212303, 'Leopoldo de Bulhões', 'GO', 8745],
+  [5212501, 'Luziânia', 'GO', 209129],
+  [5212600, 'Mairipotaba', 'GO', 2561],
+  [5212709, 'Mambaí', 'GO', 8124],
+  [5212808, 'Mara Rosa', 'GO', 10700],
+  [5212907, 'Marzagão', 'GO', 2758],
+  [5212956, 'Matrinchã', 'GO', 4042],
+  [5213004, 'Maurilândia', 'GO', 10304],
+  [5213053, 'Mimoso de Goiás', 'GO', 2614],
+  [5213087, 'Minaçu', 'GO', 27075],
+  [5213103, 'Mineiros', 'GO', 70081],
+  [5213400, 'Moiporá', 'GO', 1685],
+  [5213509, 'Monte Alegre de Goiás', 'GO', 6692],
+  [5213707, 'Montes Claros de Goiás', 'GO', 8756],
+  [5213756, 'Montividiu', 'GO', 12521],
+  [5213772, 'Montividiu do Norte', 'GO', 3779],
+  [5213806, 'Morrinhos', 'GO', 51351],
+  [5213855, 'Morro Agudo de Goiás', 'GO', 2456],
+  [5213905, 'Mossâmedes', 'GO', 4654],
+  [5214002, 'Mozarlândia', 'GO', 14750],
+  [5214051, 'Mundo Novo', 'GO', 6189],
+  [5214101, 'Mutunópolis', 'GO', 3564],
+  [5214408, 'Nazário', 'GO', 8189],
+  [5214507, 'Nerópolis', 'GO', 31932],
+  [5214606, 'Niquelândia', 'GO', 34964],
+  [5214705, 'Nova América', 'GO', 2337],
+  [5214804, 'Nova Aurora', 'GO', 2101],
+  [5214838, 'Nova Crixás', 'GO', 12815],
+  [5214861, 'Nova Glória', 'GO', 8310],
+  [5214879, 'Nova Iguaçu de Goiás', 'GO', 3010],
+  [5214903, 'Nova Roma', 'GO', 3076],
+  [5215009, 'Nova Veneza', 'GO', 9481],
+  [5215207, 'Novo Brasil', 'GO', 3527],
+  [5215231, 'Novo Gama', 'GO', 103804],
+  [5215256, 'Novo Planalto', 'GO', 3716],
+  [5215306, 'Orizona', 'GO', 16399],
+  [5215405, 'Ouro Verde de Goiás', 'GO', 4057],
+  [5215504, 'Ouvidor', 'GO', 7200],
+  [5215603, 'Padre Bernardo', 'GO', 34967],
+  [5215652, 'Palestina de Goiás', 'GO', 3132],
+  [5215702, 'Palmeiras de Goiás', 'GO', 31858],
+  [5215801, 'Palmelo', 'GO', 2259],
+  [5215900, 'Palminópolis', 'GO', 3851],
+  [5216007, 'Panamá', 'GO', 2455],
+  [5216304, 'Paranaiguara', 'GO', 7607],
+  [5216403, 'Paraúna', 'GO', 10659],
+  [5216452, 'Perolândia', 'GO', 2964],
+  [5216809, 'Petrolina de Goiás', 'GO', 9573],
+  [5216908, 'Pilar de Goiás', 'GO', 2328],
+  [5217104, 'Piracanjuba', 'GO', 24883],
+  [5217203, 'Piranhas', 'GO', 11712],
+  [5217302, 'Pirenópolis', 'GO', 26690],
+  [5217401, 'Pires do Rio', 'GO', 32373],
+  [5217609, 'Planaltina', 'GO', 105031],
+  [5217708, 'Pontalina', 'GO', 18309],
+  [5218003, 'Porangatu', 'GO', 44317],
+  [5218052, 'Porteirão', 'GO', 4070],
+  [5218102, 'Portelândia', 'GO', 3280],
+  [5218300, 'Posse', 'GO', 34914],
+  [5218391, 'Professor Jamil', 'GO', 3649],
+  [5218508, 'Quirinópolis', 'GO', 48447],
+  [5218607, 'Rialma', 'GO', 12165],
+  [5218706, 'Rianápolis', 'GO', 3980],
+  [5218789, 'Rio Quente', 'GO', 3864],
+  [5218805, 'Rio Verde', 'GO', 225696],
+  [5218904, 'Rubiataba', 'GO', 19788],
+  [5219001, 'Sanclerlândia', 'GO', 7918],
+  [5219100, 'Santa Bárbara de Goiás', 'GO', 6149],
+  [5219209, 'Santa Cruz de Goiás', 'GO', 3002],
+  [5219258, 'Santa Fé de Goiás', 'GO', 4951],
+  [5219308, 'Santa Helena de Goiás', 'GO', 38492],
+  [5219357, 'Santa Isabel', 'GO', 3538],
+  [5219407, 'Santa Rita do Araguaia', 'GO', 5924],
+  [5219456, 'Santa Rita do Novo Destino', 'GO', 2689],
+  [5219506, 'Santa Rosa de Goiás', 'GO', 2820],
+  [5219605, 'Santa Tereza de Goiás', 'GO', 3293],
+  [5219704, 'Santa Terezinha de Goiás', 'GO', 10645],
+  [5219712, 'Santo Antônio da Barra', 'GO', 4267],
+  [5219738, 'Santo Antônio de Goiás', 'GO', 7386],
+  [5219753, 'Santo Antônio do Descoberto', 'GO', 72127],
+  [5219803, 'São Domingos', 'GO', 9711],
+  [5219902, 'São Francisco de Goiás', 'GO', 6378],
+  [5220009, "São João d'Aliança", 'GO', 14041],
+  [5220058, 'São João da Paraúna', 'GO', 1774],
+  [5220108, 'São Luís de Montes Belos', 'GO', 33852],
+  [5220157, 'São Luiz do Norte', 'GO', 4837],
+  [5220207, 'São Miguel do Araguaia', 'GO', 21900],
+  [5220264, 'São Miguel do Passa Quatro', 'GO', 4464],
+  [5220280, 'São Patrício', 'GO', 2143],
+  [5220405, 'São Simão', 'GO', 17020],
+  [5220454, 'Senador Canedo', 'GO', 155635],
+  [5220504, 'Serranópolis', 'GO', 8027],
+  [5220603, 'Silvânia', 'GO', 22245],
+  [5220686, 'Simolândia', 'GO', 5742],
+  [5220702, "Sítio d'Abadia", 'GO', 2927],
+  [5221007, 'Taquaral de Goiás', 'GO', 4026],
+  [5221080, 'Teresina de Goiás', 'GO', 2701],
+  [5221197, 'Terezópolis de Goiás', 'GO', 7944],
+  [5221304, 'Três Ranchos', 'GO', 2921],
+  [5221403, 'Trindade', 'GO', 142431],
+  [5221452, 'Trombas', 'GO', 3120],
+  [5221502, 'Turvânia', 'GO', 4480],
+  [5221551, 'Turvelândia', 'GO', 4985],
+  [5221577, 'Uirapuru', 'GO', 2798],
+  [5221601, 'Uruaçu', 'GO', 42546],
+  [5221700, 'Uruana', 'GO', 13729],
+  [5221809, 'Urutaí', 'GO', 3553],
+  [5221858, 'Valparaíso de Goiás', 'GO', 198861],
+  [5221908, 'Varjão', 'GO', 3716],
+  [5222005, 'Vianópolis', 'GO', 14956],
+  [5222054, 'Vicentinópolis', 'GO', 8768],
+  [5222203, 'Vila Boa', 'GO', 4215],
+  [5222302, 'Vila Propício', 'GO', 5815],
+  [5300108, 'Brasília', 'DF', 2817381]
 ];
