@@ -1,5 +1,3 @@
-// UFs: nome, prep, consumo_anual_per_capta
-// Municipios: id, nome, uf, populacao
 const ordinais = [
   '',
   'segunda',
@@ -23,6 +21,7 @@ const ordinais = [
   'vigésima'
 ];
 const consumoAnualDC = 1839600000;
+// UFs: nome, prepopição, consumo_anual_per_capta
 const ufs = {
   RO: ['Rondônia', 'de', 1063.689627],
   AC: ['Acre', 'do', 767.3914526],
@@ -53,6 +52,7 @@ const ufs = {
   DF: ['Distrito Federal', 'do', 863.629345]
 };
 
+// Municipios: id, nome, uf, populacao
 const municipios = [
   [1100015, "Alta Floresta D'Oeste", 'RO', 21494],
   [1100023, 'Ariquemes', 'RO', 96833],
