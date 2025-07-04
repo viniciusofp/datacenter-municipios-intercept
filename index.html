@@ -196,7 +196,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           <!-- Lista de municípios -->
           <ul
             id="municipiosList"
-            class="bg-white border-2 border-[#111] border-t-0 shadow-md sm:shadow-lg max-h-32 lg:max-h-42 w-full overflow-y-auto left-0"
+            class="bg-white border-2 border-[#111] border-t-0 shadow-md sm:shadow-lg max-h-42 w-full overflow-y-auto left-0"
           >
             <li
               v-for="item in filteredMunicipios.slice(0,50)"
@@ -214,7 +214,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
         <article v-if="selectedMunicipio !== null" class="mt-8">
           <!-- Título -->
           <h2
-            class="font-bold font-actu text-[#111] text-2xl md:text-3xl mb-3 md:mb-5 flex items-center gap-4"
+            class="font-bold font-actu text-[#111] text-2xl md:text-3xl mb-3 md:mb-5 grid md:flex items-center gap-4"
           >
             <span class="h-[10px] w-[70px] bg-[#111]"></span
             ><span
@@ -250,7 +250,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
                 </p>
               </div>
               <p
-                class="uppercase font-actu-mono text-base font-bold tracking-widest w-full border-t py-2 absolute bottom-0 left-0 text-center"
+                class="uppercase font-actu-mono text-xs md:text-base font-bold tracking-widest w-full border-t py-1 md:py-2 absolute bottom-0 left-0 text-center"
               >
                 {{timeSpent().yearsSpent === 1 ? 'ano' : 'anos'}}
               </p>
@@ -267,7 +267,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
                 </p>
               </div>
               <p
-                class="uppercase font-actu-mono text-base font-bold tracking-widest w-full border-t py-2 absolute bottom-0 left-0 text-center"
+                class="uppercase font-actu-mono text-xs md:text-base font-bold tracking-widest w-full border-t py-1 md:py-2 absolute bottom-0 left-0 text-center"
               >
                 {{timeSpent().monthsSpent === 1 ? 'mês' : 'meses'}}
               </p>
@@ -284,7 +284,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
                 </p>
               </div>
               <p
-                class="uppercase font-actu-mono text-base font-bold tracking-widest w-full border-t py-2 absolute bottom-0 left-0 text-center"
+                class="uppercase font-actu-mono text-xs md:text-base font-bold tracking-widest w-full border-t py-1 md:py-2 absolute bottom-0 left-0 text-center"
               >
                 {{timeSpent().daysSpent === 1 ? 'dia' : 'dias'}}
               </p>

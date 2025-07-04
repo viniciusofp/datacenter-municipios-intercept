@@ -273,6 +273,9 @@
   .max-h-32 {
     max-height: calc(var(--spacing) * 32) !important;
   }
+  .max-h-42 {
+    max-height: calc(var(--spacing) * 42) !important;
+  }
   .w-6 {
     width: calc(var(--spacing) * 6) !important;
   }
@@ -345,6 +348,10 @@
     border-top-style: var(--tw-border-style) !important;
     border-top-width: 0px !important;
   }
+  .border-t-\[1px\] {
+    border-top-style: var(--tw-border-style) !important;
+    border-top-width: 1px !important;
+  }
   .border-r {
     border-right-style: var(--tw-border-style) !important;
     border-right-width: 1px !important;
@@ -352,6 +359,14 @@
   .border-r-2 {
     border-right-style: var(--tw-border-style) !important;
     border-right-width: 2px !important;
+  }
+  .border-b-\[3px\] {
+    border-bottom-style: var(--tw-border-style) !important;
+    border-bottom-width: 3px !important;
+  }
+  .border-l-\[1px\] {
+    border-left-style: var(--tw-border-style) !important;
+    border-left-width: 1px !important;
   }
   .border-\[\#111\] {
     border-color: #111 !important;
@@ -389,6 +404,9 @@
   .px-6 {
     padding-inline: calc(var(--spacing) * 6) !important;
   }
+  .py-1 {
+    padding-block: calc(var(--spacing) * 1) !important;
+  }
   .py-1\.5 {
     padding-block: calc(var(--spacing) * 1.5) !important;
   }
@@ -397,6 +415,9 @@
   }
   .py-10 {
     padding-block: calc(var(--spacing) * 10) !important;
+  }
+  .pt-1 {
+    padding-top: calc(var(--spacing) * 1) !important;
   }
   .pt-1\.5 {
     padding-top: calc(var(--spacing) * 1.5) !important;
@@ -625,10 +646,21 @@
       padding-inline: calc(var(--spacing) * 8) !important;
     }
   }
+  .md\:py-2 {
+    @media (width >= 48rem) {
+      padding-block: calc(var(--spacing) * 2) !important;
+    }
+  }
   .md\:text-3xl {
     @media (width >= 48rem) {
       font-size: var(--text-3xl) !important;
       line-height: var(--tw-leading, var(--text-3xl--line-height)) !important;
+    }
+  }
+  .md\:text-base {
+    @media (width >= 48rem) {
+      font-size: var(--text-base) !important;
+      line-height: var(--tw-leading, var(--text-base--line-height)) !important;
     }
   }
   .md\:text-\[20px\] {
