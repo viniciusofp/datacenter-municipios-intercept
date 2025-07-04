@@ -6,7 +6,7 @@
     <title>Calculadora - consumo de energia - data center x município</title>
   </head>
   <body>
-    <div id="dataviz" class="text-lg md:text-[20px]">
+    <div id="dataviz">
       <script src="https://unpkg.com/lodash@4.17.21/lodash.min.js"></script>
       <script src="
 https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
@@ -87,37 +87,33 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             this.selectedMunicipio = value;
             this.showList = false;
           },
-          posicaoMunicipio(mun) {
+          posicaoMunicipio() {
             let posicao = _.indexOf(
               _.orderBy(this.municipiosData, ['populacao'], ['desc']),
-              mun
+              this.selectedMunicipio
             );
             if (posicao <= 19) {
-              return `é a ${ordinais[posicao]} cidade com maior população no Brasil`;
+              return `, que é a ${ordinais[posicao]} cidade com maior população no Brasil`;
             }
 
             let posicaoNoEstado = _.indexOf(
               _.orderBy(
-                this.municipiosData.filter((m) => m.uf === mun.uf),
+                this.municipiosData.filter(
+                  (m) => m.uf === this.selectedMunicipio.uf
+                ),
                 ['populacao'],
                 ['desc']
               ),
-              mun
+              this.selectedMunicipio
             );
             if (posicaoNoEstado <= 9) {
-              return `é a ${
+              return `, que é a ${
                 ordinais[posicaoNoEstado]
-              } cidade com maior população do estado ${ufs[mun.uf][1]} ${
-                ufs[mun.uf][0]
-              }`;
+              } cidade com maior população do estado ${
+                ufs[this.selectedMunicipio.uf][1]
+              } ${ufs[this.selectedMunicipio.uf][0]}`;
             }
-            return `é considerada uma cidade ${
-              parseInt(this.selectedMunicipio.populacao) > 499999
-                ? 'grande'
-                : parseInt(this.selectedMunicipio.populacao) > 99999
-                ? 'média'
-                : 'pequena'
-            }`;
+            return null;
           },
           ratio() {
             if (this.selectedMunicipio) {
@@ -135,21 +131,12 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             const monthsSpent = Math.floor((totalDays % 360) / 30);
             const daysSpent = totalDays % 30;
             return { yearsSpent, monthsSpent, daysSpent };
-          },
-          totalEstado(mun) {
-            return this.formatNumber(
-              _.sum(
-                this.municipiosData
-                  .filter((m) => m.uf === mun.uf)
-                  .map((m) => m.populacao)
-              )
-            );
           }
         }).mount('#dataviz');
       </script>
 
       <div
-        class="border-8 border-[#6653ff] max-w-2xl mx-auto my-8 mb-12 px-6 md:px-8 pt-8 pb-12"
+        class="border-8 border-[#6653ff] max-w-2xl mx-auto my-8 mb-12 px-6 md:px-8 pt-8 pb-12 text-lg md:text-[20px]"
       >
         <p class="mb-8 font-bold text-2xl md:text-3xl font-actu">
           Quanto tempo sua cidade levaria para consumir a energia que o data
@@ -231,7 +218,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             <strong
               >consumo dos {{formatNumber(selectedMunicipio.populacao)}}
               habitantes da cidade de {{selectedMunicipio.nome}}</strong
-            >.
+            >{{posicaoMunicipio()}}.
           </p>
           <p class="mb-5">
             Isso significa que o data center consumiria em um ano o mesmo que
