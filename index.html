@@ -233,11 +233,10 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
               habitantes da cidade de {{selectedMunicipio.nome}}</strong
             >.
           </p>
-          <p class="mb-5 font-actu font-bold text-pretty text-2xl">
-            Isso significa que o <em>data center</em> consumiria em um ano o
-            mesmo que toda a população de {{selectedMunicipio.nome}} consome em:
+          <p class="mb-5">
+            Isso significa que o data center consumiria em um ano o mesmo que
+            toda a população de {{selectedMunicipio.nome}} consome em:
           </p>
-          <p class="font-bold font-actu text=[#111] text-2xl"></p>
           <div class="grid grid-cols-3 border-2 border-[#111] text-[#111]">
             <div
               class="relative aspect-square border-r-2 border-[#111] flex items-center justify-center"
@@ -291,6 +290,32 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
               </p>
             </div>
           </div>
+          <p class="text-gray-500 font-actu-mono text-xs mb-3 mt-5">
+            Como o Anuário Estatístico de Energia Elétrica não informa o consumo
+            residencial por município, a estimativa para cada cidade foi feita
+            com base no consumo residencial anual per capita médio da respectiva
+            unidade da federação em 2024, multiplicado pela população local.
+            Esse valor foi então comparado ao consumo anual previsto para o data
+            center, conforme estimativa apresentada pela empresa no estudo para
+            obtenção da licença prévia.
+          </p>
+          <p class="text-gray-500 font-actu-mono text-xs">
+            Fontes:
+            <a
+              href="https://www.epe.gov.br/pt/publicacoes-dados-abertos/publicacoes/anuario-estatistico-de-energia-eletrica"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline hover:text-gray-800"
+              >Anuário Estatístico de Energia Elétrica 2025 (EPE)</a
+            >;
+            <a
+              href="https://censo2022.ibge.gov.br/panorama/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline hover:text-gray-800"
+              >Censo Demográfico 2022 (IBGE)</a
+            >.
+          </p>
         </article>
       </div>
 
