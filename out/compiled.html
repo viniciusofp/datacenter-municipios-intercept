@@ -4,10 +4,7 @@
 https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
 "></script>
   <script src="https://raw.githack.com/viniciusofp/datacenter-municipios-intercept/refs/heads/main/data.js"></script>
-  <link
-    href="https://raw.githack.com/viniciusofp/datacenter-municipios-intercept/refs/heads/main/style.css"
-    rel="stylesheet"
-  />
+  <link href="./style.css" rel="stylesheet" />
   <script type="module">
     import { createApp } from 'https://unpkg.com/petite-vue?module';
     const parsedMunicipios = municipios.map((m) => ({
@@ -124,21 +121,22 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
       }
     }).mount('#dataviz');
   </script>
-
   <div
-    class="border-8 border-[#6653ff] max-w-2xl mx-auto my-8 mb-12 px-6 md:px-8 pt-8 pb-12 text-lg md:text-[20px]"
+    class="tib-border-8 tib-border-[#6653ff] tib-max-w-2xl tib-mx-auto tib-my-8 tib-mb-12 tib-px-6 md:tib-px-8 tib-pt-8 tib-pb-12 tib-text-lg md:tib-text-[20px]"
   >
-    <p class="mb-8 font-bold text-2xl md:text-3xl font-actu">
+    <p
+      class="tib-mb-8 tib-font-bold tib-text-2xl md:tib-text-3xl tib-font-actu"
+    >
       Quanto tempo sua cidade levaria para consumir a energia que o data center
       do TikTok consome em um ano??
     </p>
 
     <!-- Input -->
 
-    <p class="mb-4" v-if="showList && filteredMunicipios !== null">
+    <p class="tib-mb-4" v-if="showList && filteredMunicipios !== null">
       Insira uma cidade na busca abaixo e confira.
     </p>
-    <div class="relative" v-if="showList && filteredMunicipios !== null">
+    <div class="tib-relative" v-if="showList && filteredMunicipios !== null">
       <svg
         data-v-3bab6120=""
         xmlns="http://www.w3.org/2000/svg"
@@ -150,14 +148,14 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="lucide lucide-search-icon lucide-search search-icon opacity-50 absolute left-3 top-5 w-6 h-6"
+        class="lucide lucide-search-icon lucide-search tib-search-icon tib-opacity-50 tib-absolute tib-left-3 tib-top-5 tib-w-6 tib-h-6"
       >
         <path d="m21 21-4.34-4.34"></path>
         <circle cx="11" cy="11" r="8"></circle>
       </svg>
       <input
         type="text"
-        class="border-2 border-[#111] h-16 px-3 pl-12 flex items-center w-full leading-0 font-actu-mono text-base focus:ring-black focus:outline-[#6653ff]"
+        class="tib-border-2 tib-border-[#111] tib-h-16 tib-px-3 tib-pl-12 tib-flex tib-items-center tib-w-full tib-leading-0 tib-font-actu-mono tib-text-base focus:tib-ring-black focus:tib-outline-[#6653ff]"
         :value="input"
         @input="update"
         @focus="setShowList"
@@ -167,22 +165,22 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
       <!-- Lista de municípios -->
       <ul
         id="municipiosList"
-        class="bg-white border-2 border-[#111] border-t-0 max-h-48 w-full overflow-y-auto left-0"
+        class="tib-bg-white tib-border-2 tib-border-[#111] tib-border-t-0 tib-max-h-48 tib-w-full tib-overflow-y-auto tib-left-0"
       >
         <li
           v-for="item in filteredMunicipios.slice(0,50)"
           :key="item.id"
-          class="hover:bg-neutral-200 py-2 px-4 cursor-pointer tracking-wide duration-150 text-base font-actu-mono"
+          class="tib-hover:bg-neutral-200 tib-py-2 tib-px-4 tib-cursor-pointer tib-tracking-wide tib-duration-150 tib-text-base tib-font-actu-mono"
           @click="selectMunicipio(item)"
-          :class="{'text-[#6653ff]': selectedMunicipio.id === item.id}"
+          :class="{'tib-text-[#6653ff]': selectedMunicipio.id === item.id}"
         >
           {{ item.nome }} - {{item.uf}}
         </li>
       </ul>
     </div>
-    <div class="grid sm:flex gap-3 items-center mt-8">
+    <div class="tib-grid sm:tib-flex tib-gap-3 tib-items-center tib-mt-8">
       <button
-        class="uppercase font-actu-mono text-sm font-bold tracking-wider text-[#6653ff] border-[#6653ff] border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-[#6653ff] hover:text-white duration-150 gap-2"
+        class="tib-uppercase tib-font-actu-mono tib-text-sm tib-font-bold tib-tracking-wider tib-text-[#6653ff] tib-border-[#6653ff] tib-border-2 tib-px-4 tib-h-12 tib-flex tib-items-center tib-justify-center tib-cursor-pointer tib-hover:bg-[#6653ff] tib-hover:text-white tib-duration-150 tib-gap-2"
         @click="setShowList"
         v-if="!showList"
       >
@@ -196,7 +194,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="lucide lucide-search-icon lucide-search w-4 h-4"
+          class="lucide lucide-search-icon lucide-search tib-w-4 tib-h-4"
         >
           <path d="m21 21-4.34-4.34" />
           <circle cx="11" cy="11" r="8" />
@@ -204,7 +202,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
         Escolher cidade
       </button>
       <button
-        class="uppercase font-actu-mono text-sm font-bold tracking-wider text-gray-500 border-gray-500 border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-gray-500 hover:text-white duration-150 gap-2"
+        class="tib-uppercase tib-font-actu-mono tib-text-sm tib-font-bold tib-tracking-wider tib-text-gray-500 tib-border-gray-500 tib-border-2 tib-px-4 tib-h-12 tib-flex tib-items-center tib-justify-center tib-cursor-pointer tib-hover:bg-gray-500 tib-hover:text-white tib-duration-150 tib-gap-2"
         @click="random"
       >
         <svg
@@ -217,7 +215,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="lucide lucide-shuffle-icon lucide-shuffle w-4 h-4"
+          class="lucide lucide-shuffle-icon lucide-shuffle tib-w-4 tib-h-4"
         >
           <path d="m18 14 4 4-4 4" />
           <path d="m18 2 4 4-4 4" />
@@ -231,21 +229,21 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
       </button>
     </div>
     <!-- Município -->
-    <article v-if="selectedMunicipio !== null" class="mt-8">
+    <article v-if="selectedMunicipio !== null" class="tib-mt-8">
       <!-- Título -->
       <h2
-        class="font-bold font-actu text-[#111] text-2xl md:text-3xl mb-3 md:mb-5 grid md:flex items-center gap-4"
+        class="tib-font-bold tib-font-actu tib-text-[#111] tib-text-2xl md:tib-text-3xl tib-mb-3 md:tib-mb-5 tib-grid md:tib-flex tib-items-center tib-gap-4"
       >
-        <span class="h-[10px] w-[70px] bg-[#111]"></span
+        <span class="tib-h-[10px] tib-w-[70px] tib-bg-[#111]"></span
         ><span
           >{{selectedMunicipio.nome}}
-          <span class="font-normal"
+          <span class="tib-font-normal"
             >- {{ufs[selectedMunicipio.uf][0]}}</span
           ></span
         >
       </h2>
       <!-- Descrição -->
-      <p class="mb-5">
+      <p class="tib-mb-5">
         O consumo de energia previsto para o data center do TikTok corresponde a
         <strong>{{Math.round(ratio() * 100)}}%</strong> do
         <strong
@@ -253,62 +251,68 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           da cidade de {{selectedMunicipio.nome}}</strong
         >{{posicaoMunicipio()}}.
       </p>
-      <p class="mb-5">
+      <p class="tib-mb-5">
         Isso significa que o data center consumiria em um ano o mesmo que toda a
         população de {{selectedMunicipio.nome}} consome em:
       </p>
-      <div class="grid grid-cols-3 border-2 border-[#111] text-[#111]">
+      <div
+        class="tib-grid tib-grid-cols-3 tib-border-2 tib-border-[#111] tib-text-[#111]"
+      >
         <div
-          class="relative aspect-square border-r-2 border-[#111] flex items-center justify-center"
+          class="tib-relative tib-aspect-square tib-border-r-2 tib-border-[#111] tib-flex tib-items-center tib-justify-center"
         >
-          <div class="grid justify-center text-center">
+          <div class="tib-grid tib-justify-center tib-text-center">
             <p
-              class="text-5xl sm:text-7xl font-actu-mono font-extrabold mb-4"
-              :class="{'text-[#111]/20': timeSpent().yearsSpent === 0}"
+              class="tib-text-5xl sm:tib-text-7xl tib-font-actu-mono tib-font-extrabold tib-mb-4"
+              :class="{'tib-text-[#111]/20': timeSpent().yearsSpent === 0}"
             >
               {{timeSpent().yearsSpent}}
             </p>
           </div>
           <p
-            class="uppercase font-actu-mono text-xs md:text-base font-bold tracking-widest w-full border-t py-1.5 md:py-2 absolute bottom-0 left-0 text-center"
+            class="tib-uppercase tib-font-actu-mono tib-text-xs md:tib-text-base tib-font-bold tib-tracking-widest tib-w-full tib-border-t tib-py-1.5 md:tib-py-2 tib-absolute tib-bottom-0 tib-left-0 tib-text-center"
           >
             {{timeSpent().yearsSpent === 1 ? 'ano' : 'anos'}}
           </p>
         </div>
         <div
-          class="relative aspect-square border-r-2 border-[#111] flex items-center justify-center"
+          class="tib-relative tib-aspect-square tib-border-r-2 tib-border-[#111] tib-flex tib-items-center tib-justify-center"
         >
-          <div class="grid justify-center text-center">
+          <div class="tib-grid tib-justify-center tib-text-center">
             <p
-              class="text-5xl sm:text-7xl font-actu-mono font-extrabold mb-4"
-              :class="{'text-[#111]/20': timeSpent().monthsSpent === 0}"
+              class="tib-text-5xl sm:tib-text-7xl tib-font-actu-mono tib-font-extrabold tib-mb-4"
+              :class="{'tib-text-[#111]/20': timeSpent().monthsSpent === 0}"
             >
               {{timeSpent().monthsSpent}}
             </p>
           </div>
           <p
-            class="uppercase font-actu-mono text-xs md:text-base font-bold tracking-widest w-full border-t py-1.5 md:py-2 absolute bottom-0 left-0 text-center"
+            class="tib-uppercase tib-font-actu-mono tib-text-xs md:tib-text-base tib-font-bold tib-tracking-widest tib-w-full tib-border-t tib-py-1.5 md:tib-py-2 tib-absolute tib-bottom-0 tib-left-0 tib-text-center"
           >
             {{timeSpent().monthsSpent === 1 ? 'mês' : 'meses'}}
           </p>
         </div>
-        <div class="relative aspect-square flex items-center justify-center">
-          <div class="grid justify-center text-center">
+        <div
+          class="tib-relative tib-aspect-square tib-flex tib-items-center tib-justify-center"
+        >
+          <div class="tib-grid tib-justify-center tib-text-center">
             <p
-              class="text-5xl sm:text-7xl font-actu-mono font-extrabold mb-4"
-              :class="{'text-[#111]/20': timeSpent().daysSpent === 0}"
+              class="tib-text-5xl sm:tib-text-7xl tib-font-actu-mono tib-font-extrabold tib-mb-4"
+              :class="{'tib-text-[#111]/20': timeSpent().daysSpent === 0}"
             >
               {{timeSpent().daysSpent}}
             </p>
           </div>
           <p
-            class="uppercase font-actu-mono text-xs md:text-base font-bold tracking-widest w-full border-t py-1.5 md:py-2 absolute bottom-0 left-0 text-center"
+            class="tib-uppercase tib-font-actu-mono tib-text-xs md:tib-text-base tib-font-bold tib-tracking-widest tib-w-full tib-border-t tib-py-1.5 md:tib-py-2 tib-absolute tib-bottom-0 tib-left-0 tib-text-center"
           >
             {{timeSpent().daysSpent === 1 ? 'dia' : 'dias'}}
           </p>
         </div>
       </div>
-      <p class="text-gray-500 font-actu-mono text-sm mb-3 mt-8">
+      <p
+        class="tib-text-gray-500 tib-font-actu-mono tib-text-sm tib-mb-3 tib-mt-8"
+      >
         Como o Anuário Estatístico de Energia Elétrica não informa o consumo
         residencial por município, a estimativa para cada cidade foi feita com
         base no consumo residencial anual per capita médio da respectiva unidade
@@ -317,20 +321,20 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
         estimativa apresentada pela empresa no estudo para obtenção da licença
         prévia.
       </p>
-      <p class="text-gray-500 font-actu-mono text-sm">
+      <p class="tib-text-gray-500 tib-font-actu-mono tib-text-sm">
         Fontes:
         <a
           href="https://www.epe.gov.br/pt/publicacoes-dados-abertos/publicacoes/anuario-estatistico-de-energia-eletrica"
           target="_blank"
           rel="noopener noreferrer"
-          class="underline hover:text-gray-800"
+          class="tib-underline tib-hover:text-gray-800"
           >Anuário Estatístico de Energia Elétrica 2025 (EPE)</a
         >;
         <a
           href="https://censo2022.ibge.gov.br/panorama/"
           target="_blank"
           rel="noopener noreferrer"
-          class="underline hover:text-gray-800"
+          class="tib-underline tib-hover:text-gray-800"
           >Censo Demográfico 2022 (IBGE)</a
         >.
       </p>
