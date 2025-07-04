@@ -256,6 +256,9 @@
     .h-10 {
       height: calc(var(--spacing) * 10);
     }
+    .h-12 {
+      height: calc(var(--spacing) * 12);
+    }
     .h-16 {
       height: calc(var(--spacing) * 16);
     }
@@ -505,6 +508,11 @@
     .focus\:outline-\[\#6653ff\] {
       &:focus {
         outline-color: #6653ff;
+      }
+    }
+    .sm\:flex {
+      @media (width >= 40rem) {
+        display: flex;
       }
     }
     .sm\:text-7xl {
