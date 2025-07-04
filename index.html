@@ -131,6 +131,16 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             const monthsSpent = Math.floor((totalDays % 360) / 30);
             const daysSpent = totalDays % 30;
             return { yearsSpent, monthsSpent, daysSpent };
+          },
+          random() {
+            this.selectedMunicipio = _.sample(parsedMunicipios);
+            this.input = '';
+            this.filteredMunicipios = _.orderBy(
+              parsedMunicipios,
+              ['populacao'],
+              ['desc']
+            );
+            this.showList = false;
           }
         }).mount('#dataviz');
       </script>
@@ -144,13 +154,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
         </p>
 
         <!-- Input -->
-        <button
-          class="uppercase font-actu-mono text-sm font-bold tracking-wider text-[#6653ff] border-[#6653ff] border-2 px-4 pt-2.5 pb-2 cursor-pointer hover:bg-[#6653ff] hover:text-white duration-150"
-          @click="setShowList"
-          v-if="!showList"
-        >
-          Escolher outra cidade
-        </button>
+
         <p class="mb-4" v-if="showList && filteredMunicipios !== null">
           Insira uma cidade na busca abaixo e confira.
         </p>
@@ -196,7 +200,56 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             </li>
           </ul>
         </div>
-
+        <div class="flex gap-3 items-center mt-8">
+          <button
+            class="uppercase font-actu-mono text-sm font-bold tracking-wider text-[#6653ff] border-[#6653ff] border-2 px-4 h-10 flex items-center justify-start text-left cursor-pointer hover:bg-[#6653ff] hover:text-white duration-150 gap-2"
+            @click="setShowList"
+            v-if="!showList"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-search-icon lucide-search w-4 h-4"
+            >
+              <path d="m21 21-4.34-4.34" />
+              <circle cx="11" cy="11" r="8" />
+            </svg>
+            Escolher cidade
+          </button>
+          <button
+            class="uppercase font-actu-mono text-sm font-bold tracking-wider text-gray-500 border-gray-500 border-2 px-4 h-10 flex items-center justify-start text-left cursor-pointer hover:bg-gray-500 hover:text-white duration-150 gap-2"
+            @click="random"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-shuffle-icon lucide-shuffle w-4 h-4"
+            >
+              <path d="m18 14 4 4-4 4" />
+              <path d="m18 2 4 4-4 4" />
+              <path
+                d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"
+              />
+              <path d="M2 6h1.972a4 4 0 0 1 3.6 2.2" />
+              <path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45" />
+            </svg>
+            Cidade aleatória
+          </button>
+        </div>
         <!-- Município -->
         <article v-if="selectedMunicipio !== null" class="mt-8">
           <!-- Título -->
