@@ -280,11 +280,11 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
           <div class="grid grid-cols-3 border-2 border-[#111] text-[#111]">
             <div
               class="relative aspect-square border-r-2 border-[#111] flex items-center justify-center"
-              :class="{'text-[#111]/20': timeSpent().yearsSpent === 0}"
             >
               <div class="grid justify-center text-center">
                 <p
                   class="text-5xl sm:text-7xl font-actu-mono font-extrabold mb-4"
+                  :class="{'text-[#111]/20': timeSpent().yearsSpent === 0}"
                 >
                   {{timeSpent().yearsSpent}}
                 </p>
@@ -297,11 +297,11 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             </div>
             <div
               class="relative aspect-square border-r-2 border-[#111] flex items-center justify-center"
-              :class="{'text-[#111]/20': timeSpent().monthsSpent === 0}"
             >
               <div class="grid justify-center text-center">
                 <p
                   class="text-5xl sm:text-7xl font-actu-mono font-extrabold mb-4"
+                  :class="{'text-[#111]/20': timeSpent().monthsSpent === 0}"
                 >
                   {{timeSpent().monthsSpent}}
                 </p>
@@ -314,11 +314,11 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
             </div>
             <div
               class="relative aspect-square flex items-center justify-center"
-              :class="{'text-[#111]/20': timeSpent().daysSpent === 0}"
             >
               <div class="grid justify-center text-center">
                 <p
                   class="text-5xl sm:text-7xl font-actu-mono font-extrabold mb-4"
+                  :class="{'text-[#111]/20': timeSpent().daysSpent === 0}"
                 >
                   {{timeSpent().daysSpent}}
                 </p>
