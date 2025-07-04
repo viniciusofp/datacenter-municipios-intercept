@@ -273,8 +273,14 @@
   .max-h-32 {
     max-height: calc(var(--spacing) * 32) !important;
   }
+  .max-h-40 {
+    max-height: calc(var(--spacing) * 40) !important;
+  }
   .max-h-42 {
     max-height: calc(var(--spacing) * 42) !important;
+  }
+  .max-h-48 {
+    max-height: calc(var(--spacing) * 48) !important;
   }
   .w-6 {
     width: calc(var(--spacing) * 6) !important;
