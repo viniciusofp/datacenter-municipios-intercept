@@ -313,7 +313,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
                 >
                   <div class="grid justify-center text-center">
                     <p
-                      class="text-[15svw] sm:text-[5rem] font-extrabold mb-4"
+                      class="text-[11.5svw] sm:text-[5rem] font-extrabold mb-4"
                       :class="{'text-[#111]/20': timeSpent().yearsSpent === 0}"
                     >
                       {{timeSpent().yearsSpent}}
@@ -331,7 +331,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
                 >
                   <div class="grid justify-center text-center">
                     <p
-                      class="text-[15svw] sm:text-[5rem] font-extrabold mb-4"
+                      class="text-[11.5svw] sm:text-[5rem] font-extrabold mb-4"
                       :class="{'text-[#111]/20': timeSpent().monthsSpent === 0}"
                     >
                       {{timeSpent().monthsSpent}}
@@ -349,7 +349,7 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
                 >
                   <div class="grid justify-center text-center">
                     <p
-                      class="text-[15svw] sm:text-[5rem] font-extrabold mb-4"
+                      class="text-[11.5svw] sm:text-[5rem] font-extrabold mb-4"
                       :class="{'text-[#111]/20': timeSpent().daysSpent === 0}"
                     >
                       {{timeSpent().daysSpent}}
@@ -368,7 +368,8 @@ https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js
                 class="mb-8 max-w-prose font-actu text-2xl text-white font-semibold tracking-normal leading-tight"
               >
                 É o tempo que toda a população de {{selectedMunicipio.nome}}
-                levaria para consumir o que o data center do TikTok
+                ({{selectedMunicipio.uf}}) levaria para consumir o que o data
+                center do TikTok
                 <span
                   class="underline decoration-dashed underline-offset-4 decoration-black/50"
                   >consumiria em um ano</span
