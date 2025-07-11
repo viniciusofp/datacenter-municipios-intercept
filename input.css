@@ -26,6 +26,12 @@
   src: url('./font/TIActuBetaMono-Regular.woff');
 }
 
+@layer base {
+  img {
+    @apply inline-block;
+  }
+}
+
 body {
   font-family: 'Newsreader', Arial, Georgia, serif;
   line-height: 1.545454;
