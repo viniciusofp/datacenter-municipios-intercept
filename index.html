@@ -185,7 +185,7 @@ https://superal.github.io/canvas2image/canvas2image.js
             });
             const card = document.querySelector('article');
             html2canvas(card, { allowTaint: true }).then((canvas) => {
-              document.body.appendChild(canvas);
+              // document.body.appendChild(canvas);
 
               return Canvas2Image.saveAsPNG(canvas);
             });
@@ -308,7 +308,7 @@ https://superal.github.io/canvas2image/canvas2image.js
         <article v-if="selectedMunicipio !== null" class="mt-8 relative">
           <!-- Card -->
           <div
-            class="card bg-[#6653ff] p-4 py-8 flex flex-col items-center justify-center relative"
+            class="card bg-[#6653ff] p-6 py-8 flex flex-col items-center justify-center relative"
           >
             <div
               class="w-full bg-black pl-4 py-3 mb-6 flex items-center justify-between"
