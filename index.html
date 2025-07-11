@@ -247,7 +247,7 @@ https://superal.github.io/canvas2image/canvas2image.js
           </div>
           <div class="grid sm:flex gap-3 items-center mt-8 sm:mt-10">
             <button
-              class="uppercase font-actu-mono text-sm font-bold tracking-wider text-[#6653ff] border-[#6653ff] border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-[#6653ff] hover:text-white duration-150 gap-2"
+              class="uppercase font-actu-mono text-sm font-bold tracking-wider text-[#6653ff] border-[#6653ff] border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-[#6653ff] hover:text-white duration-150 gap-3"
               @click="setShowList"
               v-if="!showList"
             >
@@ -269,7 +269,7 @@ https://superal.github.io/canvas2image/canvas2image.js
               Escolher cidade
             </button>
             <button
-              class="uppercase font-actu-mono text-sm font-bold tracking-wider text-gray-500 border-gray-500 border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-gray-500 hover:text-white duration-150 gap-2"
+              class="uppercase font-actu-mono text-sm font-bold tracking-wider text-gray-500 border-gray-500 border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-gray-500 hover:text-white duration-150 gap-3"
               @click="random"
             >
               <svg
@@ -409,7 +409,7 @@ https://superal.github.io/canvas2image/canvas2image.js
         id="download"
         v-if="selectedMunicipio !== null"
         @click="downloadImage"
-        class="uppercase font-actu-mono text-sm font-bold tracking-wider bg-[#6653ff] text-white border-[#6653ff] border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-black duration-150 gap-2"
+        class="uppercase font-actu-mono text-sm font-bold tracking-wider bg-[#6653ff] text-white border-[#6653ff] border-t-[#5948df] border-2 px-4 h-12 flex items-center justify-center cursor-pointer hover:bg-black duration-150 gap-3 w-full"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -421,7 +421,7 @@ https://superal.github.io/canvas2image/canvas2image.js
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="lucide lucide-camera-icon lucide-camera w-4 h-4"
+          class="lucide lucide-camera-icon lucide-camera w-5 h-5"
         >
           <path
             d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"
